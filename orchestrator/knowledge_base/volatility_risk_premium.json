@@ -1,0 +1,42 @@
+{
+  "strategy_name": "volatility_risk_premium",
+  "category": "volatility",
+  "source": "quantopian_lectures",
+  "hypothesis": "Implied volatility (as measured by VIX) consistently trades at a premium to realized volatility — sellers of volatility are compensated for providing insurance to hedgers. This structural risk premium is persistent because hedgers (institutions, funds) are willing to overpay for protection, creating a systematic edge for disciplined sellers. The VRP (implied vol - realized vol spread) averages 2-4 vol points historically.",
+  "market_regime": "low-vol",
+  "asset_class": "options",
+  "universe": "SPX (S&P 500 Index) options and VIX futures. Primary instrument: short SPX put spreads (defined risk). Secondary: VIX futures short when in contango.",
+  "entry_logic": "VIX futures: go short front-month VIX futures when the VIX term structure is in contango (front < second month), indicating a positive roll yield. SPX options: sell 30-45 DTE put spreads (cash-secured) when VIX > 15 (elevated premium). Target delta ~0.15-0.20 on short leg.",
+  "exit_logic": "VIX futures: close at 50% profit or roll to next month 5 days before expiry. SPX options: close at 50% profit OR at 21 DTE (whichever comes first) to avoid gamma risk.",
+  "position_sizing": "Maximum 20% of portfolio in VIX/vol positions at any time. Options: max 30% of buying power used on defined-risk spreads. VIX futures: size to risk 1% of portfolio per contract on a 5-point adverse move.",
+  "risk_management": "Hard stop: close ALL vol positions if VIX spikes above 40 (extreme fear — risk of unlimited loss on shorts if using undefined risk). Only defined-risk strategies (spreads, not naked shorts). Hedge: maintain a small long VIX call as tail hedge (1-2% of portfolio). No selling vol into earnings weeks or major macro events (FOMC, CPI).",
+  "parameters": {
+    "target_dte_entry": {"value": 35, "range": [30, 45], "sensitivity": "medium"},
+    "target_dte_exit": {"value": 21, "range": [14, 25], "sensitivity": "medium"},
+    "profit_target_pct": {"value": 0.50, "range": [0.30, 0.70], "sensitivity": "medium"},
+    "vix_entry_threshold": {"value": 15, "range": [12, 25], "sensitivity": "high"},
+    "vix_stop_threshold": {"value": 40, "range": [35, 50], "sensitivity": "high"},
+    "delta_target": {"value": 0.15, "range": [0.10, 0.25], "sensitivity": "medium"}
+  },
+  "num_parameters": 6,
+  "known_failure_modes": [
+    "VIX spikes (black swan events): COVID crash (Feb-Mar 2020) caused VIX to spike from 15 to 85 in weeks. Short vol positions suffer catastrophic losses if not properly hedged or sized.",
+    "Contango-to-backwardation flips: VIX futures roll strategy loses money during backwardation (VIX front > back month), which occurs during sustained high-vol regimes.",
+    "Gamma risk near expiry: if holding options into the final 21 DTE without closing, theta/gamma dynamics can quickly reverse profitable positions.",
+    "Correlation with equity crash: the VRP strategy loses exactly when portfolios need stability — in market crashes, all vol positions lose simultaneously.",
+    "Defined-risk strategies cap upside: put spreads limit premium collected vs. naked puts, reducing edge per trade while maintaining correlation risk."
+  ],
+  "historical_performance": {
+    "sharpe": 1.2,
+    "max_drawdown": -0.20,
+    "period": "2012-2022",
+    "notes": "Excellent in low-vol, trending bull markets (2012-2019 was ideal). Severe drawdown in COVID crash (Mar 2020) even with defined risk. VIX futures roll (short contango) achieves Sharpe ~1.0 standalone. Combined with options premium selling, higher Sharpe but correlated risk. Must use small allocation (< 20% of portfolio) due to tail risk."
+  },
+  "references": [
+    "CBOE VIX White Paper - Understanding the VIX Index",
+    "quantopian/research_public - Lecture: Volatility Risk Premium",
+    "Ernie Chan - Algorithmic Trading, Chapter 6: Interday Momentum and Mean Reversion",
+    "Bhansali (2014) - Volatility and the Art of Risk Management"
+  ],
+  "related_strategies": ["bollinger_band_mean_reversion", "sector_rotation"]
+}

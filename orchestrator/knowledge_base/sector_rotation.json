@@ -1,0 +1,40 @@
+{
+  "strategy_name": "sector_rotation",
+  "category": "momentum",
+  "source": "quantopian_contest",
+  "hypothesis": "Sector ETFs exhibit momentum and business-cycle patterns — outperforming sectors tend to continue outperforming over 1-3 month horizons due to capital flows, earnings revisions, and macro regime persistence. Rotating monthly into top-performing sectors captures this persistence while the 11-sector universe provides sufficient diversification.",
+  "market_regime": "trending",
+  "asset_class": "etfs",
+  "universe": "11 SPDR Sector ETFs: XLK (Technology), XLF (Financials), XLE (Energy), XLV (Health Care), XLI (Industrials), XLP (Consumer Staples), XLY (Consumer Discretionary), XLU (Utilities), XLB (Materials), XLRE (Real Estate), XLC (Communication Services)",
+  "entry_logic": "Rank all 11 sector ETFs by 1-month and 3-month total return (equal-weighted composite). At month-end, allocate equally to top 3-4 sectors by composite rank. If fewer than 3 sectors show positive momentum, reduce to 2 or hold cash for that allocation.",
+  "exit_logic": "Monthly rebalance — exit sectors that have dropped out of the top 3-4 rank. Trim to equal weight if any position drifts more than 5% from target between rebalances.",
+  "position_sizing": "Equal-weight among selected sectors (25-33% each if 3-4 sectors selected). Total exposure: 75-100% long (reduce to 50-75% if broad market is in a downtrend as measured by SPY below its 200-day SMA).",
+  "risk_management": "Market timing overlay: if SPY closes below its 200-day SMA, cut all sector positions to 50% and hold remaining in cash/TLT. Maximum 33% in any single sector ETF. Monthly stop: if any sector position loses 8% within a month, exit at next close and replace with the next-ranked sector.",
+  "parameters": {
+    "momentum_lookback_1m": {"value": 21, "range": [15, 30], "sensitivity": "low"},
+    "momentum_lookback_3m": {"value": 63, "range": [42, 90], "sensitivity": "low"},
+    "num_sectors_held": {"value": 3, "range": [2, 5], "sensitivity": "medium"},
+    "rebalance_frequency_days": {"value": 21, "range": [21, 42], "sensitivity": "low"},
+    "market_regime_sma": {"value": 200, "range": [150, 252], "sensitivity": "low"}
+  },
+  "num_parameters": 5,
+  "known_failure_modes": [
+    "Sharp sector reversals at earnings season: a single unexpected sector-wide event can cause 10%+ drawdown within a month before the rebalance.",
+    "Momentum crashes: the sector-rotation strategy is a form of momentum and suffers the same momentum crash risk in sharp reversals.",
+    "Crowded trades: when macro consensus is strong (e.g., energy in 2022), too many players rotate into the same sector, and reversals are violent.",
+    "Low trade count: only 12 rebalances per year — limited statistical sample for backtest validation, heightening overfitting risk.",
+    "Transaction costs are low (only 11 ETFs, monthly rebalance) but spread costs can matter during volatile market opens."
+  ],
+  "historical_performance": {
+    "sharpe": 0.9,
+    "max_drawdown": -0.18,
+    "period": "2005-2022",
+    "notes": "Outperforms buy-and-hold SPY on risk-adjusted basis. The 200-day SMA overlay adds meaningful drawdown protection (reduces max drawdown by ~5pp). Pure 1-month momentum performs similarly to the composite; 3-month adds stability. COVID crash (2020) was a drawdown but quickly recovered."
+  },
+  "references": [
+    "Mebane Faber (2007) - A Quantitative Approach to Tactical Asset Allocation, SSRN",
+    "quantopian/research_public - Lecture: Sector Rotation",
+    "Ivy Portfolio - Faber & Richardson"
+  ],
+  "related_strategies": ["momentum_12_1_month", "multi_factor_long_short", "bollinger_band_mean_reversion"]
+}

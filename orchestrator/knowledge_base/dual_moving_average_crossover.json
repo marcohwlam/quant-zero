@@ -1,0 +1,34 @@
+{
+  "strategy_name": "dual_moving_average_crossover",
+  "category": "trend_following",
+  "source": "quantopian_lectures",
+  "hypothesis": "Short-term price trends persist long enough that a fast moving average crossing above a slow moving average signals sustained upward momentum. The signal captures trend initiation before full mean reversion kicks in.",
+  "market_regime": "trending",
+  "asset_class": "equities",
+  "universe": "Broad ETFs (SPY, QQQ) or liquid large-cap equities",
+  "entry_logic": "Go long when fast SMA crosses above slow SMA. Go flat (or short) when fast crosses below.",
+  "exit_logic": "Reverse signal (cross in opposite direction). Optional: trailing stop at 2x ATR.",
+  "position_sizing": "Equal weight across universe. Or volatility-adjusted (inverse ATR weighting).",
+  "risk_management": "Max drawdown stop: exit all if portfolio drawdown exceeds 15%. No single position > 20% of portfolio.",
+  "parameters": {
+    "fast_window": {"value": 10, "range": [5, 30], "sensitivity": "medium"},
+    "slow_window": {"value": 50, "range": [20, 200], "sensitivity": "medium"},
+    "atr_stop_multiplier": {"value": 2.0, "range": [1.0, 3.0], "sensitivity": "low"}
+  },
+  "num_parameters": 3,
+  "known_failure_modes": [
+    "Choppy, sideways markets generate excessive whipsaws and transaction costs.",
+    "Underperforms during V-shaped reversals where the cross signal is too slow.",
+    "Parameter sensitivity: results vary significantly with window lengths, suggesting overfitting risk."
+  ],
+  "historical_performance": {
+    "sharpe": 0.6,
+    "max_drawdown": -0.18,
+    "period": "2005-2020",
+    "notes": "Marginal alpha on SPY alone. Better on a diversified ETF basket. Mainly useful as a baseline."
+  },
+  "references": [
+    "quantopian/research_public - Lecture: Introduction to Trading Algorithms"
+  ],
+  "related_strategies": ["triple_moving_average", "macd_trend_following"]
+}

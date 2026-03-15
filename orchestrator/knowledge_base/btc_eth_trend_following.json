@@ -1,0 +1,41 @@
+{
+  "strategy_name": "btc_eth_trend_following",
+  "category": "trend_following",
+  "source": "manual",
+  "hypothesis": "BTC and ETH exhibit persistent multi-week trends driven by retail sentiment, on-chain adoption cycles, and macro risk-on/risk-off flows. A 20/60-day moving average crossover captures these trends after initiation, filtering out short-term noise. Crypto trends are stronger and longer than equity trends due to the combination of high volatility and retail momentum-chasing behavior.",
+  "market_regime": "trending",
+  "asset_class": "crypto",
+  "universe": "BTC (Bitcoin) and ETH (Ethereum) spot or perpetual futures — the only crypto assets with sufficient liquidity, history, and exchange support for systematic trading. Altcoins explicitly excluded due to insufficient history and liquidity.",
+  "entry_logic": "Go long BTC/ETH when the 20-day SMA crosses above the 60-day SMA (golden cross). Go flat (exit long) when 20-day crosses below 60-day. No short positions due to borrow cost and volatility risk in small accounts. Enter at next hourly close after signal confirmation.",
+  "exit_logic": "Exit long on the death cross (20-day SMA crosses below 60-day SMA). Trailing stop: once in profit, set a trailing stop at 10% below the recent 30-day high. This allows riding strong trends while protecting gains.",
+  "position_sizing": "Equal allocation between BTC and ETH (50/50 when both in uptrend). Each position maximum 15% of total portfolio. When only one signal is active, allocate up to 15% to that asset. Maximum 30% combined crypto allocation (per mission capital allocation targets). Maximum 2x leverage — strongly prefer no leverage in small account.",
+  "risk_management": "Hard stop: exit immediately if position loses 8% from entry (crypto volatility is 3-5x equities). Position-level trailing stop at 10% below recent 30-day high once position is profitable. Reduce to 50% position size if BTC 30-day realized vol exceeds 80% annualized (extreme vol regime). Keep only trading capital on exchange — move excess to cold storage. No leverage above 2x.",
+  "parameters": {
+    "fast_sma_days": {"value": 20, "range": [10, 30], "sensitivity": "medium"},
+    "slow_sma_days": {"value": 60, "range": [40, 100], "sensitivity": "medium"},
+    "trailing_stop_pct": {"value": 0.10, "range": [0.07, 0.15], "sensitivity": "medium"},
+    "hard_stop_pct": {"value": 0.08, "range": [0.05, 0.12], "sensitivity": "high"},
+    "high_vol_threshold": {"value": 0.80, "range": [0.60, 1.00], "sensitivity": "low"}
+  },
+  "num_parameters": 5,
+  "known_failure_modes": [
+    "Crypto winters: prolonged bear markets (2018, H2 2022) generate repeated whipsaw signals and cumulative losses as the MA system lags the down-trend.",
+    "Choppy regimes: sideways crypto markets with high volatility generate numerous false crossovers and transaction costs that erode capital.",
+    "Exchange risk: exchange failures (FTX 2022) can cause complete capital loss — only exchange-side trading capital, rest in cold storage.",
+    "24/7 markets: signals can trigger at illiquid hours (weekends, late night) with poor fills — use limit orders or only execute during high-liquidity windows.",
+    "Lag in trend capture: MA crossover is inherently a lagging indicator — a significant portion of the trend is missed before entry and a portion is given back on exit."
+  ],
+  "historical_performance": {
+    "sharpe": 1.1,
+    "max_drawdown": -0.30,
+    "period": "2018-2024",
+    "notes": "Must include 2018 crypto winter in backtest (per Gate 1 criteria) — the strategy survived but had meaningful drawdown. 2020-2021 bull market produced excellent performance. 2022 bear caused the most significant drawdown. The trailing stop significantly improves risk/reward vs. pure crossover exit. ETH tends to have stronger trends but higher volatility than BTC."
+  },
+  "references": [
+    "quantopian/research_public - Lecture: Introduction to Trading Algorithms (MA Crossover basics)",
+    "Andreas Antonopoulos - Mastering Bitcoin (for market structure understanding)",
+    "CoinMetrics - On-Chain Data Research",
+    "Nansen Research - Crypto Market Structure Reports"
+  ],
+  "related_strategies": ["dual_moving_average_crossover", "momentum_12_1_month", "funding_rate_arbitrage"]
+}

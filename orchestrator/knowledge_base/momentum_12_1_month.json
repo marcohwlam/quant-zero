@@ -1,0 +1,41 @@
+{
+  "strategy_name": "momentum_12_1_month",
+  "category": "momentum",
+  "source": "quantopian_lectures",
+  "hypothesis": "Cross-sectional momentum persists due to behavioral underreaction to news and gradual information diffusion. Stocks with the highest 12-month returns (excluding the most recent month to avoid short-term reversal) continue to outperform over the next 1-3 months. The 1-month skip removes the well-documented short-term reversal effect.",
+  "market_regime": "trending",
+  "asset_class": "equities",
+  "universe": "S&P 500 constituents — large-cap, high liquidity, sufficient borrowability for the short leg",
+  "entry_logic": "Rank all S&P 500 stocks by cumulative 12-month return, skipping the most recent month (i.e., return from month t-12 to t-1). Long the top quintile (top 100 stocks), short the bottom quintile (bottom 100 stocks). Enter at month-end rebalance.",
+  "exit_logic": "Monthly rebalance — exit positions that have left the top/bottom quintile. Positions are held exactly one month unless a stop is hit.",
+  "position_sizing": "Equal-weight within each leg. Dollar-neutral construction (equal dollar long and short exposure). Volatility-scale if targeting a specific portfolio volatility (e.g., 10% annualized).",
+  "risk_management": "Crash protection: if the S&P 500 1-month return is below -10%, reduce gross exposure by 50% until next rebalance. Max single position 2% of portfolio. Sector exposure: no single sector > 30% net. Stop-loss: exit any position that loses 8% from entry.",
+  "parameters": {
+    "momentum_lookback_months": {"value": 12, "range": [6, 18], "sensitivity": "medium"},
+    "skip_recent_months": {"value": 1, "range": [0, 3], "sensitivity": "high"},
+    "long_short_percentile": {"value": 20, "range": [10, 30], "sensitivity": "medium"},
+    "rebalance_frequency_days": {"value": 21, "range": [21, 63], "sensitivity": "low"},
+    "crash_threshold": {"value": -0.10, "range": [-0.15, -0.05], "sensitivity": "low"}
+  },
+  "num_parameters": 5,
+  "known_failure_modes": [
+    "Momentum crashes: sharp market reversals (e.g., March 2009, March 2020) cause catastrophic losses — recent winners become crash victims, recent losers bounce hard.",
+    "Factor crowding: momentum is the most widely-known anomaly; as more capital chases it, the edge compresses and crash risk increases.",
+    "High turnover: monthly quintile rebalancing of 200 positions generates material transaction costs that erode edge.",
+    "Does not work in sideways or mean-reverting regimes — requires sustained trending to generate positive returns.",
+    "Short-term reversal contamination: without the 1-month skip, short-term reversal significantly degrades performance."
+  ],
+  "historical_performance": {
+    "sharpe": 1.4,
+    "max_drawdown": -0.25,
+    "period": "2000-2020",
+    "notes": "The 1-month skip is critical — without it, Sharpe drops to ~0.8. The 2009 momentum crash produced drawdowns exceeding 50% in some implementations. Volatility scaling and crash protection help significantly. Robust across most periods except pronounced crash episodes."
+  },
+  "references": [
+    "Jegadeesh & Titman (1993) - Returns to Buying Winners and Selling Losers, Journal of Finance",
+    "quantopian/research_public - Lecture: Momentum",
+    "Stefan Jansen - ML for Algorithmic Trading, Chapter 4",
+    "Asness, Moskowitz & Pedersen (2013) - Value and Momentum Everywhere, Journal of Finance"
+  ],
+  "related_strategies": ["momentum_vol_scaled", "multi_factor_long_short", "sector_rotation"]
+}

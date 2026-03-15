@@ -1,0 +1,39 @@
+{
+  "strategy_name": "momentum_vol_scaled",
+  "category": "momentum",
+  "source": "quantopian_lectures",
+  "hypothesis": "Cross-sectional momentum (buying recent winners, selling recent losers) generates persistent alpha. Scaling position sizes by inverse volatility improves risk-adjusted returns by equalizing risk contribution across positions.",
+  "market_regime": "trending",
+  "asset_class": "equities",
+  "universe": "S&P 500 constituents or broad ETF basket",
+  "entry_logic": "Rank by 12-month return, skipping the most recent month (to avoid short-term reversal). Long top quintile, short bottom quintile.",
+  "exit_logic": "Monthly rebalance. Positions exit when they leave the top/bottom quintile.",
+  "position_sizing": "Inverse volatility weighting within each leg. Target total portfolio volatility of 10% annualized.",
+  "risk_management": "Crash protection: reduce exposure by 50% if the broad market's 1-month return is below -10%. Max single position 5%.",
+  "parameters": {
+    "momentum_lookback_months": {"value": 12, "range": [3, 18], "sensitivity": "medium"},
+    "skip_recent_months": {"value": 1, "range": [0, 3], "sensitivity": "low"},
+    "target_volatility": {"value": 0.10, "range": [0.05, 0.20], "sensitivity": "medium"},
+    "rebalance_frequency_days": {"value": 21, "range": [5, 63], "sensitivity": "medium"},
+    "crash_protection_threshold": {"value": -0.10, "range": [-0.15, -0.05], "sensitivity": "low"}
+  },
+  "num_parameters": 5,
+  "known_failure_modes": [
+    "Momentum crashes: sharp reversals (like March 2009) cause catastrophic losses in momentum portfolios.",
+    "Crowded trade: momentum is the most well-known anomaly, leading to reduced alpha over time.",
+    "High turnover: monthly rebalance of quintile portfolios generates significant transaction costs.",
+    "Short-term reversal effect: without skipping the most recent month, performance degrades."
+  ],
+  "historical_performance": {
+    "sharpe": 1.4,
+    "max_drawdown": -0.25,
+    "period": "2000-2020",
+    "notes": "The skip-recent-month tweak is critical. Without it, Sharpe drops to ~0.8. Volatility scaling adds ~0.3 to Sharpe. Crash protection helps in 2008-2009 but may cause whipsaws."
+  },
+  "references": [
+    "quantopian/research_public - Lecture: Momentum",
+    "Stefan Jansen - ML for Algorithmic Trading, Chapter 4",
+    "Jegadeesh & Titman (1993) - Returns to Buying Winners and Selling Losers"
+  ],
+  "related_strategies": ["multi_factor_long_short", "trend_following_managed_futures"]
+}

@@ -1,0 +1,37 @@
+{
+  "strategy_name": "rsi_short_term_reversal",
+  "category": "mean_reversion",
+  "source": "quantopian_contest",
+  "hypothesis": "Stocks with extreme short-term RSI readings (below 30 or above 70) tend to revert over the next 3-5 days. This captures short-term overreaction to news and liquidity shocks.",
+  "market_regime": "mean-reverting",
+  "asset_class": "equities",
+  "universe": "S&P 500 constituents (high liquidity required for short holding period)",
+  "entry_logic": "Buy when 5-day RSI drops below 20. Short when 5-day RSI exceeds 80. Enter at next open.",
+  "exit_logic": "Exit when RSI returns to 40-60 neutral zone. Time-based exit after 5 trading days regardless.",
+  "position_sizing": "Equal weight, max 20 positions at a time. Total exposure capped at 100% long, 50% short.",
+  "risk_management": "Stop-loss at 3% per position. No holding through earnings announcements. Avoid penny stocks (price > $10, volume > 1M shares/day).",
+  "parameters": {
+    "rsi_period": {"value": 5, "range": [2, 14], "sensitivity": "high"},
+    "entry_threshold_long": {"value": 20, "range": [10, 30], "sensitivity": "high"},
+    "entry_threshold_short": {"value": 80, "range": [70, 90], "sensitivity": "high"},
+    "max_holding_days": {"value": 5, "range": [3, 10], "sensitivity": "medium"}
+  },
+  "num_parameters": 4,
+  "known_failure_modes": [
+    "Trending markets push RSI to extremes that persist, not revert.",
+    "Transaction costs are significant with short holding periods — must be modeled accurately.",
+    "Earnings surprises can cause RSI extremes that don't revert.",
+    "Slippage in fast-moving stocks at extremes can be material."
+  ],
+  "historical_performance": {
+    "sharpe": 1.2,
+    "max_drawdown": -0.11,
+    "period": "2010-2020",
+    "notes": "The 5-day RSI variant works much better than the traditional 14-day. Performance is sensitive to the entry threshold — requires careful parameter stability testing."
+  },
+  "references": [
+    "quantopian/research_public - Lecture: Technical Analysis",
+    "Larry Connors - Short Term Trading Strategies That Work"
+  ],
+  "related_strategies": ["bollinger_band_mean_reversion", "pairs_trading_cointegration"]
+}
