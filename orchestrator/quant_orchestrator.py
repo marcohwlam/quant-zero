@@ -28,6 +28,8 @@ import pandas as pd
 import numpy as np
 import yfinance as yf
 
+from gate1_reporter import generate_and_save_verdict
+
 
 # ── Transaction Cost Model ────────────────────────────────────
 # Fees and slippage expressed as fractions of trade value.
@@ -589,6 +591,7 @@ def run():
             metrics["wf_windows_total"] = wf_results["wf_windows_total"]
             metrics["wf_consistency_score"] = wf_results["wf_consistency_score"]
             metrics["wf_pass"] = wf_results["wf_pass"]
+            metrics["wf_windows"] = wf_results["windows"]  # raw window dicts for reporter
             print(
                 f"  Walk-forward: {wf_results['wf_windows_passed']}/{wf_results['wf_windows_total']} "
                 f"windows passed, consistency={wf_results['wf_consistency_score']:.2f}, "
@@ -704,6 +707,22 @@ def run():
             "metrics": metrics,
             "evaluation": evaluation,
         })
+
+        if passed:
+            print("\n  Generating Gate 1 verdict report...")
+            try:
+                verdict = generate_and_save_verdict(metrics, proposal, CONFIG)
+                print(
+                    f"  Gate 1 Verdict: {verdict['overall_verdict']} "
+                    f"({verdict['confidence']} confidence)"
+                )
+                print(f"  Recommendation: {verdict['recommendation']}")
+                print(f"  Saved: {verdict['txt_path']}")
+                if verdict["overall_verdict"] in ("PASS", "CONDITIONAL PASS"):
+                    print(f"\n  ★ GATE 1 {verdict['overall_verdict']}: {proposal['strategy_name']}")
+                    print("  → Escalating to Engineering Director for CEO review.")
+            except Exception as e:
+                print(f"  WARNING: Gate 1 reporter failed: {e}")
 
         if evaluation.get("promote_to_paper"):
             print(f"\n  ★ STRATEGY PROMOTED TO PAPER TRADING: {proposal['strategy_name']}")
