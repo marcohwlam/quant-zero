@@ -1,0 +1,40 @@
+{
+  "strategy_name": "multi_factor_long_short",
+  "category": "factor",
+  "source": "quantopian_contest",
+  "hypothesis": "Combining multiple orthogonal alpha factors (value, momentum, quality) into a composite ranking creates more stable alpha than any single factor. Sector-neutral long-short construction hedges market risk and isolates stock-specific alpha.",
+  "market_regime": "all",
+  "asset_class": "equities",
+  "universe": "S&P 500 or Russell 1000 (liquid, large-cap for borrowability)",
+  "entry_logic": "Rank all stocks by composite factor score. Long top decile, short bottom decile. Rebalance weekly or monthly.",
+  "exit_logic": "Positions exit when they fall out of the top/bottom decile at rebalance.",
+  "position_sizing": "Equal-weight within each leg. Dollar-neutral (equal long and short exposure). Sector-neutral (equal sector weights in long and short legs).",
+  "risk_management": "Max single position: 2% of portfolio. Sector exposure < 5% net. Leverage capped at 2x. Track factor exposure to ensure no unintended concentration.",
+  "parameters": {
+    "value_weight": {"value": 0.33, "range": [0.0, 1.0], "sensitivity": "low"},
+    "momentum_weight": {"value": 0.33, "range": [0.0, 1.0], "sensitivity": "low"},
+    "quality_weight": {"value": 0.33, "range": [0.0, 1.0], "sensitivity": "low"},
+    "rebalance_frequency_days": {"value": 21, "range": [5, 63], "sensitivity": "medium"},
+    "long_short_percentile": {"value": 10, "range": [5, 20], "sensitivity": "medium"}
+  },
+  "num_parameters": 5,
+  "known_failure_modes": [
+    "Factor crowding: when too many quants use the same factors, alpha decays.",
+    "Short squeezes: bottom-decile shorts can spike violently.",
+    "Value traps: cheap stocks can stay cheap or go to zero.",
+    "Requires fundamental data (not just price) — adds complexity and cost.",
+    "Transaction costs on weekly rebalance with 200 positions can eat alpha."
+  ],
+  "historical_performance": {
+    "sharpe": 1.8,
+    "max_drawdown": -0.10,
+    "period": "2010-2018",
+    "notes": "This was the archetype strategy that won Quantopian contests. Performance degraded post-2018 as factor crowding increased. Requires universe of 500+ stocks to work."
+  },
+  "references": [
+    "quantopian/research_public - Lecture: Factor Analysis",
+    "quantopian/research_public - Lecture: Long-Short Equity",
+    "Stefan Jansen - ML for Algorithmic Trading, Chapter 4-6"
+  ],
+  "related_strategies": ["single_factor_momentum", "value_factor", "quality_factor"]
+}

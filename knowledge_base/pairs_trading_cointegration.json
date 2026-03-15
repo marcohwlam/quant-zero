@@ -1,0 +1,38 @@
+{
+  "strategy_name": "pairs_trading_cointegration",
+  "category": "statistical_arbitrage",
+  "source": "quantopian_lectures",
+  "hypothesis": "Certain pairs of stocks share a long-run equilibrium relationship (cointegration). When the spread between them deviates beyond a threshold, it reverts. This is market-neutral by construction.",
+  "market_regime": "mean-reverting",
+  "asset_class": "equities",
+  "universe": "Same-sector pairs with fundamental linkage (e.g., Coke/Pepsi, GM/Ford). Screen via cointegration tests.",
+  "entry_logic": "Calculate the spread's z-score. Enter long the underperformer and short the outperformer when z-score exceeds +/- entry threshold (typically 2.0).",
+  "exit_logic": "Exit when z-score returns to 0 (or close to it). Stop-loss if z-score exceeds a wider threshold (e.g., 3.5), indicating possible cointegration breakdown.",
+  "position_sizing": "Hedge ratio from the cointegration regression (beta-adjusted). Dollar-neutral.",
+  "risk_management": "Re-test cointegration monthly. If p-value > 0.05, close the pair. Max holding period 30 days. Portfolio of 10-20 pairs for diversification.",
+  "parameters": {
+    "lookback_cointegration_days": {"value": 252, "range": [126, 504], "sensitivity": "medium"},
+    "entry_zscore": {"value": 2.0, "range": [1.5, 2.5], "sensitivity": "high"},
+    "exit_zscore": {"value": 0.0, "range": [-0.5, 0.5], "sensitivity": "low"},
+    "stop_zscore": {"value": 3.5, "range": [3.0, 4.0], "sensitivity": "medium"},
+    "max_holding_days": {"value": 30, "range": [15, 60], "sensitivity": "low"}
+  },
+  "num_parameters": 5,
+  "known_failure_modes": [
+    "Cointegration breakdown: pairs can lose their relationship permanently (M&A, sector shifts).",
+    "Survivorship bias: backtests on historical pairs that survived look better than reality.",
+    "Short borrowing costs eat into thin spreads.",
+    "Requires large pair universe to diversify idiosyncratic risk."
+  ],
+  "historical_performance": {
+    "sharpe": 1.3,
+    "max_drawdown": -0.08,
+    "period": "2008-2018",
+    "notes": "Very stable when it works. Performance varies heavily by pair selection methodology."
+  },
+  "references": [
+    "quantopian/research_public - Lecture: Pairs Trading",
+    "quantopian/research_public - Lecture: Cointegration"
+  ],
+  "related_strategies": ["bollinger_band_mean_reversion", "basket_stat_arb"]
+}

@@ -1,0 +1,36 @@
+{
+  "strategy_name": "bollinger_band_mean_reversion",
+  "category": "mean_reversion",
+  "source": "quantopian_lectures",
+  "hypothesis": "Prices that deviate significantly from their recent mean (beyond 2 standard deviations) tend to revert. This is strongest in liquid, range-bound equities and ETFs where fundamentals haven't changed.",
+  "market_regime": "mean-reverting",
+  "asset_class": "equities",
+  "universe": "Liquid large-cap equities or sector ETFs",
+  "entry_logic": "Buy when price touches or crosses below the lower Bollinger Band (mean - 2*std). Short when price touches upper band.",
+  "exit_logic": "Exit when price returns to the middle band (SMA). Or: time-based exit after N days if mean reversion hasn't occurred.",
+  "position_sizing": "Size inversely proportional to distance from the band (larger position = closer to extreme).",
+  "risk_management": "Hard stop at 3x standard deviation. Max holding period of 10 days. No adding to losers.",
+  "parameters": {
+    "lookback_period": {"value": 20, "range": [10, 50], "sensitivity": "medium"},
+    "entry_std": {"value": 2.0, "range": [1.5, 3.0], "sensitivity": "high"},
+    "exit_std": {"value": 0.0, "range": [-0.5, 0.5], "sensitivity": "low"},
+    "max_holding_days": {"value": 10, "range": [5, 20], "sensitivity": "medium"}
+  },
+  "num_parameters": 4,
+  "known_failure_modes": [
+    "Trending markets: price can stay beyond bands for extended periods, causing large losses.",
+    "Earnings/news events: fundamental shifts make mean reversion invalid.",
+    "Works better on portfolios than individual names (diversification of mean reversion bets)."
+  ],
+  "historical_performance": {
+    "sharpe": 1.1,
+    "max_drawdown": -0.14,
+    "period": "2010-2020",
+    "notes": "Significantly better on a basket of 20+ liquid equities than on single names."
+  },
+  "references": [
+    "quantopian/research_public - Lecture: Mean Reversion",
+    "quantopian/research_public - Lecture: Bollinger Bands"
+  ],
+  "related_strategies": ["zscore_mean_reversion", "pairs_trading_cointegration"]
+}
