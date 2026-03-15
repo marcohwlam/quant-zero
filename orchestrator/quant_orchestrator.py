@@ -619,9 +619,29 @@ def run():
             })
             continue
 
-        # Step 3: Evaluate (Gate 1 quantitative check includes walk-forward)
-        # Gate 1 hard gate: fail immediately if walk-forward doesn't pass
-        if not metrics.get("wf_pass", False):
+        # Step 3: Evaluate (Gate 1 quantitative checks)
+        # Hard gate: fail immediately if strategy doesn't survive transaction costs
+        post_cost_sharpe_is = metrics.get("post_cost_sharpe_is", 0)
+        if post_cost_sharpe_is <= 0:
+            print(
+                f"\n  GATE 1 FAIL: Strategy does not survive transaction costs "
+                f"(post-cost IS Sharpe = {post_cost_sharpe_is:.2f})"
+            )
+            evaluation = {
+                "assessment": "failed",
+                "confidence": 1.0,
+                "overfitting_risk": "medium",
+                "post_mortem": (
+                    f"Failed transaction cost gate: post-cost IS Sharpe = {post_cost_sharpe_is:.2f}. "
+                    f"Pre-cost IS Sharpe was {metrics['sharpe_in_sample']:.2f}. "
+                    f"The edge is too thin to survive realistic trading costs."
+                ),
+                "next_direction": "Strategy needs a larger edge. Reduce trade frequency or focus on higher-conviction signals.",
+                "promote_to_paper": False,
+            }
+            passed = False
+        # Hard gate: fail immediately if walk-forward doesn't pass
+        elif not metrics.get("wf_pass", False):
             print(
                 f"\n  GATE 1 FAIL: Walk-forward failed "
                 f"({metrics.get('wf_windows_passed', 0)}/{metrics.get('wf_windows_total', 0)} windows passed)"
@@ -673,6 +693,8 @@ def run():
             "strategy_code": proposal["code"],
             "wf_windows_passed": metrics.get("wf_windows_passed"),
             "wf_consistency_score": metrics.get("wf_consistency_score"),
+            "post_cost_sharpe": metrics.get("post_cost_sharpe_is"),
+            "asset_class": metrics.get("asset_class", "equities"),
         }
         log_iteration(conn, log_data)
 
