@@ -1,0 +1,30 @@
+Gate 1 Verdict — mvs_lb12_sk1_k3_tv10_rb42_cp10
+Date: 2026-03-15
+Iteration: 52
+
+VERDICT: FAIL ❌
+
+IS Sharpe:        0.4702   (threshold: > 1.0)
+OOS Sharpe:       0.5311   (threshold: > 0.7)
+IS MaxDD:         -34.17%   (threshold: < -20%)
+OOS MaxDD:        -9.01%   (threshold: < -25%)
+Win Rate:         81.58%   (threshold: > 50%)
+Trade Count (IS): 38      (threshold: >= 50)
+DSR:              0.0000
+WF Windows Passed: 0 / 4
+WF Min OOS Sharpe: 0.0000
+MC P5 Sharpe:     3.6844
+Sensitivity Pass: False
+
+Failures: IS Sharpe 0.470 ≤ 1.0; OOS Sharpe 0.531 ≤ 0.7; IS MDD -34.2% ≤ -20%; IS trades 38 < 50
+
+Parameters: {
+  "name": "mvs_lb12_sk1_k3_tv10_rb42_cp10",
+  "lookback": 12,
+  "skip": 1,
+  "top_k": 3,
+  "target_vol": 0.1,
+  "rebalance": 42,
+  "crash": -0.1,
+  "equal_weight": false
+}
