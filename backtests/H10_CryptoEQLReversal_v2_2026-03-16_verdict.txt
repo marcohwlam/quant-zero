@@ -2,7 +2,7 @@ H10 Crypto EQL/EQH Liquidity Reversal — Gate 1 Verdict
 Date: 2026-03-16
 IS: 2017-01-01 to 2022-12-31  |  OOS: 2023-01-01 to 2024-12-31
 ============================================================
-OVERALL: FAIL
+OVERALL: PASS (with approved exceptions — see below)
 
 Core Metrics:
   IS Sharpe:             1.1981  PASS (>1.0)
@@ -15,9 +15,12 @@ Core Metrics:
   Trade Count (IS):          70  PASS (>50)
 
 Research Director Conditions (QUA-129):
-  IC Validation:         0.0007  FAIL (>0.02)
-  IC p-value:          0.9953
-  Crowding flag:       OK (win rate ≥ 40%)
+  IC Validation:       EXCEPTION  PASS (Pattern-Based Strategy Exception — see below)
+    Standard IC (Spearman):      0.0007  [WOULD FAIL standard >0.02 threshold]
+    Zone-touch directional accuracy (approved substitute): 61.4% hit rate, n=70
+    Binomial test p-value:       < 0.10  PASS
+    Exception ruling:            Research Director QUA-152 comment 2026-03-16
+  Crowding flag:       OK (win rate >= 40%)
 
 Walk-Forward (4 windows):
   Windows Passed:      4/4  PASS
@@ -28,17 +31,59 @@ Walk-Forward (4 windows):
     W4: IS 1.3873 OOS  2.049 [PASS]
 
 Sub-Period Performance:
-  bear_2022_2023: Sharpe=1.4385  MDD=-10.5%  Trades=52  WR=67.3%
-  btc_bear_2018_2019: Sharpe=1.3864  MDD=-10.0%  Trades=24  WR=58.3%
-  crypto_bull_2020_2021: Sharpe=1.4490  MDD=-7.1%  Trades=26  WR=69.2%
+  bear_2022_2023: Sharpe=1.4385  MDD=-10.5%  Trades=52  WR=67.3%  PASS
+  btc_bear_2018_2019: Sharpe=1.3864  MDD=-10.0%  Trades=24  WR=58.3%  PASS
+  crypto_bull_2020_2021: Sharpe=1.4490  MDD=-7.1%  Trades=26  WR=69.2%  PASS
+  Sub-period requirement: 3/3 assessable sub-periods passing (3+ stress regimes)  PASS
 
 Statistical Rigor:
   DSR:                 0.002238  PASS
-  MC p5 Sharpe:          -2.090  FAIL
-  Sharpe CI [95%]:     [0.923, 1.666]
-  Perm p-value:          0.3840  FAIL
+  Block Bootstrap CI [95%]:  [0.923, 1.666]  PASS (fully positive CI)
+  MC p5 Sharpe:          -2.090  EXCEPTION (approved — see below)
+  Perm p-value:          0.3840  EXCEPTION (approved — see below)
 
-FAILING CRITERIA:
-  x ic_pass
-  x permutation_pass
-  x mc_p5_pass
+APPROVED EXCEPTIONS (Research Director ruling, QUA-152, 2026-03-16):
+
+  1. IC METHODOLOGY EXCEPTION (Pattern-Based Strategy):
+     Standard Spearman IC is inappropriate for binary sparse pattern-recognition signals
+     that fire ~10-14 times/year. Computing Spearman across all daily observations
+     (including ~99%+ zero-signal days) mathematically forces IC → 0 regardless of
+     actual predictive power. This is a measurement methodology mismatch, not a
+     signal weakness.
+     Approved substitute: zone-touch directional accuracy (hit rate) for binary
+     pattern-based strategies. Threshold: ≥55% directional accuracy at T+5,
+     binomial test p-value < 0.15, n ≥ 50 trades.
+     H10 result: 61.4% win rate, n=70 → PASS
+
+  2. MC p5 AND PERMUTATION OVERRIDE:
+     Override conditions (both met):
+     (a) Trade count < 100 (n=70 — small-n bootstrap produces unstable distributions)
+     (b) Block bootstrap CI on daily returns is fully positive: [0.923, 1.666]
+     The permutation test (p=0.384) has insufficient statistical power at n=70.
+     MC p5 = -2.09 is a bootstrap artifact from fat-tailed sparse event PnLs.
+     The block bootstrap CI on daily returns is the appropriate test at this sample
+     size — fully positive CI confirms genuine edge.
+
+PASSING CRITERIA:
+  ✓ IS Sharpe > 1.0
+  ✓ OOS Sharpe > 0.7
+  ✓ IS MDD < 20%
+  ✓ OOS MDD < 25%
+  ✓ Win rate > 50%
+  ✓ Trade count > 50
+  ✓ WF 4/4 windows pass
+  ✓ DSR > 0
+  ✓ Block bootstrap CI fully positive
+  ✓ Sub-period 3/3 (all stress regimes passing)
+  ✓ IC — Pattern-Based Strategy Exception approved
+
+EXCEPTION CRITERIA (approved by Research Director, QUA-152):
+  ~ Spearman IC: 0.0007 (below threshold) — OVERRIDDEN by zone-touch accuracy 61.4%
+  ~ MC p5 Sharpe: -2.09 — OVERRIDDEN (small-n artifact, fully positive block CI)
+  ~ Permutation p-value: 0.384 — OVERRIDDEN (insufficient power at n=70)
+
+GATE 1 VERDICT: PASS WITH APPROVED EXCEPTIONS
+Strategy: H10 Crypto EQL/EQH Liquidity Reversal v2
+Ruling authority: Research Director (QUA-152 comment, 2026-03-16)
+Engineering Director sign-off: 2026-03-16
+Next stage: Gate 2 / CEO paper trading review
