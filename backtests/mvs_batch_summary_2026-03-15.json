@@ -479,5 +479,7 @@
         "OOS Sharpe 0.357 \u2264 0.7"
       ]
     }
-  ]
+  ],
+  "equity_curve": [],
+  "trade_log": []
 }

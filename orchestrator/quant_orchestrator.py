@@ -534,6 +534,47 @@ def run_backtest(code: str, data: pd.DataFrame, asset_class: str = "equities") -
     else:
         portfolio_returns = raw_returns.dropna()
 
+    # Extract equity curve (daily portfolio value + drawdown %)
+    pf_value = portfolio.value()
+    if isinstance(pf_value, pd.DataFrame):
+        pf_value = pf_value.sum(axis=1)
+    pf_drawdown = portfolio.drawdown()
+    if isinstance(pf_drawdown, pd.DataFrame):
+        pf_drawdown = pf_drawdown.mean(axis=1)
+    equity_curve = []
+    for date, val in pf_value.items():
+        dd = float(pf_drawdown.get(date, 0.0))
+        date_str = date.strftime("%Y-%m-%d") if hasattr(date, "strftime") else str(date)[:10]
+        equity_curve.append({
+            "date": date_str,
+            "portfolio_value": float(val),
+            "drawdown_pct": dd * 100,
+        })
+
+    # Extract trade log (one record per closed trade)
+    trade_log = []
+    try:
+        trades_df = portfolio.trades.records_readable
+        for i, row in trades_df.iterrows():
+            direction = "long" if str(row.get("Direction", "Long")).lower() == "long" else "short"
+            entry_ts = row.get("Entry Timestamp", "")
+            exit_ts = row.get("Exit Timestamp", "")
+            entry_date = entry_ts.strftime("%Y-%m-%d") if hasattr(entry_ts, "strftime") else str(entry_ts)[:10]
+            exit_date = exit_ts.strftime("%Y-%m-%d") if hasattr(exit_ts, "strftime") else str(exit_ts)[:10]
+            trade_log.append({
+                "trade_id": str(i),
+                "entry_date": entry_date,
+                "exit_date": exit_date,
+                "entry_price": float(row.get("Avg Entry Price", 0.0)),
+                "exit_price": float(row.get("Avg Exit Price", 0.0)),
+                "shares": float(row.get("Size", 0.0)),
+                "direction": direction,
+                "pnl": float(row.get("PnL", 0.0)),
+                "pnl_pct": float(row.get("Return", 0.0)) * 100,
+            })
+    except Exception:
+        pass
+
     return {
         "sharpe": pre_cost_sharpe,
         "max_drawdown": stats.get("Max Drawdown [%]", 0) / -100,
@@ -544,6 +585,8 @@ def run_backtest(code: str, data: pd.DataFrame, asset_class: str = "equities") -
         "post_cost_sharpe": post_cost_sharpe,
         "asset_class": asset_class,
         "portfolio_returns": portfolio_returns,
+        "equity_curve": equity_curve,
+        "trade_log": trade_log,
     }
 
 
@@ -841,6 +884,10 @@ def run():
                 "post_cost_sharpe_is": is_metrics["post_cost_sharpe"],
                 "post_cost_sharpe_oos": oos_metrics["post_cost_sharpe"],
                 "asset_class": asset_class,
+                "equity_curve_is": is_metrics.get("equity_curve", []),
+                "equity_curve_oos": oos_metrics.get("equity_curve", []),
+                "trade_log_is": is_metrics.get("trade_log", []),
+                "trade_log_oos": oos_metrics.get("trade_log", []),
             }
 
             print(f"  IS Sharpe: {metrics['sharpe_in_sample']:.2f}")

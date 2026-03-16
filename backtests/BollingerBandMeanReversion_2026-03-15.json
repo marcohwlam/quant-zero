@@ -85,5 +85,7 @@
   "kurtosis": 34.98767457128244,
   "dsr_n_trials": 9,
   "txt_path": "/mnt/c/Users/lamho/repo/quant-zero/backtests/BollingerBandMeanReversion_2026-03-15.txt",
-  "json_path": "/mnt/c/Users/lamho/repo/quant-zero/backtests/BollingerBandMeanReversion_2026-03-15.json"
+  "json_path": "/mnt/c/Users/lamho/repo/quant-zero/backtests/BollingerBandMeanReversion_2026-03-15.json",
+  "equity_curve": [],
+  "trade_log": []
 }
