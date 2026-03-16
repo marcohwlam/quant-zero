@@ -1,0 +1,32 @@
+Gate 1 Verdict: FAIL
+IS Sharpe: 0.10
+OOS Sharpe: 0.14
+IS MDD: -23.7%
+Win Rate: 55.9%
+Profit Factor: 1.03
+Trade Count (IS): 367
+Trade Count (OOS): 55
+Monte Carlo p5 Sharpe: -1.11
+Bootstrap 95% CI: [-0.26, 0.70]
+Permutation p-value: 0.511
+Walk-forward Sharpe Variance: 0.45
+DSR: -102.64
+Pre-COVID Sharpe (2018-2019): 0.36
+Stimulus era Sharpe (2020-2021): -0.00
+Rate-shock Sharpe (2022): -1.67
+
+Criteria: 5/10
+
+Failing:
+  - IS Sharpe=0.098 (need > 1.0)
+  - OOS Sharpe=0.141 (need > 0.7)
+  - IS MDD=-23.69% (need < 20%)
+  - DSR=-102.640 (need > 0)
+  - Sensitivity: >30% Sharpe change detected
+
+Recommendation: DO NOT PROCEED to paper trading. Review failing criteria above.
+
+Sensitivity: pass=False, max_change=157.95%
+Regime criterion (≥2/3 incl stress): FAIL
+
+OOS DQ: PASS

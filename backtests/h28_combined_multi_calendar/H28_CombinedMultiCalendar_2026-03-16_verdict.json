@@ -1,0 +1,117 @@
+{
+  "strategy_name": "H28_CombinedMultiCalendar",
+  "date": "2026-03-16",
+  "overall_verdict": "FAIL",
+  "recommendation": "DO NOT PROCEED to paper trading. Review failing criteria above.",
+  "confidence": "LOW",
+  "disqualify_reason": null,
+  "gate1_pass": false,
+  "criteria_passed": "5/10",
+  "failing_criteria": [
+    "IS Sharpe=0.098 (need > 1.0)",
+    "OOS Sharpe=0.141 (need > 0.7)",
+    "IS MDD=-23.69% (need < 20%)",
+    "DSR=-102.640 (need > 0)",
+    "Sensitivity: >30% Sharpe change detected"
+  ],
+  "regime_criterion_pass": false,
+  "stress_regime_passes": [],
+  "metrics": [
+    {
+      "name": "IS Sharpe",
+      "value": "0.098",
+      "threshold": "> 1.0",
+      "passed": false
+    },
+    {
+      "name": "OOS Sharpe",
+      "value": "0.141",
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    {
+      "name": "IS Max Drawdown",
+      "value": "-23.69%",
+      "threshold": "< -20%",
+      "passed": false
+    },
+    {
+      "name": "OOS Max Drawdown",
+      "value": "-9.17%",
+      "threshold": "< -25%",
+      "passed": true
+    },
+    {
+      "name": "Win Rate",
+      "value": "55.86%",
+      "threshold": "> 50%",
+      "passed": true
+    },
+    {
+      "name": "Trade count",
+      "value": "367",
+      "threshold": ">= 100 (IS)",
+      "passed": true
+    },
+    {
+      "name": "Deflated Sharpe Ratio (z-score)",
+      "value": "-102.64",
+      "threshold": "> 0",
+      "passed": false
+    },
+    {
+      "name": "Walk-forward windows passed",
+      "value": "3/4",
+      "threshold": ">= 3",
+      "passed": true
+    },
+    {
+      "name": "Walk-forward OOS/IS consistency",
+      "value": "3.02",
+      "threshold": "> 0.70",
+      "passed": true
+    },
+    {
+      "name": "Post-cost Sharpe",
+      "value": "0.097",
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    {
+      "name": "Parameter sensitivity",
+      "value": "see grid",
+      "threshold": "< 30% change",
+      "passed": false
+    },
+    {
+      "name": "Test period",
+      "value": "17.0 years",
+      "threshold": ">= 5 years",
+      "passed": true
+    }
+  ],
+  "oos_data_quality": {
+    "strategy_name": "H28_CombinedMultiCalendar",
+    "oos_total_rows": 501,
+    "oos_clean_rows": 501,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "Close": 0,
+      "High": 0,
+      "Low": 0,
+      "Open": 0,
+      "Volume": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "_template_validation": {
+    "warnings": []
+  }
+}
