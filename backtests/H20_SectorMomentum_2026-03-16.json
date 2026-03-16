@@ -1,0 +1,398 @@
+{
+  "strategy": "H20_SectorMomentum_WeeklyRotation",
+  "run_date": "2026-03-16",
+  "parameters": {
+    "regime_ticker": "SPY",
+    "mom_lookback_days": 20,
+    "top_N_sectors": 3,
+    "regime_filter_sma": 200,
+    "equal_weight": true,
+    "init_cash": 25000
+  },
+  "universe": [
+    "XLK",
+    "XLV",
+    "XLF",
+    "XLE",
+    "XLU",
+    "XLY",
+    "XLP",
+    "XLI",
+    "XLB"
+  ],
+  "is": {
+    "period": "2018-01-01 to 2022-12-31",
+    "sharpe": 0.4558,
+    "max_drawdown": -0.2313,
+    "win_rate": 0.5102,
+    "win_loss_ratio": 1.2803,
+    "profit_factor": 1.3336,
+    "total_return": 0.3024,
+    "trade_count": 196,
+    "trade_count_gate": {
+      "trade_count_total": 196,
+      "is_years": 4.996577686516085,
+      "annual_rate": 39.23,
+      "min_per_year": 30,
+      "gate_pass": true,
+      "message": "PASS: 39.2/yr \u2265 30/yr"
+    },
+    "xlk_concentration": {
+      "xlk_in_top_n_count": 93,
+      "total_weeks": 261,
+      "xlk_pct": 0.3563,
+      "xlk_concentration_risk": false
+    },
+    "holding_pct": {
+      "XLE": 0.2414,
+      "XLB": 0.1724,
+      "XLI": 0.1916,
+      "XLY": 0.3065,
+      "XLV": 0.2261,
+      "XLK": 0.3563,
+      "XLF": 0.2414,
+      "XLU": 0.2759,
+      "XLP": 0.1724,
+      "_cash": 0.272
+    },
+    "liquidity_constrained": false,
+    "liquidity_flags_count": 0,
+    "block_bootstrap_ci": {
+      "sharpe_ci_low": -0.260695791573078,
+      "sharpe_ci_high": 1.2440846747251528,
+      "mdd_ci_low": -0.3764463079961335,
+      "mdd_ci_high": -0.11984184285065545,
+      "win_rate_ci_low": 0.32322448979591833,
+      "win_rate_ci_high": 0.47346938775510206
+    },
+    "permutation_test": {
+      "permutation_pvalue": 0.0,
+      "permutation_test_pass": true
+    },
+    "deflated_sharpe_ratio": 0.0,
+    "monte_carlo_sharpe": {
+      "mc_p5_sharpe": -0.34516692931703546,
+      "mc_median_sharpe": 1.5895540469728404,
+      "mc_p95_sharpe": 3.4386521494840276
+    }
+  },
+  "oos": {
+    "period": "2023-01-01 to 2025-12-31",
+    "sharpe": 0.1458,
+    "max_drawdown": -0.1494,
+    "win_rate": 0.4189,
+    "total_return": 0.0312,
+    "trade_count": 148,
+    "xlk_concentration": {
+      "xlk_in_top_n_count": 73,
+      "total_weeks": 156,
+      "xlk_pct": 0.4679,
+      "xlk_concentration_risk": false
+    },
+    "holding_pct": {
+      "XLE": 0.3141,
+      "XLF": 0.3397,
+      "XLB": 0.1923,
+      "XLY": 0.4231,
+      "XLK": 0.4679,
+      "XLI": 0.2821,
+      "XLP": 0.1987,
+      "XLU": 0.25,
+      "XLV": 0.3013,
+      "_cash": 0.0769
+    },
+    "is_to_oos_sharpe_degradation": 0.68,
+    "sharpe_stability_flag": "WARNING: degradation 68.0% > 30%"
+  },
+  "regime_analysis": {
+    "regimes": {
+      "pre_covid_2018_2019": {
+        "sharpe": -0.2052,
+        "mdd": -0.1828,
+        "total_return": -0.0587,
+        "approx_trades": 69,
+        "status": "assessable",
+        "passes": false
+      },
+      "covid_crash_2020": {
+        "sharpe": 0.3336,
+        "mdd": -0.1929,
+        "total_return": 0.0479,
+        "approx_trades": 34,
+        "status": "assessable",
+        "passes": false
+      },
+      "recovery_2021": {
+        "sharpe": 2.2377,
+        "mdd": -0.0859,
+        "total_return": 0.3789,
+        "approx_trades": 34,
+        "status": "assessable",
+        "passes": true
+      },
+      "rate_shock_2022": {
+        "sharpe": -0.5548,
+        "mdd": -0.059,
+        "total_return": -0.033,
+        "approx_trades": 34,
+        "status": "assessable",
+        "passes": false
+      },
+      "normalization_2023": {
+        "sharpe": 0.3545,
+        "mdd": -0.1494,
+        "total_return": 0.038,
+        "approx_trades": 34,
+        "status": "assessable",
+        "passes": false
+      },
+      "post_norm_2024_25": {
+        "sharpe": 0.0504,
+        "mdd": -0.1357,
+        "total_return": -0.0016,
+        "approx_trades": 69,
+        "status": "assessable",
+        "passes": false
+      }
+    },
+    "n_assessable": 6,
+    "n_passing": 1,
+    "stress_regime_passing": [],
+    "has_stress_pass": false,
+    "regime_slice_pass": false,
+    "note": "Pass: IS Sharpe \u2265 0.8 in \u22652 assessable regimes, at least one stress regime (COVID/Rate-shock). Trade count threshold: \u226510 (weekly rotation). Criteria.md v1.1."
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "window": 1,
+        "is_period": "2018-01-01 to 2019-12-29",
+        "oos_period": "2019-12-30 to 2020-12-27",
+        "is_sharpe": -0.1998,
+        "oos_sharpe": 0.3035,
+        "is_total_return": -0.0574,
+        "oos_total_return": 0.0413,
+        "is_trade_count": 100,
+        "oos_trade_count": 38
+      },
+      {
+        "window": 2,
+        "is_period": "2018-12-31 to 2020-12-27",
+        "oos_period": "2020-12-28 to 2021-12-26",
+        "is_sharpe": 0.4729,
+        "oos_sharpe": 1.9971,
+        "is_total_return": 0.1321,
+        "oos_total_return": 0.3307,
+        "is_trade_count": 87,
+        "oos_trade_count": 37
+      },
+      {
+        "window": 3,
+        "is_period": "2019-12-30 to 2021-12-26",
+        "oos_period": "2021-12-27 to 2022-12-25",
+        "is_sharpe": 1.0553,
+        "oos_sharpe": -0.6791,
+        "is_total_return": 0.4077,
+        "oos_total_return": -0.0402,
+        "is_trade_count": 76,
+        "oos_trade_count": 19
+      },
+      {
+        "window": 4,
+        "is_period": "2020-12-28 to 2022-12-25",
+        "oos_period": "2022-12-26 to 2023-12-24",
+        "is_sharpe": 1.2285,
+        "oos_sharpe": 0.3506,
+        "is_total_return": 0.3051,
+        "oos_total_return": 0.0374,
+        "is_trade_count": 56,
+        "oos_trade_count": 47
+      }
+    ],
+    "n_windows": 4,
+    "wf_oos_sharpe_mean": 0.493,
+    "wf_oos_sharpe_std": 0.9608,
+    "wf_oos_sharpe_min": -0.6791
+  },
+  "sensitivity_scan": {
+    "lb10_N1_sma150": {
+      "sharpe": 0.7495,
+      "total_return": 0.8145,
+      "max_drawdown": -0.17,
+      "trade_count": 124,
+      "xlk_concentration_risk": false
+    },
+    "lb10_N1_sma200": {
+      "sharpe": 0.7525,
+      "total_return": 0.8221,
+      "max_drawdown": -0.17,
+      "trade_count": 120,
+      "xlk_concentration_risk": false
+    },
+    "lb10_N2_sma150": {
+      "sharpe": 0.6708,
+      "total_return": 0.5476,
+      "max_drawdown": -0.1424,
+      "trade_count": 212,
+      "xlk_concentration_risk": false
+    },
+    "lb10_N2_sma200": {
+      "sharpe": 0.6827,
+      "total_return": 0.5577,
+      "max_drawdown": -0.1424,
+      "trade_count": 210,
+      "xlk_concentration_risk": false
+    },
+    "lb10_N3_sma150": {
+      "sharpe": 0.5201,
+      "total_return": 0.3544,
+      "max_drawdown": -0.1921,
+      "trade_count": 279,
+      "xlk_concentration_risk": false
+    },
+    "lb10_N3_sma200": {
+      "sharpe": 0.5351,
+      "total_return": 0.3671,
+      "max_drawdown": -0.1976,
+      "trade_count": 278,
+      "xlk_concentration_risk": false
+    },
+    "lb15_N1_sma150": {
+      "sharpe": 0.5097,
+      "total_return": 0.4479,
+      "max_drawdown": -0.211,
+      "trade_count": 105,
+      "xlk_concentration_risk": false
+    },
+    "lb15_N1_sma200": {
+      "sharpe": 0.5606,
+      "total_return": 0.5195,
+      "max_drawdown": -0.2556,
+      "trade_count": 106,
+      "xlk_concentration_risk": false
+    },
+    "lb15_N2_sma150": {
+      "sharpe": 0.4157,
+      "total_return": 0.2895,
+      "max_drawdown": -0.2052,
+      "trade_count": 186,
+      "xlk_concentration_risk": false
+    },
+    "lb15_N2_sma200": {
+      "sharpe": 0.5223,
+      "total_return": 0.3939,
+      "max_drawdown": -0.218,
+      "trade_count": 186,
+      "xlk_concentration_risk": false
+    },
+    "lb15_N3_sma150": {
+      "sharpe": 0.447,
+      "total_return": 0.2959,
+      "max_drawdown": -0.2069,
+      "trade_count": 231,
+      "xlk_concentration_risk": false
+    },
+    "lb15_N3_sma200": {
+      "sharpe": 0.5087,
+      "total_return": 0.3486,
+      "max_drawdown": -0.2287,
+      "trade_count": 236,
+      "xlk_concentration_risk": false
+    },
+    "lb20_N1_sma150": {
+      "sharpe": 0.1613,
+      "total_return": 0.0662,
+      "max_drawdown": -0.2639,
+      "trade_count": 98,
+      "xlk_concentration_risk": false
+    },
+    "lb20_N1_sma200": {
+      "sharpe": 0.2496,
+      "total_return": 0.1547,
+      "max_drawdown": -0.3149,
+      "trade_count": 96,
+      "xlk_concentration_risk": false
+    },
+    "lb20_N2_sma150": {
+      "sharpe": 0.3975,
+      "total_return": 0.2682,
+      "max_drawdown": -0.2053,
+      "trade_count": 164,
+      "xlk_concentration_risk": false
+    },
+    "lb20_N2_sma200": {
+      "sharpe": 0.4797,
+      "total_return": 0.3471,
+      "max_drawdown": -0.2258,
+      "trade_count": 161,
+      "xlk_concentration_risk": false
+    },
+    "lb20_N3_sma150": {
+      "sharpe": 0.4352,
+      "total_return": 0.285,
+      "max_drawdown": -0.1956,
+      "trade_count": 197,
+      "xlk_concentration_risk": false
+    },
+    "lb20_N3_sma200": {
+      "sharpe": 0.4558,
+      "total_return": 0.3024,
+      "max_drawdown": -0.2313,
+      "trade_count": 196,
+      "xlk_concentration_risk": false
+    },
+    "_meta": {
+      "default_key": "lb20_N3_sma200",
+      "default_sharpe": 0.4558,
+      "total_combinations": 18,
+      "sharpe_min": 0.1613,
+      "sharpe_max": 0.7525,
+      "sharpe_range": 0.5912,
+      "sharpe_variance_pct_vs_default": 1.2971,
+      "gate1_stability_flag": "FAIL: variance 129.7% > 30%"
+    }
+  },
+  "ed_flags": {
+    "xlk_concentration_risk": false,
+    "xlk_pct_in_top_n": 0.3563,
+    "sharpe_stability_gate1": "FAIL: variance 129.7% > 30%",
+    "trade_count_gate": "PASS: 39.2/yr \u2265 30/yr"
+  },
+  "gate1_summary": {
+    "checks": {
+      "is_sharpe_ge_1": {
+        "value": 0.4558,
+        "pass": false,
+        "criterion": "IS Sharpe \u2265 1.0"
+      },
+      "is_mdd_le_20pct": {
+        "value": -0.2313,
+        "pass": false,
+        "criterion": "IS MDD \u2264 20%"
+      },
+      "trade_count_pf1": {
+        "value": 39.23,
+        "pass": true,
+        "criterion": "IS annual trade count \u2265 30/yr (PF-1)"
+      },
+      "xlk_concentration": {
+        "value": 0.3563,
+        "pass": true,
+        "criterion": "XLK in top-N \u2264 60% of IS weeks"
+      },
+      "regime_slice": {
+        "pass": false,
+        "criterion": "IS Sharpe \u2265 0.8 in \u22652 regimes, incl. \u22651 stress regime"
+      },
+      "parameter_stability": {
+        "value": 1.2971,
+        "pass": false,
+        "criterion": "Sharpe variance \u2264 30% across 18 parameter combinations"
+      }
+    },
+    "n_pass": 2,
+    "n_total": 6,
+    "gate1_pass": false,
+    "verdict": "FAIL \u2014 Review flagged criteria"
+  }
+}
