@@ -301,7 +301,7 @@ def simulate_gem_portfolio(
                         # Apply sell costs
                         sig_val = sigma.get(current_holding, pd.Series()).get(date, 0) or 0
                         adv_val = adv.get(current_holding, pd.Series()).get(date, np.nan)
-                        adv_val = adv_val if not np.isna(adv_val) and adv_val > 0 else 1e9
+                        adv_val = adv_val if not pd.isna(adv_val) and adv_val > 0 else 1e9
                         q_over_adv_sell = (current_shares * sell_price) / adv_val
                         if q_over_adv_sell > 0.01:
                             liquidity_flags.append({
@@ -338,7 +338,7 @@ def simulate_gem_portfolio(
                 if not pd.isna(buy_price) and buy_price > 0:
                     sig_val = sigma.get(target, pd.Series()).get(date, 0) or 0
                     adv_val = adv.get(target, pd.Series()).get(date, np.nan)
-                    adv_val = adv_val if not np.isna(adv_val) and adv_val > 0 else 1e9
+                    adv_val = adv_val if not pd.isna(adv_val) and adv_val > 0 else 1e9
 
                     # Estimate shares we can buy
                     est_shares = cash / buy_price
