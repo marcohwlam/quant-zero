@@ -1,0 +1,90 @@
+======================================================================
+H19 VIX-Percentile Volatility-Targeting SPY v1.2
+Gate 1 Backtest Verdict
+Date: 2026-03-16
+Ticket: QUA-202
+======================================================================
+
+## Data Quality
+  SPY: 2011 days,   missing=74 bdays
+  VIX: 2011 days,   missing=74 bdays
+  Survivorship bias: SPY is a surviving ETF. Absolute return estimates carry upward survivorship bias...
+
+## Pre-Conditions
+  PF-1 (IS trade count ≥ 30/yr): 131 trades (26.2/yr) → FAIL
+  PF-4 (first 2022 cash trigger ≤ 2022-01-31): 2022-01-21 → PASS
+
+## PDT Compliance (IS period)
+  PDT pass: True | Max trades in 5d: 3
+  Violation windows: 0
+
+## IS Performance (2018-01-01 → 2022-12-31)
+  Sharpe Ratio:      1.3148
+  Max Drawdown:      -12.10%
+  Win Rate:          56.76%
+  Profit Factor:     1.3456
+  Trade Count:       111
+  Total Return:      18.78%
+  Post-cost Sharpe:  1.2185
+
+## OOS Performance (2023-01-01 → 2024-12-31)
+  Sharpe Ratio:      6.7222
+  Max Drawdown:      -1.20%
+  Win Rate:          60.00%
+  Profit Factor:     10.0203
+  Trade Count:       20
+  Total Return:      36.15%
+
+## Statistical Rigor
+  Monte Carlo p5 Sharpe:    -1.6196
+  Monte Carlo median:       1.2233
+  Monte Carlo p95:          3.0147
+  MC Pessimistic Weak:      True
+  Sharpe 95% CI:            [-0.5861, 0.9906]
+  MDD 95% CI:               [-0.7117, -0.0457]
+  Win Rate 95% CI:          [0.0335, 0.0661]
+  Market Impact:            0.01 bps
+  Liquidity Constrained:    False
+  Order/ADV ratio:          0.000000
+  Permutation p-value:      0.1320
+  Permutation test pass:    False
+  DSR:                      0.0000
+
+## Walk-Forward Results (4 windows, IS=36mo, OOS=6mo)
+  Window 1: IS 2018-01-01→2020-12-31 (Sharpe=2.0314) | OOS 2021-01-01→2021-06-30 (Sharpe=5.7376) [PASS]
+  Window 2: IS 2018-07-01→2021-06-30 (Sharpe=2.9003) | OOS 2021-07-01→2021-12-31 (Sharpe=1.4263) [PASS]
+  Window 3: IS 2019-01-01→2021-12-31 (Sharpe=3.0155) | OOS 2022-01-01→2022-06-30 (Sharpe=-14.3862) [FAIL]
+  Window 4: IS 2019-07-01→2022-06-30 (Sharpe=2.1838) | OOS 2022-07-01→2022-12-31 (Sharpe=-3.8482) [FAIL]
+  WF Windows Passed: 2/4
+  WF Sharpe Std:     7.5181
+  WF Sharpe Min:     -14.3862
+  WF Losing Window:  True
+  WF Consistency:    OOS/IS = 5.1127
+
+## Sensitivity Heatmap (IS Sharpe, tier1 × tier2)
+                tier2=0.55    tier2=0.60    tier2=0.65
+  tier1=0.25:  1.6532 (108tr)  1.3920 (130tr)  1.9017 (136tr)
+  tier1=0.30:  1.5485 (89tr)  1.3148 (111tr)  1.7096 (118tr)
+  tier1=0.35:  1.6103 (74tr)  1.3113 (98tr)  1.6963 (106tr)
+
+## Gate 1 Criteria Table
+  Criterion                                             Value    Result
+  --------------------------------------------------------------------
+  IS Sharpe > 1.0                                      1.3148      PASS
+  OOS Sharpe > 0.7                                     6.7222      PASS
+  IS Max Drawdown < 20%                               -0.1210      PASS
+  OOS Max Drawdown < 25%                              -0.0120      PASS
+  Win Rate > 50%                                       0.5676      PASS
+  IS Trades ≥ 100                                         111      PASS
+  WF windows passed ≥ 3/4                                   2      FAIL
+  DSR > 0                                              0.0000      PASS
+  Permutation test pass                                0.1320      FAIL
+  PF-1 (trade count)                                  26.2000      FAIL
+  PF-4 (2022 cash trigger)                         2022-01-21      PASS
+
+  Gate 1 PASS: False
+  Failing: WF windows passed ≥ 3/4, Permutation test pass, PF-1 (trade count)
+
+======================================================================
+VERDICT: FAIL
+======================================================================
