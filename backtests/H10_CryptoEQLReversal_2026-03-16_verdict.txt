@@ -1,0 +1,42 @@
+H10 Crypto EQL/EQH Liquidity Reversal — Gate 1 Verdict
+Date: 2026-03-16
+IS: 2018-01-01 to 2021-12-31  |  OOS: 2022-01-01 to 2023-12-31
+============================================================
+OVERALL: FAIL
+
+Core Metrics:
+  IS Sharpe:             1.4512  PASS (>1.0)
+  OOS Sharpe:            1.6145  PASS (>0.7)
+  IS Max Drawdown:       -10.0%  PASS (<20%)
+  OOS Max Drawdown:      -10.4%  PASS (<25%)
+  Win Rate (IS):          63.0%  PASS (>50%)
+  Win/Loss Ratio:          0.81
+  Profit Factor:         1.3806
+  Trade Count (IS):          54  FAIL (>=100)
+
+Research Director Conditions (QUA-129):
+  IC Validation:         0.1537  PASS (>0.02)
+  IC p-value:          0.2672
+  Crowding flag:       OK (win rate ≥ 40%)
+
+Walk-Forward (4 windows):
+  Windows Passed:      4/4  PASS
+  Consistency Score:     1.1797  PASS
+    W1: IS 1.3864 OOS 1.3934 [PASS]
+    W2: IS 1.3873 OOS  2.049 [PASS]
+    W3: IS 1.3995 OOS 1.2848 [PASS]
+    W4: IS 1.4472 OOS 1.9082 [PASS]
+
+Sub-Period Performance:
+
+Statistical Rigor:
+  DSR:                 0.000000  FAIL
+  MC p5 Sharpe:          -2.192  FAIL
+  Sharpe CI [95%]:     [0.845, 1.970]
+  Perm p-value:          0.2760  FAIL
+
+FAILING CRITERIA:
+  x trade_count_pass
+  x dsr_pass
+  x permutation_pass
+  x mc_p5_pass
