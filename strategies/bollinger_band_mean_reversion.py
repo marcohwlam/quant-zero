@@ -248,18 +248,21 @@ def run_strategy(
     start: str = "2018-01-01",
     end: str = "2021-12-31",
     params: dict = PARAMETERS,
+    return_portfolio: bool = False,
 ) -> dict:
     """
     Download data, run the Bollinger Band Mean Reversion strategy, and return metrics.
 
     Args:
-        universe: List of ticker symbols (defaults to PARAMETERS["universe"])
-        start:    Start date for the backtest period
-        end:      End date for the backtest period
-        params:   Strategy parameter overrides
+        universe:         List of ticker symbols (defaults to PARAMETERS["universe"])
+        start:            Start date for the backtest period
+        end:              End date for the backtest period
+        params:           Strategy parameter overrides
+        return_portfolio: If True, include the vectorbt Portfolio object under key "portfolio"
 
     Returns:
         Metrics dict compatible with the orchestrator's Gate 1 reporter.
+        When return_portfolio=True, also includes "portfolio" key.
     """
     if universe is None:
         universe = params.get("universe", PARAMETERS["universe"])
@@ -315,7 +318,7 @@ def run_strategy(
     pdt_df = count_weekly_round_trips(entries, exits)
     pdt_max_weekly = int(pdt_df.sum(axis=1).max()) if not pdt_df.empty else 0
 
-    return {
+    result = {
         "sharpe": sharpe,
         "max_drawdown": mdd,
         "win_rate": win_rate,
@@ -326,14 +329,34 @@ def run_strategy(
         "tickers_traded": list(close.columns),
         "period": f"{start} to {end}",
     }
+    if return_portfolio:
+        result["portfolio"] = pf
+    return result
 
 
 # ── Quick smoke test ──────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Bollinger Band Mean Reversion strategy backtest runner."
+    )
+    parser.add_argument(
+        "--plot",
+        action="store_true",
+        help="Open an interactive Plotly chart in the default browser after the IS backtest.",
+    )
+    args = parser.parse_args()
+
     print("Running IS backtest (2018–2021)...")
-    is_result = run_strategy(start="2018-01-01", end="2021-12-31")
-    print("IS:", is_result)
+    is_result = run_strategy(start="2018-01-01", end="2021-12-31", return_portfolio=args.plot)
+    print("IS:", {k: v for k, v in is_result.items() if k != "portfolio"})
+
+    if args.plot:
+        pf = is_result["portfolio"]
+        fig = pf.plot()
+        fig.show()
 
     print("\nRunning OOS backtest (2022–2023)...")
     oos_result = run_strategy(start="2022-01-01", end="2023-12-31")

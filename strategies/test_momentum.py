@@ -258,7 +258,30 @@ GATE1_DOCUMENTED_METRICS = {
 
 
 if __name__ == "__main__":
-    print("TestMomentum v1.0 — Live Signal Check")
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="TestMomentum v1.0 — run backtest and/or live signal check."
+    )
+    parser.add_argument(
+        "--plot",
+        action="store_true",
+        help="Open an interactive Plotly chart in the default browser after the IS backtest.",
+    )
+    args = parser.parse_args()
+
+    print("TestMomentum v1.0 — IS Backtest (2018–2021)")
+    result = run_backtest(start="2018-01-01", end="2021-12-31")
+    print(f"  Sharpe:     {result['sharpe']:.3f}")
+    print(f"  Max DD:     {result['max_drawdown']:.1%}")
+    print(f"  Win Rate:   {result['win_rate']:.1%}")
+    print(f"  Trades:     {result['trade_count']}")
+
+    if args.plot:
+        portfolio = result["portfolio"]
+        portfolio.plot().show()
+
+    print("\nTestMomentum v1.0 — Live Signal Check")
     signals = get_live_signals()
     if "error" in signals:
         print(f"  Error: {signals['error']}")
