@@ -1,15 +1,56 @@
 # Post-Earnings Announcement Drift (PEAD) — Long Large-Cap Earnings Gappers
 
-**Version:** 1.0
+**Version:** 1.1
 **Author:** Alpha Research Agent (QC Discovery — QUA-228)
 **Date:** 2026-03-16
+**Last Updated:** 2026-03-16 (Research Director — QUA-244)
 **Asset class:** US equities (individual stocks)
 **Strategy type:** single-signal, event-driven
-**Status:** READY
+**Status:** SUSPENDED — Data infrastructure failure (see Gate 1 Result below)
 
 ## Summary
 
 Post-Earnings Announcement Drift (PEAD) is one of the most robustly documented market anomalies: stocks that gap up significantly on earnings day (signalling a positive earnings surprise) continue to drift upward for 20–60 days post-announcement. The mechanism is market underreaction — investors fail to fully incorporate the earnings signal into prices on announcement day. The strategy buys the top S&P 500 stocks that gap up ≥ 3% on earnings day and holds for 20 trading days, using a SPY 200-day moving average filter to suppress trading during sustained market downtrends.
+
+## Gate 1 Result — FAIL (Data Infrastructure)
+
+**Verdict date:** 2026-03-16
+**Engineering Director verdict:** [QUA-234](/QUA/issues/QUA-234)
+**CEO strategic decision:** Option A — Suspend pending data budget approval ([QUA-234](/QUA/issues/QUA-234))
+
+### Outcome
+
+| Criterion | Result |
+|---|---|
+| Gate 1 criteria passed | **2 of 10** |
+| Trade count (IS window) | **0 trades** — strategy produced no entries |
+| IS Sharpe | **N/A** — 0 trades |
+| Root cause | **Data infrastructure failure** — not a strategy flaw |
+
+### Root Cause
+
+`yfinance` earnings data (`get_earnings_dates()`) covers approximately **3 years of history (2022–present)** only. The Gate 1 in-sample window requires **2007–2021 (14 years)** of earnings calendar data. With no historical earnings dates available for the IS period, the strategy placed 0 trades and produced no backtest results.
+
+**Fix attempt (QUA-243):** Engineering replaced deprecated `earnings_dates` with `get_earnings_dates(limit=60)` and added `lxml` dependency. This resolved the API call but **did not extend historical coverage** — yfinance still returns only ~3 years of earnings history regardless of the `limit` parameter. The data gap is structural, not a code bug.
+
+### Academic Soundness
+
+The PEAD hypothesis itself remains **academically sound**. Bernard & Thomas (1989), Ball & Brown (1968), and Chordia & Shivakumar (2006) provide robust multi-decade evidence for the effect. The Gate 1 failure is a **data infrastructure failure only** — it does not invalidate the economic rationale or the strategy design.
+
+### Revival Path
+
+This hypothesis can be re-evaluated once a **point-in-time earnings calendar** is available for the 2007–2021 IS window. Viable data sources (priority order):
+
+1. **Benzinga API** — Cost-effective option; provides historical earnings dates with timestamps. Estimated cost: $50–200/month.
+2. **Refinitiv (LSEG) Eikon** — Full point-in-time earnings coverage; institutional pricing.
+3. **Compustat (via WRDS)** — Gold standard for academic backtesting; requires university/institutional subscription.
+4. **Bloomberg Terminal** — Comprehensive; available if firm subscribes.
+
+**Revival trigger:** Board approves data budget for one of the above sources, AND the data covers ≥ 10 years of S&P 500 earnings dates with announcement timestamps.
+
+**Status upon revival:** Revert to READY, re-run Gate 1 with full IS window. No strategy parameter changes required — the hypothesis design is unchanged.
+
+---
 
 ## Economic Rationale
 
