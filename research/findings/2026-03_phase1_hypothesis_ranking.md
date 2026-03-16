@@ -28,9 +28,23 @@ All 6 Phase 0 hypotheses have been evaluated against Gate 1 criteria (IS Sharpe 
 **⚠️ Ranking revision — Post QUA-79 (2026-03-16, H04 Gate 1 FAIL):**
 - H04 Pairs Trading v1.0 **FAILED** — IS Sharpe 0.50, OOS 0.02, Trade Count 38, Param Sensitivity 104.9% (full analysis: `research/findings/04_pairs_trading_gate1_failure_2026-03.md`)
 - Root cause: large-cap equity pairs (XOM/CVX, JPM/BAC, KO/PEP, GS/MS, AMZN/MSFT) not cointegrated in 2018–2023 due to post-2018 business model divergence
-- **H04 v2.0 issued** — sector ETF universe (XLF/KRE, XLE/OIH, XLV/IBB, XLP/XLY, GLD/SLV); 63d lookback; entry_zscore 1.5; Alpha Research pre-screen required before backtest
-- H05 Momentum Vol-Scaled **confirmed at Rank 2** — schedule in parallel with H04 v2.0 research
-- Strategy **NOT retired** — economic rationale valid; only pair selection failed
+- **H04 v2.0 issued** — sector ETF universe; Alpha Research pre-screen required before backtest
+- Strategy **NOT retired** — economic rationale valid; only methodology failed
+
+**⚠️ Ranking revision — Post QUA-82 (2026-03-16, H04-v2 Pre-Screen FAIL + H05 Gate 1 FAIL):**
+- H04 Pairs Trading v2.0 **PRE-SCREEN FAILED** — ALL 5 ETF pairs AND all 4 alternative pairs fail 30% cointegration threshold. Best result: XLP/XLY at 19.0% (63d window). Average p-values 0.49–0.70 = zero signal. (full analysis: `research/findings/h04v2_coint_prescreen_2026-03.md`)
+- Root cause: Engle-Granger cointegration is too restrictive for 2018-2021 IS window. Problem is methodology, not pair selection — v1.0 and v2.0 both fail for the same underlying reason.
+- **H04-v2 RETIRED** — do not backtest. Research Director decision: supersede with H04-v3.
+- **H04-v3 commissioned** — Gatev Distance Method (Gatev, Goetzmann & Rouwenhorst 2006). No cointegration requirement; pair selection by minimum SSD on normalized prices; formation window 252d. Alpha Research Agent writing new hypothesis (QUA-98).
+
+- H05 Momentum Vol-Scaled **FAILED Gate 1** — 0/30 iterations pass. IS Sharpe 0.43–0.79 (threshold > 1.0); IS MDD -13% to -34%; no configuration passes simultaneously. (full analysis: `research/findings/05_momentum_vol_scaled_gate1_failure_2026-03.md`)
+- Root cause: Cross-sectional momentum requires large universe dispersion (~500 stocks). ETF universe (8 assets) has insufficient cross-sectional variance. $25K constraint prevents S&P 500 implementation. **Strategy retired from Phase 1 at $25K capital.**
+- **H05 RETIRED from Phase 1 at $25K** — valid strategy at appropriate capital ($250K+); not viable at $25K.
+
+**⚠️ CRITICAL ESCALATION — 0/3 Gate 1 pass rate (alert threshold: < 10%):**
+- Gate 1 results: H02 FAIL (IS 0.029), H04 FAIL (IS 0.50), H05 FAIL (IS 0.79 best)
+- Pattern: The 2018-2022 IS window + $25K capital constraint is systematically blocking Gate 1 passage
+- CEO escalation triggered. Research pipeline under strategic review.
 
 **⚠️ Ranking revision — Post QUA-74 (2026-03-16, H02 Gate 1 FAIL):**
 - H02 Bollinger Band **RETIRED** — Gate 1 FAIL (IS Sharpe 0.029; full analysis in `research/findings/02_bollinger_band_gate1_failure_2026-03.md`)
@@ -48,9 +62,13 @@ All 6 Phase 0 hypotheses have been evaluated against Gate 1 criteria (IS Sharpe 
 
 | Rank | Strategy | Gate 1 Probability | Regime Fit (Mar 2026) | Primary Risk | $25K Fit |
 |------|----------|--------------------|----------------------|--------------|---------|
-| 1 | **Pairs Trading v2.0 (#04-v2)** | **High (conditional on ETF cointegration pre-screen)** | **Strong** — market-neutral, ETF pairs more stable; sector ETF pairs insulated from idiosyncratic business divergence | ETF pairs pre-screen must validate cointegration in 2018–2021 IS window | Good (ETFs, low borrow cost) |
-| 2 | **Momentum Vol-Scaled (#05)** | **Conditional** | **Favorable** — 2018-2021 IS window is trending regime; COVID recovery + 2019/2021 bull runs support momentum | IS MDD without crash protection; long-only constraint at $25K | Poor (L/S required) |
-| 3 | RSI Short-Term Reversal (#06) | **Moderate** | **Uncertain** — same mean-reversion structure as H02; defer until H04-v2 and H05 validated | PDT compliance, mean-reversion structural risk in Gate 1 window | Good (ETFs) |
+| 1 | **Pairs Trading v3.0 (#04-v3, Distance Method)** 🆕 | **Moderate-High** | **Strong** — market-neutral; distance method removes cointegration dependency; Gatev 2006 validated | Requires hypothesis write-up; not yet ready for backtest | Good (ETFs, low borrow cost) |
+| 2 | RSI Short-Term Reversal (#06) | **Moderate** | **Uncertain** — same mean-reversion structure as H02; PDT constraint; 200d SMA filter may improve | PDT compliance, mean-reversion structural risk in Gate 1 window | Good (ETFs) |
+| 3 | DMA Crossover (#01) | **Low-Moderate** | **Trend-following benefit in IS window** | IS Sharpe historically < 1.0; win rate < 50% by design | Good (baseline only) |
+| — | ~~**Momentum Vol-Scaled (#05)**~~ | **⛔ FAILED Gate 1 (0/30)** | — | ETF universe insufficient for cross-sectional momentum; $25K forces small universe | ⛔ RETIRED at $25K |
+| — | ~~**Pairs Trading v2.0 (#04-v2)**~~ | **⛔ PRE-SCREEN FAILED** | — | All 5 ETF pairs + 4 alternatives fail Engle-Granger. Methodology retired, not pair selection. | — |
+| — | ~~**Bollinger Band Mean Reversion (#02)**~~ | **⛔ FAILED Gate 1** | — | IS Sharpe 0.029 — hostile IS window | — |
+| — | ~~**Pairs Trading v1.0 (#04)**~~ | **⛔ FAILED Gate 1** | — | IS Sharpe 0.50; pairs not cointegrated in test window | — |
 | 4 | Dual MA Crossover (#01) | **Low–Moderate** | **Trend-following benefit** — 2019/2021 uptrends visible in IS window; baseline calibration only | IS Sharpe historically below 1.0; win rate < 50% | Good (baseline only) |
 | 5 | Multi-Factor Long-Short (#03) | **Uncertain** | **Weak** — factor crowding + data dependency | Factor decay post-2018, fundamental data unavailable in yfinance | Poor |
 | — | ~~Pairs Trading v1.0 (#04)~~ | **⛔ FAILED** | **—** | IS Sharpe 0.50; pairs not cointegrated in 2018–2023 test window; v2.0 issued | — |
