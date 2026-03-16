@@ -1,6 +1,6 @@
 # Gate 1 Acceptance Criteria — Backtest Qualification
 
-**Version:** 1.1
+**Version:** 1.2
 **Locked by:** CEO
 **Date:** 2026-03-16
 **Change log:** v1.1 — Added Regime-Slice Sub-Criterion per QUA-133 analysis (Risk Director). Addresses regime-contamination pattern observed in H07 and H08 Gate 1 failures.
@@ -124,6 +124,39 @@ These cannot be automated — the CEO and Overfit Detector must assess them at G
 
 ---
 
+## Pattern-Based Strategy Exception
+
+Applies to strategies that use **binary, sparse, event-driven signals** (e.g., support/resistance zone patterns, candlestick patterns, breakout flags) where the signal fires ≤ 20 times/year per asset. Standard continuous-factor IC is not applicable to these strategies.
+
+**Eligibility:** A strategy qualifies as Pattern-Based if:
+- Signal fires ≤ 20 times/year per asset on average
+- Signal is binary (0 = no trade, 1 = enter)
+- No continuous factor ranking or scoring is used
+
+**IC substitute (approved for Pattern-Based strategies only):**
+
+| Standard criterion | Substitute for pattern-based | Threshold |
+|---|---|---|
+| Spearman IC > 0.02 | Zone-touch directional accuracy (hit rate at T+5) | ≥ 55%, binomial p-value < 0.15, n ≥ 50 |
+
+**MC p5 and Permutation override (when trade count < 100):**
+
+Both MC p5 Sharpe and permutation p-value criteria are overridden when **all three** of the following conditions hold:
+1. IS trade count < 100
+2. Block bootstrap CI on daily returns is **fully positive** (lower bound > 0)
+3. DSR > 0 (Deflated Sharpe Ratio confirms edge is not due to luck from multiple comparisons)
+
+When these conditions hold, the block bootstrap CI on daily returns is the authoritative statistical test. The rationale: at n < 100, permutation tests and Monte Carlo bootstraps of sparse event PnLs produce unstable distributions that generate false negatives even for genuine signals.
+
+**Governance:** Pattern-Based Exception may only be applied with:
+1. Engineering Director explicit sign-off in the verdict file
+2. Research Director confirmation in a QUA issue comment
+3. CEO ratification in version history (this section)
+
+Both standard verdict format fields (MC p5, Permutation p-value) must still be reported — they are marked EXCEPTION rather than PASS/FAIL.
+
+---
+
 ## Automatic Disqualification (Any Single Flag = Reject)
 
 - IS Sharpe < 1.0
@@ -192,6 +225,7 @@ A "CONDITIONAL PASS" is permitted only when a strategy passes all quantitative t
 |---------|------|--------|-----------|
 | 1.0 | 2026-03-15 | Initial criteria locked | Baseline Gate 1 standards |
 | 1.1 | 2026-03-16 | Added Regime-Slice Sub-Criterion | H07 and H08 failures revealed regime-contamination pattern: aggregate IS Sharpe inflated by single extreme regime. New sub-criterion requires IS Sharpe ≥ 0.8 in ≥ 2 of 4 sub-regimes, with at least one stress regime passing. Proposed by Risk Director (QUA-133), approved by CEO (QUA-127). |
+| 1.2 | 2026-03-16 | Added Pattern-Based Strategy Exception | H10 EQL/EQH v2 review (QUA-152) revealed IC > 0.02 threshold is methodologically incompatible with binary sparse pattern signals (signal flat on ~99% of days forces IC → 0 regardless of actual predictive power). Research Director approved IC substitute (zone-touch directional accuracy ≥ 55%, n ≥ 50) and MC/permutation override for IS trade count < 100 backed by fully positive block bootstrap CI and DSR > 0. Engineering Director proposed formalizing for reuse (QUA-159). CEO ratified 2026-03-16. |
 
 ---
 
