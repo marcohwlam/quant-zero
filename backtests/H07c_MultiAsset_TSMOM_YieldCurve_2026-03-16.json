@@ -1,0 +1,324 @@
+{
+  "strategy": "H07c_MultiAsset_TSMOM_YieldCurve",
+  "date": "2026-03-16",
+  "asset_class": "equities",
+  "is_period": "2018-01-01 to 2021-12-31",
+  "oos_period": "2022-01-01 to 2023-12-31",
+  "is_sharpe": 0.8481,
+  "oos_sharpe": 0.7528,
+  "is_max_drawdown": -0.0584,
+  "oos_max_drawdown": -0.045,
+  "is_win_rate": 0.6136,
+  "oos_win_rate": 0.6957,
+  "is_profit_factor": 3.0346,
+  "is_total_return": 0.1382,
+  "oos_total_return": 0.0531,
+  "is_trade_count": 88,
+  "oos_trade_count": 23,
+  "is_yc_blocked_count": 28,
+  "is_vix_crisis_blocked": 28,
+  "is_raw_entry_opportunities": 370,
+  "is_yc_block_rate": 0.0757,
+  "oos_yc_blocked_count": 19,
+  "oos_yc_block_rate": 0.1792,
+  "duration_sensitive_tickers": [
+    "HYG",
+    "IEF",
+    "TIP",
+    "TLT",
+    "XLF",
+    "XLRE"
+  ],
+  "is_yc_regime_stats": {
+    "days_inverted": 90,
+    "days_normal": 917,
+    "pct_inverted": 0.0894,
+    "pct_normal": 0.9106,
+    "yc_threshold": 0.0
+  },
+  "oos_yc_regime_stats": {
+    "days_inverted": 285,
+    "days_normal": 216,
+    "pct_inverted": 0.5689,
+    "pct_normal": 0.4311,
+    "yc_threshold": 0.0
+  },
+  "is_vix_regime_stats": {
+    "days_crisis": 53,
+    "days_stress": 139,
+    "days_normal": 815,
+    "pct_crisis": 0.0526,
+    "pct_stress": 0.138,
+    "pct_normal": 0.8093
+  },
+  "oos_vix_regime_stats": {
+    "days_crisis": 2,
+    "days_stress": 131,
+    "days_normal": 368,
+    "pct_crisis": 0.004,
+    "pct_stress": 0.2615,
+    "pct_normal": 0.7345
+  },
+  "wf_windows_passed": 0,
+  "wf_consistency_score": 0.0,
+  "wf_oos_sharpes": [],
+  "wf_details": [
+    {
+      "window": 1,
+      "is_start": "2016-01-01",
+      "is_end": "2018-12-31",
+      "oos_start": "2019-01-01",
+      "oos_end": "2019-06-30",
+      "error": "Insufficient data: need \u2265272 trading days, got 124.",
+      "pass": false
+    },
+    {
+      "window": 2,
+      "is_start": "2016-07-01",
+      "is_end": "2019-06-30",
+      "oos_start": "2019-07-01",
+      "oos_end": "2019-12-31",
+      "error": "Insufficient data: need \u2265272 trading days, got 127.",
+      "pass": false
+    },
+    {
+      "window": 3,
+      "is_start": "2017-01-01",
+      "is_end": "2019-12-31",
+      "oos_start": "2020-01-01",
+      "oos_end": "2020-06-30",
+      "error": "Insufficient data: need \u2265272 trading days, got 124.",
+      "pass": false
+    },
+    {
+      "window": 4,
+      "is_start": "2017-07-01",
+      "is_end": "2020-06-30",
+      "oos_start": "2020-07-01",
+      "oos_end": "2020-12-31",
+      "error": "Insufficient data: need \u2265272 trading days, got 127.",
+      "pass": false
+    }
+  ],
+  "wf_sharpe_std": 0.0,
+  "wf_sharpe_min": 0.0,
+  "mc_p5_sharpe": 3.0183,
+  "mc_median_sharpe": 5.6395,
+  "mc_p95_sharpe": 8.1123,
+  "sharpe_ci_low": -0.2397,
+  "sharpe_ci_high": 1.954,
+  "mdd_ci_low": -0.1298,
+  "mdd_ci_high": -0.0265,
+  "win_rate_ci_low": 0.3065,
+  "win_rate_ci_high": 0.4768,
+  "permutation_pvalue": 0.97,
+  "permutation_test_pass": false,
+  "dsr": 0.0,
+  "n_trials": 12,
+  "sensitivity": {
+    "yield_curve_threshold=-0.25": 0.9357,
+    "yield_curve_threshold=0.0": 0.8481,
+    "yield_curve_threshold=0.25": 0.8881,
+    "dynamic_lookback_vix_threshold=15": 0.7166,
+    "dynamic_lookback_vix_threshold=20": 0.8481,
+    "dynamic_lookback_vix_threshold=25": 0.7685,
+    "vix_stress_threshold=20": 0.7875,
+    "vix_stress_threshold=25": 0.8481,
+    "vix_stress_threshold=30": 0.8096,
+    "intramonth_stop_pct=0.15": 0.8481,
+    "intramonth_stop_pct=0.2": 0.8481,
+    "intramonth_stop_pct=0.25": 0.8481,
+    "_sharpe_range": 0.2191,
+    "_sharpe_variance_pct": 0.2631,
+    "_gate1_variance_flag": "PASS: variance 26.3% \u2264 30%"
+  },
+  "regime_slices": {
+    "pre_covid_2018_2019": {
+      "sharpe": 1.2567,
+      "mdd": -0.0186,
+      "total_return": 0.0564,
+      "trade_count": 27,
+      "yc_blocked": 28,
+      "status": "assessable",
+      "passes": true
+    },
+    "stimulus_2020_2021": {
+      "sharpe": 0.8845,
+      "mdd": -0.0407,
+      "total_return": 0.0933,
+      "trade_count": 49,
+      "yc_blocked": 0,
+      "status": "assessable",
+      "passes": true
+    },
+    "rate_shock_2022": {
+      "status": "error",
+      "error": "Insufficient data: need \u2265272 trading days, got 251.",
+      "passes": false
+    },
+    "normalization_2023": {
+      "status": "error",
+      "error": "Insufficient data: need \u2265272 trading days, got 250.",
+      "passes": false
+    }
+  },
+  "regime_slice_pass": false,
+  "n_regime_slices_passing": 2,
+  "stress_regimes_passing": [],
+  "market_impact_bps": 0.0,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 0.0,
+  "data_quality": {
+    "survivorship_bias": "15-ETF fixed universe. All ETFs present since at least 2007 (DBB, DBA, HYG, SLV). No ETF selected on forward performance. XLRE (2015) \u2192 IYR (2000) if data insufficient.",
+    "price_adjustment": "yfinance auto_adjust=True \u2014 splits and dividends adjusted.",
+    "earnings_exclusion": "N/A \u2014 ETFs have no individual earnings events.",
+    "delisted": "N/A \u2014 all are major actively-traded ETFs.",
+    "tickers": {
+      "SPY": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "QQQ": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "IWM": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "EFA": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "TLT": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "IEF": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "HYG": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "TIP": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "GLD": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "SLV": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "DBB": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "DBA": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "XLE": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "XLF": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      },
+      "XLRE": {
+        "total_days": 1007,
+        "missing_business_days": 36,
+        "gap_flag": true,
+        "start": "2018-01-02",
+        "end": "2021-12-30"
+      }
+    }
+  },
+  "yield_curve_quality": {
+    "required_start": "2016-01-01",
+    "purpose": "Confirm yield curve data covers 2-year lookback buffer before IS start (2018-01-01)",
+    "series": {
+      "TNX": {
+        "start": "2016-01-04",
+        "end": "2021-12-30",
+        "total_days": 1509,
+        "available_from_2016": false
+      },
+      "IRX": {
+        "start": "2016-01-04",
+        "end": "2021-12-30",
+        "total_days": 1509,
+        "available_from_2016": false
+      },
+      "YC_spread": {
+        "start": "2016-01-04",
+        "end": "2021-12-30",
+        "total_days": 1509,
+        "available_from_2016": false
+      }
+    },
+    "all_series_available_from_2016": false
+  },
+  "gate1_checks": {
+    "is_sharpe_pass": false,
+    "oos_sharpe_pass": true,
+    "is_mdd_pass": true,
+    "oos_mdd_pass": true,
+    "win_rate_pass": true,
+    "trade_count_pass": false,
+    "wf_windows_pass": false,
+    "wf_consistency_pass": false,
+    "sensitivity_pass": true,
+    "dsr_pass": true,
+    "permutation_pass": false,
+    "regime_slice_pass": false
+  },
+  "gate1_pass": false
+}

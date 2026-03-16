@@ -1,0 +1,46 @@
+H07c Gate 1 Verdict — 2026-03-16
+Strategy: H07c_MultiAsset_TSMOM_YieldCurve
+IS period:  2018-01-01 to 2021-12-31
+OOS period: 2022-01-01 to 2023-12-31
+
+IS Sharpe:         0.8481 (FAIL > 1.0)
+OOS Sharpe:        0.7528 (PASS > 0.7)
+IS MDD:            -0.0584 (PASS < 0.20)
+OOS MDD:           -0.045 (PASS < 0.25)
+IS Win Rate:       0.6136 (PASS > 0.50)
+IS Trade Count:    88 (FAIL >= 100)
+WF Windows Passed: 0/4 (FAIL >= 3)
+WF Consistency:    0.0 (FAIL >= 0.70)
+Sensitivity:       PASS: variance 26.3% ≤ 30%
+DSR:               0.0 (PASS > 0)
+Permutation p:     0.97 (FAIL <= 0.05)
+Regime-slice:      (FAIL)
+
+H07c-Specific Metrics:
+  IS YC-blocked entries:  28 of 370 (7.6%)
+  OOS YC-blocked entries: 19 of 106 (17.9%)
+  IS VIX-crisis-blocked:  28
+  Duration-sensitive ETFs: ['HYG', 'IEF', 'TIP', 'TLT', 'XLF', 'XLRE']
+
+Statistical Rigor:
+  MC p5 Sharpe:       3.0183
+  MC Median Sharpe:   5.6395
+  Sharpe 95% CI:      [-0.2397, 1.954]
+  WF Sharpe Std:      0.0
+  WF Sharpe Min:      0.0
+
+Regime Slices:
+  pre_covid_2018_2019: Sharpe=1.2567 [PASS]
+  stimulus_2020_2021: Sharpe=0.8845 [PASS]
+  rate_shock_2022: Sharpe=N/A [FAIL]
+  normalization_2023: Sharpe=N/A [FAIL]
+
+FAILING CRITERIA:
+  - is_sharpe_pass
+  - trade_count_pass
+  - wf_windows_pass
+  - wf_consistency_pass
+  - permutation_pass
+  - regime_slice_pass
+
+GATE 1: FAIL
