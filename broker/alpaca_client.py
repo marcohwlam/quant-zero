@@ -4,9 +4,13 @@ Quant Zero Engineering Director
 Date: 2026-03-16
 
 Wraps the Alpaca REST API for crypto paper trading (Phase 2 paper).
-Reads credentials from environment variables — never hardcoded.
+Reads credentials from environment variables or broker/.env file.
 
-Required env vars:
+Credential resolution order (first wins):
+    1. Shell environment variables (ALPACA_API_KEY, ALPACA_API_SECRET)
+    2. broker/.env file in the repo root (auto-loaded if env vars not set)
+
+Required credentials:
     ALPACA_API_KEY     — from https://app.alpaca.markets → Paper Trading keys
     ALPACA_API_SECRET  — from https://app.alpaca.markets → Paper Trading keys
     ALPACA_BASE_URL    — defaults to paper endpoint (https://paper-api.alpaca.markets)
@@ -27,9 +31,44 @@ import os
 import time
 import logging
 import requests
+from pathlib import Path
 from typing import Optional
 
 logger = logging.getLogger(__name__)
+
+
+def _load_broker_env() -> None:
+    """
+    Load broker/.env into os.environ without overwriting existing variables.
+
+    Searches for broker/.env relative to this file's location (../broker/.env
+    from any depth), then falls back to repo-root broker/.env.
+    Skips blank lines and comment lines (starting with #).
+    Values may optionally be quoted with ' or ".
+    """
+    # Resolve broker/.env: this file lives in broker/, so sibling .env
+    broker_dir = Path(__file__).parent
+    env_path = broker_dir / ".env"
+
+    if not env_path.exists():
+        return
+
+    with open(env_path) as fh:
+        for line in fh:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, raw_value = line.partition("=")
+            key = key.strip()
+            value = raw_value.strip().strip("'\"")
+            # Never overwrite a value already set in the shell environment
+            if key and key not in os.environ:
+                os.environ[key] = value
+
+
+# Load .env on module import so AlpacaClient() works without pre-setting env vars
+_load_broker_env()
+
 
 # Alpaca symbol mapping (yfinance format → Alpaca format)
 SYMBOL_MAP = {
