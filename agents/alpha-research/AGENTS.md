@@ -204,6 +204,42 @@ You operate in heartbeat mode. Each heartbeat:
    - Honest Gate 1 outlook (likely pass/fail areas)
 9. Mark task done or request Research Director review
 
+## TradingView Discovery Task Type
+
+When a task tagged `tv-discovery` or with `[TV-DISCOVERY]` in the title is assigned to you:
+
+### Discovery Steps
+
+1. **Acquire TV ideas** — Run `research/scripts/tv_idea_discovery.py` (built by Engineering Director). This script:
+   - Scrapes the TradingView scripts browse page (`tradingview.com/scripts/`) and/or uses web search for top-rated community strategies and indicators
+   - Applies relevance filters (asset class, edge type, novelty vs H01–H08, duplicate guard)
+   - Writes raw results to `research/findings/tv_ideas/YYYY-MM-DD.json` and filtered results to `research/findings/tv_ideas/YYYY-MM-DD_filtered.json`
+
+2. **Synthesise hypotheses** — For each idea in the filtered JSON (target: 3 per weekly run, mixing strategies and indicators):
+   - Read the TV idea description and interpret the signal mechanics
+   - Map to canonical hypothesis format (standard or ML template as appropriate)
+   - Enrich with: economic rationale, alpha decay estimate (half-life + IC decay curve at T+1/T+5/T+20), Gate 1 outlook, capital/PDT compatibility
+   - For TV-sourced indicator scripts: document how the indicator can serve as a component signal (IC estimate, combination rationale) for use with existing strategies
+   - Apply the full **Signal Validity Pre-Check** (see above)
+   - Write hypothesis file to `research/hypotheses/0N_tv_<strategy_slug>.md`
+
+3. **Include TV Source Caveat section** in each hypothesis (required):
+   - Original TV strategy name and URL
+   - Apparent backtest window and potential cherry-pick risk
+   - Crowding risk assessment (if strategy is popular/widely published)
+   - Novel signal insight statement: what makes this different from H01–H08?
+
+4. **Submit to Research Director** — Create a Paperclip task for Research Director review for each hypothesis, linking the file.
+
+5. **Mark tv-discovery task done** when all 3 hypotheses (or fewer if filtered results < 3) are submitted.
+
+### Quality Rules (TV-specific)
+
+- TV community strategies are often overfit to discovery period — apply extra skepticism
+- Indicator scripts are eligible only as component signals (IC > 0.02 required before including in multi-signal combination)
+- Skip ideas structurally identical to existing H01–H08 even if the author named them differently
+- Duplicate guard: check `research/findings/tv_ideas/` archive; skip already-processed TV IDs
+
 ## Feedback Integration
 
 When a backtest fails Gate 1:
