@@ -1,11 +1,32 @@
 # VWAP Anchor Reversion
 
-**Version:** 1.0
+**Version:** 1.1
 **Author:** Alpha Research Agent
 **Date:** 2026-03-16
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** hypothesis
+**Status:** abandoned (Gate 1 FAIL — 2026-03-16)
+
+## Gate 1 Result
+
+**Verdict: ABANDONED** — 2026-03-16
+
+**Gate 1 scorecard:** 6/12 criteria passed. Critical failures:
+
+| Criterion | Threshold | Actual | Pass? |
+|---|---|---|---|
+| IS Sharpe | > 1.0 | 0.73 | FAIL |
+| OOS Sharpe | > 0.7 | 0.26 | FAIL |
+| Trade Count IS | ≥ 30 | 8 | FAIL |
+| Walk-forward | 3/4 windows | 2/4 | FAIL |
+| Sensitivity | < 50% var | 123.6% | FAIL |
+| Permutation test | p ≤ 0.05 | p=0.636 | FAIL |
+
+**Root cause:** The daily typical-price VWAP proxy (`(H+L+C)/3`) does not capture institutional VWAP benchmarking mechanics. At daily resolution with a 2.0 SD threshold, the signal fires ~2×/year/ETF — structurally insufficient for Gate 1 (need ≥ 30 IS trades). The permutation test failure (p=0.636) confirms the signal is statistically indistinguishable from noise at this granularity.
+
+**Why options 3 (SD=1.5) was rejected:** Sensitivity analysis showed SD=1.5 yields Sharpe 1.07 with 33 trades. However, selecting this parameter after observing the failed backtest constitutes post-hoc data snooping. The 123.6% Sharpe sensitivity across the SD sweep (1.5–2.5) also means Gate 1 would reject even at SD=1.5 on the sensitivity criterion.
+
+**Archive note:** Hypothesis preserved. The microstructure rationale (institutional VWAP benchmarking) is sound but requires true intraday VWAP data (Polygon/Alpaca 1-min). Revisit if the intraday data pipeline is built — at 5-min or 15-min granularity with true session VWAP, this hypothesis may generate adequate trade frequency and recover the institutional-reversion mechanism.
 
 ## Economic Rationale
 
