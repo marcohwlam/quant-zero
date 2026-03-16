@@ -1,0 +1,93 @@
+Gate 1 Verdict — H30_VIXSpikeCapitulation
+Date: 2026-03-16
+Overall: FAIL (4/11 criteria passed)
+
+============================================================
+IS/OOS Performance
+============================================================
+  IS Sharpe:          0.4525   (threshold > 1.0)   FAIL
+  OOS Sharpe:         1.2574   (threshold > 0.7)   PASS
+  IS Max Drawdown:    -12.81%  (threshold < 20%)   PASS
+  OOS Max Drawdown:   -0.93%  (threshold < 25%)   PASS
+  IS Trade Count:     26      (threshold >= 100)  FAIL
+  OOS Trade Count:    4
+  Win Rate (OOS):     100.00%  (threshold > 50%)   PASS
+  Profit Factor (OOS):inf
+  Post-cost Sharpe:   1.2574
+
+============================================================
+Statistical Rigor
+============================================================
+  DSR:                0.0    (threshold > 0)    FAIL
+  MC p5 Sharpe:       0.3874  (threshold >= 0.5)  WARN
+  MC Median Sharpe:   5.5438
+  Sharpe 95% CI:      [-0.0975, 1.1204]
+  MDD 95% CI:         [-0.1884, -0.0459]
+  Market Impact:      0.0103 bps
+  Permutation p-val:  0.53  (threshold <= 0.05)  FAIL
+
+============================================================
+Walk-Forward
+============================================================
+  Windows Passed:     1/4  (threshold >= 3/4)  FAIL
+  WF Consistency:     25.00%
+  WF Sharpe Std:      0.4029
+  WF Sharpe Min:      0.0
+  Window 1: OOS Sharpe=0.0396  FAIL
+  Window 2: OOS Sharpe=0.0  FAIL
+  Window 3: OOS Sharpe=0.2939  FAIL
+  Window 4: OOS Sharpe=1.0045  PASS
+
+============================================================
+Parameter Sensitivity
+============================================================
+  Combined Max Sharpe change: 48.6%  (threshold < 30%)  FAIL
+
+  vix_threshold scan (20, 25, 30):
+    vix_threshold=20: Sharpe=0.6723 (48.6% change)
+    vix_threshold=25: Sharpe=0.4525 (0.0% change)
+    vix_threshold=30: Sharpe=0.3459 (23.6% change)
+  hold_days scan (3, 5, 7):
+    hold_days=3: Sharpe=0.3719 (17.8% change)
+    hold_days=5: Sharpe=0.4525 (0.0% change)
+    hold_days=7: Sharpe=0.5152 (13.9% change)
+
+============================================================
+Special Validations
+============================================================
+  2022 In-Cash %:     1.0
+  GFC 2008-2009 MDD:  -0.0002 | Trades: 4
+  2022 Stress MDD:    0.0
+  2022 Stress Sharpe: 0.0
+  2022 Stress Trades: 0
+
+============================================================
+OOS Data Quality
+============================================================
+  Recommendation:     PASS
+  Data Coverage:      100.0%
+  Total NaNs:         0
+
+============================================================
+GATE 1 VERDICT: FAIL
+============================================================
+  [FAIL] IS Sharpe > 1.0
+  [PASS] OOS Sharpe > 0.7
+  [PASS] IS Max Drawdown < 20%
+  [PASS] OOS Max Drawdown < 25%
+  [PASS] Win Rate > 50%
+  [FAIL] DSR > 0
+  [FAIL] Walk-forward >= 3/4 windows passed
+  [FAIL] Parameter sensitivity pass
+  [FAIL] Trade count >= 100 (IS)
+  [FAIL] MC p5 Sharpe >= 0.5
+  [FAIL] Permutation test pass (p <= 0.05)
+
+Failing criteria:
+  - IS Sharpe > 1.0
+  - DSR > 0
+  - Walk-forward >= 3/4 windows passed
+  - Parameter sensitivity pass
+  - Trade count >= 100 (IS)
+  - MC p5 Sharpe >= 0.5
+  - Permutation test pass (p <= 0.05)
