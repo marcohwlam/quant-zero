@@ -1,0 +1,28 @@
+H16 Gate 1 Verdict — 2026-03-16
+Strategy: Momentum + Volatility Effect (Long-Only)
+IS period:  2000-01-01 to 2020-12-31 (20 years)
+OOS period: 2021-01-01 to 2024-12-31
+
+SURVIVORSHIP BIAS CAVEAT: Fixed large-cap universe; est. +1-3% annual alpha inflation.
+
+IS Sharpe:         0.3785 (FAIL > 1.0)
+OOS Sharpe:        0.5666 (FAIL > 0.7)
+IS MDD:            -0.7416 (FAIL < 0.20)
+IS Win Rate:       0.543 (PASS > 0.50)
+IS Win/Loss Ratio: 1.0441 (PASS >= 1.0)
+IS Trade Count:    744 (PASS >= 100)
+WF Windows Passed: 2/4 (FAIL >= 3)
+WF Consistency:    3.4745 (PASS >= 0.70)
+Sensitivity:       FAIL: variance 99.8% > 30%
+DSR:               0.0 (FAIL > 0)
+Permutation p:     1.0 (FAIL <= 0.05)
+Regime-slice:      (FAIL)
+
+MC p5 Sharpe:      0.1107
+Sharpe 95% CI:     [0.0127, 0.7042]
+BB CI positive:    True
+Avg Positions/Mo:  2.98
+
+GATE 1: FAIL
+
+Note: if PASS, verify bias-adjusted performance before paper trading promotion.
