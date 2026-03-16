@@ -1,0 +1,54 @@
+H08 Crypto Momentum BTC/ETH — Gate 1 Verdict
+Date: 2026-03-16
+=======================================================
+OVERALL: FAIL
+
+Core Metrics:
+  IS Sharpe:             1.3664  PASS (>1.0)
+  OOS Sharpe:           -0.3429  FAIL (>0.7)
+  IS Max Drawdown:       -35.1%  FAIL (<20%)
+  OOS Max Drawdown:      -46.1%  FAIL (<25%)
+  Win Rate (IS):          55.6%  PASS (>50% OR w/l>1.2)
+  Win/Loss Ratio:         17.78
+  Trade Count (IS):          18  FAIL (≥50)
+  Profit Factor:        22.2267
+
+Walk-Forward (4 windows):
+  Windows Passed:      0/4  FAIL (≥3)
+  Consistency Score:    -0.2834  FAIL (≥0.7)
+  WF Sharpe Std:         0.8851
+  WF Sharpe Min:        -1.5278  FLAG: losing window
+    W1: IS  1.393 OOS 0.4391 [FAIL]
+    W2: IS 1.5845 OOS 0.4581 [FAIL]
+    W3: IS 1.6698 OOS -1.5278 [FAIL]
+    W4: IS 1.2759 OOS -1.0501 [FAIL]
+
+Statistical Rigor:
+  DSR:                 0.000000  FAIL (>0)
+  MC p5 Sharpe:           6.567  PASS
+  MC Median Sharpe:      10.008
+  Sharpe CI [95%]:     [0.433, 2.275]
+  MDD CI [95%]:        [-0.490, -0.197]
+  Perm p-value:          0.2220  FAIL (≤0.05)
+
+Sensitivity (16 EMA combinations):
+  FAIL: Sharpe variance 44.7% > 30% across 16 EMA combinations.
+
+BTC/ETH Correlation (IS):
+  Avg 30d Corr:        0.8252
+  High Corr Flag:      True
+
+Risk Flags:
+  Look-ahead bias:     None detected
+  Contango risk:       LIVE NOTE: Backtest uses spot BTC/ETH prices. BITO incurs ~10-20%/yr contango drag in bull regimes (Risk Director QUA-106).
+
+FAILING CRITERIA:
+  x oos_sharpe_pass
+  x is_mdd_pass
+  x oos_mdd_pass
+  x trade_count_pass
+  x wf_windows_pass
+  x wf_consistency_pass
+  x sensitivity_pass
+  x dsr_pass
+  x permutation_pass
