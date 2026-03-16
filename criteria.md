@@ -1,8 +1,9 @@
 # Gate 1 Acceptance Criteria — Backtest Qualification
 
-**Version:** 1.0
+**Version:** 1.1
 **Locked by:** CEO
-**Date:** 2026-03-15
+**Date:** 2026-03-16
+**Change log:** v1.1 — Added Regime-Slice Sub-Criterion per QUA-133 analysis (Risk Director). Addresses regime-contamination pattern observed in H07 and H08 Gate 1 failures.
 **Status:** LOCKED — only the CEO may modify these criteria after lock.
 
 ---
@@ -35,6 +36,29 @@ The Overfit Detector agent is responsible for evaluating strategies against thes
 | Out-of-Sample (OOS) Sharpe Ratio | **> 0.7** | > 1.0 | OOS is the real test; IS Sharpe alone means nothing |
 | Walk-forward consistency | **OOS Sharpe within 30% of IS Sharpe** | Within 20% | If OOS degrades sharply vs IS, the strategy is overfit |
 | Deflated Sharpe Ratio (DSR) | **> 0** | > 0.5 | Adjusts for multiple comparisons / number of variants tested. DSR ≤ 0 means the Sharpe is likely due to luck. |
+
+### Regime-Slice Sub-Criterion (IS Window)
+
+To prevent aggregate IS Sharpe from being inflated by a single extraordinary regime, strategies must pass a per-regime validation within the IS window.
+
+**Regime windows (aligned with IS period 2018–2023):**
+
+| Regime | Date Range | Character |
+|--------|-----------|----------|
+| Pre-COVID | 2018–2019 | Normal bull market, low realized vol |
+| Stimulus era | 2020–2021 | COVID crash recovery + historic stimulus rally |
+| Rate-shock | 2022 | Aggressive Fed tightening, multi-asset drawdown |
+| Normalization | 2023 | Post-tightening stabilization |
+
+**Requirement:**
+- Achieve IS Sharpe ≥ 0.8 in **at least 2 of 4 sub-regimes**
+- At least one passing regime must be a **stress regime** (Stimulus era OR Rate-shock)
+
+**Assessability guard:**
+If a strategy has fewer than 10 trades in a sub-regime window, that sub-regime is marked "insufficient data" and excluded from the 2/4 count. If fewer than 2 sub-regimes are assessable, the strategy must achieve higher trade frequency before Gate 1 consideration.
+
+**This sub-criterion is additive to — not a replacement for — the aggregate IS Sharpe > 1.0 threshold.**
+A strategy passing 2/4 sub-regimes while failing aggregate IS Sharpe > 1.0 is automatically rejected.
 
 ### Drawdown
 
@@ -110,6 +134,7 @@ These cannot be automated — the CEO and Overfit Detector must assess them at G
 - Fewer than 50 trades in IS period
 - Strategy fails after realistic transaction costs
 - Strategy passes in fewer than 3 of 4 walk-forward windows
+- Fails regime-slice sub-criterion: fewer than 2 of 4 assessable sub-regimes achieve IS Sharpe ≥ 0.8, OR no stress regime (Stimulus era / Rate-shock) is among the passing regimes
 
 ---
 
@@ -133,6 +158,11 @@ QUANTITATIVE SUMMARY
 - Parameter sensitivity: [PASS/FAIL]
 - Walk-forward windows passed: [X/4]  [PASS/FAIL, threshold 3/4]
 - Post-cost performance: [PASS/FAIL]
+- Regime-slice (Pre-COVID 2018–2019 IS Sharpe): [X.XX or N/A]  [PASS/FAIL/N/A]
+- Regime-slice (Stimulus era 2020–2021 IS Sharpe): [X.XX or N/A]  [PASS/FAIL/N/A]
+- Regime-slice (Rate-shock 2022 IS Sharpe): [X.XX or N/A]  [PASS/FAIL/N/A]
+- Regime-slice (Normalization 2023 IS Sharpe): [X.XX or N/A]  [PASS/FAIL/N/A]
+- Regime-slice overall: [X of 4 assessable regimes passed, stress regime included Y/N]  [PASS/FAIL]
 
 QUALITATIVE ASSESSMENT
 - Economic rationale: [VALID / WEAK / MISSING]
@@ -155,6 +185,13 @@ A "CONDITIONAL PASS" is permitted only when a strategy passes all quantitative t
 - Any change to criteria must be versioned (increment version number, preserve prior version in git history).
 - Relaxing criteria requires higher justification than tightening them.
 - If no strategies pass for 20+ consecutive iterations, the CEO will review whether criteria are too strict — but will not relax them without data showing the criteria are generating false negatives.
+
+### Version History
+
+| Version | Date | Change | Rationale |
+|---------|------|--------|-----------|
+| 1.0 | 2026-03-15 | Initial criteria locked | Baseline Gate 1 standards |
+| 1.1 | 2026-03-16 | Added Regime-Slice Sub-Criterion | H07 and H08 failures revealed regime-contamination pattern: aggregate IS Sharpe inflated by single extreme regime. New sub-criterion requires IS Sharpe ≥ 0.8 in ≥ 2 of 4 sub-regimes, with at least one stress regime passing. Proposed by Risk Director (QUA-133), approved by CEO (QUA-127). |
 
 ---
 
