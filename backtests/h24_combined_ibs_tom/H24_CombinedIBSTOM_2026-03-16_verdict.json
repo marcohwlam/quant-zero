@@ -1,0 +1,118 @@
+{
+  "strategy_name": "H24_CombinedIBSTOM",
+  "date": "2026-03-16",
+  "overall_verdict": "FAIL",
+  "recommendation": "DO NOT PROCEED to paper trading. Review failing criteria above.",
+  "confidence": "LOW",
+  "disqualify_reason": null,
+  "gate1_pass": false,
+  "criteria_passed": "4/10",
+  "failing_criteria": [
+    "IS Sharpe=-0.144 (need > 1.0)",
+    "OOS Sharpe=0.192 (need > 0.7)",
+    "DSR=-83.662 (need > 0)",
+    "WF windows passed=2/4 (need >= 3)",
+    "WF consistency=0.620 (need >= 0.70)",
+    "Sensitivity: >30% Sharpe change detected"
+  ],
+  "regime_criterion_pass": false,
+  "stress_regime_passes": [],
+  "metrics": [
+    {
+      "name": "IS Sharpe",
+      "value": "-0.144",
+      "threshold": "> 1.0",
+      "passed": false
+    },
+    {
+      "name": "OOS Sharpe",
+      "value": "0.192",
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    {
+      "name": "IS Max Drawdown",
+      "value": "-13.00%",
+      "threshold": "< -20%",
+      "passed": true
+    },
+    {
+      "name": "OOS Max Drawdown",
+      "value": "-7.19%",
+      "threshold": "< -25%",
+      "passed": true
+    },
+    {
+      "name": "Win Rate",
+      "value": "56.03%",
+      "threshold": "> 50%",
+      "passed": true
+    },
+    {
+      "name": "Trade count",
+      "value": "373",
+      "threshold": ">= 100 (IS)",
+      "passed": true
+    },
+    {
+      "name": "Deflated Sharpe Ratio (z-score)",
+      "value": "-83.662",
+      "threshold": "> 0",
+      "passed": false
+    },
+    {
+      "name": "Walk-forward windows passed",
+      "value": "2/4",
+      "threshold": ">= 3",
+      "passed": false
+    },
+    {
+      "name": "Walk-forward OOS/IS consistency",
+      "value": "0.62",
+      "threshold": "> 0.70",
+      "passed": false
+    },
+    {
+      "name": "Post-cost Sharpe",
+      "value": "-0.144",
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    {
+      "name": "Parameter sensitivity",
+      "value": "see grid",
+      "threshold": "< 30% change",
+      "passed": false
+    },
+    {
+      "name": "Test period",
+      "value": "8.0 years",
+      "threshold": ">= 5 years",
+      "passed": true
+    }
+  ],
+  "oos_data_quality": {
+    "strategy_name": "H24_CombinedIBSTOM",
+    "oos_total_rows": 501,
+    "oos_clean_rows": 501,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "Close": 0,
+      "High": 0,
+      "Low": 0,
+      "Open": 0,
+      "Volume": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "_template_validation": {
+    "warnings": []
+  }
+}
