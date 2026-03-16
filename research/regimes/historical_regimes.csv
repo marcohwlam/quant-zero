@@ -1,0 +1,2 @@
+date,trend,volatility,momentum,liquidity,vix,spy_200d_delta,spy_12_1m,hurst_60d,summary
+2026-03-15,mildly-trending,high-vol,risk-on,liquid,27.19,+0.90%,+25.0%,0.732,mildly-trending/high-vol/risk-on/liquid
