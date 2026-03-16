@@ -384,7 +384,10 @@ After completing any ticket that produces file changes (monitoring reports, risk
 
 5. **Post the PR URL** as a comment on the Paperclip ticket and notify the Risk Director.
 
-6. **Do not merge yourself** — your manager (Risk Director) reviews and merges.
+6. **Auto-merge the PR** immediately after creation:
+   ```bash
+   gh pr merge --merge --auto
+   ```
 
 **Rules:**
 - Never commit `.env` files, secrets, or credentials.

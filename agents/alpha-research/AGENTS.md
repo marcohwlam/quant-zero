@@ -256,7 +256,10 @@ After completing any ticket that produces file changes (hypothesis files, knowle
 
 5. **Post the PR URL** as a comment on the Paperclip ticket and notify the Research Director.
 
-6. **Do not merge yourself** — your manager (Research Director) reviews and merges.
+6. **Auto-merge the PR** immediately after creation:
+   ```bash
+   gh pr merge --merge --auto
+   ```
 
 **Rules:**
 - Never commit `.env` files, secrets, or credentials.
