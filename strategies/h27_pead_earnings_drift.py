@@ -94,10 +94,18 @@ def load_earnings_dates(tickers: list) -> tuple:
     """
     Load historical earnings announcement dates via yfinance for each ticker.
 
-    DATA LIMITATION: yfinance `earnings_dates` typically covers only the last
-    12 quarters (~3 years). For longer backtests, many historical earnings events
-    will be missed. The earnings_coverage_rate metric reflects data availability
-    per ticker, not completeness across time.
+    Uses `get_earnings_dates(limit=60)` which requires `lxml` to be installed.
+    This covers ~15 years of data for large-caps (vs the old `earnings_dates`
+    property which only returned ~12 quarters and required lxml without a clear error).
+
+    Run environment note: execute with a venv that has lxml installed, e.g.:
+        python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+    Or use the pre-built venv at /tmp/test_lxml_venv (if available on the runner).
+
+    DATA LIMITATION: yfinance `get_earnings_dates(limit=60)` typically covers
+    ~50–60 rows (quarters) going back to ~2010–2012 for large-caps.
+    Coverage for the 2007–2021 in-sample period may be incomplete for tickers
+    without long listing histories.
 
     Returns:
         earnings_map: dict mapping ticker → set of pd.Timestamp (normalized, tz-naive)
@@ -108,10 +116,11 @@ def load_earnings_dates(tickers: list) -> tuple:
 
     for sym in tickers:
         try:
-            ed = yf.Ticker(sym).earnings_dates
-            if ed is None or len(ed) == 0:
+            ed = yf.Ticker(sym).get_earnings_dates(limit=60)
+            if ed is None or len(ed) < 4:
+                # Skip tickers with insufficient earnings history (< 4 quarters)
                 no_data_count += 1
-                warnings.warn(f"{sym}: no earnings_dates data — skipping")
+                warnings.warn(f"{sym}: insufficient earnings_dates data (<4 rows) — skipping")
                 continue
             # Index is tz-aware; normalize to midnight and strip tz for comparison
             dates = set(
@@ -120,7 +129,7 @@ def load_earnings_dates(tickers: list) -> tuple:
             earnings_map[sym] = dates
         except Exception as exc:
             no_data_count += 1
-            warnings.warn(f"{sym}: earnings_dates fetch failed ({exc}) — skipping")
+            warnings.warn(f"{sym}: get_earnings_dates fetch failed ({exc}) — skipping")
 
     coverage_rate = len(earnings_map) / max(len(tickers), 1)
     print(
@@ -504,8 +513,8 @@ def run_backtest(params: dict, start: str, end: str) -> dict:
         ),
         "earnings_coverage_rate": coverage_rate,
         "earnings_data_caveat": (
-            "yfinance earnings_dates typically covers last ~12 quarters (~3 years). "
-            "For longer backtests, many historical earnings events will be absent from scan."
+            "yfinance get_earnings_dates(limit=60) covers ~50-60 quarters (~15 years) for large-caps. "
+            "Requires lxml>=5.0. Coverage for pre-2012 events may be incomplete."
         ),
     }
 
