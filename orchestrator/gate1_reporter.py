@@ -34,6 +34,7 @@ if str(_OVERFIT_TOOLS) not in sys.path:
     sys.path.insert(0, str(_OVERFIT_TOOLS))
 
 from gate1_verdict import BacktestResult, Gate1Verdict, generate_verdict, format_verdict  # noqa: E402
+from gate1_verdict_validator import enforce_verdict_template, VerdictValidationError  # noqa: E402
 
 
 # ── Public API ────────────────────────────────────────────────────────────────
@@ -111,6 +112,7 @@ def generate_and_save_verdict(
 
     txt_path.write_text(verdict_text)
 
+    # ── Build verdict JSON and enforce template before saving ─────────────
     # Combine IS + OOS equity curves and trade logs into unified time-series
     equity_curve = metrics.get("equity_curve_is", []) + metrics.get("equity_curve_oos", [])
     trade_log = metrics.get("trade_log_is", []) + metrics.get("trade_log_oos", [])
@@ -137,6 +139,21 @@ def generate_and_save_verdict(
         "trade_log": trade_log,
         "txt_path": str(txt_path),
     }
+    # ── Template enforcement — validate before writing to disk ────────────
+    # Raises VerdictValidationError if any required field is missing or invalid.
+    # Warnings (e.g. missing oos_data_quality) are logged but do not block.
+    validation_result = enforce_verdict_template(verdict_json)
+    if validation_result.has_warnings:
+        import sys
+        print(
+            f"[VERDICT VALIDATOR WARN] {validation_result.summary()}",
+            file=sys.stderr,
+        )
+    verdict_json["_template_validation"] = {
+        "passed": not validation_result.has_errors,
+        "warnings": [str(i) for i in validation_result.issues if i.severity == "warning"],
+    }
+
     json_path.write_text(json.dumps(verdict_json, indent=2))
 
     return {
