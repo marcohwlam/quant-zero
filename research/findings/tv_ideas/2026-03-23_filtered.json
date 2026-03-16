@@ -1,0 +1,78 @@
+[
+  {
+    "tv_id": "P5Gu6F8k",
+    "name": "SuperTrend STRATEGY",
+    "description": "ATR-based adaptive trend following strategy. Computes SuperTrend bands using Average True Range to dynamically filter market noise. Long when price closes above the SuperTrend line (trend flips bullish), short when below. ATR multiplier controls band width. Swing holding period (days to weeks).",
+    "tags": [
+      "supertrend",
+      "atr",
+      "trend-following",
+      "momentum"
+    ],
+    "script_type": "strategy",
+    "asset_class": "equities",
+    "strategy_type_guess": "momentum",
+    "holding_period_guess": "swing",
+    "signals_used": [
+      "ATR"
+    ],
+    "author": "KivancOzbilgic",
+    "likes": 0,
+    "source_url": "https://www.tradingview.com/script/P5Gu6F8k/",
+    "discovery_method": "web-search-manual",
+    "fetched_at": "2026-03-16",
+    "filter_flags": {},
+    "hypothesis_file": "research/hypotheses/12_tv_supertrend_atr_momentum.md",
+    "batch": "2026-03-23"
+  },
+  {
+    "tv_id": "WeAMGj9j",
+    "name": "HYE Mean Reversion VWAP [Strategy]",
+    "description": "Mean reversion strategy using anchored VWAP with standard deviation bands. Enters long when price touches VWAP -2 SD and short when price touches VWAP +2 SD, targeting reversion back to VWAP center. Volume-weighted mean provides institutional execution anchor distinct from price-only Bollinger Bands.",
+    "tags": [
+      "vwap",
+      "mean-reversion",
+      "standard-deviation",
+      "institutional"
+    ],
+    "script_type": "strategy",
+    "asset_class": "equities",
+    "strategy_type_guess": "mean_reversion",
+    "holding_period_guess": "swing",
+    "signals_used": [
+      "VWAP"
+    ],
+    "author": "HYE0619",
+    "likes": 0,
+    "source_url": "https://www.tradingview.com/script/WeAMGj9j/",
+    "discovery_method": "web-search-manual",
+    "fetched_at": "2026-03-16",
+    "filter_flags": {},
+    "hypothesis_file": "research/hypotheses/13_tv_vwap_anchor_reversion.md",
+    "batch": "2026-03-23"
+  },
+  {
+    "tv_id": "39Nkoycz",
+    "name": "Mean Reversion Cloud (Ornstein-Uhlenbeck)",
+    "description": "Ornstein-Uhlenbeck process indicator that fits an OU model to a rolling price window to detect mean-reverting regimes (kappa > 0) and display statistically-derived reversion bands. Entry when price exits OU cloud bounds; exit when price returns to estimated OU mean. Native regime detection via kappa significance filter.",
+    "tags": [
+      "ornstein-uhlenbeck",
+      "mean-reversion",
+      "statistical",
+      "regime-detection"
+    ],
+    "script_type": "indicator",
+    "asset_class": "equities",
+    "strategy_type_guess": "mean_reversion",
+    "holding_period_guess": "swing",
+    "signals_used": [],
+    "author": "AlgoFyre",
+    "likes": 0,
+    "source_url": "https://www.tradingview.com/script/39Nkoycz-Mean-Reversion-Cloud-Ornstein-Uhlenbeck-AlgoFyre/",
+    "discovery_method": "web-search-manual",
+    "fetched_at": "2026-03-16",
+    "filter_flags": {},
+    "hypothesis_file": "research/hypotheses/14_tv_ou_mean_reversion_cloud.md",
+    "batch": "2026-03-23"
+  }
+]
