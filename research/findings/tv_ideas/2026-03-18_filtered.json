@@ -1,0 +1,94 @@
+[
+  {
+    "tv_id": "shLUk4wi",
+    "name": "SPY/TLT Strategy",
+    "description": "Cross-asset rotation strategy trading the SPY/TLT ETF pair. Uses TLT's SMA crossover to switch between equity (SPY) and bond (TLT) exposure. Based on the inverse correlation between equities and treasuries (risk-on / risk-off regime detection). Weekly allocation decision using a momentum-modified Sharpe ratio to determine optimal SPY vs TLT weighting.",
+    "tags": [
+      "spy",
+      "tlt",
+      "rotation",
+      "risk-on-off",
+      "cross-asset",
+      "momentum",
+      "bond",
+      "equity"
+    ],
+    "script_type": "strategy",
+    "asset_class": "equities",
+    "strategy_type_guess": "momentum",
+    "holding_period_guess": "swing",
+    "signals_used": [
+      "SMA"
+    ],
+    "author": "Botnet101",
+    "likes": 0,
+    "source_url": "https://www.tradingview.com/script/shLUk4wi-SPY-TLT-Strategy/",
+    "discovery_method": "web-search-manual",
+    "fetched_at": "2026-03-16",
+    "filter_flags": {},
+    "hypothesis_file": "research/hypotheses/18_tv_spy_tlt_rotation.md",
+    "batch": "2026-03-18",
+    "filter_pass": true,
+    "filter_reason": "Novel cross-asset rotation type not tested in H01-H17; SPY+TLT both yfinance-available; weekly signal gives 52 trade decisions/year > 30 threshold; economic rationale strong (risk-on/off)"
+  },
+  {
+    "tv_id": "Rv3pibXO",
+    "name": "TTP VIX Spy",
+    "description": "VIX-based regime detection indicator that monitors CBOE VIX relative to its rolling percentile to classify market volatility regimes (low / elevated / high fear). Maps VIX percentile to SPY position sizing tiers. Used as a volatility-targeting signal to scale equity exposure inversely to prevailing realized volatility.",
+    "tags": [
+      "vix",
+      "regime",
+      "volatility",
+      "position-sizing",
+      "risk-parity",
+      "spy",
+      "fear"
+    ],
+    "script_type": "indicator",
+    "asset_class": "equities",
+    "strategy_type_guess": "volatility",
+    "holding_period_guess": "swing",
+    "signals_used": [],
+    "author": "TheTradingParrot",
+    "likes": 0,
+    "source_url": "https://www.tradingview.com/script/Rv3pibXO-TTP-VIX-Spy/",
+    "discovery_method": "web-search-manual",
+    "fetched_at": "2026-03-16",
+    "filter_flags": {},
+    "hypothesis_file": "research/hypotheses/19_tv_vix_volatility_targeting.md",
+    "batch": "2026-03-18",
+    "filter_pass": true,
+    "filter_reason": "Volatility-targeting type priority per QUA-175; VIX data available via yfinance (TVC:VIX); weekly rebalancing gives sufficient trade decisions; Moreira & Muir (2017) academic backing; IS trade count borderline - flagged"
+  },
+  {
+    "tv_id": "dky8hLPw",
+    "name": "RSI - S&P Sector ETFs",
+    "description": "Multi-asset RSI indicator displaying relative strength readings for all 9 SPDR Select Sector ETFs simultaneously. Enables systematic sector rotation strategy overweighting top N sectors by relative momentum each week.",
+    "tags": [
+      "sector-rotation",
+      "etf",
+      "rsi",
+      "momentum",
+      "spdr",
+      "relative-strength",
+      "weekly"
+    ],
+    "script_type": "indicator",
+    "asset_class": "equities",
+    "strategy_type_guess": "momentum",
+    "holding_period_guess": "swing",
+    "signals_used": [
+      "RSI"
+    ],
+    "author": "All_Verklempt",
+    "likes": 0,
+    "source_url": "https://www.tradingview.com/script/dky8hLPw-RSI-S-P-Sector-ETFs/",
+    "discovery_method": "web-search-manual",
+    "fetched_at": "2026-03-16",
+    "filter_flags": {},
+    "hypothesis_file": "research/hypotheses/20_tv_sector_momentum_rotation.md",
+    "batch": "2026-03-18",
+    "filter_pass": true,
+    "filter_reason": "Novel sub-index rotation distinct from H07/H17 (broad asset-class rotation); all 9 SPDR ETFs yfinance-available; weekly momentum = 52+ trades/year > 30 threshold; strong academic backing in sector momentum literature"
+  }
+]
