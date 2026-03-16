@@ -1,1 +1,56 @@
-[]
+[
+  {
+    "qc_id": "volatility-risk-premium-effect",
+    "name": "Volatility Risk Premium Effect",
+    "url": "https://www.quantconnect.com/learning/articles/investment-strategy-library/volatility-risk-premium-effect",
+    "author": "QuantConnect",
+    "asset_class": "options",
+    "strategy_type": "mean_reversion",
+    "sharpe": null,
+    "cagr": null,
+    "max_drawdown": null,
+    "backtest_years": 12,
+    "clone_count": 0,
+    "description": "Sells an ATM straddle (one ATM call + one ATM put) and buys a 15% OTM put as insurance each month on a liquid equity index. Harvests the persistent spread between implied and realized volatility (volatility risk premium).",
+    "tags": ["options", "volatility", "straddle", "risk premium", "monthly"],
+    "discovery_method": "web-search",
+    "fetched_at": "2026-03-16",
+    "hypothesis_file": "research/hypotheses/15_qc_volatility_risk_premium.md"
+  },
+  {
+    "qc_id": "momentum-and-reversal-combined-with-volatility-effect-in-stocks",
+    "name": "Momentum and Reversal Combined with Volatility Effect in Stocks",
+    "url": "https://www.quantconnect.com/learning/articles/investment-strategy-library/momentum-and-reversal-combined-with-volatility-effect-in-stocks",
+    "author": "QuantConnect",
+    "asset_class": "equities",
+    "strategy_type": "momentum",
+    "sharpe": null,
+    "cagr": 0.15,
+    "max_drawdown": null,
+    "backtest_years": 14,
+    "clone_count": 0,
+    "description": "Long-short equity strategy that filters stocks to the top-20% by realized volatility then goes long the top momentum quintile and short the bottom momentum quintile (6-month formation, 1-month holding). Large-cap only. Based on Cao & Han (2016).",
+    "tags": ["equities", "momentum", "long-short", "volatility filter", "monthly"],
+    "discovery_method": "web-search",
+    "fetched_at": "2026-03-16",
+    "hypothesis_file": "research/hypotheses/16_qc_momentum_reversal_volatility.md"
+  },
+  {
+    "qc_id": "dual-momentum-etf-rotation",
+    "name": "ETF Dual Momentum Rotation (Antonacci GEM)",
+    "url": "https://www.quantconnect.com/forum/discussion/10066/dual-momentum-technology-etf/",
+    "author": "QuantConnect Community (Antonacci 2014)",
+    "asset_class": "equities",
+    "strategy_type": "momentum",
+    "sharpe": 0.9,
+    "cagr": 0.17,
+    "max_drawdown": -0.22,
+    "backtest_years": 40,
+    "clone_count": 0,
+    "description": "Monthly rotation between SPY, EFA, and AGG using Gary Antonacci's Global Equities Momentum (GEM). Combines relative momentum (SPY vs EFA) and absolute momentum (winner vs T-bills) to switch to bonds when equity momentum is negative. Binary single-holding portfolio.",
+    "tags": ["equities", "ETF", "momentum", "rotation", "bonds", "monthly", "Antonacci"],
+    "discovery_method": "web-search",
+    "fetched_at": "2026-03-16",
+    "hypothesis_file": "research/hypotheses/17_qc_dual_momentum_etf_rotation.md"
+  }
+]
