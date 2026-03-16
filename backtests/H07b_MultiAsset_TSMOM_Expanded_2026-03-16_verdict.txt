@@ -1,0 +1,56 @@
+Gate 1 Verdict — H07b_MultiAsset_TSMOM_Expanded — 2026-03-16
+============================================================
+Overall: FAIL ✗
+
+Gate 1 Checks:
+  [FAIL] is_sharpe_pass
+  [FAIL] oos_sharpe_pass
+  [PASS] is_mdd_pass
+  [PASS] oos_mdd_pass
+  [PASS] win_rate_pass
+  [PASS] win_loss_ratio_pass
+  [PASS] trade_count_pass
+  [PASS] wf_windows_pass
+  [PASS] wf_consistency_pass
+  [PASS] sensitivity_pass
+  [PASS] dsr_pass
+  [FAIL] permutation_pass
+  [FAIL] regime_slice_pass
+
+Key Metrics:
+  IS Sharpe:        0.8820  (> 1.0)
+  OOS Sharpe:       0.3433  (> 0.7)
+  IS MDD:           -0.0565  (< 0.20)
+  OOS MDD:          -0.0511  (< 0.25)
+  Win Rate:         0.5211  (> 0.50)
+  Win/Loss Ratio:   2.9027  (>= 1.0)
+  Trade Count (IS): 71  (>= 50)
+  DSR:              0.0000  (> 0)
+  WF Windows:       3/4  (>= 3)
+  MC p5 Sharpe:     3.1676
+  Permutation p:    0.6080  (FAIL)
+  Sensitivity:      PASS
+
+Regime-Slice Sub-Criterion (criteria.md v1.1):
+  pre_covid_2018_2019: Sharpe=1.4367 [PASS] (assessable)
+  stimulus_2020_2021: Sharpe=0.5625 [FAIL] (assessable)
+  rate_shock_2022: Sharpe=-1.0391 [FAIL] (assessable)
+  normalization_2023: Sharpe=0.5280 [FAIL] (assessable)
+  Overall regime-slice: 1/4 passing, stress regimes: [] — FAIL
+
+VIX Regime Gate (IS window):
+  Normal days (VIX ≤ 25): 815 (80.9%)
+  Stress days (VIX 25-35): 139 (13.8%)
+  Crisis days (VIX > 35): 53 (5.3%)
+
+Walk-Forward Table:
+  Window 1 (2018-01-01–2021-06-30): IS=0.77  OOS=1.20  [PASS]
+  Window 2 (2018-07-01–2021-12-31): IS=0.70  OOS=0.91  [PASS]
+  Window 3 (2019-01-01–2022-06-30): IS=0.50  OOS=-2.08  [FAIL]
+  Window 4 (2019-07-01–2022-12-31): IS=0.25  OOS=1.04  [PASS]
+
+Failing criteria:
+  - is_sharpe_pass
+  - oos_sharpe_pass
+  - permutation_pass
+  - regime_slice_pass
