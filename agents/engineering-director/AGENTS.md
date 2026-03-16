@@ -255,7 +255,10 @@ After completing any ticket that produces file changes (code, reports, configs, 
 
 5. **Post the PR URL** as a comment on the Paperclip ticket and notify the CEO.
 
-6. **Do not merge yourself** — the CEO reviews and merges director PRs.
+6. **Auto-merge the PR** immediately after creation:
+   ```bash
+   gh pr merge --merge --auto
+   ```
 
 **Rules:**
 - Never commit `.env` files, secrets, or credentials.
