@@ -191,8 +191,72 @@ BTC and ETH exhibit strong trend-following properties due to retail behavioral m
 
 ## Pre-Backtest Checklist (Anti-Look-Ahead)
 
-- [ ] EMA at time T uses only price data up to and including T — no future prices
-- [ ] EMA crossover signal evaluated at close T; execution at open T+1 (no same-bar fill on signal bar)
-- [ ] Trailing stop uses highest close _up to T_ — no look-ahead into future highs
-- [ ] EMA parameters fixed before backtest (no optimization on OOS window)
-- [ ] Data split: IS ends strictly before OOS begins; no OOS data visible during IS parameterization
+- [x] EMA at time T uses only price data up to and including T — no future prices
+- [x] EMA crossover signal evaluated at close T; execution at open T+1 (no same-bar fill on signal bar)
+- [x] Trailing stop uses highest close _up to T_ — no look-ahead into future highs
+- [x] EMA parameters fixed before backtest (no optimization on OOS window)
+- [x] Data split: IS ends strictly before OOS begins; no OOS data visible during IS parameterization
+
+---
+
+## Risk Director Review — QUA-106
+
+**Reviewer:** Risk Director
+**Date:** 2026-03-16
+**Status:** SIGNED OFF — CLEARED FOR GATE 1 BACKTEST
+
+### 1. IC Estimates (EMA Crossover on Crypto)
+
+**VERIFIED — REASONABLE.**
+
+The IC profile (T+1: ~0.02–0.04 → peak T+20: ~0.06–0.10 → decay T+120: ~0.02–0.04) is consistent with academic literature on crypto trend-following. Liu & Tsyvinski (2021, RFS) document significant return predictability in BTC/ETH at multi-week horizons. The IC estimates may even be slightly conservative relative to crypto-specific momentum studies, which is appropriate for a risk-gated pre-backtest assessment. The medium-term peak at ~20 days is the correct expected shape for a 20/60-day EMA crossover — the signal accumulates confirmation over days before the crossover registers, and decays as trend exhaustion sets in. IC profile: VALID.
+
+### 2. Data Source — Spot BTC/ETH for IS Window 2018–2022
+
+**CONFIRMED — SPOT DATA AVAILABLE.**
+
+- CoinGecko and Yahoo Finance (^BTCUSD, ^ETHUSD) provide BTC daily data from 2013+ and ETH daily data from 2016+. Both fully cover the 2018-01-01 start date.
+- BITO launched October 2021 → correctly excluded for IS backtest. Usable for live implementation only post-2021.
+- FETH launched July 2024 → correctly excluded for IS backtest. Note: FETH is also effectively unusable for near-term paper trading given limited performance history; BITO is the only viable ETF proxy for BTC live signal routing.
+- Crypto asset class constraint (criteria.md §Asset-Class Constraints): BTC and ETH only — SATISFIED.
+- 2018 crypto winter included in test period — SATISFIED (criteria.md hard requirement).
+
+Data source: VALID.
+
+### 3. BITO Contango Drag Estimate (~5–10%/year)
+
+**REASONABLE — QUALIFIED FLAG.**
+
+The 5–10%/year estimate is appropriate as a long-run average for BITO front-month roll costs. However, note that during strong bull markets — precisely when this strategy is most active — BTC futures contango was significantly steeper. Annualized roll costs during the 2021 bull market peak were estimated at 15–25%/year. This means the strategy's live returns via BITO could be substantially lower than spot-based backtest returns during its most profitable regime.
+
+**This is not a blocker** — the hypothesis correctly states the backtest uses spot prices and explicitly flags contango drag as a live implementation adjustment. The estimate is directionally correct for baseline planning. Risk flag logged: **live implementation returns via BITO should be modeled with 10–20% drag assumption during bull regimes, not 5–10%.** Engineering Director should account for this during Gate 2 (paper trading with ETFs).
+
+Contango drag note: REASONABLE for hypothesis purposes. Live implementation flag: REQUIRED.
+
+### 4. Anti-Look-Ahead Checklist — Sign-Off
+
+All 5 checklist items reviewed and signed off:
+
+| Item | Assessment |
+|------|-----------|
+| EMA at T uses only data ≤ T | ✅ SIGNED OFF — standard EMA rolling formula; no look-ahead if implemented correctly |
+| Signal at close T, execution at open T+1 | ✅ SIGNED OFF — critical protection against same-bar fill; explicitly specified |
+| Trailing stop uses highest close up to T only | ✅ SIGNED OFF — correctly prohibits look-ahead into future highs, which is the most common trailing stop look-ahead bug |
+| EMA parameters fixed before OOS window | ✅ SIGNED OFF — walk-forward protocol correct; parameterization on IS only |
+| IS/OOS data split strict; no OOS contamination during IS parameterization | ✅ SIGNED OFF — standard walk-forward design |
+
+**Look-ahead risk: NONE DETECTED at hypothesis level.** Engineering Director must certify again in Gate 1 backtest code review.
+
+### 5. Additional Risk Flags for Gate 1 Backtest
+
+1. **BTC/ETH correlation risk:** BTC/ETH correlation ~0.8+ means independent signals provide limited diversification. During simultaneous drawdown events, both positions may hit trailing stops at the same time, producing a synchronized portfolio-level drawdown. Engineering Director must verify combined max drawdown does not approach or exceed 20% IS threshold. This is the primary Gate 1 risk for this strategy.
+
+2. **Trade count borderline:** ~60–120 trades (IS, 2 assets × 5 years × 6–12 round trips) just clears the 50-trade minimum. If EMA whipsaw frequency is lower than estimated, trade count could fall below threshold — automatic disqualification. Engineering Director: report trade count explicitly in Gate 1 submission.
+
+3. **EMA parameter sensitivity flagged as high:** The hypothesis correctly identifies this as the primary overfitting risk. The 4×4 = 16 EMA parameter grid test is required. If Sharpe variance across combinations exceeds 30%, this is an automatic disqualification flag under criteria.md parameter robustness requirement.
+
+4. **Win rate concern:** EMA crossover win rates typically 40–55%; hypothesis projects compensating win/loss ratio. Gate 1 must confirm win rate > 50% OR average win / average loss > 1.2 (per criteria.md). If win rate is below 50%, the win/loss ratio must be explicitly documented to justify approval.
+
+### Verdict
+
+**CLEARED FOR GATE 1 BACKTEST.** Hypothesis is structurally sound, economically motivated, and anti-look-ahead checklist is complete. Data availability confirmed for full IS window. Flag items above (trade count, BTC/ETH correlation, EMA sensitivity) must be explicitly addressed in Gate 1 submission to Risk Director.
