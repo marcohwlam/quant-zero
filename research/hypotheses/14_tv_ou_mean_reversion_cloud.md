@@ -5,7 +5,7 @@
 **Date:** 2026-03-16
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** hypothesis
+**Status:** retired — Gate 1 FAIL (2026-03-16, QUA-162/QUA-211). Do not re-queue.
 
 ## Economic Rationale
 
