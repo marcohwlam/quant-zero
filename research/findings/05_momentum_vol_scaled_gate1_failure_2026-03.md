@@ -1,15 +1,15 @@
 # H05 Momentum Vol-Scaled — Gate 1 Failure Analysis
 
-**Date:** 2026-03-16
-**Task:** QUA-82 (Research Director review)
-**Batch:** `backtests/mvs_batch_summary_2026-03-15.json` (30 iterations)
-**Outcome:** FAILED — 0/30 iterations pass Gate 1
+**Date:** 2026-03-16 (Batch 1) | Updated: 2026-03-16 (Batch 2)
+**Tasks:** QUA-82 (Batch 1 review), QUA-97 (Batch 2 review)
+**Batches:** Iterations 1–35 (Batch 1) + Iterations 36–65 (Batch 2) = 60 total iterations
+**Outcome:** FAILED — 0/60 iterations pass Gate 1
 
 ---
 
-## Verdict: FAIL — IS Sharpe Ceiling ~0.79 — Retire $25K ETF Implementation
+## Verdict: FAIL — IS Sharpe Ceiling ~0.79 — Retire $25K ETF Implementation ✅ CONFIRMED by Batch 2
 
-**All 30 parameter variations fail Gate 1.** IS Sharpe ranges from 0.43 to 0.79 — never reaching the 1.0 threshold. The failure is systematic (100% of iterations) and parameter-invariant, indicating a structural failure rather than parameter mis-calibration.
+**All 60 parameter variations across two batches fail Gate 1.** IS Sharpe ranges from 0.43 to 0.79 — never reaching the 1.0 threshold. The failure is systematic (100% of iterations) and parameter-invariant across both batches, confirming a structural failure rather than parameter mis-calibration.
 
 ---
 
@@ -31,6 +31,36 @@
 - **No configuration passes both IS Sharpe AND OOS Sharpe simultaneously**
 
 **Walk-forward windows passed:** 0/4 in all tested configurations
+
+---
+
+## Batch 2 Update — Iterations 36–65 (QUA-97)
+
+**Date:** 2026-03-16 | **Source:** QUA-81 orchestrator run | **Parent task:** QUA-97
+
+### Batch 2 Top 3 by OOS Sharpe
+
+| Configuration | IS Sharpe | OOS Sharpe | IS MDD | Win Rate | Trades | Gate 1 |
+|---|---|---|---|---|---|---|
+| mvs_lb9_sk1_k4_tv12_rb21_cp10 (Iter 57) | 0.434 | **1.084** | -28.0% | 65.5% | 110 | **FAIL** (IS Sharpe, IS MDD) |
+| mvs_lb9_sk1_k5_tv10_rb42_cp10 (Iter 65) | 0.467 | **1.074** | -23.6% | 72.7% | 77 | **FAIL** (IS Sharpe, IS MDD) |
+| mvs_lb18_sk1_k4_tv10_rb21_cp10 (Iter 61) | 0.508 | **1.048** | -21.2% | 70.8% | 89 | **FAIL** (IS Sharpe, IS MDD) |
+
+**Batch 2 statistics:**
+- Gate 1 passes: **0/30**
+- IS Sharpe range: 0.43 – 0.51 (maximum IS Sharpe in Batch 2 is *lower* than Batch 1's 0.79)
+- IS MDD failures: 18/30 (identical structural pattern to Batch 1)
+- OOS Sharpe > 1.0: 3/30 (same inverted IS/OOS pattern — confirms regime effect, not look-ahead)
+
+### Batch 2 Anomalies
+
+**Walk-Forward Bug (all 30 configs):** `wf_windows_passed = 0` for all iterations. Root cause: 6-month OOS sub-windows are shorter than the momentum lookback warmup period, so no signals are generated within each WF OOS window. The WF function needs to pass combined IS+OOS history for signal computation. **Main IS/OOS metrics are unaffected.** This is an infrastructure defect, not a strategy failure.
+
+**IS Sharpe Regression in Batch 2:** Batch 2's best IS Sharpe (0.508) is significantly below Batch 1's best (0.791). Batch 2 explored new rebalance windows (21d, 42d) that change the holding period but don't resolve the fundamental universe problem. The wider rebalance windows reduce trade count and diversification, further suppressing Sharpe.
+
+### Batch 2 Conclusion
+
+Second batch confirms the structural ceiling identified in Batch 1. No parameter configuration — across 6 different dimensions over 60 total iterations — can overcome the fundamental insufficiency of the 8-ETF universe for cross-sectional momentum. **H05 is definitively retired from Phase 1 at $25K.**
 
 ---
 
@@ -114,6 +144,8 @@ The hypothesis itself rated H05 as **"Poor" for $25K fit**. The full long-short 
 
 **Research Director recommendation:** CEO escalation required. 0/3 Gate 1 pass rate triggers immediate review of pipeline strategy and IS window appropriateness.
 
+**Infrastructure action required:** Engineering Director must fix the WF function to pass combined IS+OOS history for signal computation (identified in Batch 2 anomaly above). Does not affect strategy retirement decision.
+
 ---
 
-*Research Director | QUA-82 | 2026-03-16*
+*Research Director | QUA-82 (Batch 1) + QUA-97 (Batch 2) | 2026-03-16*
