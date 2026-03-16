@@ -96,7 +96,7 @@ class AlpacaClient:
     def __init__(self):
         self.api_key    = os.environ.get("ALPACA_API_KEY")
         self.api_secret = os.environ.get("ALPACA_API_SECRET")
-        self.base_url   = os.environ.get("ALPACA_BASE_URL", "https://paper-api.alpaca.markets")
+        self.base_url   = os.environ.get("ALPACA_BASE_URL", "https://paper-api.alpaca.markets").rstrip("/").removesuffix("/v2")
         self.data_url   = os.environ.get("ALPACA_DATA_URL", "https://data.alpaca.markets")
 
         if not self.api_key or not self.api_secret:

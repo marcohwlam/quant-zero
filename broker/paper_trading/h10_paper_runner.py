@@ -53,7 +53,7 @@ logger = logging.getLogger(__name__)
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from broker.alpaca_client import AlpacaClient
-from strategies.h10_crypto_eql_reversal import run_backtest, PARAMETERS
+from strategies.h10_crypto_eql_reversal import run_strategy as run_backtest, PARAMETERS
 
 # ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -89,7 +89,7 @@ def get_current_signal(lookback_days: int = 60) -> dict:
     start = (pd.Timestamp(today) - pd.DateOffset(days=lookback_days)).strftime("%Y-%m-%d")
 
     try:
-        result = run_backtest(params=PARAMETERS, start=start, end=today, return_portfolio=True)
+        result = run_backtest(params=PARAMETERS, start=start, end=today)
         signal_info = {}
 
         for ticker in UNIVERSE:
