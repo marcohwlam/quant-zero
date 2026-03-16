@@ -1,0 +1,100 @@
+Gate 1 Verdict — H34_RSI2OversoldSPY
+Date: 2026-03-16
+Overall: FAIL (4/11 criteria passed)
+
+============================================================
+IS/OOS Performance
+============================================================
+  IS Sharpe:          0.3456   (threshold > 1.0)   FAIL
+  OOS Sharpe:         0.4797   (threshold > 0.7)   FAIL
+  IS Max Drawdown:    -16.62%  (threshold < 20%)   PASS
+  OOS Max Drawdown:   -7.03%   (threshold < 25%)   PASS
+  IS Trade Count:     119      (threshold >= 100)  PASS
+  OOS Trade Count:    34
+  Win Rate (OOS):     67.65%   (threshold > 50%)   PASS
+  Profit Factor (OOS):1.63
+  Post-cost Sharpe:   0.4797
+  IS Trades/year:     7.9/yr   (PF-1 WARN: < 30/yr)
+
+============================================================
+Statistical Rigor
+============================================================
+  DSR:                0.0000   (threshold > 0)     FAIL
+  MC p5 Sharpe:       -0.2825  (threshold >= 0.5)  FAIL  [MC pessimistic bound weak]
+  MC Median Sharpe:   2.0648
+  MC p95 Sharpe:      4.67
+  Sharpe 95% CI:      [-0.1241, 0.8947]
+  MDD 95% CI:         [-0.2739, -0.0764]
+  Win Rate 95% CI:    [0.0578, 0.0839]
+  Market Impact:      0.01 bps  [not liquidity constrained]
+  Order/ADV ratio:    0.000001
+  Permutation p-val:  0.5360   (threshold <= 0.05)  FAIL
+
+============================================================
+Walk-Forward (4 windows, IS 2007–2021)
+============================================================
+  Windows Passed:     2/4  (threshold >= 3/4)  FAIL
+  WF Consistency:     50.00%
+  WF Sharpe Std:      0.8358
+  WF Sharpe Min:      -0.4711  [FLAG: at least one losing OOS window]
+  Window 1: OOS 2009-10-24–2010-09-30  Sharpe=-0.4196  FAIL
+  Window 2: OOS 2013-07-24–2014-06-30  Sharpe= 0.7582  PASS
+  Window 3: OOS 2017-04-23–2018-03-30  Sharpe=-0.4711  FAIL
+  Window 4: OOS 2021-01-23–2021-12-31  Sharpe= 1.5167  PASS
+
+============================================================
+Parameter Sensitivity (RSI threshold: 5, 10, 15)
+============================================================
+  Max Sharpe change:  32.3%  (threshold < 30%)  FAIL
+  rsi_threshold=5:  Sharpe=0.4572 (32.3% change) — tighter filter reduces frequency
+  rsi_threshold=10: Sharpe=0.3456 (0.0% change)  — base case
+  rsi_threshold=15: Sharpe=0.3713 (7.4% change)
+
+============================================================
+Special Validations
+============================================================
+  2022 In-Cash % (regime off): 80.9%   PASS  [200-SMA filter effective in 2022 bear]
+  GFC 2008-2009 MDD:           -1.97%  [strong GFC protection via regime filter]
+  GFC 2008-2009 Trades:        7
+  2022 Stress MDD:             -5.28%
+  2022 Stress Sharpe:          -0.7242  [negative in 2022 but few trades, low impact]
+
+============================================================
+OOS Data Quality
+============================================================
+  Recommendation:     PASS
+  Data Coverage:      100.0%
+  Total NaNs:         0
+
+============================================================
+GATE 1 VERDICT: FAIL
+============================================================
+  [PASS] IS Max Drawdown < 20%
+  [PASS] OOS Max Drawdown < 25%
+  [PASS] Win Rate > 50%
+  [PASS] Trade count >= 100 (IS)
+  [FAIL] IS Sharpe > 1.0
+  [FAIL] OOS Sharpe > 0.7
+  [FAIL] DSR > 0
+  [FAIL] Walk-forward >= 3/4 windows passed
+  [FAIL] Parameter sensitivity pass
+  [FAIL] MC p5 Sharpe >= 0.5
+  [FAIL] Permutation test pass (p <= 0.05)
+
+Failing criteria:
+  - IS Sharpe > 1.0  [actual: 0.3456]
+  - OOS Sharpe > 0.7  [actual: 0.4797]
+  - DSR > 0  [actual: 0.0000 — Sharpe well below deflation-adjusted threshold]
+  - Walk-forward >= 3/4 windows passed  [actual: 2/4 — high variance across regimes]
+  - Parameter sensitivity pass  [actual: 32.3% change — RSI=5 threshold diverges]
+  - MC p5 Sharpe >= 0.5  [actual: -0.2825 — pessimistic tail is negative]
+  - Permutation test pass  [actual: p=0.536 — no statistically significant alpha detected]
+
+Recommendation: REJECT — H34 RSI(2) Oversold SPY does not meet Gate 1 criteria.
+The strategy produces insufficient Sharpe in both IS and OOS periods, fails the
+permutation test (no detectable alpha above noise), and shows high walk-forward
+variance suggesting regime-dependent performance rather than robust edge.
+The 200-SMA regime filter effectively protects capital in bear markets (GFC MDD -1.97%,
+2022 regime 80.9% in-cash) but also limits opportunity to ~8 trades/year — too few
+to build statistical confidence. Core alpha signal (RSI(2) mean reversion) is not
+generating sufficient risk-adjusted returns in this implementation.
