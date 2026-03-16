@@ -1,0 +1,118 @@
+{
+  "strategy_name": "H27_PEAD_EarningsDrift",
+  "date": "2026-03-16",
+  "overall_verdict": "FAIL",
+  "recommendation": "DO NOT PROCEED to paper trading. Requires point-in-time earnings data source (e.g., Compustat, Bloomberg earnings calendar) to run the full 2007\u20132021 IS window. With available-data IS (2023\u20132024), strategy shows structural promise but insufficient historical validation for Gate 1 approval.",
+  "confidence": "LOW",
+  "disqualify_reason": "DISQUALIFIED: Insufficient IS trades (0 < 50 required). Root cause: yfinance earnings_dates covers only ~12 quarters. The 2007\u20132021 IS window predates yfinance earnings coverage, resulting in near-zero signal generation. Strategy requires a point-in-time earnings data source for full IS validation.",
+  "gate1_pass": false,
+  "criteria_passed": "2/10",
+  "failing_criteria": [
+    "IS Sharpe=0.000 (need > 1.0)",
+    "OOS Sharpe=0.000 (need > 0.7)",
+    "Win rate=0.00% (need > 50%)",
+    "Trade count=0 (need >= 50 IS)",
+    "DSR=-32.153 (need > 0)",
+    "WF windows passed=0/4 (need >= 3)",
+    "WF consistency=0.000 (need >= 0.70)",
+    "Sensitivity: >30% Sharpe change detected"
+  ],
+  "metrics": [
+    {
+      "name": "IS Sharpe",
+      "value": "0.0",
+      "threshold": "> 1.0",
+      "passed": false
+    },
+    {
+      "name": "OOS Sharpe",
+      "value": "0.0",
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    {
+      "name": "IS Max Drawdown",
+      "value": "0.00%",
+      "threshold": "< -20%",
+      "passed": true
+    },
+    {
+      "name": "OOS Max Drawdown",
+      "value": "0.00%",
+      "threshold": "< -25%",
+      "passed": true
+    },
+    {
+      "name": "Win Rate",
+      "value": "0.00%",
+      "threshold": "> 50%",
+      "passed": false
+    },
+    {
+      "name": "Trade count",
+      "value": "0",
+      "threshold": ">= 50 (IS)",
+      "passed": false
+    },
+    {
+      "name": "Deflated Sharpe Ratio (z-score)",
+      "value": "-32.153",
+      "threshold": "> 0",
+      "passed": false
+    },
+    {
+      "name": "Walk-forward windows passed",
+      "value": "0/4",
+      "threshold": ">= 3",
+      "passed": false
+    },
+    {
+      "name": "Walk-forward OOS/IS consistency",
+      "value": "0.0",
+      "threshold": "> 0.70",
+      "passed": false
+    },
+    {
+      "name": "Post-cost Sharpe",
+      "value": "0.0",
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    {
+      "name": "Parameter sensitivity",
+      "value": "see heatmap",
+      "threshold": "< 30% change",
+      "passed": false
+    },
+    {
+      "name": "Test period",
+      "value": "19.0 years",
+      "threshold": ">= 5 years",
+      "passed": true
+    }
+  ],
+  "oos_data_quality": {
+    "strategy_name": "H27_PEAD_EarningsDrift",
+    "oos_total_rows": 1002,
+    "oos_clean_rows": 1002,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "Close": 0,
+      "High": 0,
+      "Low": 0,
+      "Open": 0,
+      "Volume": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "_template_validation": {
+    "warnings": []
+  }
+}

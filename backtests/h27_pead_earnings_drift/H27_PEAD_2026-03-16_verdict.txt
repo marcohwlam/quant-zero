@@ -1,0 +1,81 @@
+H27 PEAD Earnings Drift — Gate 1 Verdict
+Generated: 2026-03-16
+======================================================================
+
+OVERALL VERDICT: FAIL
+Criteria passed: 2/10
+Confidence: LOW
+
+DISQUALIFICATION REASON:
+DISQUALIFIED: Insufficient IS trades (0 < 50 required). Root cause: yfinance earnings_dates covers only ~12 quarters. The 2007–2021 IS window predates yfinance earnings coverage, resulting in near-zero signal generation. Strategy requires a point-in-time earnings data source for full IS validation.
+
+METRICS TABLE:
+  [FAIL] IS Sharpe: 0.0 (threshold: > 1.0)
+  [FAIL] OOS Sharpe: 0.0 (threshold: > 0.7)
+  [PASS] IS Max Drawdown: 0.00% (threshold: < -20%)
+  [PASS] OOS Max Drawdown: 0.00% (threshold: < -25%)
+  [FAIL] Win Rate: 0.00% (threshold: > 50%)
+  [FAIL] Trade count: 0 (threshold: >= 50 (IS))
+  [FAIL] Deflated Sharpe Ratio (z-score): -32.153 (threshold: > 0)
+  [FAIL] Walk-forward windows passed: 0/4 (threshold: >= 3)
+  [FAIL] Walk-forward OOS/IS consistency: 0.0 (threshold: > 0.70)
+  [FAIL] Post-cost Sharpe: 0.0 (threshold: > 0.7)
+  [FAIL] Parameter sensitivity: see heatmap (threshold: < 30% change)
+  [PASS] Test period: 19.0 years (threshold: >= 5 years)
+
+FAILING CRITERIA:
+  - IS Sharpe=0.000 (need > 1.0)
+  - OOS Sharpe=0.000 (need > 0.7)
+  - Win rate=0.00% (need > 50%)
+  - Trade count=0 (need >= 50 IS)
+  - DSR=-32.153 (need > 0)
+  - WF windows passed=0/4 (need >= 3)
+  - WF consistency=0.000 (need >= 0.70)
+  - Sensitivity: >30% Sharpe change detected
+
+RECOMMENDATION:
+DO NOT PROCEED to paper trading. Requires point-in-time earnings data source (e.g., Compustat, Bloomberg earnings calendar) to run the full 2007–2021 IS window. With available-data IS (2023–2024), strategy shows structural promise but insufficient historical validation for Gate 1 approval.
+
+SUPPLEMENTAL ANALYSIS (earnings-available window only):
+  Alt IS (2023-01-01→2024-06-30): Sharpe=0.000, MDD=0.00%, Trades=0
+  WF (4-fold within 2023–2025): 0/4 passed, avg OOS Sharpe=0.000
+  MC p5 Sharpe=0.000 (WEAK)
+  Permutation p-value=1.0000 (FAIL alpha test)
+  DSR z-score=-32.1527 (FAIL)
+
+DATA QUALITY NOTES:
+  OOS DQ: PASS
+  CRITICAL: yfinance earnings_dates covers only ~12 quarters (~3 years). IS window (2007–2021) generates near-zero trades. OOS window (2022–2025) uses available earnings data. Alt IS (2023–2024) used for sensitivity analysis and WF. Survivorship bias present: universe = current-day top 200 S&P 500.
+
+PF-2 TRAILING POSITION DRAWDOWN:
+  GFC 2008-2009: None
+  Rate Shock 2022: None
+  No regime transitions or trades found
+
+SENSITIVITY HEATMAP (alt IS, gap_threshold × hold_days):
+  gap_0.02_hold_10: Sharpe=0.000
+  gap_0.02_hold_20: Sharpe=0.000
+  gap_0.02_hold_40: Sharpe=0.000
+  gap_0.03_hold_10: Sharpe=0.000
+  gap_0.03_hold_20: Sharpe=0.000
+  gap_0.03_hold_40: Sharpe=0.000
+  gap_0.04_hold_10: Sharpe=0.000
+  gap_0.04_hold_20: Sharpe=0.000
+  gap_0.04_hold_40: Sharpe=0.000
+  gap_0.05_hold_10: Sharpe=0.000
+  gap_0.05_hold_20: Sharpe=0.000
+  gap_0.05_hold_40: Sharpe=0.000
+
+REGIME SLICES:
+  pre_gfc_2007: Sharpe=0.000, Trades=0, MDD=0.00%
+  gfc_2008_2009: Sharpe=0.000, Trades=0, MDD=0.00%
+  recovery_2010_2015: Sharpe=0.000, Trades=0, MDD=0.00%
+  bull_2016_2019: Sharpe=0.000, Trades=0, MDD=0.00%
+  covid_2020: Sharpe=0.000, Trades=0, MDD=0.00%
+  rate_shock_2022: Sharpe=0.000, Trades=0, MDD=0.00%
+  post_rate_2023_2025: Sharpe=0.000, Trades=0, MDD=0.00%
+
+SURVIVORSHIP BIAS CAVEAT:
+  Universe = current-day top 200 S&P 500 by market cap.
+  Not point-in-time. Historical delisted/demoted tickers excluded.
+  Results are biased upward by survivorship.
