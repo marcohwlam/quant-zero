@@ -6,7 +6,7 @@
 **Last updated:** 2026-03-16 (v1.1 — added Pre-Flight Gate Checklist PF-1 through PF-4 per QUA-181)
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** hypothesis
+**Status:** approved-conditional (forwarded to Engineering Director — QUA-184)
 
 ## Economic Rationale
 
