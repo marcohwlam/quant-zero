@@ -5,7 +5,7 @@
 **Date:** 2026-03-16
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** testing
+**Status:** abandoned (Gate 1 FAIL — p=0.988 entry noise; 2026-03-16)
 
 ## Economic Rationale
 
