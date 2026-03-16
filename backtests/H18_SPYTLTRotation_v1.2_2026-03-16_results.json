@@ -1,0 +1,1107 @@
+{
+  "strategy_name": "H18_SPYTLTRotation_v1.2",
+  "date": "2026-03-16",
+  "asset_class": "equities",
+  "is_sharpe": 0.33759861793238527,
+  "is_max_drawdown": -0.17745277138970117,
+  "is_win_rate": 0.4900662251655629,
+  "is_profit_factor": 1.166428676386478,
+  "is_trade_count": 151,
+  "is_trades_per_year": 30.2,
+  "is_total_return": 0.17201932987590918,
+  "oos_sharpe": 0.18632278755857762,
+  "oos_max_drawdown": -0.14602625908379172,
+  "oos_win_rate": 0.4,
+  "oos_profit_factor": 1.054505441826015,
+  "oos_trade_count": 85,
+  "oos_trades_per_year": 42.5,
+  "oos_total_return": 0.03325969265838147,
+  "win_rate": 0.4900662251655629,
+  "profit_factor": 1.166428676386478,
+  "trade_count": 151,
+  "dsr": -48.326781552855,
+  "dsr_pass": "False",
+  "wf_windows_passed": 1,
+  "wf_consistency_score": 1.6878400844232226,
+  "sensitivity_pass": false,
+  "sensitivity_max_delta": 0.8625966694064728,
+  "post_cost_sharpe": 0.18632278755857762,
+  "look_ahead_bias_flag": false,
+  "gate1_pass": false,
+  "mc_p5_sharpe": -1.3544295219429239,
+  "mc_median_sharpe": 0.7739543066360063,
+  "mc_p95_sharpe": 2.810086252065998,
+  "sharpe_ci_low": -0.534965591855497,
+  "sharpe_ci_high": 1.3680338585637986,
+  "mdd_ci_low": -0.3703988238498372,
+  "mdd_ci_high": -0.10953748014730862,
+  "win_rate_ci_low": 0.4895833333333333,
+  "win_rate_ci_high": 0.5572916666666666,
+  "market_impact_bps": 0.01725,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 6.48e-06,
+  "permutation_pvalue": 0.414,
+  "permutation_test_pass": false,
+  "wf_sharpe_std": 1.6323024977211298,
+  "wf_sharpe_min": -0.6932457991919522,
+  "pf1_gate": {
+    "trade_count_total": 151,
+    "is_years": 4.996577686516085,
+    "annual_rate": 30.22,
+    "min_per_year": 30,
+    "gate_pass": true,
+    "message": "PASS: 30.2/yr \u2265 30/yr"
+  },
+  "pf4_vol_filter_2022": {
+    "first_trigger_date": "2022-02-08",
+    "trigger_before_cutoff": true,
+    "cutoff_date": "2022-03-01",
+    "total_trigger_days_2022": 177,
+    "pass": true,
+    "message": "PASS: filter triggers 2022-02-08 \u2264 2022-03-01",
+    "vol_filter_spy_pct": 0.2,
+    "vol_filter_tlt_pct": 0.12
+  },
+  "spy_tlt_60d_corr_breakdown_first_date": null,
+  "spy_tlt_60d_corr_breakdown_total_days": 0,
+  "is_holding_pct": {
+    "SPY_100pct": 0.4686,
+    "TLT_100pct": 0.2828,
+    "neutral_50_50": 0.0,
+    "_cash_regime": 0.2486
+  },
+  "oos_holding_pct": {
+    "SPY_100pct": 0.6647,
+    "TLT_100pct": 0.3074,
+    "neutral_50_50": 0.0,
+    "_cash_regime": 0.0279
+  },
+  "wf_windows": [
+    {
+      "train_period": "2018-01-01 to 2019-06-30",
+      "test_period": "2019-07-01 to 2019-12-31",
+      "train_sharpe": 0.3628,
+      "test_sharpe": 3.2584,
+      "train_trades": 46,
+      "test_trades": 8,
+      "pass": true
+    },
+    {
+      "train_period": "2018-01-01 to 2020-06-30",
+      "test_period": "2020-07-01 to 2020-12-31",
+      "train_sharpe": 0.9988,
+      "test_sharpe": -0.1411,
+      "train_trades": 67,
+      "test_trades": 19,
+      "pass": false
+    },
+    {
+      "train_period": "2018-01-01 to 2021-06-30",
+      "test_period": "2021-07-01 to 2021-12-31",
+      "train_sharpe": 0.7184,
+      "test_sharpe": -0.6056,
+      "train_trades": 111,
+      "test_trades": 27,
+      "pass": false
+    },
+    {
+      "train_period": "2018-01-01 to 2021-12-31",
+      "test_period": "2022-01-01 to 2022-12-31",
+      "train_sharpe": 0.5565,
+      "test_sharpe": -0.6932,
+      "train_trades": 139,
+      "test_trades": 12,
+      "pass": false
+    }
+  ],
+  "sensitivity_heatmap": [
+    {
+      "mom_lookback_days": 5,
+      "threshold": 0.0,
+      "sharpe": 0.09573074264164713,
+      "trade_count": 197
+    },
+    {
+      "mom_lookback_days": 5,
+      "threshold": 0.005,
+      "sharpe": 0.0463871658817147,
+      "trade_count": 336
+    },
+    {
+      "mom_lookback_days": 5,
+      "threshold": 0.01,
+      "sharpe": 0.13358635359317678,
+      "trade_count": 442
+    },
+    {
+      "mom_lookback_days": 10,
+      "threshold": 0.0,
+      "sharpe": 0.33759861793238527,
+      "trade_count": 151
+    },
+    {
+      "mom_lookback_days": 10,
+      "threshold": 0.005,
+      "sharpe": 0.4277827033245772,
+      "trade_count": 228
+    },
+    {
+      "mom_lookback_days": 10,
+      "threshold": 0.01,
+      "sharpe": 0.2575490115462902,
+      "trade_count": 338
+    },
+    {
+      "mom_lookback_days": 15,
+      "threshold": 0.0,
+      "sharpe": 0.14037095974398325,
+      "trade_count": 124
+    },
+    {
+      "mom_lookback_days": 15,
+      "threshold": 0.005,
+      "sharpe": 0.13282721856475993,
+      "trade_count": 187
+    },
+    {
+      "mom_lookback_days": 15,
+      "threshold": 0.01,
+      "sharpe": 0.11566342506240279,
+      "trade_count": 273
+    }
+  ],
+  "oos_data_quality": {
+    "strategy_name": "H18_SPYTLTRotation_v1.2",
+    "oos_total_rows": 501,
+    "oos_clean_rows": 501,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "SPY": 0,
+      "TLT": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "sharpe_in_sample": 0.33759861793238527,
+  "sharpe_out_of_sample": 0.18632278755857762,
+  "max_dd_in_sample": 0.17745277138970117,
+  "max_dd_out_of_sample": 0.14602625908379172,
+  "win_rate_in_sample": 0.4900662251655629,
+  "trades_in_sample": 151,
+  "dsr_zscore": -48.326781552855,
+  "param_sensitivity_passed": false,
+  "param_sensitivity_max_delta": 0.8625966694064728,
+  "post_cost_sharpe_oos": 0.18632278755857762,
+  "post_cost_sharpe_is": 0.33759861793238527,
+  "n_trials": 9,
+  "trade_log_is": [
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-01-03",
+      "sell_date": "2018-02-05",
+      "cost_basis": 25000.0,
+      "net_proceeds": 24370.0445,
+      "pnl": -629.9555,
+      "return_pct": -0.025198
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-02-05",
+      "sell_date": "2018-02-20",
+      "cost_basis": 24370.0445,
+      "net_proceeds": 23834.7914,
+      "pnl": -535.2531,
+      "return_pct": -0.021964
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-02-20",
+      "sell_date": "2018-03-01",
+      "cost_basis": 23834.7914,
+      "net_proceeds": 23485.3001,
+      "pnl": -349.4913,
+      "return_pct": -0.014663
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-03-01",
+      "sell_date": "2018-03-05",
+      "cost_basis": 23485.3001,
+      "net_proceeds": 23205.5795,
+      "pnl": -279.7206,
+      "return_pct": -0.01191
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-03-05",
+      "sell_date": "2018-03-07",
+      "cost_basis": 23205.5795,
+      "net_proceeds": 23231.6106,
+      "pnl": 26.0311,
+      "return_pct": 0.001122
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-03-07",
+      "sell_date": "2018-03-09",
+      "cost_basis": 23231.6106,
+      "net_proceeds": 23186.113,
+      "pnl": -45.4976,
+      "return_pct": -0.001958
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-03-09",
+      "sell_date": "2018-03-12",
+      "cost_basis": 23186.113,
+      "net_proceeds": 23132.8848,
+      "pnl": -53.2282,
+      "return_pct": -0.002296
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-03-12",
+      "sell_date": "2018-03-15",
+      "cost_basis": 23132.8848,
+      "net_proceeds": 23428.6794,
+      "pnl": 295.7946,
+      "return_pct": 0.012787
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-03-15",
+      "sell_date": "2018-03-19",
+      "cost_basis": 23428.6794,
+      "net_proceeds": 23112.6181,
+      "pnl": -316.0613,
+      "return_pct": -0.01349
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-03-19",
+      "sell_date": "2018-04-11",
+      "cost_basis": 23112.6181,
+      "net_proceeds": 23539.2553,
+      "pnl": 426.6372,
+      "return_pct": 0.018459
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-04-11",
+      "sell_date": "2018-05-02",
+      "cost_basis": 23539.2553,
+      "net_proceeds": 23464.7457,
+      "pnl": -74.5096,
+      "return_pct": -0.003165
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-05-02",
+      "sell_date": "2018-05-08",
+      "cost_basis": 23464.7457,
+      "net_proceeds": 23519.9096,
+      "pnl": 55.1639,
+      "return_pct": 0.002351
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-05-08",
+      "sell_date": "2018-05-25",
+      "cost_basis": 23519.9096,
+      "net_proceeds": 23955.7424,
+      "pnl": 435.8328,
+      "return_pct": 0.01853
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-05-25",
+      "sell_date": "2018-06-06",
+      "cost_basis": 23955.7424,
+      "net_proceeds": 23808.2691,
+      "pnl": -147.4733,
+      "return_pct": -0.006156
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-06-06",
+      "sell_date": "2018-06-07",
+      "cost_basis": 23808.2691,
+      "net_proceeds": 23780.8992,
+      "pnl": -27.3699,
+      "return_pct": -0.00115
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-06-07",
+      "sell_date": "2018-06-08",
+      "cost_basis": 23780.8992,
+      "net_proceeds": 23683.1369,
+      "pnl": -97.7623,
+      "return_pct": -0.004111
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-06-08",
+      "sell_date": "2018-06-19",
+      "cost_basis": 23683.1369,
+      "net_proceeds": 23534.9062,
+      "pnl": -148.2307,
+      "return_pct": -0.006259
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-06-19",
+      "sell_date": "2018-07-10",
+      "cost_basis": 23534.9062,
+      "net_proceeds": 23752.9411,
+      "pnl": 218.0349,
+      "return_pct": 0.009264
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-07-10",
+      "sell_date": "2018-08-09",
+      "cost_basis": 23752.9411,
+      "net_proceeds": 24253.161,
+      "pnl": 500.2199,
+      "return_pct": 0.021059
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-08-09",
+      "sell_date": "2018-08-14",
+      "cost_basis": 24253.161,
+      "net_proceeds": 24297.0394,
+      "pnl": 43.8784,
+      "return_pct": 0.001809
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-08-14",
+      "sell_date": "2018-08-15",
+      "cost_basis": 24297.0394,
+      "net_proceeds": 24090.5166,
+      "pnl": -206.5228,
+      "return_pct": -0.0085
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-08-15",
+      "sell_date": "2018-08-24",
+      "cost_basis": 24090.5166,
+      "net_proceeds": 24352.5804,
+      "pnl": 262.0638,
+      "return_pct": 0.010878
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-08-24",
+      "sell_date": "2018-10-10",
+      "cost_basis": 24352.5804,
+      "net_proceeds": 23654.5413,
+      "pnl": -698.0391,
+      "return_pct": -0.028664
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-10-10",
+      "sell_date": "2018-11-05",
+      "cost_basis": 23654.5413,
+      "net_proceeds": 23466.3764,
+      "pnl": -188.1649,
+      "return_pct": -0.007955
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-11-05",
+      "sell_date": "2018-11-14",
+      "cost_basis": 23466.3764,
+      "net_proceeds": 23168.3758,
+      "pnl": -298.0006,
+      "return_pct": -0.012699
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-11-14",
+      "sell_date": "2018-11-28",
+      "cost_basis": 23168.3758,
+      "net_proceeds": 23215.6358,
+      "pnl": 47.26,
+      "return_pct": 0.00204
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-11-28",
+      "sell_date": "2018-11-30",
+      "cost_basis": 23215.6358,
+      "net_proceeds": 23281.8067,
+      "pnl": 66.1709,
+      "return_pct": 0.00285
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-11-30",
+      "sell_date": "2018-12-03",
+      "cost_basis": 23281.8067,
+      "net_proceeds": 23421.0934,
+      "pnl": 139.2867,
+      "return_pct": 0.005983
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2018-12-03",
+      "sell_date": "2018-12-04",
+      "cost_basis": 23421.0934,
+      "net_proceeds": 22638.57,
+      "pnl": -782.5234,
+      "return_pct": -0.033411
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2018-12-04",
+      "sell_date": "2019-01-04",
+      "cost_basis": 22638.57,
+      "net_proceeds": 23492.51,
+      "pnl": 853.94,
+      "return_pct": 0.037721
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2019-01-04",
+      "sell_date": "2019-03-07",
+      "cost_basis": 23492.51,
+      "net_proceeds": 25571.2611,
+      "pnl": 2078.7511,
+      "return_pct": 0.088486
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2019-03-07",
+      "sell_date": "2019-03-19",
+      "cost_basis": 25571.2611,
+      "net_proceeds": 25616.8031,
+      "pnl": 45.542,
+      "return_pct": 0.001781
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2019-03-19",
+      "sell_date": "2019-03-20",
+      "cost_basis": 25616.8031,
+      "net_proceeds": 25513.1323,
+      "pnl": -103.6708,
+      "return_pct": -0.004047
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2019-03-20",
+      "sell_date": "2019-03-21",
+      "cost_basis": 25513.1323,
+      "net_proceeds": 25540.9999,
+      "pnl": 27.8676,
+      "return_pct": 0.001092
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2019-03-21",
+      "sell_date": "2019-03-22",
+      "cost_basis": 25540.9999,
+      "net_proceeds": 25023.386,
+      "pnl": -517.6139,
+      "return_pct": -0.020266
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2019-03-22",
+      "sell_date": "2019-04-03",
+      "cost_basis": 25023.386,
+      "net_proceeds": 24781.9586,
+      "pnl": -241.4274,
+      "return_pct": -0.009648
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2019-04-03",
+      "sell_date": "2019-04-04",
+      "cost_basis": 24781.9586,
+      "net_proceeds": 24821.8712,
+      "pnl": 39.9126,
+      "return_pct": 0.001611
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2019-04-04",
+      "sell_date": "2019-04-05",
+      "cost_basis": 24821.8712,
+      "net_proceeds": 24826.4759,
+      "pnl": 4.6047,
+      "return_pct": 0.000186
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2019-04-05",
+      "sell_date": "2019-05-01",
+      "cost_basis": 24826.4759,
+      "net_proceeds": 25079.1329,
+      "pnl": 252.657,
+      "return_pct": 0.010177
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2019-05-01",
+      "sell_date": "2019-05-03",
+      "cost_basis": 25079.1329,
+      "net_proceeds": 25002.9554,
+      "pnl": -76.1775,
+      "return_pct": -0.003037
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2019-05-03",
+      "sell_date": "2019-05-06",
+      "cost_basis": 25002.9554,
+      "net_proceeds": 24874.2147,
+      "pnl": -128.7407,
+      "return_pct": -0.005149
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2019-05-06",
+      "sell_date": "2019-06-11",
+      "cost_basis": 24874.2147,
+      "net_proceeds": 26219.0138,
+      "pnl": 1344.7991,
+      "return_pct": 0.054064
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2019-06-11",
+      "sell_date": "2019-06-25",
+      "cost_basis": 26219.0138,
+      "net_proceeds": 26488.5924,
+      "pnl": 269.5786,
+      "return_pct": 0.010282
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2019-06-25",
+      "sell_date": "2019-06-26",
+      "cost_basis": 26488.5924,
+      "net_proceeds": 26290.2014,
+      "pnl": -198.391,
+      "return_pct": -0.00749
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2019-06-26",
+      "sell_date": "2019-06-27",
+      "cost_basis": 26290.2014,
+      "net_proceeds": 26356.0104,
+      "pnl": 65.809,
+      "return_pct": 0.002503
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2019-06-27",
+      "sell_date": "2019-06-28",
+      "cost_basis": 26356.0104,
+      "net_proceeds": 26309.2667,
+      "pnl": -46.7437,
+      "return_pct": -0.001774
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2019-06-28",
+      "sell_date": "2019-07-08",
+      "cost_basis": 26309.2667,
+      "net_proceeds": 26624.6146,
+      "pnl": 315.3479,
+      "return_pct": 0.011986
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2019-07-08",
+      "sell_date": "2019-07-09",
+      "cost_basis": 26624.6146,
+      "net_proceeds": 26585.3923,
+      "pnl": -39.2223,
+      "return_pct": -0.001473
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2019-07-09",
+      "sell_date": "2019-07-25",
+      "cost_basis": 26585.3923,
+      "net_proceeds": 26808.9204,
+      "pnl": 223.5281,
+      "return_pct": 0.008408
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2019-07-25",
+      "sell_date": "2019-08-14",
+      "cost_basis": 26808.9204,
+      "net_proceeds": 29805.4551,
+      "pnl": 2996.5347,
+      "return_pct": 0.111774
+    }
+  ],
+  "trade_log_oos": [
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-01-04",
+      "sell_date": "2023-01-05",
+      "cost_basis": 25000.0,
+      "net_proceeds": 24689.2392,
+      "pnl": -310.7608,
+      "return_pct": -0.01243
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-01-05",
+      "sell_date": "2023-01-10",
+      "cost_basis": 24689.2392,
+      "net_proceeds": 24831.1765,
+      "pnl": 141.9373,
+      "return_pct": 0.005749
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-01-10",
+      "sell_date": "2023-01-11",
+      "cost_basis": 24831.1765,
+      "net_proceeds": 25119.3817,
+      "pnl": 288.2052,
+      "return_pct": 0.011607
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-01-11",
+      "sell_date": "2023-01-20",
+      "cost_basis": 25119.3817,
+      "net_proceeds": 25214.8012,
+      "pnl": 95.4195,
+      "return_pct": 0.003799
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-01-20",
+      "sell_date": "2023-01-25",
+      "cost_basis": 25214.8012,
+      "net_proceeds": 25473.3031,
+      "pnl": 258.5019,
+      "return_pct": 0.010252
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-01-25",
+      "sell_date": "2023-01-26",
+      "cost_basis": 25473.3031,
+      "net_proceeds": 25326.5257,
+      "pnl": -146.7774,
+      "return_pct": -0.005762
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-01-26",
+      "sell_date": "2023-02-22",
+      "cost_basis": 25326.5257,
+      "net_proceeds": 24912.3273,
+      "pnl": -414.1984,
+      "return_pct": -0.016354
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-02-22",
+      "sell_date": "2023-02-23",
+      "cost_basis": 24912.3273,
+      "net_proceeds": 25127.6559,
+      "pnl": 215.3286,
+      "return_pct": 0.008643
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-02-23",
+      "sell_date": "2023-02-27",
+      "cost_basis": 25127.6559,
+      "net_proceeds": 24918.2685,
+      "pnl": -209.3874,
+      "return_pct": -0.008333
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-02-27",
+      "sell_date": "2023-03-06",
+      "cost_basis": 24918.2685,
+      "net_proceeds": 24914.7563,
+      "pnl": -3.5122,
+      "return_pct": -0.000141
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-03-06",
+      "sell_date": "2023-03-07",
+      "cost_basis": 24914.7563,
+      "net_proceeds": 24507.6532,
+      "pnl": -407.1031,
+      "return_pct": -0.01634
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-03-07",
+      "sell_date": "2023-03-24",
+      "cost_basis": 24507.6532,
+      "net_proceeds": 25714.919,
+      "pnl": 1207.2658,
+      "return_pct": 0.049261
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-03-24",
+      "sell_date": "2023-04-25",
+      "cost_basis": 25714.919,
+      "net_proceeds": 26359.0346,
+      "pnl": 644.1156,
+      "return_pct": 0.025048
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-04-25",
+      "sell_date": "2023-04-26",
+      "cost_basis": 26359.0346,
+      "net_proceeds": 26049.1054,
+      "pnl": -309.9292,
+      "return_pct": -0.011758
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-04-26",
+      "sell_date": "2023-04-28",
+      "cost_basis": 26049.1054,
+      "net_proceeds": 26766.9547,
+      "pnl": 717.8493,
+      "return_pct": 0.027558
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-04-28",
+      "sell_date": "2023-05-01",
+      "cost_basis": 26766.9547,
+      "net_proceeds": 25966.1654,
+      "pnl": -800.7893,
+      "return_pct": -0.029917
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-05-01",
+      "sell_date": "2023-05-02",
+      "cost_basis": 25966.1654,
+      "net_proceeds": 25647.9841,
+      "pnl": -318.1813,
+      "return_pct": -0.012254
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-05-02",
+      "sell_date": "2023-05-08",
+      "cost_basis": 25647.9841,
+      "net_proceeds": 25066.7338,
+      "pnl": -581.2503,
+      "return_pct": -0.022663
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-05-08",
+      "sell_date": "2023-05-11",
+      "cost_basis": 25066.7338,
+      "net_proceeds": 25004.0009,
+      "pnl": -62.7329,
+      "return_pct": -0.002503
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-05-11",
+      "sell_date": "2023-05-12",
+      "cost_basis": 25004.0009,
+      "net_proceeds": 24767.0647,
+      "pnl": -236.9362,
+      "return_pct": -0.009476
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-05-12",
+      "sell_date": "2023-05-15",
+      "cost_basis": 24767.0647,
+      "net_proceeds": 24827.0057,
+      "pnl": 59.941,
+      "return_pct": 0.00242
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-05-15",
+      "sell_date": "2023-05-16",
+      "cost_basis": 24827.0057,
+      "net_proceeds": 24724.7624,
+      "pnl": -102.2433,
+      "return_pct": -0.004118
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-05-16",
+      "sell_date": "2023-06-26",
+      "cost_basis": 24724.7624,
+      "net_proceeds": 26071.6554,
+      "pnl": 1346.893,
+      "return_pct": 0.054475
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-06-26",
+      "sell_date": "2023-06-29",
+      "cost_basis": 26071.6554,
+      "net_proceeds": 25614.5885,
+      "pnl": -457.0669,
+      "return_pct": -0.017531
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-06-29",
+      "sell_date": "2023-08-17",
+      "cost_basis": 25614.5885,
+      "net_proceeds": 25482.0585,
+      "pnl": -132.53,
+      "return_pct": -0.005174
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-08-17",
+      "sell_date": "2023-08-18",
+      "cost_basis": 25482.0585,
+      "net_proceeds": 25543.2974,
+      "pnl": 61.2389,
+      "return_pct": 0.002403
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-08-18",
+      "sell_date": "2023-08-24",
+      "cost_basis": 25543.2974,
+      "net_proceeds": 25539.9309,
+      "pnl": -3.3665,
+      "return_pct": -0.000132
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-08-24",
+      "sell_date": "2023-08-30",
+      "cost_basis": 25539.9309,
+      "net_proceeds": 25860.6758,
+      "pnl": 320.7449,
+      "return_pct": 0.012559
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-08-30",
+      "sell_date": "2023-08-31",
+      "cost_basis": 25860.6758,
+      "net_proceeds": 25796.3976,
+      "pnl": -64.2782,
+      "return_pct": -0.002486
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-08-31",
+      "sell_date": "2023-09-01",
+      "cost_basis": 25796.3976,
+      "net_proceeds": 25366.0285,
+      "pnl": -430.3691,
+      "return_pct": -0.016683
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-09-01",
+      "sell_date": "2023-09-19",
+      "cost_basis": 25366.0285,
+      "net_proceeds": 24951.5011,
+      "pnl": -414.5274,
+      "return_pct": -0.016342
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-09-19",
+      "sell_date": "2023-09-21",
+      "cost_basis": 24951.5011,
+      "net_proceeds": 24359.3904,
+      "pnl": -592.1107,
+      "return_pct": -0.02373
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-09-21",
+      "sell_date": "2023-10-20",
+      "cost_basis": 24359.3904,
+      "net_proceeds": 23759.0428,
+      "pnl": -600.3476,
+      "return_pct": -0.024645
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-10-20",
+      "sell_date": "2023-10-23",
+      "cost_basis": 23759.0428,
+      "net_proceeds": 24017.0946,
+      "pnl": 258.0518,
+      "return_pct": 0.010861
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-10-23",
+      "sell_date": "2023-10-24",
+      "cost_basis": 24017.0946,
+      "net_proceeds": 24173.3655,
+      "pnl": 156.2709,
+      "return_pct": 0.006507
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-10-24",
+      "sell_date": "2023-10-25",
+      "cost_basis": 24173.3655,
+      "net_proceeds": 23608.3469,
+      "pnl": -565.0186,
+      "return_pct": -0.023374
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-10-25",
+      "sell_date": "2023-10-26",
+      "cost_basis": 23608.3469,
+      "net_proceeds": 23301.7248,
+      "pnl": -306.6221,
+      "return_pct": -0.012988
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-10-26",
+      "sell_date": "2023-11-06",
+      "cost_basis": 23301.7248,
+      "net_proceeds": 23920.2405,
+      "pnl": 618.5157,
+      "return_pct": 0.026544
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-11-06",
+      "sell_date": "2023-11-07",
+      "cost_basis": 23920.2405,
+      "net_proceeds": 23963.7387,
+      "pnl": 43.4982,
+      "return_pct": 0.001818
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-11-07",
+      "sell_date": "2023-11-09",
+      "cost_basis": 23963.7387,
+      "net_proceeds": 23784.387,
+      "pnl": -179.3517,
+      "return_pct": -0.007484
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-11-09",
+      "sell_date": "2023-11-14",
+      "cost_basis": 23784.387,
+      "net_proceeds": 24575.4966,
+      "pnl": 791.1096,
+      "return_pct": 0.033262
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-11-14",
+      "sell_date": "2023-11-15",
+      "cost_basis": 24575.4966,
+      "net_proceeds": 24203.2008,
+      "pnl": -372.2958,
+      "return_pct": -0.015149
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-11-15",
+      "sell_date": "2023-11-20",
+      "cost_basis": 24203.2008,
+      "net_proceeds": 24424.6775,
+      "pnl": 221.4767,
+      "return_pct": 0.009151
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-11-20",
+      "sell_date": "2023-11-21",
+      "cost_basis": 24424.6775,
+      "net_proceeds": 24386.3563,
+      "pnl": -38.3212,
+      "return_pct": -0.001569
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-11-21",
+      "sell_date": "2023-11-27",
+      "cost_basis": 24386.3563,
+      "net_proceeds": 24426.4284,
+      "pnl": 40.0721,
+      "return_pct": 0.001643
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2023-11-27",
+      "sell_date": "2023-12-29",
+      "cost_basis": 24426.4284,
+      "net_proceeds": 26593.7951,
+      "pnl": 2167.3667,
+      "return_pct": 0.08873
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2023-12-29",
+      "sell_date": "2024-01-03",
+      "cost_basis": 26593.7951,
+      "net_proceeds": 26202.1871,
+      "pnl": -391.608,
+      "return_pct": -0.014726
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2024-01-03",
+      "sell_date": "2024-01-04",
+      "cost_basis": 26202.1871,
+      "net_proceeds": 25775.2452,
+      "pnl": -426.9419,
+      "return_pct": -0.016294
+    },
+    {
+      "ticker": "SPY",
+      "buy_date": "2024-01-04",
+      "sell_date": "2024-02-01",
+      "cost_basis": 25775.2452,
+      "net_proceeds": 26956.7725,
+      "pnl": 1181.5273,
+      "return_pct": 0.04584
+    },
+    {
+      "ticker": "TLT",
+      "buy_date": "2024-02-01",
+      "sell_date": "2024-02-02",
+      "cost_basis": 26956.7725,
+      "net_proceeds": 26331.8896,
+      "pnl": -624.8829,
+      "return_pct": -0.023181
+    }
+  ]
+}
