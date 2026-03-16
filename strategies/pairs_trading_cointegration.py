@@ -620,12 +620,57 @@ def _empty_metrics(start: str, end: str) -> dict:
 # ── Entry point ───────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Pairs Trading Cointegration strategy backtest runner."
+    )
+    parser.add_argument(
+        "--plot",
+        action="store_true",
+        help="Open an interactive Plotly equity-curve chart in the default browser after the IS backtest.",
+    )
+    args = parser.parse_args()
+
     print("=== Pairs Trading Cointegration — Quick Smoke Test ===\n")
 
     print("IS (2018-01-01 → 2021-12-31):")
     is_r = run_strategy(start="2018-01-01", end="2021-12-31")
     print(f"  Sharpe: {is_r['sharpe']:.3f}  MDD: {is_r['max_drawdown']:.1%}  "
           f"Trades: {is_r['trade_count']}  WinRate: {is_r['win_rate']:.1%}")
+
+    if args.plot:
+        import plotly.graph_objects as go
+        from plotly.subplots import make_subplots
+
+        equity_curve = pd.Series(is_r["equity_curve"]).sort_index()
+        peak = equity_curve.cummax()
+        drawdown = (equity_curve - peak) / peak * 100  # percentage drawdown
+
+        fig = make_subplots(
+            rows=2, cols=1,
+            shared_xaxes=True,
+            subplot_titles=("Equity Curve (IS 2018–2021)", "Drawdown (%)"),
+            row_heights=[0.7, 0.3],
+        )
+        fig.add_trace(
+            go.Scatter(x=equity_curve.index, y=equity_curve.values, name="Portfolio Value",
+                       line=dict(color="royalblue")),
+            row=1, col=1,
+        )
+        fig.add_trace(
+            go.Scatter(x=drawdown.index, y=drawdown.values, name="Drawdown %",
+                       fill="tozeroy", line=dict(color="crimson")),
+            row=2, col=1,
+        )
+        fig.update_layout(
+            title="Pairs Trading Cointegration — IS Backtest",
+            xaxis_title="Date",
+            yaxis_title="Portfolio Value ($)",
+            yaxis2_title="Drawdown (%)",
+            height=600,
+        )
+        fig.show()
 
     print("\nOOS (2022-01-01 → 2023-12-31):")
     oos_r = run_strategy(start="2022-01-01", end="2023-12-31")
