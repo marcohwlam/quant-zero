@@ -282,6 +282,25 @@ Apply realistic transaction costs in all backtests. The canonical model is maint
 
 Default to equities if asset class is not specified. For equity backtests, always compute market impact and include `market_impact_bps` in the output JSON (see Statistical Rigor Pipeline above).
 
+## Gate 1 Verdict Template Enforcement (Required — run before writing verdict to disk)
+
+All Gate 1 verdict JSON files must pass structured template validation before being
+written to disk or sent to Risk Director review. This is enforced automatically
+by `gate1_reporter.py` via `orchestrator/gate1_verdict_validator.py` (added QUA-221).
+
+The validator checks:
+1. All required top-level fields present and non-null: `strategy_name`, `date`, `overall_verdict`, `recommendation`, `confidence`, `metrics`
+2. `overall_verdict` is one of: `PASS`, `FAIL`, `CONDITIONAL PASS`
+3. All required metric names present in the `metrics` array (including IS Sharpe, OOS Sharpe, Walk-forward windows passed, DSR, Post-cost Sharpe, etc.)
+4. Each metric entry has all required sub-fields: `name`, `value`, `threshold`, `passed`
+5. `oos_data_quality` report present (warning if absent — OOS NaN validation may not have run)
+
+**On validation error:** `generate_and_save_verdict()` raises `VerdictValidationError` before writing to disk. The strategy must not proceed to Risk Director review. Mark task `blocked` and notify Engineering Director.
+
+**On validation warning:** The verdict is saved with a `_template_validation.warnings` field logged. The strategy may proceed.
+
+---
+
 ## Output Format
 
 Every completed backtest must produce a JSON metrics file at `/backtests/{strategy_name}_{date}.json`:
