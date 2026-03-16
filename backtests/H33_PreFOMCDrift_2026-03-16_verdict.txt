@@ -1,0 +1,160 @@
+=============================================================================
+GATE 1 VERDICT — H33 Pre-FOMC Announcement Drift
+Date: 2026-03-16
+Strategy File: strategies/h33_pre_fomc_drift.py
+Backtest Runner: QUA-261
+=============================================================================
+
+OVERALL VERDICT: FAIL
+RECOMMENDATION: DO NOT PROCEED — Return to Strategy Coder for rework
+CONFIDENCE: HIGH
+
+=============================================================================
+IS PERIOD: 2007-01-01 to 2021-12-31
+OOS PERIOD: 2022-01-01 to 2025-12-31
+ASSET CLASS: Equities (SPY ETF)
+=============================================================================
+
+METRIC SCORECARD
+─────────────────────────────────────────────────────────────────────────────
+Metric                          Value       Threshold   Status
+─────────────────────────────────────────────────────────────────────────────
+IS Sharpe (filtered)            0.4097      > 1.0       FAIL ❌
+IS Sharpe (unfiltered)          0.4097      > 1.0       FAIL ❌
+OOS Sharpe                      0.0201      > 0.7       FAIL ❌
+IS Max Drawdown                 -6.61%      < 20%       PASS ✅
+OOS Max Drawdown                -7.97%      < 25%       PASS ✅
+Win Rate (IS)                   48.74%      > 50%       FAIL ❌
+Profit Factor (IS)              1.48        > 1.0       PASS ✅
+IS Trade Count                  119         ≥ 100       PASS ✅
+Walk-Forward Windows            4/5 pass    ≥ 3         PASS ✅
+MC p5 Sharpe                   -0.093       ≥ 0.5       FAIL ❌
+Permutation p-value             0.130       ≤ 0.05      FAIL ❌
+DSR                             1.000       > 0         PASS ✅
+Parameter Sensitivity           0.0%        < 30%       PASS ✅
+
+CRITICAL FAILING CRITERIA:
+  1. IS Sharpe (0.41) — below threshold of 1.0 by 59%. Both filtered and
+     unfiltered identical (SHY filter never triggered in IS period).
+  2. OOS Sharpe (0.02) — catastrophic failure. Pre-FOMC drift has essentially
+     zero OOS alpha in the 2022-2025 period.
+  3. Win Rate (48.74%) — below 50% threshold.
+  4. MC p5 Sharpe (-0.09) — pessimistic bound is negative; no robust alpha
+     in 5th percentile of 1,000 resamples.
+  5. Permutation p-value (0.13) — fails significance test. Cannot reject
+     null hypothesis of no alpha at 5% level.
+
+=============================================================================
+STATISTICAL RIGOR PIPELINE
+=============================================================================
+
+Monte Carlo (1,000 resamples on IS trade PnL):
+  p5  = -0.093  [WEAK — below 0.5 threshold]
+  p50 =  2.17   [median robust but p5 fails]
+  p95 =  4.40
+
+Block Bootstrap CI (IS):
+  Sharpe 95% CI:   [-0.055, 0.814]  [CI spans zero — no statistical significance]
+  MDD 95% CI:      [-0.154, -0.038]
+  Win Rate 95% CI: [0.013, 0.019]  [Note: daily-returns-based, mostly cash days]
+
+Market Impact (SPY ~71 shares):
+  Impact: 0.0074 bps  [negligible]
+  Liquidity Constrained: No
+
+Permutation Test (500 permutations):
+  p-value = 0.130  [FAIL — p > 0.05]
+
+Walk-Forward Variance:
+  OOS Sharpe Std = 1.60  [HIGH — very noisy; only 4 trades per OOS window]
+  OOS Sharpe Min = -2.26  [Negative window exists — flag for review]
+
+DSR: 1.000  [PASS — calculated on daily returns with 3 trials]
+
+=============================================================================
+SPECIAL VALIDATION
+=============================================================================
+
+GFC 2008-2009:
+  Sharpe: 1.22  |  MDD: -3.39%
+  Strategy performed WELL in GFC period — pre-FOMC drift was strong in crisis
+
+2022 Rate-Shock Stress:
+  Sharpe: 0.37  |  MDD: -5.07%  |  SHY-blocked: 1/8 meetings
+  SHY filter effective: blocked 1 high-risk 2022 meeting
+  Note: OOS performance near-zero over full 2022-2025 window
+
+SHY Filter Effectiveness:
+  IS period (2007-2021): 0/119 meetings blocked — SHY never triggered
+  OOS period (2022-2025): 1/32 meetings blocked
+  NOTE: SHY filter was COMPLETELY INACTIVE in IS period. Filtered = Unfiltered.
+  This suggests the filter parameter tuning may need adjustment or the IS
+  period did not contain sufficient rate-hike cycles for filter validation.
+
+=============================================================================
+PARAMETER SENSITIVITY (SHY Threshold ±)
+=============================================================================
+
+Threshold     Sharpe    Change %   Trades
+-1.0%         0.4097    0.0%       119
+-1.5%         0.4097    0.0%       119  [base]
+-2.0%         0.4097    0.0%       119
+
+SENSITIVITY PASS (0% max change) — trivially passes because SHY never triggers
+in the IS window. Sensitivity is meaningless when the filter is inactive.
+
+=============================================================================
+WALK-FORWARD RESULTS
+=============================================================================
+
+Window  IS Period              OOS Period            IS SR  OOS SR   Result
+1       2007-01-01→2009-12-31  2010-01-01→2010-06-30  1.12   1.56    PASS
+2       2009-07-01→2012-06-30  2012-07-01→2012-12-31  0.28   0.72    PASS
+3       2012-07-01→2015-06-30  2015-07-01→2015-12-31  0.04   1.96    PASS
+4       2015-07-01→2018-06-30  2018-07-01→2018-12-31 -0.12  -2.26    FAIL
+5       2018-07-01→2021-06-30  2021-07-01→2021-12-31 -0.23   2.06    PASS
+
+Note: OOS windows have only 4 trades each. Sharpe estimates extremely noisy.
+OOS results appear driven by luck rather than consistent edge.
+
+=============================================================================
+ROOT CAUSE ANALYSIS
+=============================================================================
+
+The H33 strategy is based on the Lucca & Moench (2015) finding that ~80% of
+the equity risk premium accrues in the 24h before FOMC announcements. However:
+
+1. STRATEGY DECAY: The pre-FOMC drift documented in academic literature appears
+   to have decayed significantly post-2012. IS performance is dominated by the
+   2007-2010 GFC period when the effect was strongest.
+
+2. SHY FILTER INACTIVE: The SHY momentum filter (designed to block rate-hike
+   environments) never triggered in 2007-2021. This means the "filtered" variant
+   is identical to "unfiltered" — the filter provided zero value in-sample.
+
+3. OOS FAILURE: Near-zero OOS Sharpe (0.02) over 2022-2025 confirms strategy
+   decay. Post-2015 the pre-FOMC drift has been widely documented and likely
+   arbitraged away.
+
+4. HIGH WF VARIANCE: Walk-forward OOS Sharpes range from -2.26 to +2.06, 
+   indicating the strategy has no consistent edge — pure randomness with
+   very small samples (4 trades per window).
+
+=============================================================================
+RECOMMENDATION
+=============================================================================
+
+GATE 1: FAIL — DO NOT ADVANCE
+
+Actions for Strategy Coder:
+  1. Consider alternative entry window (T-2 to T-1, or intraday FOMC drift)
+  2. Investigate combining with additional filters to improve selectivity
+  3. Review academic literature for updated evidence on pre-FOMC drift
+  4. Consider longer hold periods or combining with momentum signals
+  5. May need fundamentally different hypothesis if effect has decayed
+
+Metrics Files:
+  - JSON: backtests/H33_PreFOMCDrift_2026-03-16.json
+  - Verdict: backtests/H33_PreFOMCDrift_2026-03-16_verdict.txt
+
+=============================================================================
