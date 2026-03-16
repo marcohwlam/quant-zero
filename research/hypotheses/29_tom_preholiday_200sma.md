@@ -5,9 +5,10 @@
 **Date:** 2026-03-16
 **Asset class:** equities
 **Strategy type:** multi-signal (calendar/seasonal)
-**Status:** READY
+**Status:** RETIRED — Gate 1 FAIL 2026-03-16. IS Sharpe 0.026 (threshold 1.0). Combined Calendar family RETIRED per QUA-181 family iteration limit.
 **Parent:** H28 (Combined Multi-Calendar) — Gate 1 FAIL 2026-03-16
-**Family iteration:** 2 of 2 (Combined Calendar family — H28 was iteration 1)
+**Family iteration:** 2 of 2 (Combined Calendar family — H28 was iteration 1) — **FAMILY RETIRED**
+**Finding:** `research/findings/29_tom_preholiday_200sma_gate1_failure_2026-03-16.md`
 
 ## Summary
 
