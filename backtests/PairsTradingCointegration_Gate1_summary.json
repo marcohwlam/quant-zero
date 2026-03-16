@@ -1,0 +1,68 @@
+{
+  "strategy": "PairsTradingCointegration",
+  "is_sharpe": 0.5034864945226558,
+  "oos_sharpe": 0.01653138449350717,
+  "is_mdd": 0.0350414586291692,
+  "oos_mdd": 0.01873238679130116,
+  "win_rate": 0.5526315789473685,
+  "trade_count_is": 38,
+  "trade_count_oos": 4,
+  "dsr_zscore": 7.634534438633565,
+  "param_sensitivity_passed": false,
+  "param_sensitivity_max_delta": 1.0491644677877405,
+  "wf_windows": [
+    {
+      "is_start": "2018-01-01",
+      "is_end": "2020-12-31",
+      "oos_start": "2021-01-01",
+      "oos_end": "2021-06-30",
+      "train_sharpe": 0.696056391493029,
+      "test_sharpe": -1.6885401017971038,
+      "train_mdd": 0.03504163842449837,
+      "test_mdd": 0.02317777207997057,
+      "train_trades": 33,
+      "test_trades": 1
+    },
+    {
+      "is_start": "2018-07-01",
+      "is_end": "2021-06-30",
+      "oos_start": "2021-07-01",
+      "oos_end": "2021-12-31",
+      "train_sharpe": 0.6296180803605984,
+      "test_sharpe": -0.11495323931416798,
+      "train_mdd": 0.03501337122708758,
+      "test_mdd": 0.03081964370854717,
+      "train_trades": 26,
+      "test_trades": 6
+    },
+    {
+      "is_start": "2019-01-01",
+      "is_end": "2021-12-31",
+      "oos_start": "2022-01-01",
+      "oos_end": "2022-06-30",
+      "train_sharpe": 0.647398355617781,
+      "test_sharpe": 0.0,
+      "train_mdd": 0.03003785940522185,
+      "test_mdd": 0.0,
+      "train_trades": 27,
+      "test_trades": 0
+    },
+    {
+      "is_start": "2019-07-01",
+      "is_end": "2022-06-30",
+      "oos_start": "2022-07-01",
+      "oos_end": "2022-12-31",
+      "train_sharpe": -0.30091176381842755,
+      "test_sharpe": -1.713299344985603,
+      "train_mdd": 0.0469971472910538,
+      "test_mdd": 0.0066036614052359804,
+      "train_trades": 26,
+      "test_trades": 0
+    }
+  ],
+  "gate1_verdict": "FAIL",
+  "gate1_recommendation": "Reject",
+  "gate1_confidence": "HIGH",
+  "txt_report": "/mnt/c/Users/lamho/repo/quant-zero/backtests/PairsTradingCointegration_2026-03-15.txt",
+  "json_report": "/mnt/c/Users/lamho/repo/quant-zero/backtests/PairsTradingCointegration_2026-03-15.json"
+}

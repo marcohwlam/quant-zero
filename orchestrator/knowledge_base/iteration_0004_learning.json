@@ -1,0 +1,148 @@
+{
+  "strategy_name": "long_short_dual_momentum_daily",
+  "hypothesis": "The dual-momentum concept (absolute + relative momentum) showed genuine OOS alpha in iteration 3 (OOS > IS Sharpe, 7/7 WF windows). The failure was insufficient trade count (23.5 IS) and weak Sharpe (~0.28). This iteration addresses both by: (1) switching to DAILY rebalancing to dramatically increase trade frequency, (2) adding a SHORT leg \u2014 selling the bottom-ranked ETF(s) below their SMA \u2014 to double return generation and create a long/short structure that is more market-neutral, (3) using a shorter 10-day momentum lookback for a faster, more responsive signal. The long/short structure removes beta drag and generates returns in both bull and bear regimes, boosting Sharpe. With 8 ETFs, daily rebalancing, and both long and short legs, we should generate 100+ trades. The core insight: relative momentum across liquid ETFs is a genuine cross-sectional signal. We just need to extract more return from it via short exposure and higher frequency.",
+  "metrics": {
+    "sharpe_in_sample": -0.327827751920818,
+    "sharpe_out_of_sample": -0.5142897017742981,
+    "max_dd_in_sample": -0.3245813902372212,
+    "max_dd_out_of_sample": -0.20073120508771006,
+    "trades_in_sample": 104.5,
+    "trades_out_of_sample": 39.75,
+    "win_rate_in_sample": 0.4258041207614899,
+    "profit_factor_in_sample": 0.8184434156652529,
+    "post_cost_sharpe_is": -0.5307436367885087,
+    "post_cost_sharpe_oos": -0.7972740853273735,
+    "asset_class": "equities",
+    "dsr_zscore": -15.803073,
+    "dsr_pass": "False",
+    "wf_windows_passed": 0,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 0.0,
+    "wf_pass": false,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": -0.5196,
+        "test_sharpe": -0.4267,
+        "consistency_ratio": 0.0,
+        "passed": "False"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": -0.4296,
+        "test_sharpe": 0.1274,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": -0.3108,
+        "test_sharpe": -0.0675,
+        "consistency_ratio": 0.0,
+        "passed": "False"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": -0.086,
+        "test_sharpe": 0.0872,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": -0.2038,
+        "test_sharpe": -0.5087,
+        "consistency_ratio": 0.0,
+        "passed": "False"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": -0.1459,
+        "test_sharpe": 0.3014,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": -0.0748,
+        "test_sharpe": -0.5752,
+        "consistency_ratio": 0.0,
+        "passed": "False"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "momentum_lookback": {
+        "low": -0.3278,
+        "baseline": -0.3278,
+        "high": -0.3278,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "trend_sma": {
+        "low": -0.3278,
+        "baseline": -0.3278,
+        "high": -0.3278,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "top_n_long": {
+        "low": -0.3278,
+        "baseline": -0.3278,
+        "high": -0.3278,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "bottom_n_short": {
+        "low": -0.3278,
+        "baseline": -0.3278,
+        "high": -0.3278,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rebalance_freq": {
+        "low": -0.3278,
+        "baseline": -0.3278,
+        "high": -0.3278,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 1.0,
+    "overfitting_risk": "medium",
+    "post_mortem": "Failed transaction cost gate: post-cost IS Sharpe = -0.53. Pre-cost IS Sharpe was -0.33. The edge is too thin to survive realistic trading costs.",
+    "next_direction": "Strategy needs a larger edge. Reduce trade frequency or focus on higher-conviction signals.",
+    "promote_to_paper": false
+  }
+}

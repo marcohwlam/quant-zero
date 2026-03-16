@@ -1,0 +1,35 @@
+{
+  "strategies": [
+    {
+      "name": "TestMomentum",
+      "version": "v1.0",
+      "status": "paper",
+      "asset_class": "equities",
+      "backtest_period": "2018-01-01 to 2023-12-31",
+      "backtest_is_sharpe": 1.50,
+      "backtest_oos_sharpe": 1.10,
+      "backtest_sharpe": 1.10,
+      "backtest_sharpe_std": 0.20,
+      "backtest_max_drawdown": 0.12,
+      "backtest_oos_max_drawdown": 0.15,
+      "backtest_win_rate": 0.55,
+      "backtest_trade_count": 200,
+      "demotion_drawdown_threshold": 0.18,
+      "warning_drawdown_threshold": 0.12,
+      "capital_allocated": 5000,
+      "start_date": "2026-03-16",
+      "gate1_approved": true,
+      "gate1_approval_issue": "QUA-45",
+      "runbook": "docs/monitoring/testmomentum-v1.0-runbook.md",
+      "backtest_results": "backtests/TestMomentum_2026-03-15.json"
+    }
+  ],
+  "portfolio": {
+    "total_capital": 25000,
+    "cash_buffer_minimum": 0.20,
+    "max_total_exposure": 0.80,
+    "max_strategy_concentration": 0.25,
+    "portfolio_drawdown_warn": 0.06,
+    "portfolio_drawdown_pause": 0.08
+  }
+}

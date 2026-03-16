@@ -1,0 +1,141 @@
+{
+  "strategy_name": "sector_rotation_momentum",
+  "hypothesis": "Sector ETFs exhibit persistent relative momentum over 1-3 month horizons driven by capital rotation, earnings revision cycles, and macro regime persistence. By rotating monthly into the top-ranked sectors by recent momentum while using a broad market trend filter (SPY 200-day SMA) to avoid holding during bear markets, we capture sector leadership trends with low turnover. Low turnover is critical \u2014 the prior RSI strategy failed due to excessive trading costs. Monthly rebalancing keeps fees minimal while the trend filter reduces drawdown during sustained downtrends. Unlike the failed RSI reversal approach, this strategy trades WITH momentum rather than against it, avoiding the whipsaw losses in trending regimes.",
+  "metrics": {
+    "sharpe_in_sample": 0.3319472635057735,
+    "sharpe_out_of_sample": 0.018491890032127083,
+    "max_dd_in_sample": -0.2952245446886438,
+    "max_dd_out_of_sample": -0.13911284585698078,
+    "trades_in_sample": 6.25,
+    "trades_out_of_sample": 2.25,
+    "win_rate_in_sample": 0.5361111111111111,
+    "profit_factor_in_sample": 2.6997852390739183,
+    "post_cost_sharpe_is": 0.3319472635057735,
+    "post_cost_sharpe_oos": 0.018491890032127083,
+    "asset_class": "equities",
+    "dsr_zscore": 7.419622,
+    "dsr_pass": "True",
+    "wf_windows_passed": 6,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": -0.0539,
+        "test_sharpe": Infinity,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.3135,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.1371,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.8358,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.6317,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.4903,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.1925,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "momentum_lookback_days": {
+        "low": 0.3319,
+        "baseline": 0.3319,
+        "high": 0.3319,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "num_sectors_held": {
+        "low": 0.3319,
+        "baseline": 0.3319,
+        "high": 0.3319,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rebalance_days": {
+        "low": 0.3319,
+        "baseline": 0.3319,
+        "high": 0.3319,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "spy_trend_sma": {
+        "low": 0.3319,
+        "baseline": 0.3319,
+        "high": 0.3319,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 0.97,
+    "overfitting_risk": "high",
+    "post_mortem": "This strategy fails on multiple critical acceptance criteria simultaneously:\n\n1. **IS Sharpe (0.33) well below the 1.0 threshold** \u2014 The in-sample performance is already weak, meaning the strategy doesn't even demonstrate strong historical fit.\n\n2. **OOS Sharpe (0.018) catastrophically below 0.7 threshold** \u2014 The near-zero OOS Sharpe represents a ~94% collapse from IS performance (0.33 \u2192 0.018), a hallmark of severe overfitting or parameter fragility.\n\n3. **IS Max Drawdown (-29.5%) breaches the -20% limit** \u2014 Even in-sample, the strategy experiences unacceptable drawdowns.\n\n4. **Trade count massively insufficient** \u2014 Only 6.25 IS trades and 2.25 OOS trades vs. a minimum of 50 required. This is the most damning issue: with so few trades, every performance metric is statistically meaningless. The high walk-forward consistency score (1.0) and profit factor (2.70) are artifacts of tiny sample sizes.\n\n5. **The IS vs OOS Sharpe gap is extreme** \u2014 A ratio of ~18:1 (0.33 vs 0.018) with so few trades confirms the results are dominated by noise, not signal.\n\n**What we learned:** Monthly rebalancing across a small ETF universe generates far too few trades to produce statistically reliable results. The walk-forward gate passing (6/7 windows) with a perfect consistency score is misleading when each window contains effectively 1-2 trades \u2014 any single lucky trade inflates all metrics. The hypothesis (sector momentum) may have merit, but the current parameterization produces a near-untestable sample size. The trend filter (SPY 200-day SMA) likely causes long periods of zero exposure, further reducing trade count and OOS representativeness.",
+    "next_direction": "Address the catastrophic trade count deficiency first \u2014 target 50+ trades minimum by: (1) Expanding the universe beyond sector ETFs to include individual large-cap stocks or sub-sector ETFs (e.g., GICS level-3 industries) to increase the opportunity set; (2) Reducing the rebalance period from 21 days to weekly (5 days) to generate more rotation events; (3) Increasing `num_sectors_held` from 3 to 5 to capture more positions per period; (4) Consider a shorter momentum lookback (21 days instead of 63) to generate more signal turnover. The core momentum + trend-filter hypothesis remains worth testing, but only once the trade count is sufficient for statistical validity. Also investigate relaxing the SPY trend filter or replacing it with a volatility-scaled position sizing to avoid extended flat periods that kill OOS Sharpe.",
+    "promote_to_paper": false
+  }
+}

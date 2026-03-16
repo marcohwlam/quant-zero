@@ -1,0 +1,141 @@
+{
+  "strategy_name": "dual_momentum_daily_top1_short_lookback",
+  "hypothesis": "Iteration 9 proved the dual momentum concept has genuine, non-overfit alpha (OOS > IS Sharpe, 7/7 WF windows, 0.0 delta sensitivity) but catastrophically fails on trade count \u2014 only 13.875 IS trades. Root cause: with a 63-day lookback, the top-3 rankings are extremely sticky (the same 3 ETFs dominate for weeks). \n\nThe fix is a two-pronged attack on trade frequency: (1) Use DAILY rebalancing (rebalance_days=1) to check rankings every day \u2014 but unlike iter 7 which failed on costs with daily rebalancing, this iteration holds only TOP 1 ETF (not top 3). Holding only 1 position means each rank change = a trade. With 8 ETFs and daily ranking, the #1 ETF changes ~2-3x per week. (2) Shorten the momentum lookback to 10 days \u2014 a 10-day return ranking on 8 ETFs changes the top-ranked ETF frequently (every 3-5 days on average), generating 50-200 trades over 5 years. (3) No absolute momentum filter \u2014 proven to suppress trade count in iters 6/7/8. (4) Long-only to avoid short-side losses (iter 4 failure). \n\nWhy holding top 1 instead of top 3? With top-3, the rankings rarely change because 3 out of 8 positions can be maintained even with some rank shuffling. With top-1, ANY rank change among the top bucket triggers a trade. A 10-day lookback will generate frequent rank changes. The cost impact: fewer but larger trades (100% reallocation per signal) vs iter 7's small incremental rebalances. The key insight is that each 100% reallocation generates exactly 2 trades (sell old, buy new). With ~25-50 rank changes per year in the top position, this gives 50-200 trades over 5 years \u2014 satisfying the 50-trade minimum. The 10-day momentum window captures genuine short-term momentum (confirmed in crypto and equity literature) while being responsive enough to generate frequent rank changes.",
+  "metrics": {
+    "sharpe_in_sample": Infinity,
+    "sharpe_out_of_sample": -0.354548613007922,
+    "max_dd_in_sample": -0.19655461941309685,
+    "max_dd_out_of_sample": -0.08199795855575187,
+    "trades_in_sample": 47.0,
+    "trades_out_of_sample": 18.25,
+    "win_rate_in_sample": 0.45119508873288133,
+    "profit_factor_in_sample": 0.9621994882949935,
+    "post_cost_sharpe_is": Infinity,
+    "post_cost_sharpe_oos": -0.5435500504190272,
+    "asset_class": "equities",
+    "dsr_zscore": 4.760744,
+    "dsr_pass": "True",
+    "wf_windows_passed": 0,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": false,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": Infinity,
+        "test_sharpe": Infinity,
+        "consistency_ratio": NaN,
+        "passed": "False"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": Infinity,
+        "test_sharpe": Infinity,
+        "consistency_ratio": NaN,
+        "passed": "False"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": Infinity,
+        "test_sharpe": Infinity,
+        "consistency_ratio": NaN,
+        "passed": "False"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": Infinity,
+        "test_sharpe": Infinity,
+        "consistency_ratio": NaN,
+        "passed": "False"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": Infinity,
+        "test_sharpe": Infinity,
+        "consistency_ratio": NaN,
+        "passed": "False"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": Infinity,
+        "test_sharpe": Infinity,
+        "consistency_ratio": NaN,
+        "passed": "False"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": Infinity,
+        "test_sharpe": -0.342,
+        "consistency_ratio": -0.0,
+        "passed": "False"
+      }
+    ],
+    "sensitivity_pass": false,
+    "sensitivity_details": {
+      "momentum_lookback": {
+        "low": Infinity,
+        "baseline": Infinity,
+        "high": Infinity,
+        "delta_ratio": NaN,
+        "passed": "False"
+      },
+      "top_n_held": {
+        "low": Infinity,
+        "baseline": Infinity,
+        "high": Infinity,
+        "delta_ratio": NaN,
+        "passed": "False"
+      },
+      "rebalance_days": {
+        "low": Infinity,
+        "baseline": Infinity,
+        "high": Infinity,
+        "delta_ratio": NaN,
+        "passed": "False"
+      },
+      "min_periods": {
+        "low": Infinity,
+        "baseline": Infinity,
+        "high": Infinity,
+        "delta_ratio": NaN,
+        "passed": "False"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 1.0,
+    "overfitting_risk": "high",
+    "post_mortem": "Failed walk-forward gate: only 0 of 7 windows passed (consistency score 1.00)",
+    "next_direction": "Strategy underperforms out-of-sample across multiple time periods \u2014 likely overfit or regime-dependent.",
+    "promote_to_paper": false
+  }
+}

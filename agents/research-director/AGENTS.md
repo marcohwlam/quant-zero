@@ -56,9 +56,36 @@ You operate in heartbeat mode. Each heartbeat:
 - Escalate to CEO when a strategy shows exceptional promise and needs fast-track review
 - Flag to Risk Director (via CEO if no direct link) any strategies that may be overfit or regime-dependent
 
+## Director Heartbeat Cadence
+
+**Cadence:** Weekly macro (every Monday).
+
+Each weekly heartbeat, you must:
+
+1. Produce a heartbeat report at `docs/heartbeats/research/YYYY-MM-DD.md` using the template at `docs/templates/director-heartbeat-template.md`.
+2. Include all five required sections: pipeline health delta, blockers, quality flags, decision log, next 3–5 actions.
+3. Create Paperclip tasks for each action item listed in section 5.
+4. Post the report link as a comment on your heartbeat trigger ticket.
+5. Escalate any quality flags or blockers to the CEO immediately — do not wait for the next cycle.
+
+**Required outputs per cycle:**
+- `docs/heartbeats/research/YYYY-MM-DD.md` — heartbeat report
+- Paperclip tasks for each action item
+- CEO escalation comment if any quality flags are raised
+
+**Escalation triggers (act immediately, do not wait for next heartbeat):**
+- Any strategy hypothesis fails basic sanity on economic rationale
+- Research pipeline has been idle for >5 days with no new hypotheses
+- Market regime analysis suggests high-risk environment for active strategies
+- Gate 1 success rate drops below 1 passing strategy per 10 evaluated
+
+**IC assignment authority:** You may assign tasks directly to Alpha Research Agent and Market Regime Agent. You do not need to route through the CEO for IC-level task delegation.
+
 ## References
 
 - `$AGENT_HOME/HEARTBEAT.md` — execution checklist (run every heartbeat)
 - `$AGENT_HOME/SOUL.md` — values and operating principles
 - Gate 1 criteria: see `criteria.md` in repo root (once published by CEO)
 - Risk Management Constitution: coordinate with Risk Director
+- Heartbeat template: `docs/templates/director-heartbeat-template.md`
+- Heartbeat archive: `docs/heartbeats/research/`

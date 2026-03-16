@@ -1,0 +1,155 @@
+{
+  "strategy_name": "dual_momentum_rsi_zscore_large_universe",
+  "hypothesis": "After 19 iterations, three facts are now definitive: (1) cross-sectional ranking on any ETF universe (8 or 20) with weekly/biweekly rebalancing produces <15 trades \u2014 the top-N basket is simply too sticky; (2) daily rebalancing destroys edge via transaction costs; (3) absolute momentum filters kill trade count. The solution requires a completely different signal architecture.\n\nThis iteration abandons cross-sectional ranking entirely and instead uses a HYBRID RSI + Z-SCORE MEAN REVERSION signal applied independently to each of the 8 ETFs. The key insight: mean reversion signals fire frequently (multiple times per month per ETF) but only when backed by a short-term trend filter to avoid catching falling knives.\n\nSignal architecture:\n1. **Entry (buy) for each ETF independently when ALL hold**:\n   - 5-day RSI < 35 (short-term oversold \u2014 captures liquidity-driven dislocations)\n   - 10-day z-score of price < -1.0 (price is statistically below recent mean \u2014 adds confirmation)\n   - 20-day SMA is above 60-day SMA (medium-term uptrend \u2014 trade WITH the trend)\n\n2. **Exit when EITHER**:\n   - 5-day RSI > 55 (mean reversion confirmed, momentum restored)\n   - OR position held > 6 days (time-based stop to cap drawdown)\n\nWhy this generates 50+ trades:\n- RSI < 35 fires ~8-12x per year per ETF in normal market conditions\n- 8 ETFs \u00d7 10 entries/year \u00d7 5 IS years = 400 potential entries\n- Even at 40% filter efficiency (20-day SMA > 60-day SMA gate) = 160 trades in IS\n- This is 3x the 50-trade minimum\n\nWhy this improves Sharpe:\n- RSI reversal knowledge base shows IS Sharpe ~1.2 on liquid ETFs with 5-day RSI\n- Z-score confirmation reduces false signals (complementary signal)\n- Trend filter (20d > 60d SMA) ensures we only buy dips in uptrending markets\n- Short holding period (max 6 days) limits exposure to regime changes\n- Long-only avoids short-side losses\n- Low turnover per trade (2 trades per round trip, 6-day avg hold) vs daily rebalancing that destroyed edge in iters 4/7/17",
+  "metrics": {
+    "sharpe_in_sample": -0.030091793243900447,
+    "sharpe_out_of_sample": 0.35396182015438427,
+    "max_dd_in_sample": -0.16317855597904934,
+    "max_dd_out_of_sample": -0.05314045766859581,
+    "trades_in_sample": 33.75,
+    "trades_out_of_sample": 13.125,
+    "win_rate_in_sample": 0.6829400772051888,
+    "profit_factor_in_sample": 1.024293377786836,
+    "post_cost_sharpe_is": -0.1640864325890947,
+    "post_cost_sharpe_oos": 0.16170887370985815,
+    "asset_class": "equities",
+    "dsr_zscore": -6.691624,
+    "dsr_pass": "False",
+    "wf_windows_passed": 3,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": -0.324,
+        "test_sharpe": 1.0941,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": -0.1458,
+        "test_sharpe": 0.072,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": -0.0265,
+        "test_sharpe": Infinity,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.0667,
+        "test_sharpe": 1.0089,
+        "consistency_ratio": 15.1267,
+        "passed": "True"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.6423,
+        "test_sharpe": 1.1767,
+        "consistency_ratio": 1.8319,
+        "passed": "True"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.6609,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.4512,
+        "test_sharpe": 0.0351,
+        "consistency_ratio": 0.0778,
+        "passed": "False"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "rsi_period": {
+        "low": -0.0301,
+        "baseline": -0.0301,
+        "high": -0.0301,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rsi_entry": {
+        "low": -0.0301,
+        "baseline": -0.0301,
+        "high": -0.0301,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rsi_exit": {
+        "low": -0.0301,
+        "baseline": -0.0301,
+        "high": -0.0301,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "zscore_window": {
+        "low": -0.0301,
+        "baseline": -0.0301,
+        "high": -0.0301,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "zscore_threshold": {
+        "low": -0.0301,
+        "baseline": -0.0301,
+        "high": -0.0301,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "max_holding_days": {
+        "low": -0.0301,
+        "baseline": -0.0301,
+        "high": -0.0301,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 1.0,
+    "overfitting_risk": "medium",
+    "post_mortem": "Failed transaction cost gate: post-cost IS Sharpe = -0.16. Pre-cost IS Sharpe was -0.03. The edge is too thin to survive realistic trading costs.",
+    "next_direction": "Strategy needs a larger edge. Reduce trade frequency or focus on higher-conviction signals.",
+    "promote_to_paper": false
+  }
+}

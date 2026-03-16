@@ -26,6 +26,7 @@ from pathlib import Path
 _HERE = Path(__file__).parent
 _REPO_ROOT = _HERE.parent
 _BACKTESTS_DIR = _REPO_ROOT / "backtests"
+_BACKTESTS_TEST_DIR = _REPO_ROOT / "backtests" / "test"  # unit test outputs go here, NOT the root
 _OVERFIT_TOOLS = _REPO_ROOT / "agents" / "overfit-detector" / "tools"
 
 # Make overfit-detector tools importable
@@ -41,6 +42,7 @@ def generate_and_save_verdict(
     metrics: dict,
     proposal: dict,
     config: dict | None = None,
+    output_dir: Path | None = None,
 ) -> dict:
     """
     Build a Gate 1 verdict from orchestrator metrics and save to /backtests/.
@@ -50,11 +52,14 @@ def generate_and_save_verdict(
                  walk-forward results, transaction cost Sharpe, etc.)
         proposal: strategy proposal dict (strategy_name, hypothesis, parameters)
         config: optional CONFIG dict from orchestrator (for test period dates)
+        output_dir: override output directory (default: /backtests/); unit tests
+                    should pass _BACKTESTS_TEST_DIR to avoid polluting /backtests/ root.
 
     Returns:
         dict with keys: overall_verdict, recommendation, confidence, txt_path, json_path
     """
-    _BACKTESTS_DIR.mkdir(exist_ok=True)
+    out_dir = output_dir if output_dir is not None else _BACKTESTS_DIR
+    out_dir.mkdir(parents=True, exist_ok=True)
     strategy_name = proposal.get("strategy_name", "unknown")
     date_str = datetime.date.today().isoformat()
 
@@ -101,8 +106,8 @@ def generate_and_save_verdict(
 
     # ── Save outputs ──────────────────────────────────────────────────────────
     base_name = f"{_sanitize(strategy_name)}_{date_str}"
-    txt_path = _BACKTESTS_DIR / f"{base_name}.txt"
-    json_path = _BACKTESTS_DIR / f"{base_name}.json"
+    txt_path = out_dir / f"{base_name}.txt"
+    json_path = out_dir / f"{base_name}.json"
 
     txt_path.write_text(verdict_text)
 
@@ -179,7 +184,7 @@ def _run_tests():
     passed = 0
     for name, m, p, c, expected in tests:
         try:
-            result = generate_and_save_verdict(m, p, c)
+            result = generate_and_save_verdict(m, p, c, output_dir=_BACKTESTS_TEST_DIR)
             verdict = result["overall_verdict"]
             if verdict == expected:
                 print(f"  [OK]   {name}: {verdict}")
@@ -192,7 +197,7 @@ def _run_tests():
 
     # CONDITIONAL PASS: all quant passes but overfitting risk high (dsr_zscore <= 0)
     try:
-        result = generate_and_save_verdict(_cond_metrics, {"strategy_name": "CondStrat"}, _pass_config)
+        result = generate_and_save_verdict(_cond_metrics, {"strategy_name": "CondStrat"}, _pass_config, output_dir=_BACKTESTS_TEST_DIR)
         verdict = result["overall_verdict"]
         if verdict in ("CONDITIONAL PASS", "FAIL"):
             print(f"  [OK]   CONDITIONAL PASS case: {verdict} (acceptable)")

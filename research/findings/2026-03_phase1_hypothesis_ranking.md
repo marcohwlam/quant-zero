@@ -3,7 +3,7 @@
 **Author:** Alpha Research Agent
 **Date:** 2026-03-15
 **Task:** QUA-36
-**Status:** Ready for Research Director Review
+**Status:** Updated — Post H04 Gate 1 Failure (QUA-79) — v2.0 hypothesis issued
 
 ---
 
@@ -25,7 +25,22 @@ All 6 Phase 0 hypotheses have been evaluated against Gate 1 criteria (IS Sharpe 
 - H02 Bollinger Band moved to #2 (from #1): remains high-priority, but VIX at 27 is approaching the 30 pause trigger — structural break risk elevated
 - H05 Momentum Vol-Scaled confirmed at #4 (not promoted): mildly trending regime would normally support promotion, but the near-term correction (-4.29% 1m) and defensive sector rotation argue for keeping it conditional; vol scaling will auto-reduce exposure
 
-**Mean-reversion concentration risk — ELEVATED:** H02, H04, and H06 are all mean-reversion strategies and occupy the top 3 priority slots. With HIGH transition risk (SPY barely above 200d SMA), a regime shift to a sustained downtrend could impair all three simultaneously. Mitigation: do not run H02 and H06 concurrently in Phase 1 — prioritize H04 first (market-neutral), then test H02 before H06.
+**⚠️ Ranking revision — Post QUA-79 (2026-03-16, H04 Gate 1 FAIL):**
+- H04 Pairs Trading v1.0 **FAILED** — IS Sharpe 0.50, OOS 0.02, Trade Count 38, Param Sensitivity 104.9% (full analysis: `research/findings/04_pairs_trading_gate1_failure_2026-03.md`)
+- Root cause: large-cap equity pairs (XOM/CVX, JPM/BAC, KO/PEP, GS/MS, AMZN/MSFT) not cointegrated in 2018–2023 due to post-2018 business model divergence
+- **H04 v2.0 issued** — sector ETF universe (XLF/KRE, XLE/OIH, XLV/IBB, XLP/XLY, GLD/SLV); 63d lookback; entry_zscore 1.5; Alpha Research pre-screen required before backtest
+- H05 Momentum Vol-Scaled **confirmed at Rank 2** — schedule in parallel with H04 v2.0 research
+- Strategy **NOT retired** — economic rationale valid; only pair selection failed
+
+**⚠️ Ranking revision — Post QUA-74 (2026-03-16, H02 Gate 1 FAIL):**
+- H02 Bollinger Band **RETIRED** — Gate 1 FAIL (IS Sharpe 0.029; full analysis in `research/findings/02_bollinger_band_gate1_failure_2026-03.md`)
+- H04 Pairs Trading confirmed **clear Rank 1** — market-neutral construction validated (survivorship bias methodology pre-validated, QUA-55); most insulated from the 2018-2021 trending test window
+- H05 Momentum Vol-Scaled **promoted to Rank 2** — the 2018-2021 IS test window is a trending regime (COVID crash → recovery, 2019 and 2021 bull run); trend-following / momentum strategies are structurally better suited to this window than mean reversion
+- H06 RSI Reversal **demoted to Rank 3** — same mean-reversion structure as H02; carries structural risk in the Gate 1 test window; test after H05 is validated
+
+**⚠️ Hypothesis scoring note (added QUA-74):** The H02 "HIGH probability" projection was based on historical Sharpe from 2010-2017 — a period structurally different from the Gate 1 IS window (2018-2021). Historical Sharpe from non-Gate-1 periods is **not predictive of Gate 1 outcomes**. Future hypothesis ratings must be validated against the 2018-2021 IS window specifically. Trend/crisis-hostile strategies (mean reversion, RSI) should be downgraded when the test window includes sustained trending or crisis episodes.
+
+**Mean-reversion concentration risk — REDUCED (updated QUA-74):** H02 is eliminated, removing one of three mean-reversion strategies from the active queue. H04 (market-neutral) and H06 (RSI reversal) remain. H04's market-neutral construction provides meaningful protection vs. directional regime shifts — it does not rely on prices reverting in a directional market. H06 carries genuine concentration risk if run alongside a directional strategy in a trending regime. Mitigation: run H04 first, then validate H05 (momentum) before scheduling H06.
 
 ---
 
@@ -33,12 +48,13 @@ All 6 Phase 0 hypotheses have been evaluated against Gate 1 criteria (IS Sharpe 
 
 | Rank | Strategy | Gate 1 Probability | Regime Fit (Mar 2026) | Primary Risk | $25K Fit |
 |------|----------|--------------------|----------------------|--------------|---------|
-| 1 | **Pairs Trading Cointegration (#04)** ⬆️ | **High** | **Strong** — market-neutral, best for high-vol | Survivorship bias, margin constraints | Marginal |
-| 2 | Bollinger Band Mean Reversion (#02) ⬇️ | **High** | **Moderate** — VIX 27 approaching 30 pause trigger | entry_std sensitivity, structural break risk at VIX > 30 | Good (ETFs) |
-| 3 | RSI Short-Term Reversal (#06) | **Moderate** | **Neutral** — high-vol generates more signals; 200d SMA filter critical | PDT compliance, high param sensitivity | Good (ETFs) |
-| 4 | Momentum Vol-Scaled (#05) | **Conditional** | **Conditional** — mildly trending (Hurst 0.732) supports, but -4.29% 1m correction caution | IS MDD exceeds threshold without crash protection | Poor (L/S required) |
-| 5 | Multi-Factor Long-Short (#03) | **Uncertain** | **Weak** — factor crowding + data dependency | Factor decay post-2018, data requirements | Poor |
-| 6 | Dual MA Crossover (#01) | **Low** | **Weak** — "whipsaw environment" per Market Regime Agent | IS Sharpe chronically below 1.0, win rate < 50% | Good (baseline only) |
+| 1 | **Pairs Trading v2.0 (#04-v2)** | **High (conditional on ETF cointegration pre-screen)** | **Strong** — market-neutral, ETF pairs more stable; sector ETF pairs insulated from idiosyncratic business divergence | ETF pairs pre-screen must validate cointegration in 2018–2021 IS window | Good (ETFs, low borrow cost) |
+| 2 | **Momentum Vol-Scaled (#05)** | **Conditional** | **Favorable** — 2018-2021 IS window is trending regime; COVID recovery + 2019/2021 bull runs support momentum | IS MDD without crash protection; long-only constraint at $25K | Poor (L/S required) |
+| 3 | RSI Short-Term Reversal (#06) | **Moderate** | **Uncertain** — same mean-reversion structure as H02; defer until H04-v2 and H05 validated | PDT compliance, mean-reversion structural risk in Gate 1 window | Good (ETFs) |
+| 4 | Dual MA Crossover (#01) | **Low–Moderate** | **Trend-following benefit** — 2019/2021 uptrends visible in IS window; baseline calibration only | IS Sharpe historically below 1.0; win rate < 50% | Good (baseline only) |
+| 5 | Multi-Factor Long-Short (#03) | **Uncertain** | **Weak** — factor crowding + data dependency | Factor decay post-2018, fundamental data unavailable in yfinance | Poor |
+| — | ~~Pairs Trading v1.0 (#04)~~ | **⛔ FAILED** | **—** | IS Sharpe 0.50; pairs not cointegrated in 2018–2023 test window; v2.0 issued | — |
+| — | ~~Bollinger Band Mean Reversion (#02)~~ | **⛔ FAILED** | **—** | IS Sharpe 0.029 — 34× below threshold; hostile test window | — |
 
 ---
 
@@ -46,43 +62,30 @@ All 6 Phase 0 hypotheses have been evaluated against Gate 1 criteria (IS Sharpe 
 
 ---
 
-### Rank 1: Bollinger Band Mean Reversion (Hypothesis 02)
+### ⛔ RETIRED: Bollinger Band Mean Reversion (Hypothesis 02) — Gate 1 FAIL
 
-**Gate 1 Probability: HIGH**
+**Gate 1 Result: FAILED (QUA-65, 2026-03-15)**
 
-**Why #1:**
-This is the highest-confidence Gate 1 candidate in the pool. Historical Sharpe of 1.1 on a liquid equity basket (2010-2020) and MDD of -14% both sit comfortably within Gate 1 thresholds. The mean reversion mechanism is one of the most robust in systematic trading — it works across regimes (though best in range-bound/choppy markets) and the ETF universe avoids the earnings-event failures that plague single-stock mean reversion.
+**Outcome:** IS Sharpe 0.029 (threshold > 1.0). Failed 5 of 9 Gate 1 criteria. Auto-disqualified.
 
-The 2018-2023 Gate 1 test period is reasonably favorable for this strategy: the period contains multiple range-bound episodes (2018 Q4 chop, 2019, late 2021, mid-2022 consolidations) broken up by directional moves. A regime filter (suspend when VIX > 30 or instrument in confirmed downtrend) will reduce performance during the 2022 bear market leg but is well worth the protection.
+**Root cause:** The 2018-2021 IS test window is structurally hostile to mean reversion — the COVID crash (March 2020) and the 2019/2021 bull market trends both systematically impaired the strategy. The historical Sharpe projection of 1.1 was measured on 2010-2017 data (a range-bound regime) and was not predictive of 2018-2021 performance.
 
-**Key risks:**
-- `entry_std` is flagged **HIGH sensitivity** in the knowledge base — this is the single most important parameter to stress-test. The cliff-edge behavior around entry_std = 2.0 must be confirmed NOT to violate the ±20% perturbation rule (range [1.6, 2.4] must all sustain Sharpe within 30% of peak).
-- PDT is manageable at $25K with ETF universe and 5+ day target holding periods, but must be confirmed in backtest trade-frequency tracking.
-- Regime mismatch risk: the 2022 sustained bear market (full year downtrend) is the most dangerous window — the time-stop and stop-loss rules are critical guard rails during this period.
+**Key lessons:**
+- Historical performance from a different epoch is not a valid proxy for Gate 1 IS performance — ratings must use the 2018-2021 window specifically
+- OOS windows in 2021 H1 and H2 showed Sharpe 1.63 and 1.11 respectively — the economic rationale is valid, but only in stable low-trend regimes not present in the test window
 
-**Refinement opportunities:**
-- Add a VIX-based regime filter (suspend longs when VIX > 30) — this would have reduced damage in March 2020 and the 2022 drawdown
-- Test a "decreasing exposure" rule as `entry_std` falls below the signal threshold (scale in rather than full size at first signal)
-- ETF basket: SPY, QQQ, XLV, XLF, XLE, IWM — provides sector diversification without single-stock earnings risk
-
-**Gate 1 outlook:**
-- IS Sharpe > 1.0: **LIKELY PASS** (historical 1.1; with good implementation, achievable)
-- OOS Sharpe > 0.7: **POSSIBLE PASS** (regime mismatches in OOS windows are the risk)
-- IS MDD < 20%: **LIKELY PASS** (historical -14%; stops add protection)
-- Win Rate > 50%: **LIKELY PASS** (mean reversion typically 55-65%)
-- Trade Count > 50: **PASS**
-- Parameter Sensitivity: **AT RISK** — entry_std is the critical test; must pass
-
-**Recommendation:** **Backtest this strategy first.** Prioritize validating the entry_std robustness and regime filter impact. If entry_std shows cliff-edge behavior, consider fixing it at 2.0 and testing only lookback_period and max_holding_days as free parameters.
+**Status:** Strategy hypothesis retired from Phase 1. Full analysis: `research/findings/02_bollinger_band_gate1_failure_2026-03.md`. May be reconsidered for a paper trading regime-gated variant (VIX < 20, SPY above 200d SMA, Hurst < 0.55) in a future phase.
 
 ---
 
-### Rank 2: Pairs Trading Cointegration (Hypothesis 04)
+### Rank 1: Pairs Trading Cointegration (Hypothesis 04)
 
 **Gate 1 Probability: HIGH**
 
-**Why #2:**
-Pairs Trading has the best historical risk-adjusted characteristics in the group: Sharpe 1.3 and MDD -8% (2008-2018). The market-neutral construction is a significant structural advantage — it provides hedge against broad market direction, meaning the 2022 bear market is theoretically less damaging than it would be for directional strategies. Gate 1 outlook shows "LIKELY PASS" across almost every criterion in the hypothesis file.
+**Why #1 (clear leader post-H02 retirement):**
+Pairs Trading has the best historical risk-adjusted characteristics in the active pool: Sharpe 1.3 and MDD -8% (2008-2018). The market-neutral construction is a critical structural advantage — it provides a hedge against broad market direction, meaning the COVID crash and the 2018-2021 trending test window are theoretically far less damaging than for directional mean-reversion strategies (which H02 confirmed are severely impaired by this window). Gate 1 outlook shows "LIKELY PASS" across almost every criterion.
+
+Survivorship bias methodology has been pre-validated (QUA-55) — the key blocking risk is resolved. Backtest can proceed immediately once QUA-55 output is confirmed.
 
 The low MDD (-8% historical) gives substantial headroom under the Gate 1 20% threshold even if post-2018 conditions are somewhat worse than the historical record.
 
@@ -106,18 +109,54 @@ The low MDD (-8% historical) gives substantial headroom under the Gate 1 20% thr
 - Parameter Sensitivity: **LIKELY PASS** (lookback and stop_zscore low-sensitivity; entry_zscore the risk)
 - Survivorship Bias: **FLAG** — must be explicitly verified by Overfit Detector
 
-**Recommendation:** **Backtest this strategy second.** Establish the 5-pair starting universe explicitly and commit to using only the pairs identifiable at backtest start. Flag the survivorship bias concern to the Overfit Detector Agent as a mandatory check.
+**Recommendation:** **Backtest this strategy first (clear Rank 1).** Survivorship bias methodology pre-validated (QUA-55) — confirm QUA-55 output, then proceed immediately. Establish the 5-pair starting universe explicitly and commit to using only the pairs identifiable at backtest start.
 
 ---
 
-### Rank 3: RSI Short-Term Reversal (Hypothesis 06)
+### Rank 2: Momentum Vol-Scaled (Hypothesis 05) ⬆️ — Promoted post H02 FAIL
 
-**Gate 1 Probability: MODERATE**
+**Gate 1 Probability: CONDITIONAL**
 
-**Why #3:**
-RSI short-term reversal has solid empirical backing (KB historical Sharpe 1.2, MDD -11%) and a well-documented theoretical basis (Connors RSI(2)). The expected win rate of 60-70% easily clears the Gate 1 50% threshold. The short holding period (1-5 days) keeps drawdowns naturally contained. Of the mean reversion strategies, this one has the most parameter sensitivity uncertainty — rsi_period and the entry threshold are both flagged HIGH sensitivity but have not been characterized in a prior backtest.
+**Why #2 (promoted from #4, QUA-74):**
+The 2018-2021 IS test window is a trending regime — the COVID crash was followed by a violent V-recovery (April–December 2020), and 2019 and 2021 both saw strong sustained uptrends. Trend-following and momentum strategies are structurally favored in this environment in a way that mean-reversion strategies (H02, H06) are not. H02's Gate 1 failure confirms this: the 2018-2021 window is hostile to mean reversion, which by implication means it should support trend continuation strategies.
 
-The 200-day SMA filter is a non-negotiable structural element that significantly improves behavior in trending markets. With this filter in place, the 2022 bear market becomes a "sit out" period rather than a drawdown-generating period (instruments below 200d SMA are not traded long).
+H05 Momentum Vol-Scaled has the strongest raw historical Sharpe (1.4 on 2000-2020) and the most rigorous academic backing (Jegadeesh & Titman 1993). The volatility scaling mechanism is a key differentiator — it auto-reduces exposure in high-vol / crash environments, which is exactly what 2020 required. The crash protection rule (50% position reduction when SPY 1-month return < -10%) further mitigates the acute March 2020 risk.
+
+**Critical gate blocker:** The historical MDD of -25% already exceeds the Gate 1 IS MDD threshold of -20%. The backtest must confirm crash protection keeps IS MDD below 20% in the 2018-2021 window, specifically through March 2020.
+
+**Key risks:**
+- IS MDD failure remains the primary gate blocker. Crash protection must function correctly in the March 2020 drawdown window.
+- The 2020 COVID crash/recovery dynamic cuts both ways: protection triggers during the crash but also keeps positions reduced during the April–December 2020 recovery rally — this may reduce IS Sharpe.
+- Cross-sectional momentum crowding post-2018 may reduce IS Sharpe below 1.0; must be confirmed in the specific 2018-2021 window.
+- $25K constraint: long-only top-decile variant is the only viable implementation; the short leg (which drives much of the alpha) cannot be executed at this capital level.
+
+**Refinement opportunities:**
+- Tighten crash protection trigger to -7% or -8% SPY monthly to activate faster in fast-moving markets like March 2020
+- Volatility targeting (inverse-vol weighting) is the most differentiated feature — retain in all variants
+- Test long-only top-decile variant first at the $25K scale
+
+**Gate 1 outlook:**
+- IS Sharpe > 1.0: **LIKELY** (conditional on 2018-2021 momentum not showing severe decay; trending regime helps)
+- OOS Sharpe > 0.7: **UNCERTAIN** (momentum crashes risk in OOS windows; COVID recovery tailwind may not persist)
+- IS MDD < 20%: **AT RISK** — this is the primary gate blocker; crash protection must work in March 2020
+- Win Rate > 50%: **UNCERTAIN** (monthly rebalance definition makes this complex)
+- Trade Count > 50: **PASS**
+- Parameter Sensitivity: **LIKELY PASS** (medium sensitivity; inverse-vol weighting is robust)
+
+**Recommendation:** **Backtest second**, after Pairs Trading. MDD is the gate. If crash protection keeps IS MDD under 20%, this strategy is the strongest remaining trend-following candidate for Phase 1. If not, explore tightening the crash protection trigger before retiring.
+
+---
+
+### Rank 3: RSI Short-Term Reversal (Hypothesis 06) ⬇️ — Demoted post H02 FAIL
+
+**Gate 1 Probability: MODERATE (conditional — same structural risk as H02)**
+
+**Why #3 (demoted from prior Rank 3, QUA-74):**
+RSI short-term reversal has solid empirical backing (KB historical Sharpe 1.2, MDD -11%) and a well-documented theoretical basis (Connors RSI(2)). The expected win rate of 60-70% easily clears the Gate 1 50% threshold. The short holding period (1-5 days) keeps drawdowns naturally contained.
+
+**Important caveat post H02 failure (QUA-74):** H06 is a mean-reversion strategy with the same structural weakness as H02. The 2018-2021 Gate 1 IS window contains the COVID crash and strong directional trends — H02 produced an IS Sharpe of 0.029 in this exact environment. H06's 200d SMA filter ("sit out" when below trend) is a meaningful protection H02 lacked, but it is not guaranteed to produce a materially better outcome. The H06 backtest must be watched carefully for the same pattern: IS Sharpe near zero, OOS Sharpe reasonable only in post-crash recovery windows.
+
+The 200-day SMA filter is a non-negotiable structural element that significantly improves behavior in trending markets. With this filter in place, the 2022 bear market becomes a "sit out" period rather than a drawdown-generating period (instruments below 200d SMA are not traded long). This gives H06 a structural edge over H02 which lacked this filter — but the COVID crash (2020 Q1) is still a risk window: the 200d SMA break may lag the actual crash by weeks.
 
 **Key risks:**
 - **PDT compliance in live trading** is a real and specific constraint. If signals fire more than 3 times per week on the ETF universe, live trading at $25K will miss signals. The backtest must track weekly round-trip count.
@@ -139,39 +178,11 @@ The 200-day SMA filter is a non-negotiable structural element that significantly
 - Parameter Sensitivity: **UNKNOWN** (first backtest will characterize this)
 - PDT Compliance (live trading): **AT RISK** — must track
 
-**Recommendation:** **Backtest third.** Run with the 3-ETF long-only variant as the first test. Track weekly round-trip count in all walk-forward windows. Flag any window with > 3 average weekly trades as a live-trading concern. Explicitly verify win/loss ratio alongside win rate.
+**Recommendation:** **Backtest third** (after H04 and H05). Run with the 3-ETF long-only variant as the first test. Track weekly round-trip count in all walk-forward windows. Flag any window with > 3 average weekly trades as a live-trading concern. Explicitly verify win/loss ratio alongside win rate. **Watch for H02-pattern failure** (IS Sharpe near zero due to 2018-2021 trending regime) — if the 200d SMA filter does not provide sufficient regime protection, H06 should be deprioritized similarly to H02.
 
 ---
 
-### Rank 4: Momentum Vol-Scaled (Hypothesis 05)
-
-**Gate 1 Probability: CONDITIONAL**
-
-**Why #4:**
-Momentum vol-scaled has the strongest raw historical Sharpe (1.4 on 2000-2020) and the most rigorous academic backing (Jegadeesh & Titman 1993), but the **historical MDD of -25% already exceeds the Gate 1 IS MDD threshold of -20%**. The crash protection mechanism (50% position reduction when SPY 1-month return < -10%) is designed to address this — but the backtest must confirm it actually keeps IS MDD below -20% in the 2018-2023 test period, which includes the COVID crash (March 2020) and the 2022 bear market (the most challenging period for cross-sectional momentum since 2009).
-
-Additionally, the $25K implementation constraint is significant: full long-short quintile portfolios (100+ positions) are impractical at this capital level. A long-only top-decile variant sacrifices a material portion of the alpha (the short leg contributes meaningfully to the Sharpe).
-
-**Key risks:**
-- IS MDD failure is the primary gate blocker. Without crash protection functioning correctly, this strategy fails Gate 1 on drawdown.
-- The 2020 COVID crash/recovery is the most acute test: the strategy likely suffered a large drawdown in March 2020 AND then was underweight during the violent April-December 2020 recovery (crash protection kept positions reduced).
-- Cross-sectional momentum crowding post-2018 may reduce IS Sharpe below 1.0 in the 2018-2023 specific test window.
-- Monthly rebalance of a large portfolio generates transaction costs that must be realistically modeled.
-
-**Refinement opportunities:**
-- Consider a tighter crash protection trigger (-7% or -8% SPY monthly) to activate protection faster in fast-moving markets like March 2020
-- Test the long-only top-decile variant first at the $25K scale — if IS MDD clears 20% and Sharpe > 1.0, this is a viable live-trading implementation
-- Volatility targeting (inverse-vol weighting) is the most differentiated feature — retain it in all variants
-
-**Gate 1 outlook:**
-- IS Sharpe > 1.0: **LIKELY PASS** (conditional on 2018-2023 momentum decay not being too severe)
-- OOS Sharpe > 0.7: **UNCERTAIN** (momentum crashes risk)
-- IS MDD < 20%: **AT RISK** — this is the primary gate blocker; crash protection must work
-- Win Rate > 50%: **UNCERTAIN** (monthly rebalance definition makes this complex)
-- Trade Count > 50: **PASS**
-- Parameter Sensitivity: **LIKELY PASS** (medium sensitivity parameters)
-
-**Recommendation:** Test after the top 3 are completed. **MDD is the gate.** If crash protection keeps IS MDD under 20%, this strategy moves up in priority. If not, retire this configuration and explore a modified version with tighter crash protection.
+*(H05 Momentum Vol-Scaled evaluation moved to Rank 2 — see above)*
 
 ---
 
@@ -204,12 +215,12 @@ An additional execution dependency: this strategy requires fundamental data (P/E
 
 ---
 
-### Rank 6: Dual Moving Average Crossover (Hypothesis 01)
+### Rank 4: Dual Moving Average Crossover (Hypothesis 01)
 
-**Gate 1 Probability: LOW**
+**Gate 1 Probability: Low–Moderate (re-evaluated post H02 FAIL)**
 
-**Why last:**
-The Dual MA Crossover is a baseline/benchmark strategy, not a primary alpha candidate. Historical Sharpe of 0.6 on a diversified ETF basket (2005-2020) is below the Gate 1 IS threshold of > 1.0. Even with an optimized multi-ETF basket, clearing 1.0 IS Sharpe is unlikely given the well-documented crowding of this signal. Trend-following strategies also have win rates of 40-45% (relying on large wins to compensate for frequent small losses), which is structurally below the Gate 1 > 50% win rate requirement.
+**Why #4 (re-evaluated post QUA-74):**
+The Dual MA Crossover is primarily a baseline/benchmark strategy, but deserves re-evaluation in light of H02's failure. The Gate 1 IS window (2018-2021) includes strong uptrends (2019 bull, 2020 recovery, 2021 bull) that trend-following strategies like DMA Crossover benefit from. Historical Sharpe of 0.6 on 2005-2020 data may understate performance on the 2018-2021 window specifically. However, it still carries structural weaknesses: win rate < 50% by design (trend-following payoff) and documented whipsaw behavior per Market Regime Agent classification. Historical Sharpe of 0.6 on a diversified ETF basket (2005-2020) is below the Gate 1 IS threshold of > 1.0. Even with an optimized multi-ETF basket, clearing 1.0 IS Sharpe is unlikely given the well-documented crowding of this signal. Trend-following strategies also have win rates of 40-45% (relying on large wins to compensate for frequent small losses), which is structurally below the Gate 1 > 50% win rate requirement.
 
 This strategy belongs to Phase 1 only as a benchmark to calibrate the backtest engine. It should not consume priority backtest slots.
 
@@ -234,43 +245,43 @@ Market Regime Agent classification (QUA-35) delivered: `mildly-trending / high-v
 
 **Pause/escalation triggers to monitor (from Market Regime Agent):**
 - SPY breaks 200d SMA (currently at ~656.41) → flag to Research Director and Engineering Director immediately; shift to H04-only running
-- VIX sustains > 30 → reduce all mean-reversion exposure 50%; suspend H02 and H06
+- VIX sustains > 30 → reduce all mean-reversion exposure 50%; suspend H06 (H02 already retired)
 - VIX > 40 → pause all strategies; escalate to CEO
 
-### Shared Failure Modes — Mean Reversion Concentration Risk (ELEVATED)
-Three of the 6 strategies are mean reversion (Bollinger Band #02, Pairs Trading #04, RSI Reversal #06), and they hold the top 3 priority slots under the current regime. With HIGH transition risk (SPY barely above 200d SMA), a shift to a sustained downtrend would impair all three simultaneously — this is the most important risk in the Phase 1 portfolio.
+### Shared Failure Modes — Mean Reversion Concentration Risk (REDUCED — updated QUA-74)
+~~Three of the 6 strategies are mean reversion~~ H02 is retired. **Two** mean-reversion strategies remain active: Pairs Trading (#04, market-neutral) and RSI Reversal (#06, directional). H04's market-neutral construction significantly reduces its directional regime exposure — it is not impaired by a broad market downtrend in the same way as H02 or H06. The primary residual risk is H06 (RSI Reversal), which shares H02's structural vulnerability to the 2018-2021 trending test window.
 
-**Mitigation protocol:**
-1. Run H04 Pairs Trading first (market-neutral construction provides some downside protection even in a trend)
-2. Run H02 Bollinger Band second, sequentially — do not run H02 and H06 at the same time until regime stabilizes
-3. If SPY breaks its 200d SMA during Phase 1 testing, pause H02 and H06 immediately; continue H04 with monitoring
-4. Escalate to Engineering Director if mean-reversion strategies show correlated drawdowns in walk-forward windows
+**Updated mitigation protocol:**
+1. Run H04 Pairs Trading first (market-neutral, most regime-insulated)
+2. Run H05 Momentum Vol-Scaled second (trend-following — aligned with Gate 1 IS window regime)
+3. Run H06 RSI Reversal third — do not schedule until H04 and H05 results are reviewed; if H04/H05 show issues in the 2018-2021 window, delay H06 and assess
+4. If SPY breaks its 200d SMA during Phase 1 testing, pause H06 immediately; continue H04 with monitoring; H05 vol scaling will auto-reduce exposure
 
 ### Parameter Sensitivity — Common Thread
-`entry_zscore` (Pairs) and `entry_std` (Bollinger Band) are both HIGH sensitivity. The Overfit Detector Agent should be briefed to specifically stress-test these parameters in their ±20% perturbation analysis.
+`entry_zscore` (Pairs) is HIGH sensitivity. The Overfit Detector Agent should be briefed to specifically stress-test this parameter in its ±20% perturbation analysis. Note: `entry_std` (Bollinger Band) is now moot — H02 is retired.
 
 ### $25K Capital Constraint Summary
 | Strategy | $25K Implementation | Notes |
 |----------|--------------------|----|
-| Bollinger Band (#2) | **Good** | ETF-only variant, long-only |
+| ~~Bollinger Band (#2)~~ | **⛔ RETIRED** | Gate 1 FAIL — eliminated |
 | Pairs Trading (#4) | **Marginal** | 5-8 pairs max; margin required |
-| RSI Reversal (#6) | **Good** | 1-3 ETF positions, long-only |
 | Momentum (#5) | **Poor** | Long-only only; sacrifices alpha |
-| Multi-Factor L/S (#3) | **Poor** | Long-only only; fundamental data needed |
+| RSI Reversal (#6) | **Good** | 1-3 ETF positions, long-only |
 | DMA Crossover (#1) | **Good** | ETF basket, swing trade |
+| Multi-Factor L/S (#3) | **Poor** | Long-only only; fundamental data needed |
 
 ---
 
 ## Phase 1 Backtest Priority Queue
 
-**Recommended order for Phase 1 iteration allocation** *(updated 2026-03-16, QUA-56 — regime-informed):*
+**Recommended order for Phase 1 iteration allocation** *(updated 2026-03-16, QUA-74 — post H02 Gate 1 FAIL revision):*
 
-1. **Pairs Trading Cointegration** — market-neutral construction is the highest regime-fit for current high-vol + transition-risk environment; run first; survivorship bias methodology must be validated before results accepted (flag to Overfit Detector Agent)
-2. **Bollinger Band Mean Reversion** — high Gate 1 confidence; run second; VIX filter (suspend at VIX > 30) is non-negotiable given VIX at 27.19; test entry_std robustness as primary focus
-3. **RSI Short-Term Reversal** — solid empirical basis; PDT tracking is mandatory deliverable; **do not run concurrently with Bollinger Band** — mean-reversion concentration risk requires sequential validation first
-4. **Momentum Vol-Scaled** — conditional on crash protection keeping MDD < 20%; mildly trending regime is marginally supportive; test after top 2-3; if SPY recovers above -4.29% 1m and breadth improves, reconsider promotion to #3
-5. **DMA Crossover** — baseline calibration only; Market Regime Agent explicitly flagged "whipsaw environment" for this strategy; run early to validate backtest engine, do not treat as Gate 1 candidate
-6. **Multi-Factor Long-Short** — defer pending Engineering Director confirmation of fundamental data availability; regime fit is also weak (factor crowding in high-vol)
+1. **Pairs Trading v2.0 (#04-v2)** — sector ETF universe (XLF/KRE, XLE/OIH, XLV/IBB, XLP/XLY, GLD/SLV); 63d lookback; entry_zscore 1.5; ETF pairs immune to business model divergence that broke v1.0; **requires Alpha Research cointegration pre-screen before backtest** (see `04_pairs_trading_cointegration_v2.md`)
+2. **Momentum Vol-Scaled (#05)** ⬆️ *promoted from #4* — trending regime (2018-2021) is structurally favorable for momentum; MDD is the gate (crash protection must keep IS MDD < 20% through March 2020); run second
+3. **RSI Short-Term Reversal (#06)** — mean-reversion structural risk (same category as retired H02); PDT tracking mandatory; run third, only after H04 and H05 results reviewed; watch for H02-pattern IS Sharpe collapse
+4. **DMA Crossover (#01)** — baseline calibration only; trend-following payoff may benefit from 2018-2021 window; run to validate backtest engine; do not treat as primary Gate 1 candidate
+5. **Multi-Factor Long-Short (#03)** — defer pending Engineering Director confirmation of fundamental data availability (yfinance does not have P/E, P/B, ROE); regime fit is also weak (factor crowding in high-vol)
+6. ~~**Bollinger Band Mean Reversion (#02)**~~ — **RETIRED** — Gate 1 FAIL (IS Sharpe 0.029)
 
 ---
 
@@ -278,13 +289,16 @@ Three of the 6 strategies are mean reversion (Bollinger Band #02, Pairs Trading 
 
 | Item | Owner | Priority |
 |------|-------|----------|
-| Market Regime classification | Market Regime Agent | High — needed to finalize regime-dependent rankings |
+| Market Regime classification | Market Regime Agent | ✅ Complete — QUA-35 delivered |
 | Fundamental data availability confirmation (P/E, P/B, ROE) | Engineering Director | High — gating for Strategy #03 |
-| Survivorship bias methodology validation for Pairs Trading | Overfit Detector Agent | High — must be confirmed before Pairs Trading backtest is accepted |
+| Survivorship bias methodology validation for Pairs Trading | Overfit Detector Agent | ✅ Pre-validated — QUA-55 done; confirm output before backtest launch |
 | PDT weekly trade count tracking in backtest engine | Engineering Director | Medium — required for RSI Reversal live-trading assessment |
-| entry_std and entry_zscore sensitivity flagged for stress testing | Overfit Detector Agent | High — these are the critical sensitivity parameters across top 2 strategies |
+| entry_zscore sensitivity flagged for stress testing | Overfit Detector Agent | High — critical sensitivity parameter for Pairs Trading |
+| H02 Gate 1 failure root cause analysis + strategic implications | Research Director | ✅ Complete — `research/findings/02_bollinger_band_gate1_failure_2026-03.md` |
+| Phase 1 ranking revision post H02 FAIL | Alpha Research Agent | ✅ Complete — QUA-74 (this document) |
 
 ---
 
 *Generated by Alpha Research Agent | QUA-36 | 2026-03-15*
 *Updated by Research Director | QUA-56 | 2026-03-16 — regime-informed revision following Market Regime Agent classification (QUA-35)*
+*Updated by Alpha Research Agent | QUA-74 | 2026-03-16 — post H02 Gate 1 FAIL: H02 retired, H05 promoted to Rank 2, mean-reversion risk reduced, hypothesis scoring methodology updated*

@@ -1,9 +1,11 @@
 # Hypothesis 04: Pairs Trading via Cointegration
 
-**Status:** READY
+**Status:** FAILED GATE 1 — REVISED AS v2.0 (see `04_pairs_trading_cointegration_v2.md`)
 **Category:** Statistical Arbitrage
 **Source:** Quantopian Lectures
 **Date:** 2026-03-15
+**Gate 1 Result:** FAIL — IS Sharpe 0.50, OOS Sharpe 0.02, Trade Count 38, Param Sensitivity 104.9% (QUA-73, 2026-03-16)
+**Failure Analysis:** `research/findings/04_pairs_trading_gate1_failure_2026-03.md`
 
 ---
 

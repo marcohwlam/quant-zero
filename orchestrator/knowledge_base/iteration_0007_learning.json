@@ -1,0 +1,141 @@
+{
+  "strategy_name": "dual_momentum_daily_rebalance_top3",
+  "hypothesis": "Dual momentum combining absolute momentum (ETF 21-day return > 0) with relative momentum (cross-sectional ranking) across 8 liquid ETFs. Critical fix from iterations 3 and 6: trade count has been catastrophically low (12-23 trades) due to either infrequent rebalancing OR overly restrictive trend filters. This iteration uses DAILY rebalancing (rebalance_days=1) to maximize trade frequency, holds top 3 ETFs simultaneously by 21-day return, and replaces the 200-day MA filter with a simpler absolute momentum filter (return > 0). Daily rebalancing on 8 ETFs holding top 3 should generate ~252 rebalances \u00d7 ~1 trade per rebalance day (position changes) = 100-300 trades over the 5-year IS period. The 21-day lookback (1 month) captures meaningful momentum while being responsive enough for daily rebalancing. Long-only avoids short-side losses (iter 4 failure). No MA filter avoids signal suppression (iter 6 failure). Absolute momentum filter (return > 0) prevents buying into downtrends without being as restrictive as the 200-day MA.",
+  "metrics": {
+    "sharpe_in_sample": 0.13502254200358843,
+    "sharpe_out_of_sample": 0.26485200719445945,
+    "max_dd_in_sample": -0.22810557829346997,
+    "max_dd_out_of_sample": -0.10878193699214261,
+    "trades_in_sample": 56.875,
+    "trades_out_of_sample": 23.875,
+    "win_rate_in_sample": 0.4360142310202329,
+    "profit_factor_in_sample": 1.2551840873088764,
+    "post_cost_sharpe_is": -0.014590368091845801,
+    "post_cost_sharpe_oos": 0.07429072679246108,
+    "asset_class": "equities",
+    "dsr_zscore": 11.359862,
+    "dsr_pass": "True",
+    "wf_windows_passed": 2,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": false,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.1077,
+        "test_sharpe": 1.7821,
+        "consistency_ratio": 16.5405,
+        "passed": "True"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.4705,
+        "test_sharpe": 0.1982,
+        "consistency_ratio": 0.4211,
+        "passed": "False"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.5952,
+        "test_sharpe": -2.2821,
+        "consistency_ratio": -3.8343,
+        "passed": "False"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.1664,
+        "test_sharpe": 0.0044,
+        "consistency_ratio": 0.0262,
+        "passed": "False"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.2432,
+        "test_sharpe": -0.4375,
+        "consistency_ratio": -1.7987,
+        "passed": "False"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.2379,
+        "test_sharpe": 0.009,
+        "consistency_ratio": 0.0378,
+        "passed": "False"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.3676,
+        "test_sharpe": 1.1884,
+        "consistency_ratio": 3.2325,
+        "passed": "True"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "momentum_lookback": {
+        "low": 0.135,
+        "baseline": 0.135,
+        "high": 0.135,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "top_n_held": {
+        "low": 0.135,
+        "baseline": 0.135,
+        "high": 0.135,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rebalance_days": {
+        "low": 0.135,
+        "baseline": 0.135,
+        "high": 0.135,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "abs_momentum_filter": {
+        "low": 0.135,
+        "baseline": 0.135,
+        "high": 0.135,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 1.0,
+    "overfitting_risk": "medium",
+    "post_mortem": "Failed transaction cost gate: post-cost IS Sharpe = -0.01. Pre-cost IS Sharpe was 0.14. The edge is too thin to survive realistic trading costs.",
+    "next_direction": "Strategy needs a larger edge. Reduce trade frequency or focus on higher-conviction signals.",
+    "promote_to_paper": false
+  }
+}

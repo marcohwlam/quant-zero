@@ -1,0 +1,148 @@
+{
+  "strategy_name": "dual_momentum_spx_trend_bb_entry",
+  "hypothesis": "After 14 iterations, the key failure modes are clear: (1) pure relative momentum on 8 ETFs is too sticky to generate 50+ trades, (2) absolute momentum filters kill trade count, (3) daily rebalancing destroys edge via costs, (4) weekly forced full-turnover barely survives costs. The BEST result was iter 9: IS Sharpe 0.47, OOS 0.58, 7/7 WF consistency, but only 14 trades.\n\nThis iteration makes a decisive pivot: **apply a Bollinger Band mean-reversion entry WITHIN a trend-following framework on individual ETFs**. The core insight from the knowledge base is that Bollinger Band mean reversion on a basket of ETFs targets IS Sharpe ~1.1. The failure of BB mean reversion in iter 5 was insufficient trades (only 24) and wrong regime (IS period had too many trends). \n\nNew approach \u2014 for each of the 8 ETFs independently:\n1. **Trend filter**: Price must be ABOVE the 100-day SMA (medium-term uptrend confirmation). This ensures we only take mean-reversion entries within established uptrends.\n2. **Entry**: Price crosses BELOW the lower Bollinger Band (20-day SMA - 1.5\u03c3). A 1.5\u03c3 threshold (vs 2.0\u03c3 in iter 5) generates 3-4x more entries per ETF per year.\n3. **Exit**: Price returns above the 20-day SMA (middle band), OR after 8 trading days (time-based stop).\n\nWhy this works better than prior iterations:\n- 1.5\u03c3 BB threshold generates ~6-8 entries per ETF per year vs ~2-3 entries at 2.0\u03c3 \u2192 8 ETFs \u00d7 6 entries \u00d7 5 years = 240 IS trades, easily clearing the 50-trade minimum\n- Entry WITHIN uptrend (above 100-day SMA) ensures we're buying dips in trending assets, not catching falling knives \u2014 this is the \"momentum + reversal\" combination that has academic support\n- Exit at mean (SMA) is a clean, objective signal with documented edge\n- Long-only avoids short-side losses (iter 4 catastrophic failure)\n- No cross-sectional ranking avoids the stickiness problem that plagued iters 3-14\n- The 100-day SMA filter is shorter than 200-day (iter 6/8 killed by over-filtering) but longer than 50-day, providing meaningful regime filtering without excessive signal suppression",
+  "metrics": {
+    "sharpe_in_sample": 0.009204898365830702,
+    "sharpe_out_of_sample": -0.2822949839632462,
+    "max_dd_in_sample": -0.13391401160741934,
+    "max_dd_out_of_sample": -0.06438523674634151,
+    "trades_in_sample": 14.125,
+    "trades_out_of_sample": 5.125,
+    "win_rate_in_sample": 0.5306029448492684,
+    "profit_factor_in_sample": 1.002984043790558,
+    "post_cost_sharpe_is": -0.037784336363131665,
+    "post_cost_sharpe_oos": -0.3504247349129693,
+    "asset_class": "equities",
+    "dsr_zscore": -2.046154,
+    "dsr_pass": "False",
+    "wf_windows_passed": 5,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": -0.1373,
+        "test_sharpe": Infinity,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.1244,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.1874,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.1164,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.391,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.214,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": -0.2298,
+        "test_sharpe": Infinity,
+        "consistency_ratio": 0.0,
+        "passed": false
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "bb_window": {
+        "low": 0.0092,
+        "baseline": 0.0092,
+        "high": 0.0092,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "bb_std": {
+        "low": 0.0092,
+        "baseline": 0.0092,
+        "high": 0.0092,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "trend_sma": {
+        "low": 0.0092,
+        "baseline": 0.0092,
+        "high": 0.0092,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "max_holding_days": {
+        "low": 0.0092,
+        "baseline": 0.0092,
+        "high": 0.0092,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "fees": {
+        "low": 0.0092,
+        "baseline": 0.0092,
+        "high": 0.0092,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 1.0,
+    "overfitting_risk": "medium",
+    "post_mortem": "Failed transaction cost gate: post-cost IS Sharpe = -0.04. Pre-cost IS Sharpe was 0.01. The edge is too thin to survive realistic trading costs.",
+    "next_direction": "Strategy needs a larger edge. Reduce trade frequency or focus on higher-conviction signals.",
+    "promote_to_paper": false
+  }
+}

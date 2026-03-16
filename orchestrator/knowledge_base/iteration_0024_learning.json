@@ -1,0 +1,134 @@
+{
+  "strategy_name": "dual_momentum_sma_cross_independent_etf",
+  "hypothesis": "After 23 iterations, the root causes of failure are clear: (1) cross-sectional ranking is too sticky regardless of universe/lookback; (2) absolute momentum filters kill trade count; (3) daily rebalancing destroys edge via costs; (4) the bug in iter 23 (unary ~ on float) was a code error, not a strategy flaw. The dual MA crossover concept from iter 23 is architecturally sound but had a NaN/boolean bug. This iteration fixes the implementation: for each of the 8 ETFs independently, compute a fast (10-day) and slow (30-day) SMA. ENTRY when fast > slow (golden cross). EXIT when fast < slow (death cross). Each ETF is evaluated independently \u2014 multiple can be held simultaneously, each getting equal allocation. With 8 ETFs \u00d7 ~6 crossovers/year \u00d7 5 IS years = ~240 trade events. No absolute momentum filter (avoids trade suppression). Long-only (avoids short-side losses). The key fix: use boolean dtype explicitly for entries/exits via .astype(bool) and only use ~(tilde) on clean boolean DataFrames. The 10/30 SMA crossover fires frequently enough (more than 20/50) to generate 50+ trades while the trend-following logic should produce positive IS Sharpe on these ETFs which have persistent medium-term trends.",
+  "metrics": {
+    "sharpe_in_sample": 0.34661918745409614,
+    "sharpe_out_of_sample": 0.8290147630889901,
+    "max_dd_in_sample": -0.2513309502415326,
+    "max_dd_out_of_sample": -0.11916893723122436,
+    "trades_in_sample": 21.875,
+    "trades_out_of_sample": 8.25,
+    "win_rate_in_sample": 0.45798400992151833,
+    "profit_factor_in_sample": 1.6329730732729213,
+    "post_cost_sharpe_is": 0.31052312389742287,
+    "post_cost_sharpe_oos": 0.7865697064811296,
+    "asset_class": "equities",
+    "dsr_zscore": 9.800941,
+    "dsr_pass": "True",
+    "wf_windows_passed": 4,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.5128,
+        "test_sharpe": 1.1267,
+        "consistency_ratio": 2.197,
+        "passed": "True"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.8181,
+        "test_sharpe": 0.1929,
+        "consistency_ratio": 0.2358,
+        "passed": "False"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.8616,
+        "test_sharpe": -2.5231,
+        "consistency_ratio": -2.9284,
+        "passed": "False"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.477,
+        "test_sharpe": -1.0004,
+        "consistency_ratio": -2.0972,
+        "passed": "False"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.3121,
+        "test_sharpe": 0.3668,
+        "consistency_ratio": 1.1754,
+        "passed": "True"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.2888,
+        "test_sharpe": 1.1102,
+        "consistency_ratio": 3.8446,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.2591,
+        "test_sharpe": 1.2235,
+        "consistency_ratio": 4.7222,
+        "passed": "True"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "fast_sma": {
+        "low": 0.3466,
+        "baseline": 0.3466,
+        "high": 0.3466,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "slow_sma": {
+        "low": 0.3466,
+        "baseline": 0.3466,
+        "high": 0.3466,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "fees": {
+        "low": 0.3466,
+        "baseline": 0.3466,
+        "high": 0.3466,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 0.82,
+    "overfitting_risk": "low",
+    "post_mortem": "This iteration successfully fixed the boolean dtype bug from iter 23, and the architecture is sound. Notably, the OOS Sharpe (0.83) *exceeds* the IS Sharpe (0.35), which is a very strong sign against overfitting \u2014 the strategy is generalizing well, not overfitting. The walk-forward consistency score is perfect (1.0) with 4/7 windows passing, meeting the gate. Transaction costs are manageable and the strategy survives post-cost. However, several acceptance criteria are not met: (1) IS Sharpe of 0.35 is well below the 1.0 threshold; (2) IS Max Drawdown of -0.25 breaches the -0.20 limit; (3) Total IS trades of ~22 is far below the 50-trade minimum. The trade count failure confirms the hypothesis prediction was wrong \u2014 8 ETFs \u00d7 10/30 SMA crossovers are not generating the expected ~240 trade events; only ~22 IS trades occurred. The positive OOS performance and low overfitting risk make this a promising foundation, but it needs more trades and better IS profitability.",
+    "next_direction": "Address the three failing criteria simultaneously: (1) Increase trade count by shortening the SMA parameters (e.g., fast=5, slow=15) or adding more ETFs to the universe to generate 50+ IS trades; (2) Improve IS Sharpe toward 1.0 by experimenting with a trailing stop or profit target to cut losers early and let winners run \u2014 the 45.8% win rate with 1.63 profit factor suggests a skewed return profile that could be improved; (3) Reduce IS drawdown below -0.20 by implementing a portfolio-level drawdown cap (e.g., reduce position sizes when portfolio drawdown exceeds -15%). The OOS outperformance is genuinely encouraging \u2014 do not over-engineer the entry/exit logic, just tune parameters for frequency and add risk controls.",
+    "promote_to_paper": false
+  }
+}

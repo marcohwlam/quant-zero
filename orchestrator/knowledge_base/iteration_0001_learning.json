@@ -1,0 +1,141 @@
+{
+  "strategy_name": "rsi_mean_reversion_etf_basket",
+  "hypothesis": "Short-term RSI extremes in liquid ETFs indicate overreaction to news and liquidity shocks. When the 5-day RSI drops below 30, prices are oversold and tend to revert toward the mean over the next 3-5 days. Applying this across a diversified basket of 8 liquid ETFs (SPY, QQQ, IWM, DIA, XLF, XLE, XLK, XLV) diversifies idiosyncratic risk and increases trade frequency, improving statistical robustness. The short holding period (5 days max) limits exposure to sustained trending regimes.",
+  "metrics": {
+    "sharpe_in_sample": 0.00952578883294802,
+    "sharpe_out_of_sample": 0.9518409911002123,
+    "max_dd_in_sample": -0.38102268523570015,
+    "max_dd_out_of_sample": -0.0905647602387765,
+    "trades_in_sample": 64.75,
+    "trades_out_of_sample": 27.125,
+    "win_rate_in_sample": 0.6726034877743345,
+    "profit_factor_in_sample": 0.9308858541108431,
+    "post_cost_sharpe_is": -0.07457498984171727,
+    "post_cost_sharpe_oos": 0.7759905560158351,
+    "asset_class": "equities",
+    "dsr_zscore": -0.334233,
+    "dsr_pass": false,
+    "wf_windows_passed": 3,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": -0.182,
+        "test_sharpe": 0.82,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": -0.0136,
+        "test_sharpe": 1.8208,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.2609,
+        "test_sharpe": -0.4939,
+        "consistency_ratio": -1.8929,
+        "passed": "False"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.061,
+        "test_sharpe": 0.5123,
+        "consistency_ratio": 8.396,
+        "passed": "True"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.139,
+        "test_sharpe": 1.6479,
+        "consistency_ratio": 11.859,
+        "passed": "True"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.6959,
+        "test_sharpe": -0.1669,
+        "consistency_ratio": -0.2399,
+        "passed": "False"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.47,
+        "test_sharpe": 1.3939,
+        "consistency_ratio": 2.966,
+        "passed": "True"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "rsi_period": {
+        "low": 0.0095,
+        "baseline": 0.0095,
+        "high": 0.0095,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rsi_entry_threshold": {
+        "low": 0.0095,
+        "baseline": 0.0095,
+        "high": 0.0095,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rsi_exit_threshold": {
+        "low": 0.0095,
+        "baseline": 0.0095,
+        "high": 0.0095,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "max_holding_days": {
+        "low": 0.0095,
+        "baseline": 0.0095,
+        "high": 0.0095,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 1.0,
+    "overfitting_risk": "medium",
+    "post_mortem": "Failed transaction cost gate: post-cost IS Sharpe = -0.07. Pre-cost IS Sharpe was 0.01. The edge is too thin to survive realistic trading costs.",
+    "next_direction": "Strategy needs a larger edge. Reduce trade frequency or focus on higher-conviction signals.",
+    "promote_to_paper": false
+  }
+}

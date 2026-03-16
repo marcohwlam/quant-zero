@@ -1,0 +1,155 @@
+{
+  "strategy_name": "sma_cross_vol_scaled_5_13_momentum_gate_v7",
+  "hypothesis": "Iterations 24-29 have consistently shown OOS Sharpe > IS Sharpe with the per-ETF SMA crossover + inverse-vol sizing architecture, confirming genuine non-overfit alpha. The two remaining failures are: (1) IS Sharpe ~0.53 < 1.0, and (2) IS trades ~45 < 50 (with 5/15 SMA). Iteration 30 failed with a datetime comparison bug when implementing the momentum gate. This iteration fixes that bug and implements: (1) 5/13 SMA crossover \u2014 splitting between 5/12 (54 trades, noisy IS Sharpe 0.35) and 5/15 (45 trades, cleaner IS Sharpe 0.53), targeting ~50-54 trades; (2) Cross-sectional momentum entry gate \u2014 only enter on a golden cross if the ETF ranks in the top-3 by 20-day return among all 8 ETFs, concentrating capital in highest-momentum ETFs; (3) Inverse-vol position sizing (20-day realized vol, normalized) preserved from iter 29 which successfully kept OOS > IS Sharpe; (4) 8% trailing stop per position to limit individual losers. The momentum gate is implemented correctly using integer positional indexing (iloc) rather than datetime comparisons that caused the iter 30 bug. Exits are still driven by death cross OR trailing stop \u2014 the gate only affects entries. This combination targets IS Sharpe \u2265 1.0 via better per-trade quality, IS trades \u2265 50 via the 5/13 frequency, IS MaxDD < -20% via vol-sizing + trailing stop.",
+  "metrics": {
+    "sharpe_in_sample": 0.47608773766392154,
+    "sharpe_out_of_sample": -0.09565857238937647,
+    "max_dd_in_sample": -0.05824465585707255,
+    "max_dd_out_of_sample": -0.024882194361196496,
+    "trades_in_sample": 16.5,
+    "trades_out_of_sample": 6.0,
+    "win_rate_in_sample": 0.48328134284016644,
+    "profit_factor_in_sample": 2.582701512367187,
+    "post_cost_sharpe_is": 0.4334748869914631,
+    "post_cost_sharpe_oos": -0.162944561080086,
+    "asset_class": "equities",
+    "dsr_zscore": 15.723691,
+    "dsr_pass": "True",
+    "wf_windows_passed": 6,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.6501,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.5147,
+        "test_sharpe": -0.3298,
+        "consistency_ratio": -0.6408,
+        "passed": "False"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.6578,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.2319,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.2255,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.243,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.2067,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "fast_sma": {
+        "low": 0.4761,
+        "baseline": 0.4761,
+        "high": 0.4761,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "slow_sma": {
+        "low": 0.4761,
+        "baseline": 0.4761,
+        "high": 0.4761,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "trailing_stop_pct": {
+        "low": 0.4761,
+        "baseline": 0.4761,
+        "high": 0.4761,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "vol_window": {
+        "low": 0.4761,
+        "baseline": 0.4761,
+        "high": 0.4761,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "momentum_gate_window": {
+        "low": 0.4761,
+        "baseline": 0.4761,
+        "high": 0.4761,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "top_n_gate": {
+        "low": 0.4761,
+        "baseline": 0.4761,
+        "high": 0.4761,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 0.97,
+    "overfitting_risk": "high",
+    "post_mortem": "This iteration fails on virtually every acceptance criterion simultaneously, making it a clear and decisive failure. \n\n1. **IS Sharpe (0.476) << 1.0 target**: The 5/13 SMA crossover actually *degraded* IS Sharpe compared to the 5/15 iteration (0.53), rather than improving it toward the 1.0 target. The momentum gate did not improve per-trade quality as hypothesized.\n\n2. **OOS Sharpe (-0.096) << 0.7 target**: Critically, OOS Sharpe is *negative*, meaning the strategy loses money out-of-sample. This is a complete reversal from the hypothesis claim that iterations 24-29 \"consistently showed OOS Sharpe > IS Sharpe.\" The IS/OOS gap (0.476 vs -0.096) is enormous \u2014 a hallmark of overfitting.\n\n3. **Trade count (IS: 16.5) << 50 minimum**: This is the most alarming failure. The momentum gate (top-3 of 8 ETFs by 20-day return) is so restrictive that it filtered out the vast majority of crossover signals, collapsing trade count from the expected ~50-54 down to only ~16.5. The gate is over-filtering.\n\n4. **OOS trades (6.0)**: Extremely thin OOS sample \u2014 6 trades provides essentially no statistical validity for OOS conclusions.\n\n5. **Max drawdown is deceptively favorable** (-5.8% IS, -2.5% OOS) but this is entirely explained by the near-zero trade count \u2014 you can't have large drawdowns if you're barely trading.\n\n6. **Walk-forward 6/7 PASS is misleading**: With only ~16.5 trades in-sample spread across 7 windows, each window has ~2-3 trades. A walk-forward \"pass\" on 2-3 trades per window is statistically meaningless noise.\n\n7. **Post-cost OOS Sharpe (-0.163)**: Negative after costs, confirming the strategy generates no viable real-world alpha OOS.\n\n8. **The hypothesis was wrong**: The momentum gate (top-3 of 8, ~37.5% pass rate) combined with 5/13 SMA crossover created extreme signal starvation. The bug fix from iter 30 worked correctly \u2014 the gate is simply too restrictive at top_n=3.",
+    "next_direction": "Address the critical trade starvation problem caused by the overly restrictive momentum gate. Two parallel paths to explore: (A) Relax the gate to top_n=5 or top_n=6 (62-75% pass rate) while keeping 5/13 SMA \u2014 this should recover trade count toward 40-50 without fully abandoning the momentum filter concept; (B) Abandon the cross-sectional momentum gate entirely and return to the iter 29 architecture (5/15 SMA + inverse-vol sizing, which achieved IS Sharpe 0.53 and positive OOS Sharpe) but focus on improving IS Sharpe through alternative means: e.g., adding a regime filter (only trade when SPY is above its 50-day SMA), or a volatility regime gate (skip entries during high-VIX periods). The IS Sharpe gap to 1.0 is substantial and may require reconsidering whether this SMA crossover architecture is fundamentally capable of reaching Sharpe 1.0, or whether the acceptance criteria need recalibration. Priority fix: ensure trade count >= 50 before attempting Sharpe improvements.",
+    "promote_to_paper": false
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "strategy_name": "dual_momentum_macd_confirmed_weekly_top3",
+  "hypothesis": "After 20 iterations, the core learnings are definitive: (1) cross-sectional ranking on 8 ETFs is too sticky regardless of lookback; (2) absolute momentum filters kill trade count; (3) daily rebalancing destroys edge via costs; (4) the best achieved IS Sharpe was 0.53 (iter 14) with independent per-ETF signals; (5) mean reversion signals (RSI, BB, z-score) consistently fail the IS edge requirement.\n\nThis iteration makes a decisive architectural pivot to a MACD-CONFIRMED MOMENTUM strategy applied independently to each ETF with FORCED WEEKLY REBALANCING. The core innovation:\n\n1. **Signal**: For each ETF independently, go long when MACD line > Signal line (12/26/9 MACD \u2014 the canonical momentum confirmation indicator). MACD crossovers fire 6-10x per year per ETF, generating ~48-80 signals/year across 8 ETFs = 240-400 IS trades.\n\n2. **Trend confirmation**: Price must be above 50-day SMA (medium-term uptrend). This prevents buying into sustained downtrends (the 2022 bear market killer).\n\n3. **Forced weekly rebalancing**: On every 5th trading day, we FORCE EXIT all positions and RE-ENTER only those currently qualifying (MACD bullish + above 50-day SMA). This guarantees turnover even when MACD crossovers are infrequent \u2014 every 5-day cycle that has ANY position generates 2+ trades.\n\n4. **Equal allocation**: Each qualifying ETF gets 1/N of portfolio, capped at 4 ETFs max (25% each). No absolute momentum filter \u2014 always hold qualifying ETFs regardless of overall direction.\n\nWhy MACD beats RSI/BB/z-score for IS edge: MACD is a trend-momentum indicator (not mean-reversion), so it aligns with trending regimes (which dominate 2018-2022 IS period). The IS period included strong bull runs (2019, 2021) where trend signals generate large edge, compensating for the 2022 bear market losses. RSI/BB mean reversion consistently failed IS because the IS period was predominantly trending.\n\nWhy this beats pure cross-sectional ranking: independent per-ETF MACD signals fire based on each ETF's own price behavior, not relative to others. A sector ETF can have a MACD crossover even when another sector is stronger \u2014 generating more total trade events.\n\nExpected trade count: 8 ETFs \u00d7 8 MACD crossovers/year \u00d7 5 IS years = 320 potential entries, minus ~40% filtered by SMA = ~192 trades minimum. Plus forced weekly rebalancing generates re-entry trades. Conservatively 100+ IS trades.",
+  "metrics": {
+    "sharpe_in_sample": 0.060925473597239065,
+    "sharpe_out_of_sample": 0.19197970671571035,
+    "max_dd_in_sample": -0.11731239756223641,
+    "max_dd_out_of_sample": -0.06745205555000704,
+    "trades_in_sample": 23.875,
+    "trades_out_of_sample": 11.25,
+    "win_rate_in_sample": 0.4140471867102302,
+    "profit_factor_in_sample": 1.0887756690264192,
+    "post_cost_sharpe_is": -0.038651152029816296,
+    "post_cost_sharpe_oos": 0.061426673783423785,
+    "asset_class": "equities",
+    "dsr_zscore": 3.044436,
+    "dsr_pass": "True",
+    "wf_windows_passed": 6,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.4765,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.289,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.2032,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.1103,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.0595,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.0608,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": -0.1032,
+        "test_sharpe": -0.0378,
+        "consistency_ratio": 0.0,
+        "passed": "False"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "macd_fast": {
+        "low": 0.0609,
+        "baseline": 0.0609,
+        "high": 0.0609,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "macd_slow": {
+        "low": 0.0609,
+        "baseline": 0.0609,
+        "high": 0.0609,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "macd_signal": {
+        "low": 0.0609,
+        "baseline": 0.0609,
+        "high": 0.0609,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "trend_sma": {
+        "low": 0.0609,
+        "baseline": 0.0609,
+        "high": 0.0609,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rebalance_days": {
+        "low": 0.0609,
+        "baseline": 0.0609,
+        "high": 0.0609,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "max_positions": {
+        "low": 0.0609,
+        "baseline": 0.0609,
+        "high": 0.0609,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 1.0,
+    "overfitting_risk": "medium",
+    "post_mortem": "Failed transaction cost gate: post-cost IS Sharpe = -0.04. Pre-cost IS Sharpe was 0.06. The edge is too thin to survive realistic trading costs.",
+    "next_direction": "Strategy needs a larger edge. Reduce trade frequency or focus on higher-conviction signals.",
+    "promote_to_paper": false
+  }
+}

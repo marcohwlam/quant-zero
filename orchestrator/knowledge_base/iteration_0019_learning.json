@@ -1,0 +1,141 @@
+{
+  "strategy_name": "dual_momentum_expanded_universe_trend_filter",
+  "hypothesis": "After 18 iterations, the diagnosis is definitive: (1) the 8-ETF universe is too small \u2014 with any reasonable filter, rankings are too sticky to generate 50+ trades; (2) cross-sectional ranking alone doesn't generate enough turnover; (3) daily rebalancing destroys edge via costs; (4) absolute momentum filters suppress trade count catastrophically.\n\nThis iteration makes TWO critical changes simultaneously:\n\n1. **Massively expand the universe to 20 ETFs**: Add all 11 SPDR sector ETFs (XLK, XLF, XLE, XLV, XLI, XLP, XLY, XLU, XLB, XLRE, XLC) plus broad market (SPY, QQQ, IWM, DIA) plus multi-asset (GLD, TLT, EEM, EFA, XLB). With 20 ETFs ranked daily, the top-3 composition changes FAR more frequently than with 8 ETFs. The cross-sectional dispersion is also higher \u2014 technology, energy, utilities, bonds, and gold have genuinely different return profiles, creating real ranking volatility.\n\n2. **Weekly rebalancing (every 5 days) with NO absolute momentum filter**: The killer insight from iteration 9 (best result: IS Sharpe 0.47, OOS 0.58, 7/7 WF consistency) was that removing the absolute filter kept rankings active. With 20 ETFs instead of 8, rank shuffling in the top-3 is ~5x more frequent. Expected: ~52 rebalances/year \u00d7 ~2 position changes per rebalance = ~100 trade events/year = ~500 IS trades over 5 years.\n\n3. **63-day momentum lookback** \u2014 the academically validated window from Jegadeesh & Titman (1993). This is the sweet spot: long enough to capture genuine multi-month momentum, responsive enough to generate rank changes across a diverse 20-ETF universe.\n\n4. **Hold top 2 of 20** (not top 3 of 8): Top 2 out of 20 is the 90th percentile \u2014 far more selective than top 3 of 8 (62nd percentile). This selectivity improves per-trade edge and creates more frequent rank-crossover events as ETFs battle to stay in the top 2.\n\nThe combination of 20 diverse ETFs + top-2 selection + 63-day lookback + weekly rebalancing should finally crack both the trade count (50+) and Sharpe (1.0+) requirements simultaneously.",
+  "metrics": {
+    "sharpe_in_sample": 0.4738820591345191,
+    "sharpe_out_of_sample": 0.25824557369907586,
+    "max_dd_in_sample": -0.201346954480967,
+    "max_dd_out_of_sample": -0.11408672048466809,
+    "trades_in_sample": 11.625,
+    "trades_out_of_sample": 6.25,
+    "win_rate_in_sample": 0.6192258313581843,
+    "profit_factor_in_sample": Infinity,
+    "post_cost_sharpe_is": 0.44242434362979327,
+    "post_cost_sharpe_oos": 0.1965311368386373,
+    "asset_class": "equities",
+    "dsr_zscore": 14.291994,
+    "dsr_pass": "True",
+    "wf_windows_passed": 3,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.5742,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.6392,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.6687,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": Infinity,
+        "test_sharpe": Infinity,
+        "consistency_ratio": NaN,
+        "passed": "False"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": Infinity,
+        "test_sharpe": Infinity,
+        "consistency_ratio": NaN,
+        "passed": "False"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": Infinity,
+        "test_sharpe": Infinity,
+        "consistency_ratio": NaN,
+        "passed": "False"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": Infinity,
+        "test_sharpe": Infinity,
+        "consistency_ratio": NaN,
+        "passed": "False"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "momentum_lookback": {
+        "low": 0.4739,
+        "baseline": 0.4739,
+        "high": 0.4739,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "top_n": {
+        "low": 0.4739,
+        "baseline": 0.4739,
+        "high": 0.4739,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rebalance_days": {
+        "low": 0.4739,
+        "baseline": 0.4739,
+        "high": 0.4739,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "num_parameters": {
+        "low": 0.4739,
+        "baseline": 0.4739,
+        "high": 0.4739,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 0.97,
+    "overfitting_risk": "medium",
+    "post_mortem": "This iteration fails on virtually every acceptance criterion simultaneously. Despite the theoretically sound redesign (20-ETF universe, top-2 selection, 63-day lookback, weekly rebalancing), the results are deeply disappointing:\n\n1. **Trade count catastrophe**: IS trades = 11.6, OOS = 6.25 \u2014 nowhere near the 50-trade minimum. The expanded universe and weekly rebalancing still failed to generate meaningful turnover. This is the most fundamental failure and suggests the strategy structure itself is not generating the expected rank shuffling in practice, despite theoretical arguments to the contrary.\n\n2. **Sharpe ratios well below targets**: IS Sharpe of 0.47 barely matches the best prior result (iteration 9: 0.47), and OOS Sharpe of 0.26 is far below the 0.7 target. After costs, OOS drops to 0.197 \u2014 barely positive.\n\n3. **IS vs OOS degradation**: The IS-to-OOS Sharpe ratio shows ~46% decay (0.47 \u2192 0.26, or 0.44 \u2192 0.20 post-cost), indicating moderate overfitting risk. The gap is concerning but not extreme given the low absolute values.\n\n4. **Walk-forward**: Only 3/7 windows passed, and the consistency score of 1.0 is misleading \u2014 the gate \"passes\" but the underlying performance is weak. The walk-forward gate criterion of \u22653/4 windows is technically met, but 3/7 is a borderline result.\n\n5. **Max drawdown**: IS drawdown of -20.1% just barely breaches the -0.20 threshold (it equals the limit), and OOS at -11.4% is fine. Marginal pass here.\n\n6. **Profit Factor = inf**: This is a red flag \u2014 it likely means zero losing trades in IS, which combined with only 11.6 trades total suggests the strategy is barely trading and the statistics are not meaningful.\n\nThe core problem remains unsolved: the strategy simply isn't trading. 20 ETFs with weekly rebalancing should theoretically generate far more turnover, but the top-2 selection with 63-day momentum appears to be extremely sticky in practice, not the dynamic rank-shuffling machine hypothesized.",
+    "next_direction": "The trade count problem is existential and must be solved first. Three targeted changes: (1) **Increase top_n to 5 or 6 out of 20** \u2014 holding more positions means more partial turnover as individual ETFs rotate in and out of a larger basket, dramatically increasing trade frequency; (2) **Shorten momentum lookback to 20-day** \u2014 faster signal = more rank changes = more trades; the 63-day window is clearly too stable across this universe; (3) **Consider equal-weight portfolio rebalancing with a drift threshold** (e.g., rebalance only when top-N composition changes OR when any weight drifts >5%) rather than pure calendar rebalancing, to force position changes when rankings shift. The Profit Factor = inf and 11.6 trades over 5 years strongly suggests the lookback and top_n combination creates near-permanent lock-in of the same 2 ETFs (likely SPY/QQQ). Shorter lookback + more holdings is the only path to adequate trade count while maintaining the cross-sectional momentum framework.",
+    "promote_to_paper": false
+  }
+}

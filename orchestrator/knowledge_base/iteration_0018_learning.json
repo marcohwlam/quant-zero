@@ -1,0 +1,141 @@
+{
+  "strategy_name": "dual_momentum_spx_individual_trend_weekly",
+  "hypothesis": "After 17 iterations of dual momentum variants, the clear pattern is: (1) the 8-ETF universe is too small for cross-sectional rotation to generate 50+ trades, (2) daily rebalancing destroys edge via costs, (3) absolute momentum filters suppress trade count. The best IS Sharpe achieved was 0.53 (iter 14) using independent per-ETF trend signals, not cross-sectional ranking.\n\nThis iteration makes a decisive architectural pivot: ABANDON cross-sectional ranking entirely and instead apply a DUAL-CONDITION TREND-FOLLOWING strategy to each ETF independently. For each of the 8 ETFs:\n\n1. ENTRY when BOTH conditions hold:\n   - The ETF's 63-day return > 3% (strong absolute momentum \u2014 enough to confirm genuine trend but not so high it kills frequency)\n   - Price is above its 50-day SMA (medium-term trend confirmation)\n\n2. EXIT when EITHER condition fails:\n   - 63-day return drops below 0%\n   - Price drops below its 50-day SMA\n\n3. Weekly signal evaluation (check every 5 days) \u2014 avoids daily trading costs while maintaining responsiveness.\n\nWhy this generates 50+ trades: with 8 ETFs each cycling through trend regimes ~4-6x per year (entry + exit), we get ~32-48 signals/year \u00d7 5 IS years = 160-240 signals. Even at 50% filter efficiency = 80-120 actual trades.\n\nWhy this improves Sharpe vs iter 14 (53-day return > 5%, 50-day SMA, IS Sharpe 0.53):\n- The 63-day lookback captures stronger, more persistent trends than 20-day (reduces noise)\n- The 3% threshold (vs 5%) allows more entries per cycle while still filtering noise\n- Weekly evaluation (vs daily) reduces whipsaw and transaction costs\n\nThe key insight: each ETF is independent. SPY, QQQ, XLK can ALL be held simultaneously when trending. This naturally generates more trades than any ranking-based approach while preserving per-trade edge by requiring strong, confirmed trends.",
+  "metrics": {
+    "sharpe_in_sample": 0.31596625666907596,
+    "sharpe_out_of_sample": 0.5005000580000193,
+    "max_dd_in_sample": -0.21432736059848992,
+    "max_dd_out_of_sample": -0.1276489439267448,
+    "trades_in_sample": 14.625,
+    "trades_out_of_sample": 6.375,
+    "win_rate_in_sample": 0.4527139527139527,
+    "profit_factor_in_sample": 1.962131794741737,
+    "post_cost_sharpe_is": 0.28616650687874623,
+    "post_cost_sharpe_oos": 0.4634334061074113,
+    "asset_class": "equities",
+    "dsr_zscore": 7.200096,
+    "dsr_pass": "True",
+    "wf_windows_passed": 6,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.2021,
+        "test_sharpe": 1.0958,
+        "consistency_ratio": 5.4212,
+        "passed": "True"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.4841,
+        "test_sharpe": 0.3494,
+        "consistency_ratio": 0.7217,
+        "passed": "True"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.5433,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.6592,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": -0.0836,
+        "test_sharpe": Infinity,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.5467,
+        "test_sharpe": 2.2247,
+        "consistency_ratio": 4.0694,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.0769,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "momentum_lookback": {
+        "low": 0.316,
+        "baseline": 0.316,
+        "high": 0.316,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "momentum_threshold": {
+        "low": 0.316,
+        "baseline": 0.316,
+        "high": 0.316,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "trend_sma": {
+        "low": 0.316,
+        "baseline": 0.316,
+        "high": 0.316,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rebalance_days": {
+        "low": 0.316,
+        "baseline": 0.316,
+        "high": 0.316,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 0.95,
+    "overfitting_risk": "low",
+    "post_mortem": "This iteration made a decisive architectural pivot from cross-sectional ranking to independent per-ETF dual-condition trend following, which is a conceptually sound improvement. However, it failed on nearly every quantitative acceptance criterion: (1) IS Sharpe of 0.32 is far below the 1.0 target; (2) OOS Sharpe of 0.50 is below the 0.70 target; (3) IS Max Drawdown of -0.21 barely breaches the -0.20 limit; (4) Most critically, total trades in IS is only ~14.6 \u2014 catastrophically below the 50-trade minimum, completely invalidating the hypothesis that this architecture would generate 160-240 signals. The theoretical trade count math was flawed. On the positive side: OOS Sharpe (0.50) actually exceeds IS Sharpe (0.32), suggesting NO overfitting \u2014 a rare and genuinely encouraging sign. The walk-forward consistency score is perfect (1.0, 6/7 windows passed), and the strategy survives transaction costs. The architecture shows real promise, but the signal frequency is far too low, likely because the 3% momentum threshold combined with the 50-day SMA filter is simultaneously triggering on the same market regimes, and the 8-ETF universe is still the fundamental bottleneck.",
+    "next_direction": "Expand the ETF universe significantly \u2014 from 8 to 20-30 ETFs spanning sectors, factors, geographies, and asset classes \u2014 to generate the necessary trade volume. Keep the dual-condition architecture (absolute momentum + SMA filter) but lower the momentum threshold to 1-2% to allow more entries per ETF per year. Consider also adding a re-entry mechanism: if an ETF exits and then re-qualifies within a short window, count it as a new trade. The OOS > IS Sharpe pattern is extremely promising and worth preserving \u2014 do not over-parameterize the expansion.",
+    "promote_to_paper": false
+  }
+}

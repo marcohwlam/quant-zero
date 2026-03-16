@@ -1,6 +1,6 @@
 # Hypothesis 02: Bollinger Band Mean Reversion
 
-**Status:** READY
+**Status:** FAILED
 **Category:** Mean Reversion
 **Source:** Quantopian Lectures
 **Date:** 2026-03-15

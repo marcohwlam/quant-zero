@@ -1,0 +1,148 @@
+{
+  "strategy_name": "dual_momentum_expanded_universe_weekly",
+  "hypothesis": "The dual momentum concept has shown genuine OOS alpha (OOS > IS Sharpe in iter 3, walk-forward consistency 1.0) but fails on trade count and per-trade edge. The root cause analysis: 8 ETFs \u00d7 weekly rebalance \u00d7 top-3 holding = insufficient turnover when trend filters suppress most signals. This iteration fixes this by: (1) Expanding universe from 8 to 16 ETFs (adding GLD, TLT, EEM, EFA, XLI, XLP, XLY, XLU) to double cross-sectional ranking candidates and inherently increase turnover; (2) Using bi-weekly rebalancing (every 10 days) \u2014 not daily (which failed on costs in iter 7) and not weekly (which still gave too few trades in iter 6 due to signal suppression), but with a LARGER universe making each rebalance yield more position changes; (3) Holding top 2 ETFs rather than top 3 \u2014 with 16 ETFs, top 2 represents the 87th percentile vs. 62nd percentile with 8 ETFs, making the signal more selective and higher conviction per trade; (4) Using 42-day (2-month) momentum lookback \u2014 shorter than 63 days (iter 3/6) but longer than 21 days (iter 7), balancing responsiveness vs. noise; (5) Absolute momentum filter: only hold ETF if its 42-day return > 0, no MA filter that caused signal collapse in iter 6. With 16 ETFs, bi-weekly rebalancing (26 per year \u00d7 5 IS years = 130 rebalances), and ~2 position changes per rebalance, we target 80-150 trades in IS. The larger universe also means regime diversity (bonds, gold, EM, international) reduces correlation during equity bear markets.",
+  "metrics": {
+    "sharpe_in_sample": 0.23042019839145977,
+    "sharpe_out_of_sample": Infinity,
+    "max_dd_in_sample": -0.17059035386150637,
+    "max_dd_out_of_sample": -0.09940851972638029,
+    "trades_in_sample": 9.125,
+    "trades_out_of_sample": 4.25,
+    "win_rate_in_sample": 0.6380685286935287,
+    "profit_factor_in_sample": Infinity,
+    "post_cost_sharpe_is": 0.20339379174033898,
+    "post_cost_sharpe_oos": Infinity,
+    "asset_class": "equities",
+    "dsr_zscore": 11.695662,
+    "dsr_pass": "True",
+    "wf_windows_passed": 4,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.3048,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.1981,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.4252,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.4295,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": -0.0082,
+        "test_sharpe": Infinity,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": Infinity,
+        "test_sharpe": Infinity,
+        "consistency_ratio": NaN,
+        "passed": "False"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": -0.0069,
+        "test_sharpe": Infinity,
+        "consistency_ratio": 0.0,
+        "passed": false
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "momentum_lookback": {
+        "low": 0.2304,
+        "baseline": 0.2304,
+        "high": 0.2304,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "top_n_held": {
+        "low": 0.2304,
+        "baseline": 0.2304,
+        "high": 0.2304,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rebalance_days": {
+        "low": 0.2304,
+        "baseline": 0.2304,
+        "high": 0.2304,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "abs_momentum_filter": {
+        "low": 0.2304,
+        "baseline": 0.2304,
+        "high": 0.2304,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "universe_size": {
+        "low": 0.2304,
+        "baseline": 0.2304,
+        "high": 0.2304,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 0.95,
+    "overfitting_risk": "high",
+    "post_mortem": "This iteration fails on multiple critical acceptance criteria despite some positive signals. The most glaring issues are: (1) **Trade count catastrophically low**: Only 9.125 trades IS and 4.25 OOS \u2014 far below the 50-trade minimum. The expanded universe and bi-weekly rebalancing hypothesis completely failed to generate sufficient turnover; the absolute momentum filter is still suppressing signals aggressively. (2) **IS Sharpe of 0.23 is far below the 1.0 threshold** \u2014 the strategy is barely generating alpha in-sample. (3) **OOS Sharpe of `inf`** is a major red flag: with only 4.25 trades OOS, this almost certainly means zero losing trades in OOS due to statistical noise from an absurdly small sample, not genuine edge. An infinite Sharpe on 4 trades is meaningless and likely an artifact. (4) **Profit Factor (IS) of `inf`** \u2014 again, suspicious with only 9 trades; likely means zero losing trades in IS as well, which is statistically implausible over a real 5-year period and suggests data issues or the trades are so infrequent they only capture obvious trends. (5) Walk-forward only passed 4/7 windows despite a consistency score of 1.0 \u2014 the gate passed but the raw window count is mediocre. The core hypothesis of expanding the universe to generate more trades has failed: the absolute momentum filter is vetoing nearly all signals regardless of universe size. The IS/OOS comparison is essentially meaningless with sample sizes this small.",
+    "next_direction": "The absolute momentum filter must be relaxed or removed \u2014 it is the primary culprit suppressing trades to near-zero regardless of universe size. Try: (1) Remove the abs_momentum_filter entirely OR replace it with a much weaker cash filter (e.g., only go to cash if >50% of universe has negative momentum, not individual ETF level); (2) Increase top_n_held to 4-5 with the 16-ETF universe to ensure positions are always held \u2014 avoid cash; (3) Switch to daily or weekly rebalancing (rebalance_days=5) to multiply trade opportunities; (4) Consider a relative-only momentum model with no absolute filter, always holding the top-N ETFs regardless of sign \u2014 this guarantees minimum trade frequency; (5) Target 100+ trades IS before worrying about Sharpe optimization. The infinite OOS Sharpe and infinite Profit Factor are data quality/sample size artifacts that must be resolved by generating sufficient trade volume first.",
+    "promote_to_paper": false
+  }
+}

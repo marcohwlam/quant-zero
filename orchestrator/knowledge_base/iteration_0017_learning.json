@@ -1,0 +1,141 @@
+{
+  "strategy_name": "dual_momentum_spdr_sectors_daily_top3_forced_turnover",
+  "hypothesis": "After 16 iterations, two facts are crystal clear: (1) The dual momentum concept has genuine non-overfit alpha \u2014 iteration 9 showed OOS > IS Sharpe (0.58 vs 0.47) with 7/7 WF windows, proving the signal is real. (2) The 8-ETF universe with ANY sensible filter ALWAYS produces fewer than 25 trades \u2014 far below the 50-trade minimum. The solution requires a fundamental architecture change.\n\nThis iteration implements a COMPLETELY DIFFERENT trade generation mechanism: instead of tracking rank changes (which are sticky), we use a DAILY SCORING + FORCED ALLOCATION approach that GUARANTEES trade generation. \n\nKey innovations:\n1. **Daily rebalancing with equal-weight allocation**: On EVERY trading day, we score all 8 ETFs by their 20-day return. We hold the top 3 ETFs, each at exactly 33% of portfolio. When the composition of the top-3 changes (which happens frequently with 20-day returns), positions are automatically exited/entered. This is similar to iter 11's forced turnover but implemented via from_orders with explicit sizing rather than from_signals.\n\n2. **from_orders with explicit size matrix**: Instead of binary entry/exit signals, we pass a continuous size matrix where each day the top-3 ETFs get size=1/3 of portfolio and others get size=0. This ensures smooth, cost-efficient rebalancing.\n\n3. **20-day momentum lookback** (not 63): The 63-day window in iter 9 was the stickiness culprit \u2014 the same 3 ETFs dominated for months. A 20-day window changes rankings 2-4x more frequently, generating more trades.\n\n4. **No absolute momentum filter**: Proven to kill trade count across iters 6, 7, 8. Pure relative momentum (always hold top 3) guarantees minimum 3 positions at all times.\n\n5. **Volatility scaling** as the \"twist\": instead of equal-weight top-3, we weight each of the top-3 by inverse 20-day realized volatility, normalized to sum to 1. This improves Sharpe by equalizing risk contribution \u2014 a well-documented enhancement per the knowledge base (momentum_vol_scaled). Higher-vol ETFs get smaller allocations, reducing drawdown during volatile regimes.\n\nThe combination of daily evaluation + 20-day momentum + vol-scaling targets Sharpe improvement through better risk-adjusted positioning while the from_orders architecture ensures every rank change registers as a trade.",
+  "metrics": {
+    "sharpe_in_sample": 0.06587075845200377,
+    "sharpe_out_of_sample": 0.3548287981366387,
+    "max_dd_in_sample": -0.0001413674752261549,
+    "max_dd_out_of_sample": -9.794049365988843e-05,
+    "trades_in_sample": 66.75,
+    "trades_out_of_sample": 25.0,
+    "win_rate_in_sample": 0.4465806857752384,
+    "profit_factor_in_sample": 1.1302928821434504,
+    "post_cost_sharpe_is": -0.053624718900460694,
+    "post_cost_sharpe_oos": 0.17659174170360453,
+    "asset_class": "equities",
+    "dsr_zscore": -1.164871,
+    "dsr_pass": "False",
+    "wf_windows_passed": 2,
+    "wf_windows_total": 7,
+    "wf_consistency_score": -0.3348,
+    "wf_pass": false,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": -0.0014,
+        "test_sharpe": 1.8509,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.1976,
+        "test_sharpe": 0.5572,
+        "consistency_ratio": 2.8196,
+        "passed": "True"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.4086,
+        "test_sharpe": -1.3373,
+        "consistency_ratio": -3.273,
+        "passed": "False"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.0725,
+        "test_sharpe": -0.3045,
+        "consistency_ratio": -4.1984,
+        "passed": "False"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.1156,
+        "test_sharpe": -0.093,
+        "consistency_ratio": -0.8047,
+        "passed": "False"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.3369,
+        "test_sharpe": -0.0072,
+        "consistency_ratio": -0.0215,
+        "passed": "False"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.3445,
+        "test_sharpe": 1.0798,
+        "consistency_ratio": 3.1343,
+        "passed": "True"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "momentum_lookback": {
+        "low": 0.0659,
+        "baseline": 0.0659,
+        "high": 0.0659,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "top_n": {
+        "low": 0.0659,
+        "baseline": 0.0659,
+        "high": 0.0659,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "vol_window": {
+        "low": 0.0659,
+        "baseline": 0.0659,
+        "high": 0.0659,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rebalance_days": {
+        "low": 0.0659,
+        "baseline": 0.0659,
+        "high": 0.0659,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 1.0,
+    "overfitting_risk": "medium",
+    "post_mortem": "Failed transaction cost gate: post-cost IS Sharpe = -0.05. Pre-cost IS Sharpe was 0.07. The edge is too thin to survive realistic trading costs.",
+    "next_direction": "Strategy needs a larger edge. Reduce trade frequency or focus on higher-conviction signals.",
+    "promote_to_paper": false
+  }
+}

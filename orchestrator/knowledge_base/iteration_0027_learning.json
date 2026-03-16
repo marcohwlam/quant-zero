@@ -1,0 +1,155 @@
+{
+  "strategy_name": "sma_cross_expanded_universe_trailing_stop_v3",
+  "hypothesis": "Iteration 26 showed OOS Sharpe 0.72 > IS Sharpe 0.55 (non-overfit, genuine OOS alpha), WF consistency 0.846, but three criteria unmet: IS Sharpe 0.55 < 1.0, IS MaxDD -22.8% > -20%, and IS trades ~45 < 50. The 5/15 SMA crossover per-ETF architecture is structurally sound. The fix requires two targeted changes without introducing any filter that kills trade count or OOS alpha: (1) Expand the universe from 8 to all 8 available ETFs but apply the SMA crossover to each independently AND add a secondary signal \u2014 when a crossover fires AND the 3-day RSI is below 60 (not overbought at entry), this confirms the entry has more upside room, slightly improving per-trade edge and IS Sharpe; (2) Tighten the trailing stop from 12% to 8% to reduce IS MaxDD below -20% while still allowing normal ETF fluctuations. The 5/15 SMA crossover architecture is preserved entirely \u2014 no regime filter, no absolute momentum filter, no cross-sectional ranking. Each ETF independently generates entries on golden cross (5d SMA > 15d SMA) and exits on death cross (5d SMA < 15d SMA) OR trailing stop hit at 8%. The RSI confirmation (entry only when RSI14 < 60) prevents buying at peak overbought levels, reducing the drawdown from extended entries at highs. With 8 ETFs \u00d7 ~15 crossovers/year \u00d7 5 IS years = ~600 trade events at full, and the 8% trailing stop cutting losers faster, the IS Sharpe should improve materially. The OOS > IS relationship from iter 26 should be preserved since we are not adding any IS-biased filter.",
+  "metrics": {
+    "sharpe_in_sample": 0.5382377939695757,
+    "sharpe_out_of_sample": 0.9160531690651676,
+    "max_dd_in_sample": -0.22042422169405818,
+    "max_dd_out_of_sample": -0.0986257741589193,
+    "trades_in_sample": 36.625,
+    "trades_out_of_sample": 13.75,
+    "win_rate_in_sample": 0.4774195022729043,
+    "profit_factor_in_sample": 1.768764565844502,
+    "post_cost_sharpe_is": 0.47336982457204996,
+    "post_cost_sharpe_oos": 0.827257210961124,
+    "asset_class": "equities",
+    "dsr_zscore": 10.979421,
+    "dsr_pass": "True",
+    "wf_windows_passed": 5,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 0.9511,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.7727,
+        "test_sharpe": 1.334,
+        "consistency_ratio": 1.7263,
+        "passed": "True"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.942,
+        "test_sharpe": 1.0205,
+        "consistency_ratio": 1.0833,
+        "passed": "True"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 1.0878,
+        "test_sharpe": -1.3674,
+        "consistency_ratio": -1.257,
+        "passed": "False"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.8053,
+        "test_sharpe": -0.2583,
+        "consistency_ratio": -0.3207,
+        "passed": "False"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.5593,
+        "test_sharpe": 0.999,
+        "consistency_ratio": 1.7863,
+        "passed": "True"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.6847,
+        "test_sharpe": 1.1211,
+        "consistency_ratio": 1.6373,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.6233,
+        "test_sharpe": 1.2481,
+        "consistency_ratio": 2.0024,
+        "passed": "True"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "fast_sma": {
+        "low": 0.5382,
+        "baseline": 0.5382,
+        "high": 0.5382,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "slow_sma": {
+        "low": 0.5382,
+        "baseline": 0.5382,
+        "high": 0.5382,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "trailing_stop_pct": {
+        "low": 0.5382,
+        "baseline": 0.5382,
+        "high": 0.5382,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rsi_window": {
+        "low": 0.5382,
+        "baseline": 0.5382,
+        "high": 0.5382,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rsi_entry_max": {
+        "low": 0.5382,
+        "baseline": 0.5382,
+        "high": 0.5382,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "fees": {
+        "low": 0.5382,
+        "baseline": 0.5382,
+        "high": 0.5382,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 0.92,
+    "overfitting_risk": "low",
+    "post_mortem": "This iteration (v3) continues to show genuinely encouraging signs \u2014 OOS Sharpe (0.916) meaningfully exceeds IS Sharpe (0.538), the walk-forward consistency score is excellent at 0.951 (5/7 windows passed), and the strategy survives realistic transaction costs. The OOS > IS relationship from iteration 26 has been preserved and even strengthened, confirming no IS-biased overfitting was introduced. However, three of the five acceptance criteria remain unmet: (1) IS Sharpe of 0.538 is well below the 1.0 threshold; (2) IS Max Drawdown of -22.0% breaches the -20% ceiling (tightening the trailing stop from 12% to 8% helped OOS drawdown dramatically to -9.9% but did not bring IS drawdown under -20%); (3) Total IS trades of 36.6 fall short of the 50-trade minimum \u2014 adding the RSI<60 filter actually reduced trades further rather than preserving them, since the RSI filter is filtering out entries that would have otherwise fired. The RSI confirmation hypothesis did not deliver the expected improvement in per-trade edge sufficient to lift IS Sharpe, and the trade count reduction is a structural concern. The core SMA crossover architecture remains sound, and the OOS alpha appears genuine.",
+    "next_direction": "Three targeted fixes needed simultaneously: (1) TRADE COUNT \u2014 Remove the RSI<60 entry filter entirely; it is cutting trades (36.6 vs target 50+) without lifting IS Sharpe. Return to pure SMA crossover entries. (2) IS SHARPE & DRAWDOWN \u2014 The 8% trailing stop is clearly helping OOS (DD -9.9%) but IS drawdown is still -22%. Consider a slightly tighter stop of 6\u20137%, OR add a fixed hard stop at -5% per trade in addition to the trailing stop to cut individual losers faster and improve IS Sharpe through better loss management. (3) UNIVERSE / TRADE FREQUENCY \u2014 With 8 ETFs and ~15 crossovers/year the math should yield ~60 IS trades over 5 years; investigate whether any ETFs are being excluded due to data gaps or the RSI filter, and ensure all 8 ETFs are active. A lower slow_sma (e.g., 12 instead of 15) would increase crossover frequency, boosting trade count and potentially IS Sharpe without compromising the structural integrity of the approach.",
+    "promote_to_paper": false
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "strategy_name": "PairsTradingCointegration",
+  "date": "2026-03-15",
+  "overall_verdict": "FAIL",
+  "recommendation": "Reject",
+  "confidence": "HIGH",
+  "disqualify_reason": "Auto-disqualify: IS Sharpe = 0.50 (threshold: > 1.0)",
+  "metrics": [
+    {
+      "name": "Test period",
+      "value": "2018-01-01 \u2013 2023-12-31, 6.0 years",
+      "threshold": "\u2265 5 years",
+      "passed": true,
+      "auto_disqualify": true
+    },
+    {
+      "name": "IS Sharpe",
+      "value": "0.50",
+      "threshold": "> 1.0",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "OOS Sharpe",
+      "value": "0.02",
+      "threshold": "> 0.7",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "Walk-forward windows passed",
+      "value": "0/4",
+      "threshold": "\u2265 3/4",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "Walk-forward OOS/IS consistency",
+      "value": "-0.65 mean OOS/IS ratio",
+      "threshold": "OOS within 30% of IS",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "IS Max Drawdown",
+      "value": "3.5%",
+      "threshold": "< 20%",
+      "passed": true,
+      "auto_disqualify": true
+    },
+    {
+      "name": "OOS Max Drawdown",
+      "value": "1.9%",
+      "threshold": "< 25%",
+      "passed": true,
+      "auto_disqualify": false
+    },
+    {
+      "name": "Win Rate",
+      "value": "55.3%",
+      "threshold": "> 50%",
+      "passed": true,
+      "auto_disqualify": false
+    },
+    {
+      "name": "Trade count",
+      "value": "38",
+      "threshold": "> 50",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "Deflated Sharpe Ratio (z-score)",
+      "value": "7.63",
+      "threshold": "> 0.0",
+      "passed": true,
+      "auto_disqualify": true
+    },
+    {
+      "name": "Parameter sensitivity",
+      "value": "104.9% max Sharpe \u0394 within \u00b120%",
+      "threshold": "< 30% Sharpe change",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "Post-cost Sharpe",
+      "value": "0.02",
+      "threshold": "> 0.7 (after realistic costs)",
+      "passed": false,
+      "auto_disqualify": true
+    }
+  ],
+  "txt_path": "/mnt/c/Users/lamho/repo/quant-zero/backtests/PairsTradingCointegration_2026-03-15.txt"
+}

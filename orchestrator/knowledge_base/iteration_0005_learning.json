@@ -1,0 +1,134 @@
+{
+  "strategy_name": "bollinger_mean_reversion_etf_basket",
+  "hypothesis": "Bollinger Band mean reversion applied to a basket of 8 liquid ETFs exploits short-term liquidity dislocations and overreaction. When price crosses below the lower band (SMA - 2\u03c3), it signals a statistically extreme deviation that tends to revert within days. Key learnings from prior iterations: (1) RSI reversal (iter 1) had the right frequency and OOS characteristics but failed on IS edge \u2014 Bollinger Bands use a wider signal window (20 days) that should produce stronger per-trade edge; (2) Daily/weekly momentum strategies generated too few trades or negative Sharpe from shorting \u2014 this strategy is long-only, avoiding the short-side losses from iter 4; (3) Mean reversion on ETFs has known IS Sharpe ~1.1 per knowledge base. The strategy buys when price crosses below lower Bollinger Band (2\u03c3) and exits when price crosses back above the middle band (SMA). Applied across 8 ETFs daily, this generates 50-150 trades/year with sufficient per-trade edge. Long-only avoids borrow costs and short-side whipsaw. The ETF basket diversifies idiosyncratic risk. 20-day window balances signal quality vs. responsiveness.",
+  "metrics": {
+    "sharpe_in_sample": 0.039392116745769756,
+    "sharpe_out_of_sample": 0.9594311458156217,
+    "max_dd_in_sample": -0.25844583001289434,
+    "max_dd_out_of_sample": -0.07157732300073749,
+    "trades_in_sample": 24.0,
+    "trades_out_of_sample": 8.75,
+    "win_rate_in_sample": 0.65667325428195,
+    "profit_factor_in_sample": 0.9903991339081986,
+    "post_cost_sharpe_is": 0.002665070297494493,
+    "post_cost_sharpe_oos": 0.8898394486584025,
+    "asset_class": "equities",
+    "dsr_zscore": 0.766692,
+    "dsr_pass": "True",
+    "wf_windows_passed": 3,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": -0.1369,
+        "test_sharpe": 1.7585,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": -0.1886,
+        "test_sharpe": 0.9092,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.1927,
+        "test_sharpe": 0.0304,
+        "consistency_ratio": 0.1575,
+        "passed": "False"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.1384,
+        "test_sharpe": -0.3452,
+        "consistency_ratio": -2.4945,
+        "passed": "False"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.1,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.5458,
+        "test_sharpe": 1.7917,
+        "consistency_ratio": 3.283,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.4693,
+        "test_sharpe": 0.9878,
+        "consistency_ratio": 2.1046,
+        "passed": "True"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "bb_window": {
+        "low": 0.0394,
+        "baseline": 0.0394,
+        "high": 0.0394,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "bb_std": {
+        "low": 0.0394,
+        "baseline": 0.0394,
+        "high": 0.0394,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "exit_std": {
+        "low": 0.0394,
+        "baseline": 0.0394,
+        "high": 0.0394,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 0.92,
+    "overfitting_risk": "high",
+    "post_mortem": "This backtest reveals a deeply concerning inversion of the typical overfitting pattern \u2014 OOS dramatically outperforms IS (OOS Sharpe 0.96 vs IS Sharpe 0.039, post-cost: 0.89 vs 0.003). While the usual concern is IS >> OOS, a severe IS << OOS divergence is equally suspicious and suggests the IS period may have been a structurally unfavorable regime for this strategy (e.g., trending or high-volatility environment), or the OOS period coincidentally aligned with ideal mean-reversion conditions. Either way, this large gap signals unreliable strategy behavior across regimes. Additionally, several hard acceptance criteria were missed: (1) IS Sharpe of 0.039 badly fails the \u22651.0 requirement; (2) Post-cost IS Sharpe of 0.003 barely survives but is economically meaningless; (3) Total IS trades of 24 fails the \u226550 minimum, meaning the IS results are statistically underpowered \u2014 the profit factor of 0.99 on only 24 trades confirms there is no real IS edge; (4) OOS trades of only 8.75 further underscore the low-frequency problem. Walk-forward passed 3/7 windows (only 43% pass rate), though the consistency score of 1.0 is noted. The OOS max drawdown is attractive at -7.2%, but OOS statistics built on ~9 trades are not meaningful. The strategy's hypothesis is sound in principle, but execution and regime-matching are clearly broken in the IS period.",
+    "next_direction": "Address the critical trade frequency problem first \u2014 24 IS trades and 8.75 OOS trades are far too few for statistical validity and fail the 50-trade minimum. Consider: (1) Expanding the ETF basket from 8 to 15-20 instruments to multiply signal opportunities; (2) Loosening the entry threshold from 2.0\u03c3 to 1.5\u03c3 to capture more crossings while retaining mean-reversion logic; (3) Shortening the BB window from 20 to 10-15 days to increase signal frequency; (4) Investigate why IS Sharpe is near zero while OOS is ~1.0 \u2014 examine whether IS covered a trending bull/bear market regime where mean reversion underperforms, and consider regime-filtering (e.g., only trade when VIX > threshold or market breadth is neutral). The IS edge must be demonstrated before OOS performance can be trusted.",
+    "promote_to_paper": false
+  }
+}

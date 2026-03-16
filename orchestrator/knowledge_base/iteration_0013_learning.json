@@ -1,0 +1,141 @@
+{
+  "strategy_name": "dual_momentum_multi_signal_etf_basket",
+  "hypothesis": "After 12 iterations, the core problem is clear: the dual momentum family with 8 ETFs generates too few trades because rankings are sticky. The fundamental insight from iteration 9 (best attempt: IS Sharpe 0.47, OOS 0.58, 7/7 WF consistency, but only 13.875 trades) is that the concept works but needs more signal diversity.\n\nThis iteration takes a completely different code architecture to GUARANTEE 50+ trades: instead of tracking rank changes between rebalance periods, we use a CONTINUOUS SIGNAL approach where we generate individual BUY signals for EACH ETF independently when it meets criteria, and EXIT signals when it fails.\n\nThe approach:\n1. For each of the 8 ETFs daily, compute: (a) 20-day momentum rank (relative), (b) 20-day return > 0 (absolute/soft filter), (c) RSI(14) < 60 as entry gate\n2. ENTRY signal for each ETF when: it is in the top-3 by 20-day return AND 20-day return > 0\n3. EXIT signal for each ETF when: it falls out of top-3 by 20-day return OR its 20-day return turns negative\n4. Daily evaluation of signals but NO forced full-portfolio turnover (that killed edge in iter 11)\n\nKey insight: by evaluating signals DAILY rather than on a fixed rebalance schedule, we allow natural entry/exit when rankings genuinely change. The 20-day lookback changes rankings far more frequently than 63-day (iter 9). With 8 ETFs and daily evaluation of a 20-day momentum window, rankings shuffle ~3-4x per month per ETF = ~250-400 signal events per year across all ETFs. Even if 80% are held continuously, the 20% turnover events = 50+ trades per year = 250+ over 5-year IS period.\n\nWhy 20-day lookback beats 63-day for trade count: 20-day returns are more volatile, causing more rank shuffling. The academic literature (Jegadeesh & Titman) found momentum works at 3-12 months, but the ETF rotation literature shows 20-60 day windows work for high-liquidity ETFs. \n\nThe absolute momentum filter (return > 0) is kept as a SOFT filter \u2014 it reduces drawdown without completely suppressing trades because with only 8 ETFs and top-3 selection, if 5+ ETFs are trending up, 3 will always pass. This avoids the cash-trap issue.\n\nLong-only, no leverage, fees=0.001.",
+  "metrics": {
+    "sharpe_in_sample": 0.06046139076910233,
+    "sharpe_out_of_sample": 0.22222887338930533,
+    "max_dd_in_sample": -0.24413867248870033,
+    "max_dd_out_of_sample": -0.10988901721641169,
+    "trades_in_sample": 32.0,
+    "trades_out_of_sample": 13.625,
+    "win_rate_in_sample": 0.47654142496698737,
+    "profit_factor_in_sample": 1.1325486263581852,
+    "post_cost_sharpe_is": -0.0192712392403826,
+    "post_cost_sharpe_oos": 0.11195821552259419,
+    "asset_class": "equities",
+    "dsr_zscore": 7.272001,
+    "dsr_pass": "True",
+    "wf_windows_passed": 3,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.089,
+        "test_sharpe": 1.5184,
+        "consistency_ratio": 17.0631,
+        "passed": "True"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.5464,
+        "test_sharpe": 0.2578,
+        "consistency_ratio": 0.4718,
+        "passed": "False"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.7947,
+        "test_sharpe": -2.206,
+        "consistency_ratio": -2.7758,
+        "passed": "False"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.231,
+        "test_sharpe": -0.4104,
+        "consistency_ratio": -1.7764,
+        "passed": "False"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.331,
+        "test_sharpe": -0.4229,
+        "consistency_ratio": -1.2776,
+        "passed": "False"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.4111,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.2701,
+        "test_sharpe": 1.0945,
+        "consistency_ratio": 4.0517,
+        "passed": "True"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "momentum_lookback": {
+        "low": 0.0605,
+        "baseline": 0.0605,
+        "high": 0.0605,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "top_n": {
+        "low": 0.0605,
+        "baseline": 0.0605,
+        "high": 0.0605,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "abs_momentum_filter": {
+        "low": 0.0605,
+        "baseline": 0.0605,
+        "high": 0.0605,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rebalance_days": {
+        "low": 0.0605,
+        "baseline": 0.0605,
+        "high": 0.0605,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 1.0,
+    "overfitting_risk": "medium",
+    "post_mortem": "Failed transaction cost gate: post-cost IS Sharpe = -0.02. Pre-cost IS Sharpe was 0.06. The edge is too thin to survive realistic trading costs.",
+    "next_direction": "Strategy needs a larger edge. Reduce trade frequency or focus on higher-conviction signals.",
+    "promote_to_paper": false
+  }
+}

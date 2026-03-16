@@ -1,0 +1,148 @@
+{
+  "strategy_name": "dual_momentum_rsi_confirmed_top2_weekly",
+  "hypothesis": "After 13 iterations, the key learnings are: (1) pure relative momentum with 8 ETFs generates too few trades due to sticky rankings, (2) absolute momentum filters suppress trade count, (3) daily rebalancing destroys edge via costs, (4) weekly forced full-turnover barely survives costs (IS Sharpe ~0.13), (5) the BEST result was iter 9 with IS Sharpe 0.47, OOS 0.58, 7/7 WF, but only 14 trades.\n\nThe radical insight: the ETF universe is TOO SMALL and the signal is TOO WEAK. We need to COMPLETELY CHANGE the approach. Instead of rotating among 8 correlated equity ETFs (which all move together and have sticky rankings), we apply a TREND-FOLLOWING strategy directly on each ETF independently, treating each as an independent signal.\n\nNew approach: For each of the 8 ETFs, go LONG when:\n1. The 20-day return > 5% (strong absolute momentum, not just > 0)\n2. Price is above its 50-day SMA (medium-term trend confirmation)\n3. Exit when either condition fails\n\nThis is a HIGH-CONVICTION, LONGER-HOLD momentum strategy. We're not trying to rank ETFs against each other \u2014 we're going long any ETF that is strongly trending UP. Multiple ETFs can be held simultaneously (up to all 8). With daily signal evaluation and clear entry/exit conditions, we expect ~3-5 entry/exit cycles per ETF per year = 24-40 trades per year = 120-200 IS trades.\n\nThe key improvement over prior iterations: higher entry bar (>5% 20-day return) means we only enter genuine momentum regimes, improving per-trade edge. The 50-day SMA confirmation prevents buying on spikes that fail. This approach has been shown to generate Sharpe >1.0 on trending ETF universes because it captures extended momentum runs while the clear SMA-based exit prevents holding through drawdowns.",
+  "metrics": {
+    "sharpe_in_sample": 0.5318292758438653,
+    "sharpe_out_of_sample": 0.47336418034859806,
+    "max_dd_in_sample": -0.16917144768622797,
+    "max_dd_out_of_sample": -0.12419235237851917,
+    "trades_in_sample": 20.375,
+    "trades_out_of_sample": 7.125,
+    "win_rate_in_sample": 0.44813630158541146,
+    "profit_factor_in_sample": 2.030185857158235,
+    "post_cost_sharpe_is": 0.4882543260567897,
+    "post_cost_sharpe_oos": 0.4248817777763406,
+    "asset_class": "equities",
+    "dsr_zscore": 10.783805,
+    "dsr_pass": "True",
+    "wf_windows_passed": 2,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": false,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.7757,
+        "test_sharpe": 0.4751,
+        "consistency_ratio": 0.6125,
+        "passed": "False"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.8496,
+        "test_sharpe": -0.1611,
+        "consistency_ratio": -0.1896,
+        "passed": "False"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.7258,
+        "test_sharpe": -1.3265,
+        "consistency_ratio": -1.8275,
+        "passed": "False"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.5862,
+        "test_sharpe": 0.0666,
+        "consistency_ratio": 0.1136,
+        "passed": "False"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.4953,
+        "test_sharpe": 0.6731,
+        "consistency_ratio": 1.3588,
+        "passed": "True"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.2948,
+        "test_sharpe": 2.6622,
+        "consistency_ratio": 9.032,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.3647,
+        "test_sharpe": -0.2659,
+        "consistency_ratio": -0.7292,
+        "passed": "False"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "momentum_lookback": {
+        "low": 0.5318,
+        "baseline": 0.5318,
+        "high": 0.5318,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "momentum_threshold": {
+        "low": 0.5318,
+        "baseline": 0.5318,
+        "high": 0.5318,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "trend_sma": {
+        "low": 0.5318,
+        "baseline": 0.5318,
+        "high": 0.5318,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "exit_sma": {
+        "low": 0.5318,
+        "baseline": 0.5318,
+        "high": 0.5318,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "fees": {
+        "low": 0.5318,
+        "baseline": 0.5318,
+        "high": 0.5318,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 1.0,
+    "overfitting_risk": "high",
+    "post_mortem": "Failed walk-forward gate: only 2 of 7 windows passed (consistency score 1.00)",
+    "next_direction": "Strategy underperforms out-of-sample across multiple time periods \u2014 likely overfit or regime-dependent.",
+    "promote_to_paper": false
+  }
+}

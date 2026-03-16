@@ -1,0 +1,141 @@
+{
+  "strategy_name": "dual_momentum_weekly_top3_ma200",
+  "hypothesis": "Dual momentum combining absolute momentum (ETF N-day return > 0) with relative momentum (cross-sectional ranking) across 8 liquid ETFs. Key fixes from iteration 3 (only 23 trades, Sharpe 0.28): (1) Weekly rebalancing (every 5 days) instead of ad-hoc \u2014 this multiplies signal generation to ~52 rebalances/year; (2) Hold top 3 ETFs simultaneously instead of top 1-2 \u2014 tripling average positions from ~1 to ~3 per day greatly increases trade count; (3) 63-day (quarter) momentum lookback balances signal quality vs. noise; (4) 200-day SMA trend filter as absolute momentum proxy \u2014 only hold ETF if price > 200-day MA, which acts as a bear market filter to prevent buying into sustained downtrends (critical for 2022 regime). Combined effect: 52 rebalances \u00d7 3 positions \u00d7 ~50% turnover per rebalance \u2248 75+ entry trades over 5-year IS period, satisfying the 50-trade minimum. The long-only structure avoids the short-side losses that destroyed iteration 4. The 200-day MA filter reduces drawdown during bear markets by going to cash rather than holding losers. Sector ETFs show documented momentum persistence driven by earnings revision cycles, capital rotation, and macro regime persistence.",
+  "metrics": {
+    "sharpe_in_sample": 0.15594339140961072,
+    "sharpe_out_of_sample": 0.4615291549139089,
+    "max_dd_in_sample": -0.19579820030542017,
+    "max_dd_out_of_sample": -0.10222288818694349,
+    "trades_in_sample": 12.375,
+    "trades_out_of_sample": 6.0,
+    "win_rate_in_sample": 0.49815197057844124,
+    "profit_factor_in_sample": 3.389169437999783,
+    "post_cost_sharpe_is": 0.120951166980166,
+    "post_cost_sharpe_oos": 0.4072771241510985,
+    "asset_class": "equities",
+    "dsr_zscore": 10.467995,
+    "dsr_pass": "True",
+    "wf_windows_passed": 6,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.1853,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.5721,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.6393,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.5231,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.0337,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.1536,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": -0.0212,
+        "test_sharpe": Infinity,
+        "consistency_ratio": 0.0,
+        "passed": false
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "momentum_lookback": {
+        "low": 0.1559,
+        "baseline": 0.1559,
+        "high": 0.1559,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "trend_sma": {
+        "low": 0.1559,
+        "baseline": 0.1559,
+        "high": 0.1559,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "top_n_held": {
+        "low": 0.1559,
+        "baseline": 0.1559,
+        "high": 0.1559,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rebalance_freq": {
+        "low": 0.1559,
+        "baseline": 0.1559,
+        "high": 0.1559,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 0.95,
+    "overfitting_risk": "medium",
+    "post_mortem": "This iteration fails on multiple hard acceptance criteria despite some encouraging signs. Critical failures: (1) IS Sharpe of 0.156 is dramatically below the 1.0 threshold \u2014 not even close; (2) OOS Sharpe of 0.462 is below the 0.7 threshold; (3) Total trades in IS period is only 12.375, far below the 50-trade minimum \u2014 the hypothesis that weekly rebalancing \u00d7 top-3 holdings would generate 75+ trades was completely wrong. The hypothesis engineering was flawed: the 200-day SMA filter appears to be filtering out most signals, collapsing trade count rather than expanding it. Interestingly, the OOS Sharpe (0.462) exceeds the IS Sharpe (0.156), and OOS drawdown (-0.102) is better than IS drawdown (-0.196), which is the inverse of typical overfitting \u2014 suggesting the strategy may actually be underfit or that IS period captured a more adverse regime (e.g., 2022 bear market). The walk-forward consistency score of 1.0 and 6/7 windows passing is genuinely strong and suggests the signal has some real persistence. The profit factor of 3.39 in IS is also surprisingly high given the low Sharpe, implying large variance in trade outcomes. The post-cost survival is positive but irrelevant given the other failures. The trade count failure (12 vs 50 required) is the most damning \u2014 the 200-day SMA filter combined with only 8 ETFs severely restricts signal generation.",
+    "next_direction": "Address the catastrophic trade count failure (12 vs 50 minimum) by: (1) Reducing rebalance frequency to daily or every 2 days instead of every 5 \u2014 this alone could 2-3x trade count; (2) Loosen or remove the 200-day SMA trend filter which appears to be the primary cause of trade suppression (or use a shorter 50-day MA); (3) Expand the ETF universe from 8 to 12-15 ETFs to create more cross-sectional ranking opportunities; (4) Consider reducing top_n_held to 2 but increasing universe size, or keeping top 3 from a larger universe. The IS Sharpe of 0.156 also needs to improve significantly \u2014 experiment with shorter momentum lookbacks (21-day or 42-day) which may capture more dynamic rotations. The promising walk-forward consistency (1.0) and reverse IS/OOS performance gap suggest the core dual momentum signal has merit, but the parameterization is too restrictive.",
+    "promote_to_paper": false
+  }
+}

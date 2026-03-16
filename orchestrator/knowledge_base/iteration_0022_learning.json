@@ -1,0 +1,155 @@
+{
+  "strategy_name": "dual_momentum_spx_triple_signal_monthly",
+  "hypothesis": "After 21 iterations of dual momentum variants, the pattern is unambiguous: the 8-ETF universe with cross-sectional ranking is fundamentally broken for generating 50+ trades regardless of lookback or filter choice. The real culprit identified across all iterations is that vectorbt's from_signals counts entry+exit PAIRS, not rebalance events \u2014 and with sticky top-N rankings, the same positions persist for months with zero new entries counted.\n\nThis iteration takes a completely different approach: ABANDONING the ETF rotation framework entirely and instead implementing a TRIPLE-SIGNAL LONG-ONLY strategy on SPY using three independently-generated momentum signals, each with different lookback periods. The approach:\n\n1. **Signal 1 (Short-term, 10-day)**: SPY 10-day return > 1.5% AND 10-day RSI < 65 (not overbought) \u2192 short-term momentum confirmed\n2. **Signal 2 (Medium-term, 30-day)**: SPY price above 30-day SMA AND 30-day return > 0% \u2192 medium-term uptrend\n3. **Signal 3 (Long-term, 90-day)**: SPY price above 90-day SMA (absolute momentum / trend filter)\n\nENTRY: ALL three signals must agree (triple confirmation). This high-conviction composite fires less often but with much stronger edge.\n\nEXIT: Exit when ANY of: (a) 10-day return < -1%, OR (b) price crosses below 30-day SMA, OR (c) time-based exit after 15 days.\n\nWhy this generates 50+ trades: The 10-day signal is the driver \u2014 it resets every ~2 weeks and requires re-entry confirmation. With entries firing ~2-3x/month when trend conditions hold, across 5 IS years = 60-90+ round trips.\n\nWhy this improves Sharpe: Triple confirmation means only entering in strong, confirmed uptrend momentum \u2014 the regime where SPY has the most persistent edge. The SMA-based exit prevents riding drawdowns. The 15-day time stop ensures we book gains and reset quickly.\n\nKey departure: Single asset (SPY only) eliminates the stickiness/ranking problem entirely while providing a clean, high-frequency signal on the most liquid ETF.",
+  "metrics": {
+    "sharpe_in_sample": -0.24805722443999775,
+    "sharpe_out_of_sample": 0.7169431245402524,
+    "max_dd_in_sample": -0.1718062583879527,
+    "max_dd_out_of_sample": -0.028778832739751525,
+    "trades_in_sample": 24.0,
+    "trades_out_of_sample": 6.0,
+    "win_rate_in_sample": 0.375,
+    "profit_factor_in_sample": 0.7545705090098135,
+    "post_cost_sharpe_is": -0.3434075112398207,
+    "post_cost_sharpe_oos": 0.633678115478917,
+    "asset_class": "equities",
+    "dsr_zscore": -9.337272,
+    "dsr_pass": "False",
+    "wf_windows_passed": 1,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": false,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.3167,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.1178,
+        "test_sharpe": -3.6208,
+        "consistency_ratio": -30.7332,
+        "passed": "False"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": -0.1475,
+        "test_sharpe": Infinity,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": -0.4739,
+        "test_sharpe": 0.8236,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": -0.3676,
+        "test_sharpe": 1.6299,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": -0.4114,
+        "test_sharpe": Infinity,
+        "consistency_ratio": 0.0,
+        "passed": false
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": -0.2557,
+        "test_sharpe": Infinity,
+        "consistency_ratio": 0.0,
+        "passed": false
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "short_lookback": {
+        "low": -0.2481,
+        "baseline": -0.2481,
+        "high": -0.2481,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "med_lookback": {
+        "low": -0.2481,
+        "baseline": -0.2481,
+        "high": -0.2481,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "long_lookback": {
+        "low": -0.2481,
+        "baseline": -0.2481,
+        "high": -0.2481,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "short_mom_threshold": {
+        "low": -0.2481,
+        "baseline": -0.2481,
+        "high": -0.2481,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "exit_mom_threshold": {
+        "low": -0.2481,
+        "baseline": -0.2481,
+        "high": -0.2481,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "max_holding_days": {
+        "low": -0.2481,
+        "baseline": -0.2481,
+        "high": -0.2481,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 1.0,
+    "overfitting_risk": "medium",
+    "post_mortem": "Failed transaction cost gate: post-cost IS Sharpe = -0.34. Pre-cost IS Sharpe was -0.25. The edge is too thin to survive realistic trading costs.",
+    "next_direction": "Strategy needs a larger edge. Reduce trade frequency or focus on higher-conviction signals.",
+    "promote_to_paper": false
+  }
+}

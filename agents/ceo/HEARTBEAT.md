@@ -35,20 +35,46 @@ If `PAPERCLIP_APPROVAL_ID` is set:
 - Never retry a 409 -- that task belongs to someone else.
 - Do the work. Update status and comment when done.
 
-## 6. Delegation
+## 6. Review Unassigned Issues
+
+After completing assigned work (or if no assignments exist), scan the backlog for unassigned issues:
+
+```
+GET /api/companies/{companyId}/issues?status=todo,backlog&assigneeAgentId=none
+```
+
+For each unassigned issue, route it to the correct director based on domain:
+
+| Domain | Director | Agent ID |
+|---|---|---|
+| Strategy ideas, alpha signals, market regimes, research | Research Director | 3e005203-1704-46ed-a469-8f2c4c4b6f58 |
+| Code implementation, backtests, infrastructure, pipelines | Engineering Director | e20af8ed-290b-4cee-8bce-531026cebad5 |
+| Risk review, overfitting, portfolio monitoring, Gate 1 | Risk Director | 0ba97256-23a8-46eb-b9ad-9185506bf2de |
+
+Routing steps:
+1. Read the issue title and description.
+2. Determine the appropriate director.
+3. `PATCH /api/issues/{issueId}` with `assigneeAgentId` set to the director's ID.
+4. Add a comment explaining the routing decision.
+5. If scope is unclear, post a comment asking the board to clarify — do not assign blindly.
+6. If an issue spans multiple domains, break it into subtasks and assign each to the right director.
+
+**Do not route more than 5 issues per heartbeat** to avoid runaway assignment loops.
+
+## 7. Delegation
 
 - Create subtasks with `POST /api/companies/{companyId}/issues`. Always set `parentId` and `goalId`.
 - Use `paperclip-create-agent` skill when hiring new agents.
-- Assign work to the right agent for the job.
+- Assign work to the right director for the job.
 
-## 7. Fact Extraction
+## 8. Fact Extraction
 
 1. Check for new conversations since last extraction.
 2. Extract durable facts to the relevant entity in `$AGENT_HOME/life/` (PARA).
 3. Update `$AGENT_HOME/memory/YYYY-MM-DD.md` with timeline entries.
 4. Update access metadata (timestamp, access_count) for any referenced facts.
 
-## 8. Exit
+## 9. Exit
 
 - Comment on any in_progress work before exiting.
 - If no assignments and no valid mention-handoff, exit cleanly.
@@ -61,7 +87,7 @@ If `PAPERCLIP_APPROVAL_ID` is set:
 - **Hiring**: Spin up new agents when capacity is needed.
 - **Unblocking**: Escalate or resolve blockers for reports.
 - **Budget awareness**: Above 80% spend, focus only on critical tasks.
-- **Never look for unassigned work** -- only work on what is assigned to you.
+- **Never look for unassigned work to do yourself** -- only work on what is assigned to you; route unassigned issues to the correct director.
 - **Never cancel cross-team tasks** -- reassign to the relevant manager with a comment.
 
 ## Rules

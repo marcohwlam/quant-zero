@@ -3,4 +3,5 @@ vectorbt>=0.26.2
 yfinance>=0.2.36
 pandas>=2.0.0
 numpy>=1.26.0
+scipy>=1.11.0
 sqlalchemy>=2.0.0

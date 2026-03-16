@@ -1,0 +1,141 @@
+{
+  "strategy_name": "dual_momentum_trend_etf",
+  "hypothesis": "Combining absolute momentum (time-series trend) with relative momentum (cross-sectional ranking) across 8 liquid ETFs generates a robust, high-frequency signal. Each ETF is scored daily by its recent 20-day return (relative momentum). We go long the top-ranked ETFs when they are also above their own 50-day SMA (absolute momentum / trend filter). This dual-confirmation reduces false signals vs. pure momentum. Weekly rebalancing (every 5 days) ensures 50+ trades while keeping turnover low enough for costs to be manageable. The trend filter prevents buying into sustained downtrends. Unlike sector rotation (failed on too few trades) and RSI reversal (failed on costs), this approach: (1) generates sufficient trade frequency via weekly rebalancing across 8 ETFs, (2) trades WITH trend so signals are stronger and more persistent, (3) uses a simple 2-parameter signal that is robust to overfitting.",
+  "metrics": {
+    "sharpe_in_sample": 0.27809560175479675,
+    "sharpe_out_of_sample": 0.4098137260085326,
+    "max_dd_in_sample": -0.19318821989359058,
+    "max_dd_out_of_sample": -0.11323752558191046,
+    "trades_in_sample": 23.5,
+    "trades_out_of_sample": 10.25,
+    "win_rate_in_sample": 0.48889320220841953,
+    "profit_factor_in_sample": 1.2757275430680806,
+    "post_cost_sharpe_is": 0.21382561856792726,
+    "post_cost_sharpe_oos": 0.32308809206682915,
+    "asset_class": "equities",
+    "dsr_zscore": 12.384355,
+    "dsr_pass": "True",
+    "wf_windows_passed": 7,
+    "wf_windows_total": 7,
+    "wf_consistency_score": 1.0,
+    "wf_pass": true,
+    "wf_windows": [
+      {
+        "window": 1,
+        "train_start": "2018-01-02",
+        "train_end": "2021-01-01",
+        "test_start": "2021-01-02",
+        "test_end": "2021-07-01",
+        "train_sharpe": 0.3394,
+        "test_sharpe": 0.6999,
+        "consistency_ratio": 2.0621,
+        "passed": "True"
+      },
+      {
+        "window": 2,
+        "train_start": "2018-07-02",
+        "train_end": "2021-07-01",
+        "test_start": "2021-07-02",
+        "test_end": "2022-01-01",
+        "train_sharpe": 0.4539,
+        "test_sharpe": 0.7688,
+        "consistency_ratio": 1.6938,
+        "passed": "True"
+      },
+      {
+        "window": 3,
+        "train_start": "2019-01-02",
+        "train_end": "2022-01-01",
+        "test_start": "2022-01-02",
+        "test_end": "2022-07-01",
+        "train_sharpe": 0.3577,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 4,
+        "train_start": "2019-07-02",
+        "train_end": "2022-07-01",
+        "test_start": "2022-07-02",
+        "test_end": "2023-01-01",
+        "train_sharpe": 0.0851,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 5,
+        "train_start": "2020-01-02",
+        "train_end": "2023-01-01",
+        "test_start": "2023-01-02",
+        "test_end": "2023-07-01",
+        "train_sharpe": 0.1624,
+        "test_sharpe": 0.8359,
+        "consistency_ratio": 5.1468,
+        "passed": "True"
+      },
+      {
+        "window": 6,
+        "train_start": "2020-07-02",
+        "train_end": "2023-07-01",
+        "test_start": "2023-07-02",
+        "test_end": "2024-01-01",
+        "train_sharpe": 0.4224,
+        "test_sharpe": Infinity,
+        "consistency_ratio": Infinity,
+        "passed": "True"
+      },
+      {
+        "window": 7,
+        "train_start": "2021-01-02",
+        "train_end": "2024-01-01",
+        "test_start": "2024-01-02",
+        "test_end": "2024-07-01",
+        "train_sharpe": 0.3168,
+        "test_sharpe": 1.1868,
+        "consistency_ratio": 3.7463,
+        "passed": "True"
+      }
+    ],
+    "sensitivity_pass": true,
+    "sensitivity_details": {
+      "momentum_lookback": {
+        "low": 0.2781,
+        "baseline": 0.2781,
+        "high": 0.2781,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "trend_sma": {
+        "low": 0.2781,
+        "baseline": 0.2781,
+        "high": 0.2781,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "top_n_held": {
+        "low": 0.2781,
+        "baseline": 0.2781,
+        "high": 0.2781,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      },
+      "rebalance_freq": {
+        "low": 0.2781,
+        "baseline": 0.2781,
+        "high": 0.2781,
+        "delta_ratio": 0.0,
+        "passed": "True"
+      }
+    }
+  },
+  "evaluation": {
+    "assessment": "failed",
+    "confidence": 0.95,
+    "overfitting_risk": "low",
+    "post_mortem": "Despite a genuinely encouraging result in several dimensions \u2014 no overfitting (OOS Sharpe 0.41 actually *exceeds* IS Sharpe 0.28, indicating healthy generalization), perfect walk-forward consistency (7/7 windows), a drawdown well within limits (-19.3% IS, -11.3% OOS), and cost survival \u2014 the strategy fails on three hard acceptance criteria: (1) IS Sharpe of 0.28 is far below the 1.0 threshold; (2) OOS Sharpe of 0.41 is well below the 0.70 threshold; (3) Total trades in IS (23.5) and OOS (10.25) fall dramatically short of the 50-trade minimum. The positive: the OOS > IS Sharpe relationship is a strong signal of genuine, non-overfit alpha, and the trend-following dual-momentum concept appears structurally sound. The negative: the signal is simply too weak and too infrequent in its current configuration.",
+    "next_direction": "Increase trade frequency aggressively to clear the 50-trade minimum: reduce rebalance_freq from 5 to 1 or 2 days, expand the ETF universe from 8 to 15\u201320 instruments, and increase top_n_held from 3 to 4\u20135. To boost Sharpe, consider shortening the momentum_lookback from 20 to 10\u201315 days (faster signal), or adding a short-side (go short bottom-ranked ETFs below their SMA) to capture more return. The walk-forward consistency and OOS>IS behavior strongly suggest the core dual-momentum logic is valid \u2014 the priority is scaling up signal frequency and return generation, not redesigning the strategy.",
+    "promote_to_paper": false
+  }
+}

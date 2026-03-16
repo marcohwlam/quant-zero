@@ -1,0 +1,88 @@
+{
+  "strategy_name": "dual_momentum_trend_etf",
+  "category": "momentum",
+  "source": "gary_antonacci_dual_momentum",
+  "hypothesis": "Gary Antonacci's Dual Momentum combines absolute momentum (time-series) and relative momentum (cross-sectional) to generate risk-adjusted returns. The absolute momentum filter (asset return vs. cash/T-bills) acts as a bear market hedge — go to cash when an asset is trending down absolutely. Relative momentum selects the best-performing asset from a universe. Applied to ETFs, this exploits documented momentum persistence (12-month lookback) while avoiding the worst drawdowns.",
+  "market_regime": "trending",
+  "asset_class": "equities",
+  "universe": "ETFs: SPY (US equity), QQQ (Nasdaq/tech), IWM (small-cap), DIA (Dow), XLF (financials), XLE (energy), XLK (tech), XLV (healthcare)",
+  "prior_attempt_iter3": {
+    "IS_sharpe": 0.278,
+    "OOS_sharpe": 0.410,
+    "max_dd": -0.193,
+    "trades": 23.5,
+    "failure_mode": "Too few trades (23.5 < 50 minimum). Likely monthly rebalance with small universe. Need more frequent rebalance OR larger universe OR lower threshold."
+  },
+  "variants_to_explore": [
+    {
+      "name": "dual_momentum_weekly_rebalance",
+      "description": "Weekly rebalance instead of monthly — generates 4x more signals, increases trade count dramatically",
+      "key_params": {"lookback_days": 63, "rebalance_days": 5},
+      "expected_benefit": "Increases trade count from ~24 to ~100+"
+    },
+    {
+      "name": "dual_momentum_short_lookback",
+      "description": "Shorter lookback (21-42 days / 1-2 months) for more responsive signals",
+      "key_params": {"lookback_days": 21, "rebalance_days": 5},
+      "expected_benefit": "More frequent turnover, captures shorter momentum cycles"
+    },
+    {
+      "name": "dual_momentum_multi_asset",
+      "description": "Expand universe to 12+ ETFs including GLD, TLT, EEM — more selection candidates",
+      "key_params": {"symbols": ["SPY", "QQQ", "IWM", "DIA", "XLF", "XLE", "XLK", "XLV"], "top_n": 2},
+      "expected_benefit": "Hold top 2 ETFs simultaneously — doubles average positions, more trades"
+    },
+    {
+      "name": "dual_momentum_top_n_portfolio",
+      "description": "Hold top N assets by momentum (N=2 or 3) instead of single winner-take-all",
+      "key_params": {"lookback_days": 63, "top_n": 3, "rebalance_days": 5},
+      "expected_benefit": "Diversified momentum portfolio, more trades, lower drawdown"
+    },
+    {
+      "name": "dual_momentum_ma_filter",
+      "description": "Add 200-day MA trend filter: only hold if price > 200d MA (absolute momentum proxy via price level)",
+      "key_params": {"lookback_days": 63, "ma_window": 200, "rebalance_days": 5},
+      "expected_benefit": "Regime filter reduces drawdown during bear markets, especially 2022"
+    },
+    {
+      "name": "dual_momentum_vol_scaled",
+      "description": "Scale position size by inverse 20-day realized volatility for each ETF held",
+      "key_params": {"lookback_days": 63, "vol_window": 20, "target_vol": 0.15},
+      "expected_benefit": "Equalizes risk contribution per holding — better risk-adjusted returns"
+    },
+    {
+      "name": "dual_momentum_sector_rotation",
+      "description": "Pure cross-sectional momentum on sector ETFs (XLF, XLE, XLK, XLV, XLI, XLC), hold top 2",
+      "key_params": {"lookback_days": 63, "top_n": 2, "rebalance_days": 5},
+      "expected_benefit": "Sector rotation within S&P 500 — low correlation to broad market, documented alpha"
+    }
+  ],
+  "implementation_notes": {
+    "vectorbt_approach": "Use vbt.Portfolio.from_signals() with daily data. Rebalance signals on every Nth day using modulo on index. For top-N selection, set entries=True for top N tickers by rolling return, exits=True for tickers dropping out of top N.",
+    "absolute_momentum_filter": "Compare each ETF's N-day return to 0 (or to a risk-free proxy). If return < 0, exclude from selection — go to cash for that allocation.",
+    "relative_momentum": "Rank ETFs by lookback_days total return. Hold top_n with highest positive return.",
+    "rebalance_signal_generation": "Create a boolean DataFrame entries where on every rebalance_day, set True for selected tickers, False for others. Set exits as the inverse — exit non-selected.",
+    "trade_count_target": "Must achieve >= 50 IS trades. Weekly rebalance on 8 ETFs holding top 2 = ~(52 weeks * 2 assets) = ~100 trades/year. 5-year IS period = ~500 trades easily.",
+    "drawdown_target": "IS max drawdown must be < 20%. Absolute momentum filter (cash when trending down) is critical for 2022.",
+    "critical_code_pattern": "For per-ticker signals on rebalancing days:\n  close = data.xs('Close', level=1, axis=1)\n  lookback_returns = close.pct_change(lookback_days)\n  # On rebalance days, rank and select top_n\n  entries = pd.DataFrame(False, index=close.index, columns=close.columns)\n  exits = pd.DataFrame(False, index=close.index, columns=close.columns)\n  for i in range(lookback_days, len(close)):\n    if i % rebalance_days == 0:\n      day_rets = lookback_returns.iloc[i].dropna()\n      day_rets = day_rets[day_rets > 0]  # absolute momentum filter\n      if len(day_rets) > 0:\n        selected = day_rets.nlargest(top_n).index.tolist()\n        for col in close.columns:\n          if col in selected:\n            entries.iloc[i][col] = True\n          else:\n            exits.iloc[i][col] = True\n  portfolio = vbt.Portfolio.from_signals(close, entries, exits, freq='D', init_cash=100_000, fees=0.001)"
+  },
+  "known_failure_modes": [
+    "Monthly rebalance with small universe generates too few trades — fails 50-trade minimum",
+    "Momentum crashes: sharp reversals (2020-03, 2022) cause loss if absolute momentum filter absent",
+    "Winner-take-all (top 1 only) concentrates risk — prefer top 2 or 3",
+    "Long lookbacks (252 days) are too slow to react to regime shifts",
+    "Survivorship bias: using current ETF universe only, not historical constituents"
+  ],
+  "historical_performance": {
+    "sharpe_target": "1.2-1.8 IS, 0.8-1.2 OOS",
+    "max_drawdown_target": "-12% to -18%",
+    "trade_count_target": "100-500 IS trades",
+    "period": "2018-2024",
+    "notes": "Key: use weekly rebalance + top 2-3 holdings + absolute momentum filter. These three changes transform the strategy from a few dozen trades to hundreds, dramatically improving statistical significance and trade count requirements."
+  },
+  "references": [
+    "Gary Antonacci - Dual Momentum Investing (2014)",
+    "AQR - Fact, Fiction and Momentum Investing",
+    "Fama & French momentum factor literature"
+  ]
+}
