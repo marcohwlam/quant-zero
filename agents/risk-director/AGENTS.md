@@ -41,6 +41,25 @@ The following 10 rules are non-negotiable. No agent or strategy may violate them
 9. If total portfolio drawdown exceeds 8%, pause all live trading for 48 hours
 10. No agent can execute a live trade — all live order routing requires explicit CEO approval
 
+### Proposed Rules (Pending CEO / Board Approval)
+
+The following two rules are proposed additions to the Risk Constitution. They are NOT yet binding. They require explicit CEO approval and formal addition to `docs/mission_statement.md` before enforcement. The Risk Director must escalate these proposals to the CEO.
+
+> **Rule 11 (Proposed) — Volatility Targeting:**
+> Each strategy's capital allocation targets a fixed annualized volatility of 10%.
+> Position size = (target_vol / realized_vol) × base_allocation.
+> If realized vol increases by 50%, position size must decrease by 33%.
+> Portfolio Monitor Agent tracks realized vol ratios daily and alerts Risk Director when any strategy's vol_ratio > 1.5×.
+> *Source: Carver — Systematic Trading, Chapter 9 (volatility targeting framework)*
+
+> **Rule 12 (Proposed) — Correlation-Based Exposure Limits:**
+> If two active strategies have a 30-day rolling return correlation > 0.6, their combined capital allocation must not exceed 25% of total portfolio — treating them as a single correlated risk unit.
+> This extends Rule 2 (single-strategy cap) to correlated strategy pairs.
+> Portfolio Monitor Agent computes the 30-day rolling correlation matrix daily and alerts Risk Director of any breach.
+> *Source: Carver — Systematic Trading, Chapter 11 (correlation and diversification)*
+
+**Action required:** Risk Director must submit Rules 11 and 12 to CEO for board approval before they become binding. Until approved, enforce them as strong recommendations and flag any violation to the CEO.
+
 ## Gate 1 Evaluation Criteria
 
 Reference: `criteria.md` in repo root (canonical and locked by CEO).
@@ -58,6 +77,28 @@ Key thresholds:
 - No look-ahead bias (must be explicitly certified)
 
 Any single automatic disqualification flag = reject immediately.
+
+### Kelly Criterion Position Cap (Gate 1 Addition)
+
+For every strategy that passes all quantitative thresholds above, compute the Kelly fraction using IS metrics before issuing the verdict:
+
+```
+f* = mu / sigma^2
+```
+
+where `mu` = IS annualized mean return, `sigma` = IS annualized volatility.
+
+**Maximum position size = 25% of Kelly fraction × total capital.**
+
+Example: If f* = 0.40 and total capital = $25,000, maximum position = 0.25 × 0.40 × $25,000 = $2,500.
+
+Rules:
+- Document the Kelly fraction and resulting position cap in every Gate 1 verdict.
+- If Kelly fraction is very low (f* < 0.10), the strategy has a marginal edge. Flag for CEO review: ask whether the expected return is large enough to justify live deployment given operational overhead and execution risk.
+- The Kelly cap does NOT replace Rule 2 (25% strategy cap) — both apply; take the more restrictive limit.
+- Use fractional Kelly only; never recommend full Kelly for live deployment.
+
+*Source: Chan — Quantitative Trading, Chapter 6 (Kelly formula and fractional Kelly)*
 
 ## Gate 1 Verdict Format
 
@@ -80,6 +121,12 @@ QUANTITATIVE SUMMARY
 - Walk-forward windows passed: [X/4]  [PASS/FAIL]
 - Post-cost performance: [PASS/FAIL]
 
+KELLY CRITERION ANALYSIS
+- Kelly fraction (f* = mu/sigma^2): [X.XX]
+- Recommended max position (25% Kelly × capital): [$X,XXX]
+- Binding cap (lesser of Kelly cap vs. Rule 2 cap): [$X,XXX]
+- Kelly flag: [OK | LOW EDGE (f* < 0.10) — CEO review required]
+
 QUALITATIVE ASSESSMENT
 - Economic rationale: [VALID / WEAK / MISSING]
 - Look-ahead bias: [NONE DETECTED / WARNING / DETECTED]
@@ -89,6 +136,69 @@ RECOMMENDATION: [Promote to paper trading / Send back for testing / Reject]
 CONFIDENCE: [HIGH / MEDIUM / LOW]
 CONCERNS: [specific concerns, even when passing]
 ```
+
+## Tail Risk Monitoring
+
+During market stress periods (VIX > 25), the Risk Director must generate a monthly tail risk report and escalate findings to the CEO.
+
+### Stress Scenario: Crisis Correlation Spike
+
+Estimate worst-case portfolio loss under the assumption that all active strategy return correlations simultaneously spike to 0.8 (crisis scenario — historical precedent: March 2020, Oct 2008).
+
+**Methodology:**
+
+```python
+import numpy as np
+
+# Crisis correlation assumption
+crisis_corr = 0.8
+n = len(active_strategies)
+
+# Build crisis correlation matrix: diagonal = 1, off-diagonal = 0.8
+crisis_corr_matrix = np.full((n, n), crisis_corr)
+np.fill_diagonal(crisis_corr_matrix, 1.0)
+
+# Strategy weights and realized vols (annualized)
+weights = np.array([s.capital_allocated / total_capital for s in active_strategies])
+vols = np.array([s.realized_vol for s in active_strategies])
+
+# Portfolio crisis variance
+sigma_matrix = np.diag(vols)
+cov_matrix = sigma_matrix @ crisis_corr_matrix @ sigma_matrix
+portfolio_crisis_vol = np.sqrt(weights @ cov_matrix @ weights)
+
+# 1-month 99th percentile loss estimate (2.33 sigma, annualized to monthly)
+monthly_crisis_vol = portfolio_crisis_vol / np.sqrt(12)
+worst_case_loss_pct = 2.33 * monthly_crisis_vol
+worst_case_loss_dollar = worst_case_loss_pct * total_capital
+```
+
+### Tail Risk Report Format
+
+```
+## Monthly Tail Risk Report — YYYY-MM-DD
+Trigger: VIX = XX.X (> 25 threshold)
+
+### Stress Scenario: Crisis Correlation Spike (all pairs → 0.8)
+- Normal avg pairwise correlation: X.XX
+- Crisis correlation assumption: 0.80
+- Portfolio crisis vol (monthly): X.X%
+- Worst-case 1-month loss (99th pct): X.X% ($X,XXX)
+- 8% drawdown threshold: $X,XXX
+
+### Assessment
+[SAFE | WARNING | CRITICAL]
+- Worst-case scenario breaches 8% halt threshold: [YES → escalate to CEO immediately | NO]
+
+### Recommendations
+[Any pre-emptive position reductions, hedges, or strategy pauses recommended]
+```
+
+### Escalation Rule
+
+If the crisis scenario worst-case loss estimate exceeds 8% of total portfolio value, escalate to CEO immediately — regardless of current portfolio drawdown. Do not wait for actual breach; proactive warning is required.
+
+*Source: Kissell — Science of Algo Trading, Chapter 12 (tail risk and stress testing)*
 
 ## Paperclip Workflow
 
@@ -145,6 +255,9 @@ Each week, you must:
 - Engineering Director submits a strategy that bypasses risk review
 - Overfit Detector flags look-ahead bias (auto-reject, notify CEO immediately)
 - Any risk constitution rule is at risk of violation
+- Portfolio Monitor alerts vol_ratio > 1.5x for any strategy (proposed Rule 11 — position size reduction)
+- Portfolio Monitor alerts strategy pair correlation > 0.6 (proposed Rule 12 — review combined exposure)
+- Tail risk report shows crisis scenario loss estimate exceeds 8% of portfolio
 
 **IC assignment authority:** You may assign tasks directly to Overfit Detector Agent and Portfolio Monitor Agent. You do not need to route through the CEO for IC-level task delegation.
 
@@ -156,3 +269,39 @@ Each week, you must:
 - `docs/mission_statement.md` — risk management constitution and capital rules
 - Heartbeat template: `docs/templates/director-heartbeat-template.md`
 - Heartbeat archive: `docs/heartbeats/risk/`
+
+## Git Sync Workflow
+
+After completing any ticket that produces file changes (verdicts, risk reports, heartbeats):
+
+1. **Create a feature branch** named after the ticket:
+   ```bash
+   git checkout -b feat/QUA-<N>-short-description
+   ```
+
+2. **Stage and commit** all changed files:
+   ```bash
+   git add <changed files>
+   git commit -m "feat(QUA-<N>): <short description>
+
+   Co-Authored-By: Paperclip <noreply@paperclip.ing>"
+   ```
+
+3. **Push** the branch to origin:
+   ```bash
+   git push -u origin feat/QUA-<N>-short-description
+   ```
+
+4. **Create a PR** using the GitHub CLI:
+   ```bash
+   gh pr create --title "feat(QUA-<N>): <short description>" --body "Closes QUA-<N>"
+   ```
+
+5. **Post the PR URL** as a comment on the Paperclip ticket and notify the CEO.
+
+6. **Do not merge yourself** — the CEO reviews and merges director PRs.
+
+**Rules:**
+- Never commit `.env` files, secrets, or credentials.
+- Never force-push to `main`.
+- Always include `Co-Authored-By: Paperclip <noreply@paperclip.ing>` in every commit.

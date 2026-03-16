@@ -37,6 +37,114 @@ All backtests must produce:
 - Maximum drawdown (MDD)
 - Win rate and profit factor
 - Trade log with entry/exit/PnL per trade
+- Monte Carlo p5 Sharpe, bootstrap CI, permutation p-value, walk-forward variance (see Backtest Runner AGENTS.md)
+
+---
+
+## Authoritative Transaction Cost Model
+
+This is the canonical cost model for all Quant Zero strategy implementations. Strategy Coder and Backtest Runner must use these exact values. Source: Johnson — *Algorithmic Trading & DMA* (Book 6).
+
+| Asset Class | Fixed Cost | Slippage | Market Impact |
+|---|---|---|---|
+| Equities/ETFs | $0.005/share | 0.05% | `0.1 × σ × sqrt(Q / ADV)` |
+| Options | $0.65/contract | 0.10% | N/A |
+| Crypto | 0.10% taker fee | 0.05% | N/A |
+
+**Market impact formula (equities):**
+```
+impact = k × σ × sqrt(Q / ADV)
+```
+- `k = 0.1` (institutional estimate, Almgren-Chriss square-root model)
+- `σ` = 20-day rolling daily return standard deviation
+- `Q` = order size in shares
+- `ADV` = 20-day average daily volume in shares (yfinance `Volume`)
+
+**Liquidity flag:** Any order where `Q / ADV > 0.01` (>1% of ADV) must be flagged as `liquidity_constrained = True` in backtest output.
+
+**Change control:** Any modification to this cost model requires Engineering Director sign-off and a comment in the relevant task.
+
+---
+
+## ML Pipeline Infrastructure Standard
+
+All ML-based strategy backtests must comply with the following requirements to prevent data snooping and look-ahead bias. Source: Chan — *Machine Trading* (Book 9), Halls-Moore — *Successful Algo Trading* (Book 8).
+
+### Required
+
+1. **sklearn `Pipeline` object** must wrap all preprocessing + model steps. No bare `fit`/`transform` calls outside a Pipeline.
+2. **Strict chronological train/validation/test split.** No random splits. Use `TimeSeriesSplit` or custom walk-forward windows. Test period must be strictly after training period with no overlap.
+3. **Feature engineering documented in-line.** Every feature must have a comment explaining what it represents and why. No unexplained transformations.
+4. **Scaler/transformer fit on training data only.** `StandardScaler`, `MinMaxScaler`, and all similar transforms must be fit exclusively on training data, then applied to validation/test.
+
+### Forbidden
+
+- `train_test_split()` with `shuffle=True` or `random_state` on time-series data
+- Any `fit()`, `fit_transform()`, or `partial_fit()` operation that uses test-period rows
+- Feature windows that extend into the future (e.g., `shift(-1)` features not lagged)
+- Hyperparameter tuning on the final test set
+
+### Strategy Coder checklist (Engineering Director enforces)
+
+- [ ] sklearn `Pipeline` used for all preprocessing + model
+- [ ] Train/test split is chronological with strict temporal ordering
+- [ ] All features are lagged by at least 1 period to prevent look-ahead
+- [ ] No fit/transform on test data confirmed in code review
+
+---
+
+## Data Quality Monitoring
+
+Strategy Coder must complete this checklist **before** submitting a strategy to Backtest Runner. Engineering Director reviews and gates the handoff. Source: Halls-Moore — *Successful Algo Trading* (Book 8).
+
+### Pre-backtest data quality checklist
+
+- [ ] **Universe (survivorship bias):** Is this the current constituent list or a point-in-time historical universe? Current-only lists introduce survivorship bias. Flag and document the choice. Prefer point-in-time if available.
+- [ ] **Price adjustments:** Are prices adjusted for splits and dividends? Use `yfinance` with `auto_adjust=True`. If using raw prices, justify explicitly.
+- [ ] **Data gaps:** Check for tickers with >5 missing trading days in the backtest window. Flag these tickers. Do not silently forward-fill gap periods > 5 days.
+- [ ] **Earnings exclusion:** Confirm whether earnings event windows (±5 trading days from earnings date) are excluded or intentionally included. Document the decision. Unintentional earnings exposure can inflate Sharpe artificially.
+- [ ] **Delisted tickers:** Are delisted tickers included with their actual exit prices? Missing delisted tickers introduce survivorship bias.
+
+Engineering Director will not delegate to Backtest Runner until this checklist is complete and attached to the task as a comment.
+
+---
+
+## Execution Quality Analysis Pipeline
+
+Once paper trading begins for any strategy, implement shortfall tracking per trade. Source: Johnson — *Algorithmic Trading & DMA* (Book 6).
+
+### Implementation Shortfall (IS) Definition
+
+```
+IS = (paper_fill_price - backtest_assumed_price) / backtest_assumed_price
+```
+
+- Positive IS = paper fill was worse than backtest assumption (execution slippage)
+- Report IS as basis points (multiply by 10,000)
+
+### Weekly IS Report (post-paper-trading)
+
+Each Monday heartbeat, Engineering Director must report:
+- **Mean IS (bps):** Average implementation shortfall across all fills this week
+- **Max IS (bps):** Worst single fill
+- **Fraction >10 bps:** Fraction of trades where IS exceeded 10 bps (0.1%)
+
+**Action threshold:** If `mean IS > 5 bps` (0.05%) for two consecutive weeks, return the strategy to Strategy Coder for transaction cost model revision. Tag the task with label `cost-model-revision`.
+
+### IS Tracking Schema
+
+Append to each trade log entry:
+```json
+{
+  "trade_id": "...",
+  "entry_backtest_price": 0.0,
+  "entry_paper_price": 0.0,
+  "entry_is_bps": 0.0,
+  "exit_backtest_price": 0.0,
+  "exit_paper_price": 0.0,
+  "exit_is_bps": 0.0
+}
+```
 
 ## Gate 1 Acceptance Criteria
 
@@ -117,3 +225,39 @@ Each week, you must:
 - Research Director coordinates strategy handoffs via Paperclip tasks
 - Heartbeat template: `docs/templates/director-heartbeat-template.md`
 - Heartbeat archive: `docs/heartbeats/engineering/`
+
+## Git Sync Workflow
+
+After completing any ticket that produces file changes (code, reports, configs, agent instructions):
+
+1. **Create a feature branch** named after the ticket:
+   ```bash
+   git checkout -b feat/QUA-<N>-short-description
+   ```
+
+2. **Stage and commit** all changed files:
+   ```bash
+   git add <changed files>
+   git commit -m "feat(QUA-<N>): <short description>
+
+   Co-Authored-By: Paperclip <noreply@paperclip.ing>"
+   ```
+
+3. **Push** the branch to origin:
+   ```bash
+   git push -u origin feat/QUA-<N>-short-description
+   ```
+
+4. **Create a PR** using the GitHub CLI:
+   ```bash
+   gh pr create --title "feat(QUA-<N>): <short description>" --body "Closes QUA-<N>"
+   ```
+
+5. **Post the PR URL** as a comment on the Paperclip ticket and notify the CEO.
+
+6. **Do not merge yourself** — the CEO reviews and merges director PRs.
+
+**Rules:**
+- Never commit `.env` files, secrets, or credentials.
+- Never force-push to `main`.
+- Always include `Co-Authored-By: Paperclip <noreply@paperclip.ing>` in every commit.

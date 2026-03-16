@@ -60,3 +60,39 @@ These files are essential. Read them.
 - `$AGENT_HOME/TOOLS.md` -- tools you have access to
 - `criteria.md` in repo root -- Gate 1 acceptance criteria (CEO-locked)
 - `docs/mission_statement.md` -- Risk Management Constitution
+
+## Git Sync Workflow
+
+After completing any ticket that produces file changes (code, reports, configs, agent instructions):
+
+1. **Create a feature branch** named after the ticket:
+   ```bash
+   git checkout -b feat/QUA-<N>-short-description
+   ```
+
+2. **Stage and commit** all changed files:
+   ```bash
+   git add <changed files>
+   git commit -m "feat(QUA-<N>): <short description>
+
+   Co-Authored-By: Paperclip <noreply@paperclip.ing>"
+   ```
+
+3. **Push** the branch to origin:
+   ```bash
+   git push -u origin feat/QUA-<N>-short-description
+   ```
+
+4. **Create a PR** using the GitHub CLI:
+   ```bash
+   gh pr create --title "feat(QUA-<N>): <short description>" --body "Closes QUA-<N>"
+   ```
+
+5. **Post the PR URL** as a comment on the Paperclip ticket.
+
+6. **Merge the PR** after board review (CEOs may self-merge with board approval).
+
+**Rules:**
+- Never commit `.env` files, secrets, or credentials.
+- Never force-push to `main`.
+- Always include `Co-Authored-By: Paperclip <noreply@paperclip.ing>` in every commit.
