@@ -5,7 +5,8 @@
 **Date:** 2026-03-16
 **Asset class:** equities
 **Strategy type:** multi-signal
-**Status:** hypothesis
+**Status:** ABANDONED — Gate 1 FAIL (IC=0 both signals, 2026-03-16)
+**Finding:** `research/findings/11_cvd_breakout_gate1_failure_2026-03-16.md`
 
 ## Economic Rationale
 

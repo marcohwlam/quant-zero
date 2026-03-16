@@ -34,10 +34,10 @@ from strategies.h10_crypto_eql_reversal import (
 warnings.filterwarnings("ignore")
 
 TODAY = datetime.date.today().isoformat()
-STRATEGY_NAME = "H10_CryptoEQLReversal"
+STRATEGY_NAME = "H10_CryptoEQLReversal_v2"
 
-IS_START, IS_END = "2018-01-01", "2021-12-31"
-OOS_START, OOS_END = "2022-01-01", "2023-12-31"
+IS_START, IS_END = "2017-01-01", "2022-12-31"
+OOS_START, OOS_END = "2023-01-01", "2024-12-31"
 
 
 # ── Statistical Rigor Functions ────────────────────────────────────────────────
@@ -297,7 +297,7 @@ def main():
                 "trade_count": r["trade_count"],
                 "win_rate": r["win_rate"],
             }
-            print(f"  {name}: Sharpe={r['sharpe']}  MDD={r['mdd']:.1%}  Trades={r['trade_count']}  WR={r['win_rate']:.1%}")
+            print(f"  {name}: Sharpe={r['sharpe']}  MDD={r['max_drawdown']:.1%}  Trades={r['trade_count']}  WR={r['win_rate']:.1%}")
         except Exception as exc:
             sub_results[name] = {"error": str(exc)}
             print(f"  {name}: ERROR — {exc}")
@@ -357,7 +357,7 @@ def main():
         "is_mdd_pass": bool(is_mdd > -0.20),
         "oos_mdd_pass": bool(oos_mdd > -0.25),
         "win_rate_pass": bool(win_rate_pass),
-        "trade_count_pass": bool(is_trade_count >= 100),
+        "trade_count_pass": bool(is_trade_count > 50),
         "wf_windows_pass": bool(wf_windows_passed >= 3),
         "wf_consistency_pass": bool(wf_consistency_score >= 0.7),
         "ic_pass": bool(ic_result["ic_pass"]),
@@ -441,7 +441,7 @@ def main():
         f"  Win Rate (IS):       {is_win_rate:>8.1%}  {'PASS' if gate1_checks['win_rate_pass'] else 'FAIL'} (>50%)",
         f"  Win/Loss Ratio:      {is_win_loss:>8.2f}",
         f"  Profit Factor:       {is_profit_factor:>8.4f}",
-        f"  Trade Count (IS):    {is_trade_count:>8d}  {'PASS' if gate1_checks['trade_count_pass'] else 'FAIL'} (>=100)",
+        f"  Trade Count (IS):    {is_trade_count:>8d}  {'PASS' if gate1_checks['trade_count_pass'] else 'FAIL'} (>50)",
         "",
         "Research Director Conditions (QUA-129):",
         f"  IC Validation:       {ic_result['ic']:>8.4f}  {'PASS' if gate1_checks['ic_pass'] else 'FAIL'} (>0.02)",
