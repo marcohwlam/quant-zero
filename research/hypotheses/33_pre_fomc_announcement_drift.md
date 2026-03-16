@@ -5,7 +5,7 @@
 **Date:** 2026-03-16
 **Asset class:** US equity (SPY ETF)
 **Strategy type:** single-signal, event-driven
-**Status:** READY
+**Status:** RETIRED — Gate 1 FAIL (2026-03-16). Signal decayed post-2012; permutation p=0.13; OOS Sharpe 0.02. No viable rework path without intraday data. See research/findings/33_pre_fomc_drift_gate1_failure_2026-03-16.md
 **Tier:** CEO Directive QUA-254 Event-Driven / Tier 3–4 (highest priority class per QUA-181)
 
 ---
