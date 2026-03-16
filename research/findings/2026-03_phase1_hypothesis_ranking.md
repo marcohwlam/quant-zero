@@ -11,20 +11,34 @@
 
 All 6 Phase 0 hypotheses have been evaluated against Gate 1 criteria (IS Sharpe > 1.0, OOS Sharpe > 0.7, IS MDD < 20%, Win Rate > 50%, Trade Count > 50, Parameter Sensitivity < 30% Sharpe degradation, DSR > 0). Rankings are based on probability of clearing Gate 1, economic rationale strength, sensitivity risk, and capital efficiency at $25K.
 
-**Note on Market Regime:** The Market Regime Agent classification for March 2026 (`research/regimes/2026-03_regime_classification.md`) was not yet available at time of writing. Rankings below are based on hypothesis analysis and historical analogs. The regime-dependent rankings (Bollinger Band vs. Pairs Trading) may shift once the official classification is available. The Research Director should revisit this ranking after the Market Regime Agent completes its task.
+**Note on Market Regime:** Updated 2026-03-16 by Research Director (QUA-56) following Market Regime Agent classification (QUA-35).
+
+**Regime (March 2026):** `mildly-trending / high-vol / risk-on / liquid` — **Transition Risk: HIGH**
+- VIX: 27.19 (elevated, approaching the 30 structural-break threshold)
+- SPY vs 200d SMA: +0.90% (barely above trend — fragile)
+- Hurst exponent (60d): 0.732 (trailing uptrend confirmed)
+- SPY 1m return: -4.29% (near-term correction in progress)
+- Sector breadth: only 4/11 sectors above 50d SMA (defensive rotation underway)
+
+**Ranking changes from original QUA-36 output:**
+- H04 Pairs Trading promoted to #1 (from #2): market-neutral construction is the strongest fit for high-vol + regime-uncertain environment
+- H02 Bollinger Band moved to #2 (from #1): remains high-priority, but VIX at 27 is approaching the 30 pause trigger — structural break risk elevated
+- H05 Momentum Vol-Scaled confirmed at #4 (not promoted): mildly trending regime would normally support promotion, but the near-term correction (-4.29% 1m) and defensive sector rotation argue for keeping it conditional; vol scaling will auto-reduce exposure
+
+**Mean-reversion concentration risk — ELEVATED:** H02, H04, and H06 are all mean-reversion strategies and occupy the top 3 priority slots. With HIGH transition risk (SPY barely above 200d SMA), a regime shift to a sustained downtrend could impair all three simultaneously. Mitigation: do not run H02 and H06 concurrently in Phase 1 — prioritize H04 first (market-neutral), then test H02 before H06.
 
 ---
 
 ## Ranking Summary
 
-| Rank | Strategy | Gate 1 Probability | Primary Risk | $25K Fit |
-|------|----------|--------------------|--------------|---------|
-| 1 | Bollinger Band Mean Reversion (#02) | **High** | entry_std sensitivity | Good (ETFs) |
-| 2 | Pairs Trading Cointegration (#04) | **High** | Survivorship bias, margin constraints | Marginal |
-| 3 | RSI Short-Term Reversal (#06) | **Moderate** | PDT compliance, high param sensitivity | Good (ETFs) |
-| 4 | Momentum Vol-Scaled (#05) | **Conditional** | IS MDD exceeds threshold without crash protection | Poor (L/S required) |
-| 5 | Multi-Factor Long-Short (#03) | **Uncertain** | Factor decay post-2018, data requirements | Poor |
-| 6 | Dual MA Crossover (#01) | **Low** | IS Sharpe chronically below 1.0, win rate < 50% | Good (baseline only) |
+| Rank | Strategy | Gate 1 Probability | Regime Fit (Mar 2026) | Primary Risk | $25K Fit |
+|------|----------|--------------------|----------------------|--------------|---------|
+| 1 | **Pairs Trading Cointegration (#04)** ⬆️ | **High** | **Strong** — market-neutral, best for high-vol | Survivorship bias, margin constraints | Marginal |
+| 2 | Bollinger Band Mean Reversion (#02) ⬇️ | **High** | **Moderate** — VIX 27 approaching 30 pause trigger | entry_std sensitivity, structural break risk at VIX > 30 | Good (ETFs) |
+| 3 | RSI Short-Term Reversal (#06) | **Moderate** | **Neutral** — high-vol generates more signals; 200d SMA filter critical | PDT compliance, high param sensitivity | Good (ETFs) |
+| 4 | Momentum Vol-Scaled (#05) | **Conditional** | **Conditional** — mildly trending (Hurst 0.732) supports, but -4.29% 1m correction caution | IS MDD exceeds threshold without crash protection | Poor (L/S required) |
+| 5 | Multi-Factor Long-Short (#03) | **Uncertain** | **Weak** — factor crowding + data dependency | Factor decay post-2018, data requirements | Poor |
+| 6 | Dual MA Crossover (#01) | **Low** | **Weak** — "whipsaw environment" per Market Regime Agent | IS Sharpe chronically below 1.0, win rate < 50% | Good (baseline only) |
 
 ---
 
@@ -210,16 +224,27 @@ This strategy belongs to Phase 1 only as a benchmark to calibrate the backtest e
 
 ## Cross-Strategy Observations
 
-### Regime Dependency (Without Official Classification)
-Without the Market Regime Agent output, ranking assumes a mixed/uncertain current regime. Key regime-contingent notes:
-- If current regime is **mean-reverting/choppy** → Bollinger Band (#2) and Pairs Trading (#4) move up significantly; Momentum (#5) moves down
-- If current regime is **trending bull** → Momentum (#5) and DMA Crossover (#1) improve; mean reversion strategies see reduced signal quality
-- If current regime is **high volatility/risk-off** → Pairs Trading (#4) benefits from market neutrality; Bollinger Band (#2) faces increased structural break risk
+### Regime Dependency (Updated — Official Classification Available)
+Market Regime Agent classification (QUA-35) delivered: `mildly-trending / high-vol / risk-on / liquid` with **HIGH transition risk**.
 
-**Action item:** Update this ranking once the Market Regime Agent classification is available.
+**Current regime impacts:**
+- **High-vol (VIX 27.19):** Favors market-neutral (H04 Pairs Trading). Disfavors directional mean-reversion (H02 Bollinger Band faces structural-break risk at VIX > 30; H06 RSI generates more signals but at lower quality). Disfavors trend-following (H01 DMA in whipsaw mode per regime agent).
+- **Mildly trending (Hurst 0.732, trailing uptrend):** Marginally supports Momentum (#05) but the near-term correction (-4.29% 1m) and defensive sector rotation (only 4/11 sectors above 50d SMA) indicate the trend is not broad-based — vol scaling will auto-reduce H05 exposure appropriately.
+- **HIGH transition risk:** The most important regime signal. SPY is barely above its 200d SMA (+0.90%), a break would shift the regime to risk-off/bear. This is the primary reason for the mean-reversion concentration risk warning below.
 
-### Shared Failure Modes
-Three of the 6 strategies are mean reversion (Bollinger Band, RSI, Pairs Trading). This creates a concentration risk in the hypothesis portfolio — if the current regime is a sustained trend (as in 2022), all three will underperform simultaneously. The Research Director should consider this when deciding how many strategies to run in Phase 1 simultaneously.
+**Pause/escalation triggers to monitor (from Market Regime Agent):**
+- SPY breaks 200d SMA (currently at ~656.41) → flag to Research Director and Engineering Director immediately; shift to H04-only running
+- VIX sustains > 30 → reduce all mean-reversion exposure 50%; suspend H02 and H06
+- VIX > 40 → pause all strategies; escalate to CEO
+
+### Shared Failure Modes — Mean Reversion Concentration Risk (ELEVATED)
+Three of the 6 strategies are mean reversion (Bollinger Band #02, Pairs Trading #04, RSI Reversal #06), and they hold the top 3 priority slots under the current regime. With HIGH transition risk (SPY barely above 200d SMA), a shift to a sustained downtrend would impair all three simultaneously — this is the most important risk in the Phase 1 portfolio.
+
+**Mitigation protocol:**
+1. Run H04 Pairs Trading first (market-neutral construction provides some downside protection even in a trend)
+2. Run H02 Bollinger Band second, sequentially — do not run H02 and H06 at the same time until regime stabilizes
+3. If SPY breaks its 200d SMA during Phase 1 testing, pause H02 and H06 immediately; continue H04 with monitoring
+4. Escalate to Engineering Director if mean-reversion strategies show correlated drawdowns in walk-forward windows
 
 ### Parameter Sensitivity — Common Thread
 `entry_zscore` (Pairs) and `entry_std` (Bollinger Band) are both HIGH sensitivity. The Overfit Detector Agent should be briefed to specifically stress-test these parameters in their ±20% perturbation analysis.
@@ -238,14 +263,14 @@ Three of the 6 strategies are mean reversion (Bollinger Band, RSI, Pairs Trading
 
 ## Phase 1 Backtest Priority Queue
 
-**Recommended order for Phase 1 iteration allocation:**
+**Recommended order for Phase 1 iteration allocation** *(updated 2026-03-16, QUA-56 — regime-informed):*
 
-1. **Bollinger Band Mean Reversion** — highest Gate 1 confidence; test entry_std robustness as primary focus
-2. **Pairs Trading Cointegration** — strong Gate 1 outlook; survivorship bias methodology must be validated first
-3. **RSI Short-Term Reversal** — solid empirical basis; PDT tracking is mandatory deliverable from backtest
-4. **Momentum Vol-Scaled** — conditional on crash protection keeping MDD < 20%; test after top 3
-5. **DMA Crossover** — baseline calibration only; run early to validate backtest engine, not as Gate 1 candidate
-6. **Multi-Factor Long-Short** — defer pending Engineering Director confirmation of fundamental data availability
+1. **Pairs Trading Cointegration** — market-neutral construction is the highest regime-fit for current high-vol + transition-risk environment; run first; survivorship bias methodology must be validated before results accepted (flag to Overfit Detector Agent)
+2. **Bollinger Band Mean Reversion** — high Gate 1 confidence; run second; VIX filter (suspend at VIX > 30) is non-negotiable given VIX at 27.19; test entry_std robustness as primary focus
+3. **RSI Short-Term Reversal** — solid empirical basis; PDT tracking is mandatory deliverable; **do not run concurrently with Bollinger Band** — mean-reversion concentration risk requires sequential validation first
+4. **Momentum Vol-Scaled** — conditional on crash protection keeping MDD < 20%; mildly trending regime is marginally supportive; test after top 2-3; if SPY recovers above -4.29% 1m and breadth improves, reconsider promotion to #3
+5. **DMA Crossover** — baseline calibration only; Market Regime Agent explicitly flagged "whipsaw environment" for this strategy; run early to validate backtest engine, do not treat as Gate 1 candidate
+6. **Multi-Factor Long-Short** — defer pending Engineering Director confirmation of fundamental data availability; regime fit is also weak (factor crowding in high-vol)
 
 ---
 
@@ -262,3 +287,4 @@ Three of the 6 strategies are mean reversion (Bollinger Band, RSI, Pairs Trading
 ---
 
 *Generated by Alpha Research Agent | QUA-36 | 2026-03-15*
+*Updated by Research Director | QUA-56 | 2026-03-16 — regime-informed revision following Market Regime Agent classification (QUA-35)*
