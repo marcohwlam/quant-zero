@@ -1,0 +1,77 @@
+H09 TQQQ Weekly Snapback — Gate 1 Verdict
+Date: 2026-03-16
+IS: 2015-01-01 to 2021-12-31  |  OOS: 2022-01-01 to 2023-12-31
+============================================================
+OVERALL: FAIL ✗
+
+Core Metrics:
+  IS Sharpe:            -0.4720  FAIL (>1.0)
+  OOS Sharpe:           -0.8029  FAIL (>0.7)
+  IS Max Drawdown:       -22.0%  FAIL (<20%)
+  OOS Max Drawdown:       -6.7%  PASS (<25%)
+  Win Rate (IS):          56.4%  PASS (>50% OR w/l>1.2)
+  Win/Loss Ratio:          0.59
+  Profit Factor:         0.7674
+  Trade Count (IS):         252  PASS (≥100)
+
+Walk-Forward (4 windows, 36m IS / 6m OOS):
+  Windows Passed:      1/4  FAIL (≥3)
+  Consistency Score:     1.5630  PASS (≥0.7)
+  WF Sharpe Std:         1.3582
+  WF Sharpe Min:        -2.2731  FLAG: losing WF window
+    W1: IS -0.4961 OOS -2.2731 [FAIL]
+    W2: IS -1.0835 OOS -1.126 [FAIL]
+    W3: IS -1.1561 OOS -1.9112 [FAIL]
+    W4: IS -1.1902 OOS 1.2167 [PASS]
+
+Regime-Slice Sub-Criterion (criteria.md v1.1):
+  Regimes ≥0.8 Sharpe: 0/4  FAIL (≥2 incl ≥1 stress)
+    pre_covid_2018_2019: Sharpe=-1.1679 MDD=-17.6% Trades=87 ✗
+    stimulus_2020_2021: Sharpe=0.2609 MDD=-5.4% Trades=76 ✗
+    rate_shock_2022: Sharpe=-0.9534 MDD=-2.8% Trades=8 ✗
+    normalization_2023: Sharpe=-0.7871 MDD=-5.1% Trades=52 ✗
+
+Sub-Period Analysis (Research Director conditions):
+  GFC Note: TQQQ inception 2010-02-09; GFC 2008-09 untestable.
+  post_gfc_recovery_2010_2011: Sharpe=-3.1037  MDD=-20.2%  Trades=42
+  china_selloff_2015_2016: Sharpe=-0.5762  MDD=-6.1%  Trades=69
+  q4_2018_correction: Sharpe=-1.7485  MDD=-15.8%  Trades=68
+  covid_crash_2020: Sharpe=0.4216  MDD=-5.5%  Trades=95
+  bear_2022: Sharpe=-0.9534  MDD=-2.8%  Trades=8
+
+Statistical Rigor:
+  DSR:                     0.000000  FAIL (>0)
+  MC p5 Sharpe:              -3.129  FAIL — MC pessimistic bound weak
+  MC Median Sharpe:          -1.557
+  Sharpe CI [95%]:     [-1.164, 0.211]
+  MDD CI [95%]:        [-0.365, -0.074]
+  Perm p-value:              0.9880  FAIL (≤0.05)
+
+Sensitivity (entry_decline_pct × vix_gate):
+  Combined variance:         84.0%  FAIL (≤30%)
+    decline_2pct: Sharpe=-0.7422  Trades=442
+    decline_3pct: Sharpe=-0.6475  Trades=346
+    decline_5pct: Sharpe=-0.4720  Trades=252
+    decline_6pct: Sharpe=-0.3753  Trades=197
+    decline_7pct: Sharpe=-0.3609  Trades=146
+
+Exit Reason Analysis (IS):
+  stop_loss: 110 trades
+  take_profit: 142 trades
+
+Risk Flags:
+  Look-ahead bias:     None detected
+  Liquidity flags:     0 trades flagged as liquidity-constrained
+  TASC crowding risk:  Monitor post-publication (March 2026) edge decay in live trading
+  TQQQ 2022 MDD:       Strategy uses regime gate (QQQ 200-SMA + VIX gate) to reduce exposure
+
+FAILING CRITERIA:
+  x is_sharpe_pass
+  x oos_sharpe_pass
+  x is_mdd_pass
+  x wf_windows_pass
+  x sensitivity_pass
+  x regime_slice_pass
+  x dsr_pass
+  x permutation_pass
+  x mc_p5_pass
