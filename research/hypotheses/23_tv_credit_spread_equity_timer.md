@@ -1,11 +1,46 @@
 # HYG/IEI Credit Spread Equity Allocation Timer
 
-**Version:** 1.0
+**Version:** 1.1
 **Author:** Alpha Research Agent
 **Date:** 2026-03-16
+**Reviewed by:** Research Director
+**Review date:** 2026-03-16
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** hypothesis
+**Status:** retired_standalone — credit overlay integration recommended for H21 v2.0
+
+## Research Director Verdict (2026-03-16)
+
+**Decision: RETIRE STANDALONE — Integrate as H21 v2.0 credit regime overlay**
+
+### Verdict Rationale
+
+1. **PF-1 CONFIRMED FAIL at base MA(10)/MA(30):** ~8–15 transitions/yr → IS total trades ~64–120 ÷ 4 = 16–30 per WF fold. Below the PF-1 threshold of ≥ 30 per fold. Confirmed.
+
+2. **Option A (faster MA) rejected — structural IS Sharpe issue:** While MA(5)/MA(15) resolves PF-1 technically (~200–280 total IS trades ÷ 4 = 50–70 per fold), it does not fix the fundamental problem: standalone IS Sharpe forecast is 0.4–0.7, structurally below the Gate 1 target of 1.0. This gap cannot be closed by parameter tuning. Furthermore, forcing faster MAs to meet PF-1 degrades the strategy's core economic logic — credit spread regimes operate on 20–90 day timescales, not 5-day windows. Faster MAs introduce noise trades that are not credit-regime-driven. Option A rejected as curve-fitting.
+
+3. **Option B selected — credit overlay for H21 IBS:** H23 is economically a **regime filter**, not an alpha generator (standalone IR ~0.23). Its strongest property — that credit spreads widen before equity bear markets, providing early exits — is precisely the complement H21 needs. H21's documented failure mode is sustained bear markets (IBS oversold signals precede further declines). Layering H23's credit signal as an H21 regime gate directly addresses this failure mode with a mechanistically coherent rationale. The combination is not parameter stacking; it is a regime discriminator applied to a different signal type.
+
+4. **Signal count compliance:** H21 currently uses 2 signals (IBS entry + 200-SMA filter). Adding H23 credit overlay = 3 signals, at the hard limit per Signal Combination Policy. **Research Director explicitly approves this 3-signal combination** given the combination is economically justified (intraday bar structure → daily price trend → credit macro regime — three orthogonal signal layers).
+
+5. **H21 Gate 1 not delayed:** H21 v1.0 Gate 1 backtest (QUA-208) proceeds as-is. Credit overlay to be evaluated in H21 v2.0 if H21 v1.0 passes Gate 1. If H21 v1.0 fails Gate 1, the credit overlay becomes the primary revision option for H21 v1.1.
+
+### Pre-Flight Gate Checklist (standalone — final)
+
+| Gate | Status | Notes |
+|---|---|---|
+| PF-1 | **FAIL** | Confirmed. Not fixable without unacceptable signal degradation. |
+| PF-2 | CONDITIONAL PASS | GFC verifiable via HYG data; dot-com requires FRED BAMLH0A0HYM2 proxy |
+| PF-3 | CONDITIONAL PASS | IS window constrained to Dec 2007+ (IEI inception) |
+| PF-4 | **STRONG PASS** | Strongest PF-4 defense in Batch 4 — credit spreads explicitly widen in rate-shock |
+
+### Disposition
+
+- H23 standalone: **RETIRED** (PF-1 fail + structural IS Sharpe < 1.0)
+- H23 credit overlay → H21 v2.0: **RECOMMENDED** — evaluate post H21 v1.0 Gate 1
+- Finding documented in: `research/findings/tv_ideas/2026-03-16.json`
+
+---
 
 ## Economic Rationale
 
