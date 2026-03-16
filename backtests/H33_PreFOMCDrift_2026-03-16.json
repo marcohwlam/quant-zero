@@ -1,0 +1,134 @@
+{
+  "strategy_name": "H33_PreFOMCDrift",
+  "date": "2026-03-16",
+  "asset_class": "equities",
+  "is_sharpe": 0.4097,
+  "is_sharpe_unfiltered": 0.4097,
+  "is_max_drawdown": -0.0661,
+  "is_trade_count": 119,
+  "is_trade_count_unfiltered": 119,
+  "is_win_rate": 0.4874,
+  "is_profit_factor": 1.4757,
+  "is_total_return": 0.2411,
+  "is_shy_blocked_count": 0,
+  "is_fomc_meetings": 119,
+  "oos_sharpe": 0.0201,
+  "oos_max_drawdown": -0.0797,
+  "oos_trade_count": 31,
+  "oos_win_rate": 0.4516,
+  "oos_profit_factor": 1.0012,
+  "oos_total_return": 0.0002,
+  "oos_shy_blocked_count": 1,
+  "post_cost_sharpe": 0.0201,
+  "win_rate": 0.4874,
+  "profit_factor": 1.4757,
+  "trade_count": 119,
+  "dsr": 1.0,
+  "dsr_sr_annualized": 0.4097,
+  "dsr_sr_benchmark": 0.041,
+  "wf_windows_passed": 4,
+  "wf_total_windows": 5,
+  "wf_consistency_score": 0.8,
+  "wf_oos_sharpes": [
+    1.5635,
+    0.7212,
+    1.9586,
+    -2.2598,
+    2.0577
+  ],
+  "wf_sharpe_std": 1.604701934441409,
+  "wf_sharpe_min": -2.2598,
+  "wf_results": [
+    {
+      "is_sharpe": 1.1192,
+      "oos_sharpe": 1.5635,
+      "passed": true,
+      "oos_trades": 4
+    },
+    {
+      "is_sharpe": 0.2812,
+      "oos_sharpe": 0.7212,
+      "passed": true,
+      "oos_trades": 4
+    },
+    {
+      "is_sharpe": 0.0389,
+      "oos_sharpe": 1.9586,
+      "passed": true,
+      "oos_trades": 4
+    },
+    {
+      "is_sharpe": -0.1213,
+      "oos_sharpe": -2.2598,
+      "passed": false,
+      "oos_trades": 4
+    },
+    {
+      "is_sharpe": -0.2263,
+      "oos_sharpe": 2.0577,
+      "passed": true,
+      "oos_trades": 4
+    }
+  ],
+  "sensitivity_pass": true,
+  "sensitivity_max_change_pct": 0.0,
+  "sensitivity_results": [
+    {
+      "threshold": -0.01,
+      "sharpe": 0.4097,
+      "trades": 119
+    },
+    {
+      "threshold": -0.015,
+      "sharpe": 0.4097,
+      "trades": 119
+    },
+    {
+      "threshold": -0.02,
+      "sharpe": 0.4097,
+      "trades": 119
+    }
+  ],
+  "mc_p5_sharpe": -0.09312255398644852,
+  "mc_median_sharpe": 2.2637379931827875,
+  "mc_p95_sharpe": 4.467967085839032,
+  "sharpe_ci_low": -0.07470226951873497,
+  "sharpe_ci_high": 0.8139382689032678,
+  "mdd_ci_low": -0.15850116627546526,
+  "mdd_ci_high": -0.0386356040939169,
+  "win_rate_ci_low": 0.013168503090567052,
+  "win_rate_ci_high": 0.018812147272238646,
+  "market_impact_bps": 0.006505339080520555,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 6.357435972095016e-07,
+  "permutation_pvalue": 0.13,
+  "permutation_test_pass": false,
+  "gfc_2008_2009_mdd": -0.0339,
+  "gfc_2008_2009_sharpe": 1.2227,
+  "stress_2022_mdd": -0.0507,
+  "stress_2022_sharpe": 0.3656,
+  "stress_2022_shy_blocked": 1,
+  "oos_data_quality": {
+    "strategy_name": "H33_PreFOMCDrift",
+    "oos_total_rows": 1002,
+    "oos_clean_rows": 1002,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "Close": 0,
+      "High": 0,
+      "Low": 0,
+      "Open": 0,
+      "Volume": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "look_ahead_bias_flag": false,
+  "gate1_pass": false
+}
