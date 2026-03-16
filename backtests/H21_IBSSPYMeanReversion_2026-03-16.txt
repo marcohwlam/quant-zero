@@ -1,0 +1,41 @@
+GATE 1 VERDICT: FAIL
+Strategy: H21_IBSSPYMeanReversion v1.0
+Date: 2026-03-16
+Analyst: Overfit Detector Agent
+
+⛔ AUTO-DISQUALIFIED
+Reason: Auto-disqualify: IS Sharpe = -0.41 (threshold: > 1.0)
+
+QUANTITATIVE SUMMARY
+- Test period: 2010-01-01 – 2024-12-31, 15.0 years  [PASS, threshold ≥ 5 years]
+- IS Sharpe: -0.41  [FAIL, threshold > 1.0]
+- OOS Sharpe: 0.12  [FAIL, threshold > 0.7]
+- Walk-forward windows passed: 0/4  [FAIL, threshold ≥ 3/4]
+- Walk-forward OOS/IS consistency: 0.00 mean OOS/IS ratio  [FAIL, threshold OOS within 30% of IS]
+- IS Max Drawdown: 38.8%  [FAIL, threshold < 20%]
+- OOS Max Drawdown: 10.1%  [PASS, threshold < 25%]
+- Win Rate: 56.8%  [PASS, threshold > 50%]
+- Trade count: 410  [PASS, threshold > 50]
+- Deflated Sharpe Ratio (z-score): -110.51  [FAIL, threshold > 0.0]
+- Parameter sensitivity: 117.0% max Sharpe Δ within ±20%  [FAIL, threshold < 30% Sharpe change]
+- Post-cost Sharpe: 0.12  [FAIL, threshold > 0.7 (after realistic costs)]
+
+WALK-FORWARD WINDOW DETAIL
+  Window 1: IS=-0.48, OOS=0.39  [FAIL]
+  Window 2: IS=-0.20, OOS=-0.25  [FAIL]
+  Window 3: IS=-0.16, OOS=-1.68  [FAIL]
+  Window 4: IS=-0.49, OOS=-0.15  [FAIL]
+
+QUALITATIVE ASSESSMENT
+- Economic rationale: VALID
+- Look-ahead bias: NONE DETECTED
+- Overfitting risk: HIGH
+- Notes:
+    * IS drawdown is elevated (38.8%); strategies near 20% warrant closer review.
+    * Overfitting risk assessed as HIGH — mandatory second review before CEO promotion decision.
+
+RECOMMENDATION: Reject
+CONFIDENCE: HIGH
+CONCERNS:
+  - IS drawdown is elevated (38.8%); strategies near 20% warrant closer review.
+  - Overfitting risk assessed as HIGH — mandatory second review before CEO promotion decision.

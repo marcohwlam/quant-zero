@@ -1,0 +1,80 @@
+H21 IBS SPY Mean Reversion — Gate 1 Verdict
+Date: 2026-03-16
+Strategy: H21 IBS Daily Mean Reversion — SPY
+Override params: ibs_entry_threshold=0.30 (PF-1 compliance, per QUA-216)
+IS Window: 2010-01-01 to 2021-12-31
+OOS Window: 2022-01-01 to 2024-12-31
+
+IS Sharpe: -0.4052
+OOS Sharpe: 0.1201
+IS MDD: 38.84%
+OOS MDD: 10.10%
+IS Win Rate: 56.83%
+OOS Win Rate: 63.83%
+IS Profit Factor: 0.8193
+OOS Profit Factor: 1.0425
+Total IS trades: 410
+Total OOS trades: 94
+Trades/yr (IS): 34.2
+Trades/yr (OOS): 31.4
+Post-cost Sharpe (OOS): 0.1201
+
+Statistical Rigor:
+  MC p5 Sharpe: -2.4940
+  MC Median Sharpe: -1.1918
+  MC p95 Sharpe: 0.2139
+  Sharpe 95% CI (IS): [-1.4969, 0.2979]
+  MDD 95% CI (IS): [-61.54%, -16.32%]
+  Win Rate 95% CI (IS): [32.01%, 36.85%]
+  Market Impact: 0.0128 bps
+  Liquidity Constrained: False
+  Permutation p-value: 1.0000
+  DSR z-score: -110.5069
+  WF Sharpe std: 0.7660
+  WF Sharpe min: -1.6808
+
+Walk-Forward (4-fold):
+  WF 2013: IS=-0.4838, OOS=+0.3893 — FAIL (OOS/IS ratio)
+  WF 2015: IS=-0.2011, OOS=-0.2523 — FAIL
+  WF 2018: IS=-0.1620, OOS=-1.6808 — FAIL
+  WF 2020: IS=-0.4947, OOS=-0.1476 — FAIL
+  WF Windows Passed: 0/4
+
+Sub-period IS Sharpe:
+  2010-2015: -0.2011
+  2015-2020: -0.7860
+  2020-2023: -0.0884
+  All sub-periods non-negative: FAIL (all negative)
+
+Stress Test (1993-2009, not counted in Gate 1):
+  Sharpe: 0.1286 | MDD: 21.39% | Trades: 490
+
+Sensitivity Heatmap (IS Sharpe across ibs_entry_threshold x max_hold_days):
+  ibs=0.15: hold=2: -0.017, hold=3: -0.051, hold=4: -0.021, hold=5: +0.051
+  ibs=0.20: hold=2: -0.108, hold=3: -0.040, hold=4: +0.036, hold=5: +0.069
+  ibs=0.25: hold=2: -0.219, hold=3: -0.260, hold=4: -0.102, hold=5: -0.094
+  ibs=0.30: hold=2: -0.326, hold=3: -0.405, hold=4: -0.289, hold=5: -0.293
+  ibs=0.35: hold=2: -0.222, hold=3: -0.283, hold=4: -0.191, hold=5: -0.207
+  Max Sharpe delta vs base: 116.95%
+
+Verdict: FAIL
+Confidence: HIGH
+
+Auto-disqualifications:
+  - IS Sharpe -0.41 vs threshold >1.0 (FAIL by 1.41 points)
+  - OOS Sharpe 0.12 vs threshold >0.7 (FAIL by 0.58 points)
+  - IS Max Drawdown 38.84% vs threshold <20% (FAIL by 18.84pp)
+  - All sub-period Sharpes negative (2010-2015, 2015-2020, 2020-2023)
+  - WF windows passed: 0/4 (threshold ≥3)
+  - Permutation test FAIL (p-value 1.00, no significant alpha)
+  - MC p5 Sharpe -2.49 (pessimistic bound severely negative)
+  - DSR z-score -110.51 (strategy overfitting, no genuine alpha)
+  - Sensitivity max delta 116.95% (threshold <30%)
+
+Recommendation: RETIRE H21 IBS SPY Mean Reversion strategy.
+Root cause: The IBS mean reversion edge on SPY may have been arbitraged away
+in the 2010-2021 period, or the 200-SMA regime filter is too permissive.
+The strategy shows a high win rate (57-64%) but negative Sharpe due to asymmetric
+loss magnitude — winners are small, losers are larger.
+
+OOS Data Quality: PASS (100% coverage, no NaN contamination)

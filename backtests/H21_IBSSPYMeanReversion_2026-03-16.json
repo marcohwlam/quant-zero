@@ -1,0 +1,1123 @@
+{
+  "strategy_name": "H21_IBSSPYMeanReversion",
+  "date": "2026-03-16",
+  "overall_verdict": "FAIL",
+  "recommendation": "Reject",
+  "confidence": "HIGH",
+  "disqualify_reason": "Auto-disqualify: IS Sharpe = -0.41 (threshold: > 1.0)",
+  "oos_data_quality": {
+    "strategy_name": "H21_IBSSPYMeanReversion",
+    "oos_total_rows": 752,
+    "oos_clean_rows": 752,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "Close": 0,
+      "High": 0,
+      "Low": 0,
+      "Open": 0,
+      "Volume": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "metrics": [
+    {
+      "name": "Test period",
+      "value": "2010-01-01 \u2013 2024-12-31, 15.0 years",
+      "threshold": "\u2265 5 years",
+      "passed": true,
+      "auto_disqualify": true
+    },
+    {
+      "name": "IS Sharpe",
+      "value": "-0.41",
+      "threshold": "> 1.0",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "OOS Sharpe",
+      "value": "0.12",
+      "threshold": "> 0.7",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "Walk-forward windows passed",
+      "value": "0/4",
+      "threshold": "\u2265 3/4",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "Walk-forward OOS/IS consistency",
+      "value": "0.00 mean OOS/IS ratio",
+      "threshold": "OOS within 30% of IS",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "IS Max Drawdown",
+      "value": "38.8%",
+      "threshold": "< 20%",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "OOS Max Drawdown",
+      "value": "10.1%",
+      "threshold": "< 25%",
+      "passed": true,
+      "auto_disqualify": false
+    },
+    {
+      "name": "Win Rate",
+      "value": "56.8%",
+      "threshold": "> 50%",
+      "passed": true,
+      "auto_disqualify": false
+    },
+    {
+      "name": "Trade count",
+      "value": "410",
+      "threshold": "> 50",
+      "passed": true,
+      "auto_disqualify": true
+    },
+    {
+      "name": "Deflated Sharpe Ratio (z-score)",
+      "value": "-110.51",
+      "threshold": "> 0.0",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "Parameter sensitivity",
+      "value": "117.0% max Sharpe \u0394 within \u00b120%",
+      "threshold": "< 30% Sharpe change",
+      "passed": false,
+      "auto_disqualify": true
+    },
+    {
+      "name": "Post-cost Sharpe",
+      "value": "0.12",
+      "threshold": "> 0.7 (after realistic costs)",
+      "passed": false,
+      "auto_disqualify": true
+    }
+  ],
+  "equity_curve": [],
+  "trade_log": [
+    {
+      "entry_date": "2010-01-15",
+      "exit_date": "2010-01-19",
+      "entry_price": 85.3096,
+      "exit_price": 86.2763,
+      "shares": 278,
+      "pnl": 268.75,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-01-21",
+      "exit_date": "2010-01-22",
+      "entry_price": 83.8533,
+      "exit_price": 81.8895,
+      "shares": 286,
+      "pnl": -561.65,
+      "hold_days": 1,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2010-01-26",
+      "exit_date": "2010-01-27",
+      "entry_price": 82.0593,
+      "exit_price": 82.3544,
+      "shares": 286,
+      "pnl": 84.41,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-01-28",
+      "exit_date": "2010-02-01",
+      "entry_price": 81.5038,
+      "exit_price": 81.7783,
+      "shares": 289,
+      "pnl": 79.32,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-02-04",
+      "exit_date": "2010-02-05",
+      "entry_price": 79.9037,
+      "exit_price": 79.9785,
+      "shares": 295,
+      "pnl": 22.09,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-02-08",
+      "exit_date": "2010-02-11",
+      "entry_price": 79.4908,
+      "exit_price": 81.0809,
+      "shares": 297,
+      "pnl": 472.25,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-02-23",
+      "exit_date": "2010-02-24",
+      "entry_price": 82.4333,
+      "exit_price": 83.0981,
+      "shares": 292,
+      "pnl": 194.12,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-03-02",
+      "exit_date": "2010-03-04",
+      "entry_price": 84.2273,
+      "exit_price": 84.4629,
+      "shares": 288,
+      "pnl": 67.85,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-03-19",
+      "exit_date": "2010-03-22",
+      "entry_price": 87.4157,
+      "exit_price": 87.7851,
+      "shares": 278,
+      "pnl": 102.68,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-03-25",
+      "exit_date": "2010-03-30",
+      "entry_price": 87.9283,
+      "exit_price": 88.395,
+      "shares": 278,
+      "pnl": 129.76,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2010-04-16",
+      "exit_date": "2010-04-19",
+      "entry_price": 89.9709,
+      "exit_price": 90.2096,
+      "shares": 273,
+      "pnl": 65.18,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-04-26",
+      "exit_date": "2010-04-27",
+      "entry_price": 91.4708,
+      "exit_price": 89.2082,
+      "shares": 269,
+      "pnl": -608.65,
+      "hold_days": 1,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2010-04-30",
+      "exit_date": "2010-05-03",
+      "entry_price": 89.5563,
+      "exit_price": 90.6162,
+      "shares": 268,
+      "pnl": 284.05,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-05-04",
+      "exit_date": "2010-05-06",
+      "entry_price": 88.5841,
+      "exit_price": 85.0366,
+      "shares": 274,
+      "pnl": -972.0,
+      "hold_days": 2,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2010-05-13",
+      "exit_date": "2010-05-17",
+      "entry_price": 87.4309,
+      "exit_price": 85.7971,
+      "shares": 267,
+      "pnl": -436.22,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-05-18",
+      "exit_date": "2010-05-20",
+      "entry_price": 84.725,
+      "exit_price": 80.9705,
+      "shares": 271,
+      "pnl": -1017.46,
+      "hold_days": 2,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2010-06-21",
+      "exit_date": "2010-06-24",
+      "entry_price": 84.3783,
+      "exit_price": 81.265,
+      "shares": 261,
+      "pnl": -812.57,
+      "hold_days": 3,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2010-09-22",
+      "exit_date": "2010-09-24",
+      "entry_price": 86.3603,
+      "exit_price": 87.3286,
+      "shares": 246,
+      "pnl": 238.2,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-09-27",
+      "exit_date": "2010-09-28",
+      "entry_price": 87.0075,
+      "exit_price": 87.2146,
+      "shares": 246,
+      "pnl": 50.94,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-09-30",
+      "exit_date": "2010-10-05",
+      "entry_price": 86.9009,
+      "exit_price": 88.2566,
+      "shares": 247,
+      "pnl": 334.87,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-10-25",
+      "exit_date": "2010-10-26",
+      "entry_price": 90.3804,
+      "exit_price": 90.2951,
+      "shares": 241,
+      "pnl": -20.56,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-11-09",
+      "exit_date": "2010-11-10",
+      "entry_price": 92.5959,
+      "exit_price": 92.866,
+      "shares": 235,
+      "pnl": 63.45,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-11-15",
+      "exit_date": "2010-11-18",
+      "entry_price": 91.393,
+      "exit_price": 91.2382,
+      "shares": 239,
+      "pnl": -36.99,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2010-11-26",
+      "exit_date": "2010-11-29",
+      "entry_price": 90.4565,
+      "exit_price": 90.6297,
+      "shares": 241,
+      "pnl": 41.74,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-12-07",
+      "exit_date": "2010-12-08",
+      "entry_price": 93.5249,
+      "exit_price": 93.7634,
+      "shares": 234,
+      "pnl": 55.83,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-12-13",
+      "exit_date": "2010-12-16",
+      "entry_price": 94.842,
+      "exit_price": 94.9348,
+      "shares": 231,
+      "pnl": 21.43,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2010-12-29",
+      "exit_date": "2010-12-31",
+      "entry_price": 96.3817,
+      "exit_price": 96.1452,
+      "shares": 227,
+      "pnl": -53.67,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-01-19",
+      "exit_date": "2011-01-24",
+      "entry_price": 98.165,
+      "exit_price": 98.7067,
+      "shares": 223,
+      "pnl": 120.79,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-01-28",
+      "exit_date": "2011-01-31",
+      "entry_price": 97.7593,
+      "exit_price": 98.3855,
+      "shares": 225,
+      "pnl": 140.89,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-02-22",
+      "exit_date": "2011-02-25",
+      "entry_price": 100.9051,
+      "exit_price": 101.1764,
+      "shares": 219,
+      "pnl": 59.41,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-03-01",
+      "exit_date": "2011-03-03",
+      "entry_price": 100.2162,
+      "exit_price": 102.048,
+      "shares": 221,
+      "pnl": 404.82,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-03-07",
+      "exit_date": "2011-03-08",
+      "entry_price": 100.5989,
+      "exit_price": 101.3675,
+      "shares": 224,
+      "pnl": 172.16,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-03-10",
+      "exit_date": "2011-03-15",
+      "entry_price": 99.4585,
+      "exit_price": 98.2938,
+      "shares": 228,
+      "pnl": -265.57,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2011-03-16",
+      "exit_date": "2011-03-21",
+      "entry_price": 96.5807,
+      "exit_price": 99.6269,
+      "shares": 233,
+      "pnl": 709.77,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2011-03-22",
+      "exit_date": "2011-03-23",
+      "entry_price": 99.3909,
+      "exit_price": 99.5655,
+      "shares": 233,
+      "pnl": 40.68,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-03-28",
+      "exit_date": "2011-03-29",
+      "entry_price": 100.69,
+      "exit_price": 101.2549,
+      "shares": 230,
+      "pnl": 129.93,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-03-31",
+      "exit_date": "2011-04-05",
+      "entry_price": 101.9277,
+      "exit_price": 102.3147,
+      "shares": 229,
+      "pnl": 88.64,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2011-04-11",
+      "exit_date": "2011-04-14",
+      "entry_price": 101.8277,
+      "exit_price": 101.0246,
+      "shares": 230,
+      "pnl": -184.71,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-05-02",
+      "exit_date": "2011-05-05",
+      "entry_price": 104.718,
+      "exit_price": 102.5989,
+      "shares": 222,
+      "pnl": -470.44,
+      "hold_days": 3,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2011-05-06",
+      "exit_date": "2011-05-10",
+      "entry_price": 103.1652,
+      "exit_price": 104.3344,
+      "shares": 221,
+      "pnl": 258.39,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-05-13",
+      "exit_date": "2011-05-17",
+      "entry_price": 103.0423,
+      "exit_price": 102.261,
+      "shares": 223,
+      "pnl": -174.24,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-05-20",
+      "exit_date": "2011-05-25",
+      "entry_price": 102.7117,
+      "exit_price": 101.662,
+      "shares": 222,
+      "pnl": -233.03,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2011-06-01",
+      "exit_date": "2011-06-06",
+      "entry_price": 101.3742,
+      "exit_price": 99.0894,
+      "shares": 223,
+      "pnl": -509.5,
+      "hold_days": 3,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2011-06-07",
+      "exit_date": "2011-06-10",
+      "entry_price": 99.1372,
+      "exit_price": 97.9836,
+      "shares": 223,
+      "pnl": -257.26,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2011-06-15",
+      "exit_date": "2011-06-20",
+      "entry_price": 97.646,
+      "exit_price": 98.5465,
+      "shares": 224,
+      "pnl": 201.73,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-06-22",
+      "exit_date": "2011-06-23",
+      "entry_price": 99.4047,
+      "exit_price": 99.0096,
+      "shares": 222,
+      "pnl": -87.71,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-06-24",
+      "exit_date": "2011-06-28",
+      "entry_price": 97.9678,
+      "exit_price": 100.0206,
+      "shares": 225,
+      "pnl": 461.87,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2011-07-11",
+      "exit_date": "2011-07-14",
+      "entry_price": 101.954,
+      "exit_price": 101.0393,
+      "shares": 220,
+      "pnl": -201.24,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2011-07-27",
+      "exit_date": "2011-08-01",
+      "entry_price": 100.8957,
+      "exit_price": 99.38,
+      "shares": 221,
+      "pnl": -334.96,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2011-12-28",
+      "exit_date": "2011-12-29",
+      "entry_price": 97.5519,
+      "exit_price": 98.4512,
+      "shares": 225,
+      "pnl": 202.33,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2022-01-05",
+      "exit_date": "2022-01-10",
+      "entry_price": 443.2795,
+      "exit_price": 440.1066,
+      "shares": 53,
+      "pnl": -168.16,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2022-01-13",
+      "exit_date": "2022-01-14",
+      "entry_price": 439.6359,
+      "exit_price": 439.3597,
+      "shares": 53,
+      "pnl": -14.64,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2022-01-18",
+      "exit_date": "2022-01-20",
+      "entry_price": 432.0268,
+      "exit_price": 422.3701,
+      "shares": 54,
+      "pnl": -521.46,
+      "hold_days": 2,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2022-02-03",
+      "exit_date": "2022-02-08",
+      "entry_price": 422.6641,
+      "exit_price": 426.3342,
+      "shares": 54,
+      "pnl": 198.19,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2022-02-10",
+      "exit_date": "2022-02-15",
+      "entry_price": 425.2384,
+      "exit_price": 421.7583,
+      "shares": 54,
+      "pnl": -187.92,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2022-03-23",
+      "exit_date": "2022-03-24",
+      "entry_price": 421.3192,
+      "exit_price": 427.2318,
+      "shares": 54,
+      "pnl": 319.28,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2022-03-31",
+      "exit_date": "2022-04-01",
+      "entry_price": 428.762,
+      "exit_price": 429.5365,
+      "shares": 54,
+      "pnl": 41.82,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2022-04-05",
+      "exit_date": "2022-04-08",
+      "entry_price": 428.1828,
+      "exit_price": 424.4627,
+      "shares": 54,
+      "pnl": -200.89,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2022-12-13",
+      "exit_date": "2022-12-15",
+      "entry_price": 384.8313,
+      "exit_price": 372.634,
+      "shares": 60,
+      "pnl": -731.84,
+      "hold_days": 2,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2023-01-17",
+      "exit_date": "2023-01-19",
+      "entry_price": 382.559,
+      "exit_price": 373.394,
+      "shares": 58,
+      "pnl": -531.57,
+      "hold_days": 2,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2023-01-30",
+      "exit_date": "2023-01-31",
+      "entry_price": 385.2711,
+      "exit_price": 390.5344,
+      "shares": 57,
+      "pnl": 300.01,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-02-03",
+      "exit_date": "2023-02-07",
+      "entry_price": 396.5813,
+      "exit_price": 398.9029,
+      "shares": 56,
+      "pnl": 130.01,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-02-08",
+      "exit_date": "2023-02-10",
+      "entry_price": 394.9463,
+      "exit_price": 392.0333,
+      "shares": 56,
+      "pnl": -163.13,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-02-16",
+      "exit_date": "2023-02-17",
+      "entry_price": 392.667,
+      "exit_price": 391.2838,
+      "shares": 56,
+      "pnl": -77.46,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-02-21",
+      "exit_date": "2023-02-24",
+      "entry_price": 383.8285,
+      "exit_price": 380.8306,
+      "shares": 57,
+      "pnl": -170.89,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-02-27",
+      "exit_date": "2023-03-02",
+      "entry_price": 382.5206,
+      "exit_price": 382.2044,
+      "shares": 57,
+      "pnl": -18.02,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-03-06",
+      "exit_date": "2023-03-09",
+      "entry_price": 389.0027,
+      "exit_price": 376.1995,
+      "shares": 56,
+      "pnl": -716.98,
+      "hold_days": 3,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2023-03-17",
+      "exit_date": "2023-03-20",
+      "entry_price": 376.508,
+      "exit_price": 379.7379,
+      "shares": 56,
+      "pnl": 180.87,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-03-22",
+      "exit_date": "2023-03-24",
+      "entry_price": 378.5548,
+      "exit_price": 381.6764,
+      "shares": 56,
+      "pnl": 174.81,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-03-27",
+      "exit_date": "2023-03-29",
+      "entry_price": 382.7833,
+      "exit_price": 387.0773,
+      "shares": 56,
+      "pnl": 240.46,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-04-12",
+      "exit_date": "2023-04-13",
+      "entry_price": 393.9435,
+      "exit_price": 398.7665,
+      "shares": 55,
+      "pnl": 265.27,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-04-25",
+      "exit_date": "2023-04-27",
+      "entry_price": 392.0416,
+      "exit_price": 397.7442,
+      "shares": 56,
+      "pnl": 319.35,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-05-01",
+      "exit_date": "2023-05-03",
+      "entry_price": 401.1455,
+      "exit_price": 393.5102,
+      "shares": 56,
+      "pnl": -427.57,
+      "hold_days": 2,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2023-05-09",
+      "exit_date": "2023-05-11",
+      "entry_price": 396.7239,
+      "exit_price": 397.4741,
+      "shares": 55,
+      "pnl": 41.26,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-05-16",
+      "exit_date": "2023-05-17",
+      "entry_price": 396.0675,
+      "exit_price": 400.4639,
+      "shares": 55,
+      "pnl": 241.8,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-05-23",
+      "exit_date": "2023-05-26",
+      "entry_price": 399.7746,
+      "exit_price": 405.0836,
+      "shares": 55,
+      "pnl": 292.0,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-06-05",
+      "exit_date": "2023-06-06",
+      "entry_price": 412.3346,
+      "exit_price": 412.8089,
+      "shares": 54,
+      "pnl": 25.61,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-06-07",
+      "exit_date": "2023-06-08",
+      "entry_price": 411.8036,
+      "exit_price": 413.8699,
+      "shares": 55,
+      "pnl": 113.64,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-06-16",
+      "exit_date": "2023-06-22",
+      "entry_price": 425.8431,
+      "exit_price": 422.5514,
+      "shares": 53,
+      "pnl": -174.46,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-06-23",
+      "exit_date": "2023-06-27",
+      "entry_price": 419.7868,
+      "exit_price": 422.2222,
+      "shares": 53,
+      "pnl": 129.07,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-07-07",
+      "exit_date": "2023-07-10",
+      "entry_price": 424.9613,
+      "exit_price": 425.6007,
+      "shares": 53,
+      "pnl": 33.89,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-07-14",
+      "exit_date": "2023-07-18",
+      "entry_price": 435.3588,
+      "exit_price": 439.6662,
+      "shares": 52,
+      "pnl": 223.99,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-07-20",
+      "exit_date": "2023-07-25",
+      "entry_price": 438.1688,
+      "exit_price": 440.8763,
+      "shares": 52,
+      "pnl": 140.79,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2023-07-27",
+      "exit_date": "2023-07-28",
+      "entry_price": 438.4692,
+      "exit_price": 442.309,
+      "shares": 52,
+      "pnl": 199.67,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-08-02",
+      "exit_date": "2023-08-07",
+      "entry_price": 436.1824,
+      "exit_price": 436.2974,
+      "shares": 53,
+      "pnl": 6.09,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-08-09",
+      "exit_date": "2023-08-14",
+      "entry_price": 431.9381,
+      "exit_price": 433.7805,
+      "shares": 53,
+      "pnl": 97.65,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-08-15",
+      "exit_date": "2023-08-18",
+      "entry_price": 429.1668,
+      "exit_price": 422.5417,
+      "shares": 54,
+      "pnl": -357.76,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-08-22",
+      "exit_date": "2023-08-23",
+      "entry_price": 424.5737,
+      "exit_price": 428.8629,
+      "shares": 54,
+      "pnl": 231.62,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-08-24",
+      "exit_date": "2023-08-25",
+      "entry_price": 423.3528,
+      "exit_price": 425.9007,
+      "shares": 54,
+      "pnl": 137.59,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-08-31",
+      "exit_date": "2023-09-06",
+      "entry_price": 436.3956,
+      "exit_price": 431.9509,
+      "shares": 53,
+      "pnl": -235.57,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2023-09-12",
+      "exit_date": "2023-09-14",
+      "entry_price": 432.1707,
+      "exit_price": 435.9586,
+      "shares": 53,
+      "pnl": 200.76,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-09-15",
+      "exit_date": "2023-09-19",
+      "entry_price": 431.1474,
+      "exit_price": 430.0647,
+      "shares": 54,
+      "pnl": -58.47,
+      "hold_days": 2,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-09-20",
+      "exit_date": "2023-09-21",
+      "entry_price": 426.5479,
+      "exit_price": 419.068,
+      "shares": 54,
+      "pnl": -403.91,
+      "hold_days": 1,
+      "exit_reason": "ATR_STOP"
+    },
+    {
+      "entry_date": "2023-09-22",
+      "exit_date": "2023-09-25",
+      "entry_price": 418.5546,
+      "exit_price": 419.8841,
+      "shares": 54,
+      "pnl": 71.79,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-09-26",
+      "exit_date": "2023-09-29",
+      "entry_price": 414.1398,
+      "exit_price": 415.2697,
+      "shares": 55,
+      "pnl": 62.15,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2023-10-03",
+      "exit_date": "2023-10-04",
+      "entry_price": 409.9681,
+      "exit_price": 412.5302,
+      "shares": 56,
+      "pnl": 143.48,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-10-13",
+      "exit_date": "2023-10-18",
+      "entry_price": 419.6048,
+      "exit_price": 417.9216,
+      "shares": 55,
+      "pnl": -92.57,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2023-10-19",
+      "exit_date": "2023-10-24",
+      "entry_price": 414.6746,
+      "exit_price": 411.5296,
+      "shares": 55,
+      "pnl": -172.98,
+      "hold_days": 3,
+      "exit_reason": "TIME_STOP"
+    },
+    {
+      "entry_date": "2023-11-09",
+      "exit_date": "2023-11-10",
+      "entry_price": 421.8803,
+      "exit_price": 428.0247,
+      "shares": 54,
+      "pnl": 331.79,
+      "hold_days": 1,
+      "exit_reason": "IBS_TP"
+    },
+    {
+      "entry_date": "2023-11-27",
+      "exit_date": "2023-11-30",
+      "entry_price": 441.951,
+      "exit_price": 443.3639,
+      "shares": 52,
+      "pnl": 73.47,
+      "hold_days": 3,
+      "exit_reason": "IBS_TP"
+    }
+  ],
+  "txt_path": "/mnt/c/Users/lamho/repo/quant-zero/backtests/H21_IBSSPYMeanReversion_2026-03-16.txt",
+  "_template_validation": {
+    "passed": true,
+    "warnings": []
+  }
+}
