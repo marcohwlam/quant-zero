@@ -111,6 +111,10 @@ def generate_and_save_verdict(
 
     txt_path.write_text(verdict_text)
 
+    # Combine IS + OOS equity curves and trade logs into unified time-series
+    equity_curve = metrics.get("equity_curve_is", []) + metrics.get("equity_curve_oos", [])
+    trade_log = metrics.get("trade_log_is", []) + metrics.get("trade_log_oos", [])
+
     verdict_json = {
         "strategy_name": strategy_name,
         "date": date_str,
@@ -128,6 +132,8 @@ def generate_and_save_verdict(
             }
             for m in verdict.metrics
         ],
+        "equity_curve": equity_curve,
+        "trade_log": trade_log,
         "txt_path": str(txt_path),
     }
     json_path.write_text(json.dumps(verdict_json, indent=2))

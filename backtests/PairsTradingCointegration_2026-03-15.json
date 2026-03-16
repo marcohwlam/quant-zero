@@ -91,5 +91,7 @@
       "auto_disqualify": true
     }
   ],
-  "txt_path": "/mnt/c/Users/lamho/repo/quant-zero/backtests/PairsTradingCointegration_2026-03-15.txt"
+  "txt_path": "/mnt/c/Users/lamho/repo/quant-zero/backtests/PairsTradingCointegration_2026-03-15.txt",
+  "equity_curve": [],
+  "trade_log": []
 }

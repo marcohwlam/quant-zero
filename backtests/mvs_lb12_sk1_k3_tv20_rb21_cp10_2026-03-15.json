@@ -42,5 +42,7 @@
     "crash": -0.1,
     "equal_weight": false
   },
-  "iteration": 49
+  "iteration": 49,
+  "equity_curve": [],
+  "trade_log": []
 }

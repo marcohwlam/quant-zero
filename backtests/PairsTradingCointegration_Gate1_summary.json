@@ -64,5 +64,7 @@
   "gate1_recommendation": "Reject",
   "gate1_confidence": "HIGH",
   "txt_report": "/mnt/c/Users/lamho/repo/quant-zero/backtests/PairsTradingCointegration_2026-03-15.txt",
-  "json_report": "/mnt/c/Users/lamho/repo/quant-zero/backtests/PairsTradingCointegration_2026-03-15.json"
+  "json_report": "/mnt/c/Users/lamho/repo/quant-zero/backtests/PairsTradingCointegration_2026-03-15.json",
+  "equity_curve": [],
+  "trade_log": []
 }
