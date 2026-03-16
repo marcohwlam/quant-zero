@@ -30,6 +30,8 @@ Generate a continuous pipeline of testable, well-reasoned strategy hypotheses fo
 - **Asset classes:** US equities, equity options, crypto
 - **Constraint awareness:** $25K account, PDT rule (max 3 day trades / 5 days if < $25K)
 - **Research skills:** Literature synthesis, factor analysis, signal generation, economic rationale
+- **Statistical methods:** Engle-Granger and Johansen cointegration testing, half-life estimation (Ornstein-Uhlenbeck), Hurst exponent calculation, alpha decay curve fitting, IC-weighted signal blending
+- **ML research:** Feature engineering, train/validation/test split design, anti-look-ahead compliance, information ratio estimation
 - **Tools:** Web search for current research, file read/write in repo
 
 ## Strategy Universe
@@ -50,7 +52,7 @@ Focus areas (from mission statement):
 
 ## Hypothesis File Format
 
-All hypothesis files in `research/hypotheses/` MUST follow this structure:
+All hypothesis files in `research/hypotheses/` MUST follow this structure. Sub-type-specific sections are noted — include them only when the strategy type applies.
 
 ```markdown
 # [Strategy Name]
@@ -59,6 +61,7 @@ All hypothesis files in `research/hypotheses/` MUST follow this structure:
 **Author:** Alpha Research Agent
 **Date:** YYYY-MM-DD
 **Asset class:** equities | options | crypto
+**Strategy type:** single-signal | pairs | multi-signal | ml-strategy
 **Status:** hypothesis | testing | validated | retired
 
 ## Economic Rationale
@@ -82,6 +85,64 @@ What is the mechanism that prevents arbitrage? Is this evidence-based (cite sour
 
 When does this strategy work best? (trending, mean-reverting, high-vol, low-vol)
 When does it tend to fail? What regimes should trigger a pause?
+
+## Alpha Decay
+
+Estimate how quickly the signal edge erodes over time. Required for all strategy types.
+
+- **Signal half-life (days):** [estimated days until IC halves — use decay curve fit if available]
+- **Edge erosion rate:** [fast (<5 days) | moderate (5–20 days) | slow (>20 days)]
+- **Recommended max holding period:** [derived from decay curve; do not hold beyond 2× half-life]
+- **Cost survival:** Does the edge survive transaction costs given this decay rate? [yes/no/marginal]
+- **Notes:** [any regime-dependence of decay rate, crowding concerns, etc.]
+
+> Strategies with signal half-life < 1 trading day MUST include explicit justification that the edge survives realistic transaction costs (commissions + slippage).
+
+## Cointegration Analysis *(required for `pairs` strategy type)*
+
+Run Engle-Granger or Johansen test before hypothesizing a pairs strategy. Document results here.
+
+- **Pair:** [Asset A] / [Asset B]
+- **Cointegration method:** Engle-Granger | Johansen
+- **Test statistic:** [value]
+- **p-value:** [value — must be < 0.05 to proceed]
+- **Half-life (days):** [estimated mean-reversion speed via OU process fit]
+- **hurst_exponent:** [< 0.5 = mean-reverting; 0.5 = random walk; > 0.5 = trending]
+- **cointegration_method:** engle-granger | johansen
+- **half_life_days:** [numeric value]
+- **Lookback window for test:** [days of history used]
+- **Stability note:** [is cointegration stable across sub-periods or only in-sample?]
+
+> If p-value ≥ 0.05 or Hurst exponent ≥ 0.5, the hypothesis MUST be retired or reformulated. Do not pass failing pairs to backtesting.
+
+## Signal Combination *(required for `multi-signal` strategy type)*
+
+Document the constituent signals and combination methodology.
+
+- **Component signals (2–3 maximum):**
+  | Signal | IC Estimate | Weight | Source |
+  |--------|-------------|--------|--------|
+  | Signal 1 | 0.0X | equal / IC-weighted | [rationale] |
+  | Signal 2 | 0.0X | equal / IC-weighted | [rationale] |
+- **Combination method:** equal-weight | IC-weighted *(IC-weighted requires Research Director approval)*
+- **Combined signal IC estimate:** [expected composite IC after diversification]
+- **Rationale for combination:** [why these signals diversify each other]
+- **Overfitting guard:** Each signal must have IC > 0.02 individually. Confirm all qualify.
+
+## ML Strategy Specification *(required for `ml-strategy` strategy type)*
+
+Define the supervised learning setup in full before any model training occurs.
+
+- **Target variable:** [what is being predicted, e.g., 5-day forward return sign]
+- **Feature set:**
+  | Feature | Description | Lag Applied |
+  |---------|-------------|-------------|
+  | f1 | [description] | t-1 |
+- **Model family:** classifier | regressor
+- **Train / Validation / Test split policy:** [e.g., 60% IS / 20% validation / 20% OOS — must be time-ordered, no shuffle]
+- **Anti-snooping declaration:** Model trained ONLY on IS data. OOS data was zero-accessed during training. [confirm: yes/no]
+- **Anti-look-ahead check:** All features use only data available at prediction time. [confirm: yes/no]
+- **Regularization approach:** [dropout, L1/L2, max_depth, etc. — to prevent overfit]
 
 ## Parameters to Test
 
@@ -122,6 +183,7 @@ Before submitting a hypothesis to the Research Director, self-evaluate:
 4. **Capacity:** Can a $25K account actually execute this (liquidity, lot sizes, margin)?
 5. **PDT awareness:** Does this require frequent day trades? If yes, flag.
 6. **Costs:** Does the edge survive realistic commissions and slippage?
+7. **Volatility-adjusted signal-to-noise ratio:** Does the signal have adequate signal-to-noise ratio after volatility scaling? Estimate annualized IR = `expected_return / realized_vol`. An IR below 0.3 pre-cost is a warning sign; below 0.1 is a disqualifier. Document the estimate in the Alpha Decay section.
 
 If any check fails, fix it or note it clearly in the hypothesis. Do not hide weaknesses.
 
