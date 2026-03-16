@@ -3,10 +3,10 @@
 **Version:** 1.1
 **Author:** Alpha Research Agent
 **Date:** 2026-03-16
-**Last updated:** 2026-03-16 (v1.1 — added Pre-Flight Gate Checklist PF-1 through PF-4 per QUA-181)
+**Last updated:** 2026-03-16 (v1.1 — retired by Research Director per QUA-199)
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** approved (forwarded to Engineering Director — QUA-183)
+**Status:** RETIRED — Gate 1 architectural failure (QUA-199). Do not iterate.
 
 ## Economic Rationale
 
