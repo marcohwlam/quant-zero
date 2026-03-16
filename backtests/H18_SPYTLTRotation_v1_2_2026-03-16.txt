@@ -1,0 +1,41 @@
+GATE 1 VERDICT: FAIL
+Strategy: H18_SPYTLTRotation_v1.2 v1.0
+Date: 2026-03-16
+Analyst: Overfit Detector Agent
+
+⛔ AUTO-DISQUALIFIED
+Reason: Auto-disqualify: IS Sharpe = 0.34 (threshold: > 1.0)
+
+QUANTITATIVE SUMMARY
+- Test period: 2018-01-01 – 2024-12-31, 7.0 years  [PASS, threshold ≥ 5 years]
+- IS Sharpe: 0.34  [FAIL, threshold > 1.0]
+- OOS Sharpe: 0.19  [FAIL, threshold > 0.7]
+- Walk-forward windows passed: 1/4  [FAIL, threshold ≥ 3/4]
+- Walk-forward OOS/IS consistency: 1.69 mean OOS/IS ratio  [PASS, threshold OOS within 30% of IS]
+- IS Max Drawdown: 17.7%  [PASS, threshold < 20%]
+- OOS Max Drawdown: 14.6%  [PASS, threshold < 25%]
+- Win Rate: 49.0%  [FAIL, threshold > 50%]
+- Trade count: 151  [PASS, threshold > 50]
+- Deflated Sharpe Ratio (z-score): -48.33  [FAIL, threshold > 0.0]
+- Parameter sensitivity: 86.3% max Sharpe Δ within ±20%  [FAIL, threshold < 30% Sharpe change]
+- Post-cost Sharpe: 0.19  [FAIL, threshold > 0.7 (after realistic costs)]
+
+WALK-FORWARD WINDOW DETAIL
+  Window 1: IS=0.36, OOS=3.26  [PASS]
+  Window 2: IS=1.00, OOS=-0.14  [FAIL]
+  Window 3: IS=0.72, OOS=-0.61  [FAIL]
+  Window 4: IS=0.56, OOS=-0.69  [FAIL]
+
+QUALITATIVE ASSESSMENT
+- Economic rationale: VALID
+- Look-ahead bias: NONE DETECTED
+- Overfitting risk: HIGH
+- Notes:
+    * IS drawdown is elevated (17.7%); strategies near 20% warrant closer review.
+    * Overfitting risk assessed as HIGH — mandatory second review before CEO promotion decision.
+
+RECOMMENDATION: Reject
+CONFIDENCE: HIGH
+CONCERNS:
+  - IS drawdown is elevated (17.7%); strategies near 20% warrant closer review.
+  - Overfitting risk assessed as HIGH — mandatory second review before CEO promotion decision.
