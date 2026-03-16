@@ -1,0 +1,61 @@
+Gate 1 Verdict: H14_OUMeanReversion
+Date: 2026-03-16
+=================================================================
+
+OVERALL: FAIL
+
+OU Model: AR(1) OLS regression on rolling 60-bar window
+kappa significance: p < 0.05
+Half-life filter: t_half < 30 days
+
+Criteria Results (8/12):
+  FAIL  IS Sharpe > 1.0: 0.9033
+  FAIL  OOS Sharpe > 0.7: -0.0091
+  PASS  IS MDD < 20%: -0.0157
+  PASS  OOS MDD < 25%: -0.0059
+  PASS  Win Rate > 50%: 0.5687
+  PASS  DSR > 0: 7.3e-05
+  PASS  WF Windows >= 3/4: 3
+  FAIL  Sensitivity Pass: False
+  PASS  Trade Count IS >= 30: 160
+  PASS  IC > 0.02: 0.1109
+  FAIL  Perm Test Pass (p<=0.05): 0.544
+  PASS  MC p5 Sharpe > 0.5: 0.7394
+
+IS Period:  2018-01-01 to 2021-12-31
+OOS Period: 2022-01-01 to 2023-12-31
+Universe:   ['SPY', 'QQQ', 'IWM', 'XLE', 'XLF', 'XLK']
+
+Key Metrics:
+  IS  Sharpe: 0.9033  |  OOS Sharpe: -0.0091
+  IS  MDD:    -1.6%  |  OOS MDD:   -0.6%
+  Win Rate:   56.9%  |  Profit Factor: 1.6301
+  IS Trades:  160  |  OOS Trades: 84
+  DSR: 0.000073  |  Avg IC: 0.1109
+  kappa fire count: 160  |  kappa win rate: 56.9%
+  MC p5 Sharpe: 0.7394
+  Perm p-value: 0.5440
+  WF windows passed: 3/4
+
+Walk-Forward:
+  Window 1: IS=1.4667 OOS=0.0 [FAIL]
+  Window 2: IS=-0.7848 OOS=1.9707 [PASS]
+  Window 3: IS=0.0779 OOS=2.3242 [PASS]
+  Window 4: IS=0.3443 OOS=1.4182 [PASS]
+
+Sub-Period Results (2022 bear market is key test):
+  pre_covid_2018_2019: Sharpe=1.467  Trades=84  WR=51.2%  [ok]
+  covid_crash_2020: Sharpe=2.143  Trades=18  WR=77.8%  [ok]
+  stimulus_2021: Sharpe=2.497  Trades=33  WR=72.7%  [ok]
+  rate_shock_2022: Sharpe=-0.460  Trades=37  WR=48.6%  [ok]
+
+OU Lookback + kappa p-value Sensitivity (30/45/60/90 bars):
+  lb=30, p<0.05: Sharpe=0.2532  Trades=129
+  lb=30, p<0.1: Sharpe=0.2717  Trades=222
+  lb=45, p<0.05: Sharpe=0.9399  Trades=169
+  lb=45, p<0.1: Sharpe=0.5224  Trades=243
+  lb=60, p<0.05: Sharpe=0.9033  Trades=160
+  lb=60, p<0.1: Sharpe=1.1959  Trades=253
+  lb=90, p<0.05: Sharpe=0.6263  Trades=162
+  lb=90, p<0.1: Sharpe=0.6949  Trades=242
+  Max Sharpe deviation from base (lb=60, p<0.05): 72.0%
