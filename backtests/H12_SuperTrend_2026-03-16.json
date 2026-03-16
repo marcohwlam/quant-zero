@@ -1,0 +1,334 @@
+{
+  "strategy_name": "H12_SuperTrend_ATR_Momentum",
+  "date": "2026-03-16",
+  "asset_class": "equities",
+  "tickers": [
+    "SPY",
+    "QQQ",
+    "IWM"
+  ],
+  "is_period": "2018-01-01 to 2022-12-31",
+  "oos_period": "2023-01-01 to 2024-12-31",
+  "parameters": {
+    "atr_lookback": 14,
+    "atr_multiplier": 2.5,
+    "vix_threshold": 30.0,
+    "sma_period": 200,
+    "max_hold_days": 30
+  },
+  "is_sharpe": -0.0069,
+  "oos_sharpe": 1.4728,
+  "is_max_drawdown": -1.1822,
+  "oos_max_drawdown": -0.3655,
+  "win_rate": 0.38,
+  "profit_factor": 0.9945,
+  "trade_count": 50,
+  "oos_trade_count": 18,
+  "ic": 0.0933,
+  "dsr": 0.0341,
+  "wf_windows_passed": 0,
+  "wf_consistency_score": 0.0,
+  "wf_results": [
+    {
+      "window": 1,
+      "train_start": "2018-01-01",
+      "train_end": "2019-12-31",
+      "test_start": "2020-01-01",
+      "test_end": "2020-06-30",
+      "is_sharpe": -0.2580865278788238,
+      "oos_sharpe": 0.0,
+      "consistency": -0.0,
+      "passed": false
+    },
+    {
+      "window": 2,
+      "train_start": "2019-01-01",
+      "train_end": "2020-12-31",
+      "test_start": "2021-01-01",
+      "test_end": "2021-06-30",
+      "is_sharpe": 1.5076762383953386,
+      "oos_sharpe": 0.0,
+      "consistency": 0.0,
+      "passed": false
+    },
+    {
+      "window": 3,
+      "train_start": "2020-01-01",
+      "train_end": "2021-12-31",
+      "test_start": "2022-01-01",
+      "test_end": "2022-06-30",
+      "is_sharpe": 1.22886397153645,
+      "oos_sharpe": 0.0,
+      "consistency": 0.0,
+      "passed": false
+    },
+    {
+      "window": 4,
+      "train_start": "2021-01-01",
+      "train_end": "2022-12-31",
+      "test_start": "2023-01-01",
+      "test_end": "2023-06-30",
+      "is_sharpe": -9.707216635942604,
+      "oos_sharpe": 0.0,
+      "consistency": -0.0,
+      "passed": false
+    }
+  ],
+  "wf_sharpe_std": 0.0,
+  "wf_sharpe_min": 0.0,
+  "sensitivity_pass": false,
+  "sensitivity_max_degradation": 103.5363,
+  "sensitivity_scan": [
+    {
+      "atr_multiplier": 1.5,
+      "atr_lookback": 7,
+      "sharpe": 0.44512786894793793,
+      "trade_count": 79,
+      "win_rate": 0.4936708860759494
+    },
+    {
+      "atr_multiplier": 1.5,
+      "atr_lookback": 10,
+      "sharpe": 0.33918292865001637,
+      "trade_count": 80,
+      "win_rate": 0.475
+    },
+    {
+      "atr_multiplier": 1.5,
+      "atr_lookback": 14,
+      "sharpe": 0.49850198794509354,
+      "trade_count": 79,
+      "win_rate": 0.4810126582278481
+    },
+    {
+      "atr_multiplier": 1.5,
+      "atr_lookback": 17,
+      "sharpe": 0.5462431054256754,
+      "trade_count": 74,
+      "win_rate": 0.4864864864864865
+    },
+    {
+      "atr_multiplier": 1.5,
+      "atr_lookback": 20,
+      "sharpe": 0.5526426658721323,
+      "trade_count": 76,
+      "win_rate": 0.47368421052631576
+    },
+    {
+      "atr_multiplier": 2.0,
+      "atr_lookback": 7,
+      "sharpe": 0.8777509833018924,
+      "trade_count": 55,
+      "win_rate": 0.4909090909090909
+    },
+    {
+      "atr_multiplier": 2.0,
+      "atr_lookback": 10,
+      "sharpe": 0.7644389030610651,
+      "trade_count": 54,
+      "win_rate": 0.5
+    },
+    {
+      "atr_multiplier": 2.0,
+      "atr_lookback": 14,
+      "sharpe": 0.711648542440774,
+      "trade_count": 56,
+      "win_rate": 0.44642857142857145
+    },
+    {
+      "atr_multiplier": 2.0,
+      "atr_lookback": 17,
+      "sharpe": 0.6789146025102651,
+      "trade_count": 55,
+      "win_rate": 0.45454545454545453
+    },
+    {
+      "atr_multiplier": 2.0,
+      "atr_lookback": 20,
+      "sharpe": 0.5797449224431822,
+      "trade_count": 56,
+      "win_rate": 0.44642857142857145
+    },
+    {
+      "atr_multiplier": 2.5,
+      "atr_lookback": 7,
+      "sharpe": 0.7066538094586392,
+      "trade_count": 48,
+      "win_rate": 0.4583333333333333
+    },
+    {
+      "atr_multiplier": 2.5,
+      "atr_lookback": 10,
+      "sharpe": 0.5614192165536139,
+      "trade_count": 47,
+      "win_rate": 0.425531914893617
+    },
+    {
+      "atr_multiplier": 2.5,
+      "atr_lookback": 14,
+      "sharpe": -0.006940447437352988,
+      "trade_count": 50,
+      "win_rate": 0.38
+    },
+    {
+      "atr_multiplier": 2.5,
+      "atr_lookback": 17,
+      "sharpe": 0.22660225634010206,
+      "trade_count": 48,
+      "win_rate": 0.4166666666666667
+    },
+    {
+      "atr_multiplier": 2.5,
+      "atr_lookback": 20,
+      "sharpe": 0.23053865883111213,
+      "trade_count": 47,
+      "win_rate": 0.425531914893617
+    },
+    {
+      "atr_multiplier": 3.0,
+      "atr_lookback": 7,
+      "sharpe": 0.1187136842622035,
+      "trade_count": 37,
+      "win_rate": 0.4594594594594595
+    },
+    {
+      "atr_multiplier": 3.0,
+      "atr_lookback": 10,
+      "sharpe": -0.0741886039229733,
+      "trade_count": 38,
+      "win_rate": 0.4473684210526316
+    },
+    {
+      "atr_multiplier": 3.0,
+      "atr_lookback": 14,
+      "sharpe": -0.3803026146484825,
+      "trade_count": 41,
+      "win_rate": 0.4146341463414634
+    },
+    {
+      "atr_multiplier": 3.0,
+      "atr_lookback": 17,
+      "sharpe": -0.3783817718797083,
+      "trade_count": 41,
+      "win_rate": 0.4146341463414634
+    },
+    {
+      "atr_multiplier": 3.0,
+      "atr_lookback": 20,
+      "sharpe": -0.20716004277077665,
+      "trade_count": 40,
+      "win_rate": 0.425
+    },
+    {
+      "atr_multiplier": 3.5,
+      "atr_lookback": 7,
+      "sharpe": -0.02995912907476841,
+      "trade_count": 28,
+      "win_rate": 0.5
+    },
+    {
+      "atr_multiplier": 3.5,
+      "atr_lookback": 10,
+      "sharpe": -0.1563635379369438,
+      "trade_count": 29,
+      "win_rate": 0.4827586206896552
+    },
+    {
+      "atr_multiplier": 3.5,
+      "atr_lookback": 14,
+      "sharpe": -0.0157147759590396,
+      "trade_count": 29,
+      "win_rate": 0.4827586206896552
+    },
+    {
+      "atr_multiplier": 3.5,
+      "atr_lookback": 17,
+      "sharpe": -0.32890355087720746,
+      "trade_count": 27,
+      "win_rate": 0.5185185185185185
+    },
+    {
+      "atr_multiplier": 3.5,
+      "atr_lookback": 20,
+      "sharpe": -0.4672209349729418,
+      "trade_count": 29,
+      "win_rate": 0.4827586206896552
+    }
+  ],
+  "mc_p5_sharpe": -4.0293,
+  "mc_median_sharpe": -0.1445,
+  "mc_p95_sharpe": 3.4987,
+  "sharpe_ci_low": -3.0216,
+  "sharpe_ci_high": 4.0147,
+  "mdd_ci_low": -0.5268,
+  "mdd_ci_high": -0.1442,
+  "win_rate_ci_low": 0.2653,
+  "win_rate_ci_high": 0.4898,
+  "market_impact_bps": 0.0333,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 6.03e-06,
+  "permutation_pvalue": 0.806,
+  "permutation_test_pass": false,
+  "post_cost_sharpe": -0.0069,
+  "look_ahead_bias_flag": false,
+  "sub_period_results": [
+    {
+      "period": "pre-COVID bull",
+      "start": "2018-01-01",
+      "end": "2019-12-31",
+      "sharpe": -0.2580865278788238,
+      "trade_count": 14,
+      "win_rate": 0.5
+    },
+    {
+      "period": "COVID crash/recovery",
+      "start": "2020-01-01",
+      "end": "2020-12-31",
+      "sharpe": 8.798656833808792,
+      "trade_count": 3,
+      "win_rate": 1.0
+    },
+    {
+      "period": "post-COVID bull",
+      "start": "2021-01-01",
+      "end": "2021-12-31",
+      "sharpe": 0.0,
+      "trade_count": 0,
+      "win_rate": 0.0
+    },
+    {
+      "period": "2022 rate-shock bear",
+      "start": "2022-01-01",
+      "end": "2022-12-31",
+      "sharpe": 0.0,
+      "trade_count": 0,
+      "win_rate": 0.0
+    },
+    {
+      "period": "post-2022 recovery",
+      "start": "2023-01-01",
+      "end": "2024-12-31",
+      "sharpe": 1.472798088913368,
+      "trade_count": 18,
+      "win_rate": 0.6111111111111112
+    }
+  ],
+  "bear_2022_sharpe": 0.0,
+  "gate_criteria": {
+    "is_sharpe_gt_1.0": false,
+    "oos_sharpe_gt_0.7": true,
+    "is_mdd_lt_20pct": false,
+    "oos_mdd_lt_25pct": false,
+    "win_rate_gt_50pct": false,
+    "dsr_gt_0": true,
+    "wf_passed_3of4": false,
+    "sensitivity_pass": false,
+    "trade_count_ge_30": true,
+    "permutation_test_pass": false,
+    "ic_pass": true,
+    "mc_p5_sharpe_gt_0.5": false
+  },
+  "gate1_pass": false,
+  "criteria_passed": 4,
+  "criteria_total": 12
+}
