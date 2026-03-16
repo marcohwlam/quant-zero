@@ -1,0 +1,329 @@
+{
+  "strategy_name": "h29_tom_preholiday_200sma",
+  "date": "2026-03-16",
+  "asset_class": "equities",
+  "is_sharpe": 0.0263,
+  "is_max_drawdown": -0.1584,
+  "is_trade_count": 205,
+  "is_win_rate": 0.5561,
+  "is_profit_factor": 0.9987132512614795,
+  "is_total_return": -0.0013,
+  "is_regime_pct": 0.7974,
+  "oos_sharpe": -0.0487,
+  "oos_max_drawdown": -0.1205,
+  "oos_trade_count": 52,
+  "oos_win_rate": 0.5,
+  "oos_profit_factor": 0.9344898939703782,
+  "oos_total_return": -0.0151,
+  "oos_regime_pct": 0.7385,
+  "oos_is_sharpe_ratio": -1.8517103225436033,
+  "win_rate": 0.5561,
+  "profit_factor": 0.9987132512614795,
+  "trade_count": 205,
+  "max_drawdown": -0.1584,
+  "dsr": 0.536088,
+  "mc_p5_sharpe": -1.6118134850458126,
+  "mc_median_sharpe": -0.012618934952598035,
+  "mc_p95_sharpe": 2.028773209566706,
+  "mc_pessimistic_flag": true,
+  "sharpe_ci_low": -0.39650740505569243,
+  "sharpe_ci_high": 0.48924053491275205,
+  "mdd_ci_low": -0.3675666808301033,
+  "mdd_ci_high": -0.09366858825907076,
+  "win_rate_ci_low": 0.07712980381617844,
+  "win_rate_ci_high": 0.10159231389411448,
+  "market_impact_bps": 0.0065,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 6.4e-07,
+  "permutation_pvalue": 0.0,
+  "permutation_test_pass": true,
+  "wf_sharpe_std": 1.5860688089975794,
+  "wf_sharpe_min": -1.5474,
+  "wf_windows_passed": 2,
+  "wf_consistency_score": 0.0,
+  "wf_results": [
+    {
+      "fold": 1,
+      "is_start": "2007-01-01",
+      "is_end": "2009-12-31",
+      "oos_start": "2010-01-01",
+      "oos_end": "2010-06-30",
+      "is_sharpe": -0.606,
+      "oos_sharpe": -0.3647,
+      "is_trades": 25,
+      "oos_trades": 7,
+      "passed": false
+    },
+    {
+      "fold": 2,
+      "is_start": "2007-07-01",
+      "is_end": "2010-06-30",
+      "oos_start": "2010-07-01",
+      "oos_end": "2010-12-31",
+      "is_sharpe": -0.7135,
+      "oos_sharpe": 2.7756,
+      "is_trades": 23,
+      "oos_trades": 7,
+      "passed": true
+    },
+    {
+      "fold": 3,
+      "is_start": "2008-01-01",
+      "is_end": "2010-12-31",
+      "oos_start": "2011-01-01",
+      "oos_end": "2011-06-30",
+      "is_sharpe": 0.233,
+      "oos_sharpe": 0.6136,
+      "is_trades": 24,
+      "oos_trades": 9,
+      "passed": true
+    },
+    {
+      "fold": 4,
+      "is_start": "2008-07-01",
+      "is_end": "2011-06-30",
+      "oos_start": "2011-07-01",
+      "oos_end": "2011-12-31",
+      "is_sharpe": 0.4011,
+      "oos_sharpe": -1.5474,
+      "is_trades": 33,
+      "oos_trades": 3,
+      "passed": false
+    }
+  ],
+  "wf_oos_sharpes": [
+    -0.3647,
+    2.7756,
+    0.6136,
+    -1.5474
+  ],
+  "stress_windows": {
+    "gfc_2008_2009": {
+      "mdd": -0.0773,
+      "sharpe": -0.5475,
+      "trades": 10,
+      "passed": true
+    },
+    "rate_shock_2022": {
+      "mdd": -0.0254,
+      "sharpe": -1.1157,
+      "trades": 3,
+      "passed": true
+    }
+  },
+  "stress_all_pass": true,
+  "sensitivity_pass": false,
+  "sensitivity_results": {
+    "grid": {
+      "entry-3_exit2": {
+        "sharpe": 0.09,
+        "trades": 203
+      },
+      "entry-3_exit3": {
+        "sharpe": 0.1305,
+        "trades": 201
+      },
+      "entry-3_exit4": {
+        "sharpe": 0.2403,
+        "trades": 201
+      },
+      "entry-2_exit2": {
+        "sharpe": -0.0029,
+        "trades": 207
+      },
+      "entry-2_exit3": {
+        "sharpe": 0.0263,
+        "trades": 205
+      },
+      "entry-2_exit4": {
+        "sharpe": 0.1734,
+        "trades": 205
+      },
+      "entry-1_exit2": {
+        "sharpe": 0.3661,
+        "trades": 211
+      },
+      "entry-1_exit3": {
+        "sharpe": 0.3328,
+        "trades": 209
+      },
+      "entry-1_exit4": {
+        "sharpe": 0.4488,
+        "trades": 209
+      }
+    },
+    "base_sharpe": 0.0263,
+    "sharpe_variance": 0.021969485432098763,
+    "sharpe_range": 0.4517,
+    "sharpe_values": [
+      0.09,
+      0.1305,
+      0.2403,
+      -0.0029,
+      0.0263,
+      0.1734,
+      0.3661,
+      0.3328,
+      0.4488
+    ],
+    "unstable": true,
+    "instability_notes": [
+      "entry-2_exit2: Sharpe=-0.0029 (111.0% below base)"
+    ],
+    "sensitivity_pass": false
+  },
+  "post_cost_sharpe": 0.0263,
+  "post_cost_sharpe_oos": -0.0487,
+  "regime_filter_verified": true,
+  "majority_blocked_2022": true,
+  "gfc_entries_blocked": true,
+  "regime_per_year": {
+    "2007": {
+      "regime_active_pct": 0.8964,
+      "blocked_by_sma_pct": 0.1036,
+      "trading_days": 251
+    },
+    "2008": {
+      "regime_active_pct": 0.0198,
+      "blocked_by_sma_pct": 0.9802,
+      "trading_days": 253
+    },
+    "2009": {
+      "regime_active_pct": 0.5952,
+      "blocked_by_sma_pct": 0.4048,
+      "trading_days": 252
+    },
+    "2010": {
+      "regime_active_pct": 0.7619,
+      "blocked_by_sma_pct": 0.2381,
+      "trading_days": 252
+    },
+    "2011": {
+      "regime_active_pct": 0.6349,
+      "blocked_by_sma_pct": 0.3651,
+      "trading_days": 252
+    },
+    "2012": {
+      "regime_active_pct": 0.988,
+      "blocked_by_sma_pct": 0.012,
+      "trading_days": 250
+    },
+    "2013": {
+      "regime_active_pct": 1.0,
+      "blocked_by_sma_pct": 0.0,
+      "trading_days": 252
+    },
+    "2014": {
+      "regime_active_pct": 0.9802,
+      "blocked_by_sma_pct": 0.0198,
+      "trading_days": 252
+    },
+    "2015": {
+      "regime_active_pct": 0.7897,
+      "blocked_by_sma_pct": 0.2103,
+      "trading_days": 252
+    },
+    "2016": {
+      "regime_active_pct": 0.8056,
+      "blocked_by_sma_pct": 0.1944,
+      "trading_days": 252
+    },
+    "2017": {
+      "regime_active_pct": 1.0,
+      "blocked_by_sma_pct": 0.0,
+      "trading_days": 251
+    },
+    "2018": {
+      "regime_active_pct": 0.8406,
+      "blocked_by_sma_pct": 0.1594,
+      "trading_days": 251
+    },
+    "2019": {
+      "regime_active_pct": 0.8889,
+      "blocked_by_sma_pct": 0.1111,
+      "trading_days": 252
+    },
+    "2020": {
+      "regime_active_pct": 0.7668,
+      "blocked_by_sma_pct": 0.2332,
+      "trading_days": 253
+    },
+    "2021": {
+      "regime_active_pct": 1.0,
+      "blocked_by_sma_pct": 0.0,
+      "trading_days": 251
+    },
+    "2022": {
+      "regime_active_pct": 0.1912,
+      "blocked_by_sma_pct": 0.8088,
+      "trading_days": 251
+    },
+    "2023": {
+      "regime_active_pct": 0.932,
+      "blocked_by_sma_pct": 0.068,
+      "trading_days": 250
+    },
+    "2024": {
+      "regime_active_pct": 1.0,
+      "blocked_by_sma_pct": 0.0,
+      "trading_days": 252
+    },
+    "2025": {
+      "regime_active_pct": 0.8313,
+      "blocked_by_sma_pct": 0.1687,
+      "trading_days": 249
+    }
+  },
+  "gate1_checks": {
+    "is_sharpe_gt_1": false,
+    "oos_sharpe_gt_0.7": false,
+    "is_mdd_lt_20pct": true,
+    "oos_mdd_lt_25pct": true,
+    "win_rate_gt_50pct": true,
+    "dsr_gt_0": true,
+    "wf_windows_3of4": false,
+    "wf_consistency": false,
+    "sensitivity_pass": false,
+    "min_trades_100": true,
+    "stress_mdd_lt_40pct": true,
+    "permutation_test": true
+  },
+  "gate1_pass": false,
+  "gate1_failing_criteria": [
+    "is_sharpe_gt_1",
+    "oos_sharpe_gt_0.7",
+    "wf_windows_3of4",
+    "wf_consistency",
+    "sensitivity_pass"
+  ],
+  "look_ahead_bias_flag": false,
+  "oos_data_quality": {
+    "strategy_name": "h29_tom_preholiday_200sma",
+    "recommendation": "WARN",
+    "critical_nan_fields": [],
+    "advisory_nan_fields": [
+      "profit_factor"
+    ],
+    "returns_nan_count": 0,
+    "oos_trade_count": 52
+  },
+  "is_warnings": [
+    "pandas_market_calendars not installed \u2014 using pandas US Federal holiday fallback.",
+    "PF-1 WARN: 13.7 trades/yr < 30 threshold"
+  ],
+  "oos_warnings": [
+    "pandas_market_calendars not installed \u2014 using pandas US Federal holiday fallback.",
+    "PF-1 WARN: 13.0 trades/yr < 30 threshold"
+  ],
+  "params": {
+    "ticker": "SPY",
+    "vix_ticker": "^VIX",
+    "tom_entry_day": -2,
+    "tom_exit_day": 3,
+    "vix_threshold_tom": 28.0,
+    "vix_threshold_preholiday": 35.0,
+    "sma_period": 200,
+    "max_hold_days": 8,
+    "init_cash": 25000
+  }
+}
