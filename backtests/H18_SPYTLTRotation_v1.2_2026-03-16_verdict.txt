@@ -1,0 +1,84 @@
+H18 SPY/TLT Momentum Rotation v1.2 — Gate 1 Verdict
+Date: 2026-03-16
+Strategy: H18 SPY/TLT Daily Momentum Rotation (v1.2 params)
+IS Window: 2018-01-01 to 2022-12-31
+OOS Window: 2023-01-01 to 2024-12-31
+
+IS Sharpe: 0.3376
+OOS Sharpe: 0.1863
+IS MDD: 17.75%
+OOS MDD: 14.60%
+IS Win Rate: 49.01%
+OOS Win Rate: 40.00%
+IS Profit Factor: 1.1664
+OOS Profit Factor: 1.0545
+Total IS trades: 151
+Total OOS trades: 85
+Trades/yr (IS): 30.2
+Trades/yr (OOS): 42.5
+Post-cost Sharpe (OOS): 0.1863
+
+Pre-Condition Gates:
+  PF-1 PASS: 30.2 trades/yr >= 30/yr threshold
+  PF-4 PASS: vol filter first trigger 2022-02-08 <= cutoff 2022-03-01
+  Simultaneous SPY/TLT vol filter triggered before early 2022 rate shock
+
+IS Holding Breakdown:
+  100% SPY: 46.86%
+  100% TLT: 28.28%
+  50/50 neutral: 0.00%
+  Cash (regime filter): 24.86%
+
+SPY/TLT Correlation Analysis (IS 2018-2022):
+  No 10+ consecutive day streak with 60-day rolling correlation > +0.3 detected
+  (correlation stayed negative or low for most of IS period)
+
+Statistical Rigor:
+  MC p5 Sharpe: -1.3544
+  MC Median Sharpe: 0.7740
+  MC p95 Sharpe: 2.8101
+  Sharpe 95% CI (IS): [-0.5350, 1.3680]
+  MDD 95% CI (IS): [-37.04%, -10.95%]
+  Win Rate 95% CI (IS): [48.96%, 55.73%]
+  Market Impact (SPY): 0.0086 bps | Market Impact (TLT): 0.0259 bps
+  Liquidity Constrained: False
+  Permutation p-value: 0.4140
+  DSR z-score: -48.3268
+
+Walk-Forward (4-fold):
+  WF 2019-H2: IS=0.3628, OOS=3.2584 — PASS
+  WF 2020-H2: IS=0.9988, OOS=-0.1411 — FAIL
+  WF 2021-H2: IS=0.7184, OOS=-0.6056 — FAIL
+  WF 2022 full: IS=0.5565, OOS=-0.6932 — FAIL
+  WF Windows Passed: 1/4
+  WF Sharpe std: 1.6323 (high variance)
+  WF Sharpe min: -0.6932
+
+Sensitivity Heatmap (IS Sharpe, mom_lookback_days x threshold):
+  lb=5:  thr=0.000: 0.096, thr=0.005: 0.046, thr=0.01: 0.134
+  lb=10: thr=0.000: 0.338, thr=0.005: 0.428, thr=0.01: 0.258
+  lb=15: thr=0.000: 0.140, thr=0.005: 0.133, thr=0.01: 0.116
+  Max Sharpe delta vs base: 86.26% (FAIL, threshold <30%)
+
+OOS Data Quality: PASS (100% coverage, no NaN contamination)
+
+Verdict: FAIL
+Confidence: HIGH
+
+Auto-disqualifications:
+  - IS Sharpe 0.3376 (below 1.0 threshold by 0.66 pts)
+  - OOS Sharpe 0.1863 (below 0.7 threshold by 0.51 pts)
+  - IS Win Rate 49.01% (below 50% threshold)
+  - WF 1/4 windows passed (threshold >=3)
+  - Permutation test FAIL (p=0.41 — no significant alpha)
+  - DSR z-score -48.33 (strategy overfitting, limited genuine alpha)
+  - Sensitivity max delta 86.26% (threshold <30%)
+
+Recommendation: RETIRE H18 v1.2 per Engineering Director candid outlook
+(IS Sharpe 0.34 << 0.70 structural ceiling threshold).
+Root cause: The SPY-TLT rotation edge appears degraded in 2018-2022.
+The vol filter protected the 2022 drawdown (PF-4 PASS), but the IS Sharpe
+is still far below the Gate 1 minimum — even the best WF window (2019 H2,
+OOS 3.26) shows high variance rather than consistent alpha.
+The strategy exhibits low win rate (49%) and high sensitivity to lookback
+parameters, suggesting the momentum signal is not robust in this period.
