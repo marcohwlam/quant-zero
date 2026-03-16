@@ -1,0 +1,40 @@
+{
+  "strategy": "H18_SPY_TLT_WeeklyMomentumRotation",
+  "run_date": "2026-03-16",
+  "parameters": {
+    "spy": "SPY",
+    "tlt": "TLT",
+    "mom_lookback_days": 15,
+    "threshold": 0.0,
+    "vol_filter_spy_pct": 0.25,
+    "vol_filter_tlt_pct": 0.15,
+    "init_cash": 25000,
+    "vol_window": 20
+  },
+  "preflight_verification": {
+    "pf1_trade_count": {
+      "trade_count_total": 65,
+      "is_years": 4.996577686516085,
+      "annual_rate": 13.01,
+      "min_per_year": 30,
+      "gate_pass": false,
+      "message": "FAIL: 13.0/yr < 30/yr \u2014 flag to Engineering Director"
+    },
+    "pf4_vol_filter_trigger": {
+      "first_trigger_date": "2022-03-09",
+      "trigger_before_cutoff": false,
+      "cutoff_date": "2022-03-01",
+      "total_trigger_days_2022": 102,
+      "pass": false,
+      "message": "FAIL: filter triggers 2022-03-09 > 2022-03-01 \u2014 flag to Engineering Director (late trigger may not protect 2022 drawdown)",
+      "vol_filter_spy_pct": 0.25,
+      "vol_filter_tlt_pct": 0.15
+    },
+    "proceed_with_backtest": false
+  },
+  "gate1_summary": {
+    "gate1_pass": false,
+    "verdict": "BLOCKED \u2014 Pre-flight verification failed. Engineering Director action required before proceeding.",
+    "preflight_block": true
+  }
+}
