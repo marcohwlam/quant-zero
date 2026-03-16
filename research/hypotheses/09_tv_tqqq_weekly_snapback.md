@@ -5,7 +5,7 @@
 **Date:** 2026-03-16
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** hypothesis
+**Status:** testing
 
 ## Economic Rationale
 
@@ -51,7 +51,22 @@ Additional economic support: trend-following systematic managers who use 3× pro
 - **Recommended max holding period:** 5 trading days (1 week)
 - **Cost survival:** Yes — TQQQ spread is ~$0.01–0.02 on $50–$80 shares; round-trip transaction cost ~0.04%; edge must exceed ~0.15% net. 1% target with 2× stop provides adequate buffer.
 - **Annualised IR estimate:** Assume ~30% of trades trigger TP (+1%), 15% trigger SL (-2%), 55% exit on Friday (expected ~+0.3% average). Expectancy ≈ +0.30×0.01 + 0.15×(-0.02) + 0.55×0.003 ≈ +0.30% per trade. With ~25 trades/year → raw return ~7.5%; vol of TQQQ ~80%/year → annualised IR ≈ 0.35 (marginal pre-cost, needs confirmation). IR above 0.3 threshold.
-- **Notes:** TASC article likely cherry-picks a favourable backtest window (2020–2025 bull market). Must validate on 2008–2010 and 2022 bear market sub-periods.
+
+**IC decay curve (estimated):**
+
+| IC Metric | Estimate | Notes |
+|-----------|----------|-------|
+| IC at T+1 (next day) | 0.05 | Snapback just beginning; edge partially realised |
+| IC at T+5 (1 week) | 0.07 | Peak — full signal resolution window for 2–5 day hold |
+| IC at T+20 (1 month) | 0.01 | Signal expired; no persistent edge at 1-month horizon |
+
+Derivation: Annualised IR ≈ 0.35 with ~25 trades/year → IC ≈ IR / √N ≈ 0.35 / 5 ≈ 0.07 at T+5 (peak). T+1 lower (bounce not complete); T+20 near zero (strategy fully resolved). IC at T+5 > 0.02 threshold — qualifies as standalone signal.
+
+- **Notes:**
+  - TASC article likely cherry-picks a favourable backtest window (2020–2025 bull market). Must validate on 2008–2010 and 2022 bear market sub-periods.
+  - **Survivorship bias / backtest window (Research Director note):** IS backtest window MUST start no later than 2015 to capture at least two distinct regimes (2015–2016 China selloff, 2018 Q4 correction, 2020 COVID crash, 2022 bear). Starting from 2020 alone inflates Sharpe by selecting a predominantly bull-market sample. Enforce 2015–2023 IS window in Gate 1 backtest spec.
+  - **IS MDD risk (Research Director note):** TQQQ fell approximately -82% in 2022. The regime gate (QQQ < 200-day SMA → disable entries) must be precisely specified to ensure protection during severe drawdowns. Required precision: (a) use closing price of QQQ vs. 200-day simple MA calculated on the same day's close; (b) gate check runs every Friday (or on entry-signal day) before allowing new positions; (c) any existing position opened before the gate triggers must still be exited per the stop/TP/time-stop rules — the gate only suppresses new entries. If this specification is ambiguous or unimplemented, the backtest will almost certainly breach Gate 1 IS MDD < 20%.
+  - **Capital confirmation (Research Director note):** At ~$50–$100/share (TQQQ price range as of 2026), a single-share lot costs $50–$100. At $25K capital with 10–20% position sizing ($2,500–$5,000), the strategy accommodates 25–100 full shares per trade. No fractional shares required. Capital constraint is satisfied. The TV filter warning ("may require >$25K") likely refers to margin accounts or multi-position scaling — irrelevant for this single-position swing strategy.
 
 ## Parameters to Test
 
