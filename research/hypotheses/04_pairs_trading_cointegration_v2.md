@@ -1,6 +1,6 @@
 # Hypothesis 04-v2: Pairs Trading via Cointegration — Sector ETF Universe
 
-**Status:** READY FOR BACKTEST
+**Status:** BLOCKED — Pre-Screen Failed (see QUA-82)
 **Category:** Statistical Arbitrage
 **Source:** Revised from v1.0 following Gate 1 failure (QUA-79)
 **Version:** 2.0
@@ -154,7 +154,7 @@ Sector ETF pairs share a common macro driver that creates a structural mean-reve
 
 Before backtest engine runs v2.0, confirm:
 
-- [ ] **Cointegration pre-screen**: Alpha Research Agent validates each of the 5 ETF pairs passes Engle-Granger p < 0.10 for ≥ 30% of 2018–2021 trading days
+- [x] **Cointegration pre-screen**: ❌ FAILED — ALL 5 ETF pairs fail Engle-Granger p < 0.10 for ≥ 30% of 2018–2021 trading days. Best result: XLP/XLY at 19.0% (63d window). All alternative pairs also fail. See QUA-82 and `research/findings/h04v2_coint_prescreen_2026-03.md`.
 - [ ] **No look-ahead**: Cointegration test must be computed on rolling window with no future data; OLS hedge ratio must be re-estimated on each new bar
 - [ ] **VIX overlay included**: VIX series loaded, and position-open logic checks VIX < 30 at signal generation time
 - [ ] **Trade count tracking**: Report IS trade count per pair, not just total, to identify pairs with low contribution
