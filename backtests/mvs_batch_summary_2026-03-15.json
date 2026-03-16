@@ -1,0 +1,483 @@
+{
+  "batch_date": "2026-03-15",
+  "hypothesis": "05_momentum_vol_scaled",
+  "total_iterations": 30,
+  "gate1_pass_count": 0,
+  "gate1_fail_count": 30,
+  "top_3_by_oos_sharpe": [
+    {
+      "iteration": 57,
+      "name": "mvs_lb9_sk1_k4_tv12_rb21_cp10",
+      "is_sharpe": 0.433529782145976,
+      "oos_sharpe": 1.0837158137935743,
+      "is_mdd": -0.28036362734844794,
+      "win_rate": 0.6545454545454545,
+      "trades": 110,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.434 \u2264 1.0",
+        "IS MDD -28.0% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 65,
+      "name": "mvs_lb9_sk1_k5_tv10_rb42_cp12",
+      "is_sharpe": 0.4670264923272056,
+      "oos_sharpe": 1.074490208814062,
+      "is_mdd": -0.23592208349600896,
+      "win_rate": 0.7272727272727273,
+      "trades": 77,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.467 \u2264 1.0",
+        "IS MDD -23.6% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 61,
+      "name": "mvs_lb18_sk1_k4_tv10_rb21_cp10",
+      "is_sharpe": 0.5081301197668462,
+      "oos_sharpe": 1.0479242269966236,
+      "is_mdd": -0.21182545246624945,
+      "win_rate": 0.7078651685393258,
+      "trades": 89,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.508 \u2264 1.0",
+        "IS MDD -21.2% \u2264 -20%"
+      ]
+    }
+  ],
+  "all_results": [
+    {
+      "iteration": 57,
+      "name": "mvs_lb9_sk1_k4_tv12_rb21_cp10",
+      "is_sharpe": 0.433529782145976,
+      "oos_sharpe": 1.0837158137935743,
+      "is_mdd": -0.28036362734844794,
+      "win_rate": 0.6545454545454545,
+      "trades": 110,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.434 \u2264 1.0",
+        "IS MDD -28.0% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 65,
+      "name": "mvs_lb9_sk1_k5_tv10_rb42_cp12",
+      "is_sharpe": 0.4670264923272056,
+      "oos_sharpe": 1.074490208814062,
+      "is_mdd": -0.23592208349600896,
+      "win_rate": 0.7272727272727273,
+      "trades": 77,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.467 \u2264 1.0",
+        "IS MDD -23.6% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 61,
+      "name": "mvs_lb18_sk1_k4_tv10_rb21_cp10",
+      "is_sharpe": 0.5081301197668462,
+      "oos_sharpe": 1.0479242269966236,
+      "is_mdd": -0.21182545246624945,
+      "win_rate": 0.7078651685393258,
+      "trades": 89,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.508 \u2264 1.0",
+        "IS MDD -21.2% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 40,
+      "name": "mvs_lb18_sk1_k3_tv10_rb21_cp10",
+      "is_sharpe": 0.5470670132330923,
+      "oos_sharpe": 1.0111405216509666,
+      "is_mdd": -0.19121300497884022,
+      "win_rate": 0.6956521739130435,
+      "trades": 69,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.547 \u2264 1.0"
+      ]
+    },
+    {
+      "iteration": 62,
+      "name": "mvs_lb9_sk1_k3_tv15_rb21_cp10",
+      "is_sharpe": 0.4740513345838014,
+      "oos_sharpe": 0.9649509704430921,
+      "is_mdd": -0.3358333149604029,
+      "win_rate": 0.7195121951219512,
+      "trades": 82,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.474 \u2264 1.0",
+        "IS MDD -33.6% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 38,
+      "name": "mvs_lb9_sk1_k3_tv10_rb21_cp10",
+      "is_sharpe": 0.5233623741391779,
+      "oos_sharpe": 0.8930826059455862,
+      "is_mdd": -0.22516255461337045,
+      "win_rate": 0.7209302325581395,
+      "trades": 86,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.523 \u2264 1.0",
+        "IS MDD -22.5% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 60,
+      "name": "mvs_lb6_sk1_k3_tv12_rb21_cp08",
+      "is_sharpe": 0.5409727380039788,
+      "oos_sharpe": 0.8615775589179862,
+      "is_mdd": -0.21786231249365592,
+      "win_rate": 0.6395348837209303,
+      "trades": 86,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.541 \u2264 1.0",
+        "IS MDD -21.8% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 58,
+      "name": "mvs_lb6_sk0_k4_tv10_rb21_cp08",
+      "is_sharpe": 0.4485439414808007,
+      "oos_sharpe": 0.8525812961019238,
+      "is_mdd": -0.20828925349165728,
+      "win_rate": 0.64,
+      "trades": 125,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.449 \u2264 1.0",
+        "IS MDD -20.8% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 64,
+      "name": "mvs_lb6_sk1_k2_tv12_rb21_cp10",
+      "is_sharpe": 0.6339235771326064,
+      "oos_sharpe": 0.7645621341384937,
+      "is_mdd": -0.195821309026832,
+      "win_rate": 0.671875,
+      "trades": 64,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.634 \u2264 1.0"
+      ]
+    },
+    {
+      "iteration": 43,
+      "name": "mvs_lb12_sk3_k3_tv10_rb21_cp10",
+      "is_sharpe": 0.5650353565834656,
+      "oos_sharpe": 0.7567354675940583,
+      "is_mdd": -0.21221897508566187,
+      "win_rate": 0.7027027027027027,
+      "trades": 74,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.565 \u2264 1.0",
+        "IS MDD -21.2% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 37,
+      "name": "mvs_lb6_sk1_k3_tv10_rb21_cp10",
+      "is_sharpe": 0.5241154674002908,
+      "oos_sharpe": 0.7501490891947674,
+      "is_mdd": -0.18131838028109035,
+      "win_rate": 0.6373626373626373,
+      "trades": 91,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.524 \u2264 1.0"
+      ]
+    },
+    {
+      "iteration": 51,
+      "name": "mvs_lb12_sk1_k3_tv10_rb63_cp10",
+      "is_sharpe": 0.5470906737245729,
+      "oos_sharpe": 0.7064347773993105,
+      "is_mdd": -0.336737628128477,
+      "win_rate": 0.7575757575757576,
+      "trades": 33,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.547 \u2264 1.0",
+        "IS MDD -33.7% \u2264 -20%",
+        "IS trades 33 < 50"
+      ]
+    },
+    {
+      "iteration": 42,
+      "name": "mvs_lb12_sk2_k3_tv10_rb21_cp10",
+      "is_sharpe": 0.5335842555097015,
+      "oos_sharpe": 0.6854370975306517,
+      "is_mdd": -0.21188434126473937,
+      "win_rate": 0.6575342465753424,
+      "trades": 73,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.534 \u2264 1.0",
+        "OOS Sharpe 0.685 \u2264 0.7",
+        "IS MDD -21.2% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 53,
+      "name": "mvs_lb12_sk1_k3_tv10_rb21_cp05",
+      "is_sharpe": 0.6371159426848692,
+      "oos_sharpe": 0.667786811543311,
+      "is_mdd": -0.21671883638132997,
+      "win_rate": 0.7014925373134329,
+      "trades": 67,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.637 \u2264 1.0",
+        "OOS Sharpe 0.668 \u2264 0.7",
+        "IS MDD -21.7% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 49,
+      "name": "mvs_lb12_sk1_k3_tv20_rb21_cp10",
+      "is_sharpe": 0.5820442465758067,
+      "oos_sharpe": 0.6544923276301208,
+      "is_mdd": -0.3442722199751115,
+      "win_rate": 0.7123287671232876,
+      "trades": 73,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.582 \u2264 1.0",
+        "OOS Sharpe 0.654 \u2264 0.7",
+        "IS MDD -34.4% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 56,
+      "name": "mvs_lb12_sk1_k3_eqwt_rb21_cp10",
+      "is_sharpe": 0.7220773423922728,
+      "oos_sharpe": 0.6297827906307809,
+      "is_mdd": -0.3444886097734508,
+      "win_rate": 0.8125,
+      "trades": 80,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.722 \u2264 1.0",
+        "OOS Sharpe 0.630 \u2264 0.7",
+        "IS MDD -34.4% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 47,
+      "name": "mvs_lb12_sk1_k3_tv15_rb21_cp10",
+      "is_sharpe": 0.556891246222812,
+      "oos_sharpe": 0.6275056422838297,
+      "is_mdd": -0.3218030795549005,
+      "win_rate": 0.6891891891891891,
+      "trades": 74,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.557 \u2264 1.0",
+        "OOS Sharpe 0.628 \u2264 0.7",
+        "IS MDD -32.2% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 59,
+      "name": "mvs_lb12_sk1_k3_tv15_rb10_cp10",
+      "is_sharpe": 0.5915082442766125,
+      "oos_sharpe": 0.6191071380141714,
+      "is_mdd": -0.19499147937625977,
+      "win_rate": 0.6645569620253164,
+      "trades": 158,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.592 \u2264 1.0",
+        "OOS Sharpe 0.619 \u2264 0.7"
+      ]
+    },
+    {
+      "iteration": 63,
+      "name": "mvs_lb12_sk2_k4_tv10_rb21_cp10",
+      "is_sharpe": 0.4599496462919576,
+      "oos_sharpe": 0.595555286215052,
+      "is_mdd": -0.2326238241320012,
+      "win_rate": 0.6354166666666666,
+      "trades": 96,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.460 \u2264 1.0",
+        "OOS Sharpe 0.596 \u2264 0.7",
+        "IS MDD -23.3% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 39,
+      "name": "mvs_lb3_sk1_k3_tv10_rb21_cp10",
+      "is_sharpe": 0.46543785750053396,
+      "oos_sharpe": 0.5847457278635141,
+      "is_mdd": -0.18599554636381113,
+      "win_rate": 0.5677966101694916,
+      "trades": 118,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.465 \u2264 1.0",
+        "OOS Sharpe 0.585 \u2264 0.7"
+      ]
+    },
+    {
+      "iteration": 50,
+      "name": "mvs_lb12_sk1_k3_tv10_rb10_cp10",
+      "is_sharpe": 0.6490571725599787,
+      "oos_sharpe": 0.5581269094617248,
+      "is_mdd": -0.12982811236912298,
+      "win_rate": 0.6729559748427673,
+      "trades": 159,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.649 \u2264 1.0",
+        "OOS Sharpe 0.558 \u2264 0.7"
+      ]
+    },
+    {
+      "iteration": 48,
+      "name": "mvs_lb12_sk1_k3_tv08_rb21_cp10",
+      "is_sharpe": 0.6632655250007508,
+      "oos_sharpe": 0.5368674878032733,
+      "is_mdd": -0.17260187766269955,
+      "win_rate": 0.6794871794871795,
+      "trades": 78,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.663 \u2264 1.0",
+        "OOS Sharpe 0.537 \u2264 0.7"
+      ]
+    },
+    {
+      "iteration": 36,
+      "name": "mvs_lb12_sk1_k3_tv10_rb21_cp10",
+      "is_sharpe": 0.6314371142390588,
+      "oos_sharpe": 0.531254639179943,
+      "is_mdd": -0.21671883638132997,
+      "win_rate": 0.6710526315789473,
+      "trades": 76,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.631 \u2264 1.0",
+        "OOS Sharpe 0.531 \u2264 0.7",
+        "IS MDD -21.7% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 54,
+      "name": "mvs_lb12_sk1_k3_tv10_rb21_cp15",
+      "is_sharpe": 0.7071532652504945,
+      "oos_sharpe": 0.531254639179943,
+      "is_mdd": -0.14376228491843807,
+      "win_rate": 0.6582278481012658,
+      "trades": 79,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.707 \u2264 1.0",
+        "OOS Sharpe 0.531 \u2264 0.7"
+      ]
+    },
+    {
+      "iteration": 55,
+      "name": "mvs_lb12_sk1_k3_tv10_rb21_nocp",
+      "is_sharpe": 0.7071532652504945,
+      "oos_sharpe": 0.531254639179943,
+      "is_mdd": -0.14376228491843807,
+      "win_rate": 0.6582278481012658,
+      "trades": 79,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.707 \u2264 1.0",
+        "OOS Sharpe 0.531 \u2264 0.7"
+      ]
+    },
+    {
+      "iteration": 52,
+      "name": "mvs_lb12_sk1_k3_tv10_rb42_cp10",
+      "is_sharpe": 0.4701535251415261,
+      "oos_sharpe": 0.5310581490155019,
+      "is_mdd": -0.34166734857867387,
+      "win_rate": 0.8157894736842105,
+      "trades": 38,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.470 \u2264 1.0",
+        "OOS Sharpe 0.531 \u2264 0.7",
+        "IS MDD -34.2% \u2264 -20%",
+        "IS trades 38 < 50"
+      ]
+    },
+    {
+      "iteration": 45,
+      "name": "mvs_lb12_sk1_k4_tv10_rb21_cp10",
+      "is_sharpe": 0.5448409069751721,
+      "oos_sharpe": 0.5291940650572842,
+      "is_mdd": -0.2399666200729594,
+      "win_rate": 0.7087378640776699,
+      "trades": 103,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.545 \u2264 1.0",
+        "OOS Sharpe 0.529 \u2264 0.7",
+        "IS MDD -24.0% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 46,
+      "name": "mvs_lb12_sk1_k5_tv10_rb21_cp10",
+      "is_sharpe": 0.5189550184381921,
+      "oos_sharpe": 0.5110066126201448,
+      "is_mdd": -0.25220401268241577,
+      "win_rate": 0.7716535433070866,
+      "trades": 127,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.519 \u2264 1.0",
+        "OOS Sharpe 0.511 \u2264 0.7",
+        "IS MDD -25.2% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 41,
+      "name": "mvs_lb12_sk0_k3_tv10_rb21_cp10",
+      "is_sharpe": 0.6976230453203985,
+      "oos_sharpe": 0.5022595625292974,
+      "is_mdd": -0.21732003898728705,
+      "win_rate": 0.7922077922077922,
+      "trades": 77,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.698 \u2264 1.0",
+        "OOS Sharpe 0.502 \u2264 0.7",
+        "IS MDD -21.7% \u2264 -20%"
+      ]
+    },
+    {
+      "iteration": 44,
+      "name": "mvs_lb12_sk1_k2_tv10_rb21_cp10",
+      "is_sharpe": 0.7907748559286193,
+      "oos_sharpe": 0.35693294678702386,
+      "is_mdd": -0.1777608153563555,
+      "win_rate": 0.6792452830188679,
+      "trades": 53,
+      "passed": false,
+      "failures": [
+        "IS Sharpe 0.791 \u2264 1.0",
+        "OOS Sharpe 0.357 \u2264 0.7"
+      ]
+    }
+  ]
+}

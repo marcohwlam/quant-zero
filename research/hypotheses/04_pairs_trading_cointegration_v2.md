@@ -1,10 +1,52 @@
 # Hypothesis 04-v2: Pairs Trading via Cointegration — Sector ETF Universe
 
-**Status:** BLOCKED — Pre-Screen Failed (see QUA-82)
+**Status:** RETIRED — Pre-Screen Failed; superseded by H04-v3 (Distance Method)
 **Category:** Statistical Arbitrage
 **Source:** Revised from v1.0 following Gate 1 failure (QUA-79)
 **Version:** 2.0
 **Date:** 2026-03-16
+
+---
+
+## Research Director Decision (QUA-82 — 2026-03-16)
+
+**Decision: Do not proceed with H04-v2 backtest. Retire Engle-Granger cointegration approach. Commission H04-v3 using Gatev Distance Method.**
+
+### Summary
+
+The pre-screen (QUA-82) confirms that every proposed ETF pair and every fallback alternative pair fails the Engle-Granger 30% cointegration threshold in the 2018–2021 IS window. Average p-values of 0.49–0.70 indicate zero cointegration signal — this is not a marginal failure. The best result across all pairs, all windows, and all alternative pairs is XLP/XLY at 19.0% (63-day window), which is 11 percentage points below threshold.
+
+**Root cause of repeated failure:** The Engle-Granger cointegration requirement is too restrictive for the 2018–2021 IS window. This is a structural methodology problem, not a pair selection problem. v1.0 failed because equity pairs weren't cointegrated; v2.0 pre-screen shows ETF pairs aren't cointegrated either. The COVID-19 regime break, the differentiated sector recovery, and pre-COVID divergence in sub-sector relationships all prevent reliable cointegration signal in this window.
+
+### Path Forward: H04-v3 — Gatev Distance Method
+
+**Commissioned:** Gatev, Goetzmann & Rouwenhorst (2006) distance method for pairs selection and entry/exit. This is the seminal academic pairs trading method. Key differences from v2.0:
+
+- **No cointegration requirement:** Pair selection based on minimum sum of squared deviations of normalized price series over a 252-day formation window.
+- **Same ETF universe candidates:** XLF/KRE, XLE/OIH, XLV/IBB, XLP/XLY, GLD/SLV can be retained alongside a broader screen (top-5 pairs by SSD score from a wider ETF universe).
+- **Different entry trigger:** Trade when normalized spread exceeds 2 historical standard deviations (no cointegration filter needed).
+- **Academic validation:** Gatev et al. demonstrated 11% annualized excess returns on equity pairs (1962–2002); ETF adaptation is well-grounded.
+
+**Why this avoids the v2.0 failure mode:** The distance method does not impose a statistical test that COVID structural breaks systematically fail. It selects pairs that co-moved most closely in the formation window and trades deviations from that historical co-movement pattern — a weaker requirement that survives regime transitions better.
+
+**Alpha decay consideration for H04-v3:**
+- Signal half-life estimate: 5–20 trading days (spread mean-reversion horizon)
+- IC decay: Expected to degrade gracefully over 20+ days rather than cliff-drop; distance-based spreads are more robust than cointegration residuals
+- Transaction cost viability: Half-life > 1 day; passes the alpha decay gate by structure
+
+### Options Considered and Rejected
+
+| Option | Reason Rejected |
+|--------|----------------|
+| **Option A: Window shift to 2013–2017** | Avoids the most challenging test period; does not validate post-2020 viability; regime mismatch risk for live trading |
+| **Option B: Data-driven pair discovery (rolling)** | Significant look-ahead bias risk; complex to implement correctly; deferred to v3 if distance method fails |
+| **Option D: Deprioritize pairs trading** | Economic rationale for relative value / statistical arbitrage remains valid; two failures reflect methodology problem, not strategy class problem |
+
+### Pipeline Impact
+
+- **H04-v3** (Distance Method): Alpha Research Agent to write new hypothesis doc. Target: 1-week turnaround.
+- **H05 Momentum Vol-Scaled**: Advancing to Engineering Director immediately — do not delay pipeline while H04-v3 is being written.
+- **Gate 1 pass rate:** 0/3 strategies tested (H01 baseline, H02 FAIL, H04 FAIL). H05 is the next real candidate.
 
 ---
 
