@@ -133,3 +133,22 @@ A **low IBS value** (close near the day's low) signals that intraday selling pre
 - TV source (strategy): https://www.tradingview.com/script/C6uAEwxB-IBS-Internal-Bar-Strength-Trading-Strategy-for-SPY-and-NDQ/
 - TV source (indicator): https://www.tradingview.com/script/I3PUR2GA-Internal-Bar-Strength-IBS-Strategy/
 - Related in knowledge base: `research/hypotheses/06_rsi_short_term_reversal.md` (reversal logic), `research/hypotheses/02_bollinger_band_mean_reversion.md` (mean reversion class)
+
+## Research Director Note: H21 v2.0 Credit Overlay (2026-03-16)
+
+Following the retirement of H23 standalone (QUA-206), the Research Director recommends evaluating a **credit spread regime overlay** as the primary enhancement path for H21 v2.0.
+
+**Proposed overlay parameter:**
+
+| Parameter | Suggested Value | Rationale |
+|---|---|---|
+| `credit_regime_fast_ma` | 10 | Fast MA of HYG/IEI ratio |
+| `credit_regime_slow_ma` | 30 | Slow MA of HYG/IEI ratio |
+| `credit_regime_gate` | `True` / `False` | When False: suspend new IBS entries; close existing positions on next IBS exit signal |
+
+**Signal count:** H21 v2.0 with credit overlay = 3 signals (IBS + 200-SMA + HYG/IEI). Research Director explicitly approves this combination at the 3-signal hard limit.
+
+**Implementation priority:** Evaluate H21 v2.0 credit overlay only after H21 v1.0 Gate 1 results (QUA-208) are available:
+- If H21 v1.0 IS Sharpe ≥ 1.0: credit overlay is an enhancement to boost OOS stability
+- If H21 v1.0 IS Sharpe 0.7–1.0 (borderline fail): credit overlay is the primary revision path for H21 v1.1
+- If H21 v1.0 IS Sharpe < 0.7: retire H21 family entirely (family iteration limit applies)
