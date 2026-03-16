@@ -1,0 +1,322 @@
+{
+  "strategy_name": "H13_VWAPReversion",
+  "date": "2026-03-16",
+  "asset_class": "equities",
+  "data_variant": "Option A \u2014 typical price proxy VWAP (not true institutional VWAP)",
+  "universe": [
+    "SPY",
+    "QQQ",
+    "IWM"
+  ],
+  "is_period": "2018-01-01 to 2021-12-31",
+  "oos_period": "2022-01-01 to 2023-12-31",
+  "is_sharpe": 0.7323,
+  "oos_sharpe": 0.257,
+  "is_max_drawdown": -0.0023,
+  "oos_max_drawdown": -0.0038,
+  "win_rate": 0.75,
+  "profit_factor": 5.1674,
+  "is_trade_count": 8,
+  "oos_trade_count": 7,
+  "is_total_return": 0.0112,
+  "oos_total_return": 0.0023,
+  "is_exit_reasons": {
+    "TP": 7,
+    "TIME": 1
+  },
+  "ic_pass": true,
+  "avg_ic": 0.0897,
+  "ic_per_ticker": {
+    "SPY": {
+      "ic": 0.1716,
+      "n_obs": 17
+    },
+    "QQQ": {
+      "ic": -0.3455,
+      "n_obs": 10
+    },
+    "IWM": {
+      "ic": -0.0523,
+      "n_obs": 30
+    }
+  },
+  "ic_note": "VWAP Option A proxy IC=0.0897. IC > 0.02 gate passed \u2014 proceed with full Gate 1.",
+  "dsr": 0.006328,
+  "wf_windows_passed": 2,
+  "wf_consistency_score": 2.2758,
+  "wf_table": [
+    {
+      "window": 1,
+      "is_start": "2018-01-01",
+      "is_end": "2019-12-31",
+      "oos_start": "2020-01-01",
+      "oos_end": "2020-06-30",
+      "is_sharpe": 0.6516,
+      "oos_sharpe": 0.0,
+      "is_mdd": -0.0023,
+      "oos_mdd": 0.0,
+      "is_trade_count": 5,
+      "oos_trade_count": 0,
+      "pass": false
+    },
+    {
+      "window": 2,
+      "is_start": "2018-07-01",
+      "is_end": "2020-06-30",
+      "oos_start": "2020-07-01",
+      "oos_end": "2020-12-31",
+      "is_sharpe": 0.1846,
+      "oos_sharpe": 1.4142,
+      "is_mdd": -0.0023,
+      "oos_mdd": 0.0,
+      "is_trade_count": 3,
+      "oos_trade_count": 1,
+      "pass": true
+    },
+    {
+      "window": 3,
+      "is_start": "2019-01-01",
+      "is_end": "2020-12-31",
+      "oos_start": "2021-01-01",
+      "oos_end": "2021-06-30",
+      "is_sharpe": 0.3698,
+      "oos_sharpe": 0.0,
+      "is_mdd": -0.0023,
+      "oos_mdd": 0.0,
+      "is_trade_count": 2,
+      "oos_trade_count": 0,
+      "pass": false
+    },
+    {
+      "window": 4,
+      "is_start": "2019-07-01",
+      "is_end": "2021-06-30",
+      "oos_start": "2021-07-01",
+      "oos_end": "2021-12-31",
+      "is_sharpe": 0.7078,
+      "oos_sharpe": 1.0208,
+      "is_mdd": 0.0,
+      "oos_mdd": -0.0003,
+      "is_trade_count": 1,
+      "oos_trade_count": 2,
+      "pass": true
+    }
+  ],
+  "wf_sharpe_std": 0.6244,
+  "wf_sharpe_min": 0.0,
+  "sensitivity_scan": {
+    "sd_1.5": {
+      "threshold": 1.5,
+      "sharpe": 1.0735,
+      "trade_count": 33,
+      "win_rate": 0.7879,
+      "max_drawdown": -0.0065
+    },
+    "sd_1.75": {
+      "threshold": 1.75,
+      "sharpe": 1.3191,
+      "trade_count": 20,
+      "win_rate": 0.9,
+      "max_drawdown": -0.0032
+    },
+    "sd_2.0": {
+      "threshold": 2.0,
+      "sharpe": 0.7323,
+      "trade_count": 8,
+      "win_rate": 0.75,
+      "max_drawdown": -0.0023
+    },
+    "sd_2.25": {
+      "threshold": 2.25,
+      "sharpe": 0.6675,
+      "trade_count": 4,
+      "win_rate": 0.75,
+      "max_drawdown": -0.0003
+    },
+    "sd_2.5": {
+      "threshold": 2.5,
+      "sharpe": -0.1725,
+      "trade_count": 3,
+      "win_rate": 0.3333,
+      "max_drawdown": -0.0022
+    },
+    "_meta": {
+      "sharpe_variance_pct": 123.56,
+      "sensitivity_pass": false,
+      "note": "Max Sharpe deviation from base (2.0SD): 123.6% (FAIL)"
+    }
+  },
+  "sensitivity_pass": false,
+  "post_cost_sharpe": 0.7323,
+  "look_ahead_bias_flag": false,
+  "mc_p5_sharpe": 1.0913,
+  "mc_median_sharpe": 11.1856,
+  "mc_p95_sharpe": 25.9828,
+  "sharpe_ci_low": -0.1955,
+  "sharpe_ci_high": 1.3064,
+  "mdd_ci_low": -0.0061,
+  "mdd_ci_high": 0.0,
+  "win_rate_ci_low": 0.001,
+  "win_rate_ci_high": 0.0101,
+  "market_impact_bps": 0.006,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 0.0,
+  "permutation_pvalue": 0.636,
+  "permutation_test_pass": false,
+  "sub_periods": {
+    "pre_covid_2018_2019": {
+      "sharpe": 0.6516,
+      "trade_count": 5,
+      "win_rate": 0.8,
+      "max_drawdown": -0.0023,
+      "note": "insufficient_data"
+    },
+    "covid_crash_2020": {
+      "sharpe": 1.002,
+      "trade_count": 1,
+      "win_rate": 1.0,
+      "max_drawdown": 0.0,
+      "note": "insufficient_data"
+    },
+    "stimulus_2021": {
+      "sharpe": 0.7253,
+      "trade_count": 2,
+      "win_rate": 0.5,
+      "max_drawdown": -0.0003,
+      "note": "insufficient_data"
+    },
+    "rate_shock_2022": {
+      "sharpe": -0.0744,
+      "trade_count": 3,
+      "win_rate": 0.6667,
+      "max_drawdown": -0.0018,
+      "note": "insufficient_data"
+    }
+  },
+  "trade_log": [
+    {
+      "ticker": "SPY",
+      "entry_date": "2018-02-12",
+      "exit_date": "2018-02-15",
+      "entry_price": 232.9699,
+      "exit_price": 239.5544,
+      "shares": 35,
+      "hold_days": 3,
+      "exit_reason": "TP",
+      "gross_pnl": 230.46,
+      "net_pnl": 230.46,
+      "return_pct": 2.8263,
+      "entry_sd_threshold": 2.0,
+      "market_impact_entry_bps": 0.01
+    },
+    {
+      "ticker": "SPY",
+      "entry_date": "2018-12-27",
+      "exit_date": "2019-01-04",
+      "entry_price": 218.2657,
+      "exit_price": 222.5495,
+      "shares": 38,
+      "hold_days": 5,
+      "exit_reason": "TP",
+      "gross_pnl": 162.79,
+      "net_pnl": 162.79,
+      "return_pct": 1.9627,
+      "entry_sd_threshold": 2.0,
+      "market_impact_entry_bps": 0.01
+    },
+    {
+      "ticker": "QQQ",
+      "entry_date": "2018-02-12",
+      "exit_date": "2018-02-14",
+      "entry_price": 149.7419,
+      "exit_price": 150.5777,
+      "shares": 55,
+      "hold_days": 2,
+      "exit_reason": "TP",
+      "gross_pnl": 45.97,
+      "net_pnl": 45.97,
+      "return_pct": 0.5582,
+      "entry_sd_threshold": 2.0,
+      "market_impact_entry_bps": 0.02
+    },
+    {
+      "ticker": "QQQ",
+      "entry_date": "2018-12-27",
+      "exit_date": "2019-01-04",
+      "entry_price": 143.9885,
+      "exit_price": 145.7183,
+      "shares": 57,
+      "hold_days": 5,
+      "exit_reason": "TP",
+      "gross_pnl": 98.6,
+      "net_pnl": 98.6,
+      "return_pct": 1.2014,
+      "entry_sd_threshold": 2.0,
+      "market_impact_entry_bps": 0.02
+    },
+    {
+      "ticker": "IWM",
+      "entry_date": "2019-05-28",
+      "exit_date": "2019-06-04",
+      "entry_price": 138.5976,
+      "exit_price": 135.6154,
+      "shares": 59,
+      "hold_days": 5,
+      "exit_reason": "TIME",
+      "gross_pnl": -175.95,
+      "net_pnl": -175.95,
+      "return_pct": -2.1517,
+      "entry_sd_threshold": 2.0,
+      "market_impact_entry_bps": 0.02
+    },
+    {
+      "ticker": "IWM",
+      "entry_date": "2020-09-25",
+      "exit_date": "2020-10-01",
+      "entry_price": 134.542,
+      "exit_price": 141.3024,
+      "shares": 60,
+      "hold_days": 4,
+      "exit_reason": "TP",
+      "gross_pnl": 405.63,
+      "net_pnl": 405.63,
+      "return_pct": 5.0248,
+      "entry_sd_threshold": 2.0,
+      "market_impact_entry_bps": 0.03
+    },
+    {
+      "ticker": "IWM",
+      "entry_date": "2021-07-21",
+      "exit_date": "2021-07-28",
+      "entry_price": 207.1753,
+      "exit_price": 206.5332,
+      "shares": 40,
+      "hold_days": 5,
+      "exit_reason": "TP",
+      "gross_pnl": -25.69,
+      "net_pnl": -25.69,
+      "return_pct": -0.31,
+      "entry_sd_threshold": 2.0,
+      "market_impact_entry_bps": 0.02
+    },
+    {
+      "ticker": "IWM",
+      "entry_date": "2021-08-23",
+      "exit_date": "2021-08-24",
+      "entry_price": 205.3155,
+      "exit_price": 207.7781,
+      "shares": 40,
+      "hold_days": 1,
+      "exit_reason": "TP",
+      "gross_pnl": 98.51,
+      "net_pnl": 98.51,
+      "return_pct": 1.1994,
+      "entry_sd_threshold": 2.0,
+      "market_impact_entry_bps": 0.01
+    }
+  ],
+  "gate1_pass": false,
+  "gate1_verdict": "FAIL",
+  "gate1_pass_count": 6,
+  "gate1_total_criteria": 12
+}

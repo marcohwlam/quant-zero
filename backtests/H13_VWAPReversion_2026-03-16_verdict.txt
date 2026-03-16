@@ -1,0 +1,57 @@
+Gate 1 Verdict: H13_VWAPReversion
+Date: 2026-03-16
+=================================================================
+
+OVERALL: FAIL
+IC Gate: PASS (avg IC=0.0897; threshold 0.02)
+
+Data Variant: Option A — Typical Price proxy VWAP
+  (NOT true institutional VWAP; lower IC expected)
+
+Criteria Results (6/12):
+  FAIL  IS Sharpe > 1.0: 0.7323
+  FAIL  OOS Sharpe > 0.7: 0.257
+  PASS  IS MDD < 20%: -0.0023
+  PASS  OOS MDD < 25%: -0.0038
+  PASS  Win Rate > 50%: 0.75
+  PASS  DSR > 0: 0.006328
+  FAIL  WF Windows ≥ 3/4: 2
+  FAIL  Sensitivity Pass: False
+  FAIL  Trade Count ≥ 30 (IS): 8
+  PASS  IC > 0.02: 0.0897
+  FAIL  Perm Test Pass (p ≤ 0.05): 0.636
+  PASS  MC p5 Sharpe > 0.5: 1.0913
+
+IS Period:  2018-01-01 to 2021-12-31
+OOS Period: 2022-01-01 to 2023-12-31
+Universe:   ['SPY', 'QQQ', 'IWM']
+
+Key Metrics:
+  IS  Sharpe: 0.7323  |  OOS Sharpe: 0.257
+  IS  MDD:    -0.2%  |  OOS MDD:   -0.4%
+  Win Rate:   75.0%  |  Profit Factor: 5.1674
+  IS Trades:  8  |  OOS Trades: 7
+  DSR: 0.006328  |  Avg IC: 0.0897
+  MC p5 Sharpe: 1.0913
+  Perm p-value: 0.6360
+  WF windows passed: 2/4
+
+Walk-Forward:
+  Window 1: IS=0.6516 OOS=0.0 [FAIL]
+  Window 2: IS=0.1846 OOS=1.4142 [PASS]
+  Window 3: IS=0.3698 OOS=0.0 [FAIL]
+  Window 4: IS=0.7078 OOS=1.0208 [PASS]
+
+Sub-Period Results:
+  pre_covid_2018_2019: Sharpe=0.652  Trades=5  WR=80.0%  [insufficient_data]
+  covid_crash_2020: Sharpe=1.002  Trades=1  WR=100.0%  [insufficient_data]
+  stimulus_2021: Sharpe=0.725  Trades=2  WR=50.0%  [insufficient_data]
+  rate_shock_2022: Sharpe=-0.074  Trades=3  WR=66.7%  [insufficient_data]
+
+Sensitivity Sweep (VWAP SD threshold 1.5–2.5):
+  SD=1.5: Sharpe=1.0735  Trades=33
+  SD=1.75: Sharpe=1.3191  Trades=20
+  SD=2.0: Sharpe=0.7323  Trades=8
+  SD=2.25: Sharpe=0.6675  Trades=4
+  SD=2.5: Sharpe=-0.1725  Trades=3
+  Max Sharpe deviation from base (2.0SD): 123.6% (FAIL)
