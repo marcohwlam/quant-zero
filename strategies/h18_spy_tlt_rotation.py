@@ -1,13 +1,13 @@
 """
-Strategy: H18 SPY/TLT Weekly Momentum Rotation
+Strategy: H18 SPY/TLT Daily Momentum Rotation
 Author: Strategy Coder Agent
 Date: 2026-03-16
-Hypothesis: SPY and TLT exhibit persistent relative momentum at weekly frequency.
+Hypothesis: SPY and TLT exhibit persistent relative momentum at daily frequency.
             Rotate to the outperforming asset (100%) or hold 50/50 in neutral zone.
             A dual-vol filter exits to cash when both assets show simultaneous high vol
             (inflation / correlation-breakdown regime detection).
 Asset class: equities + bonds (ETFs)
-Parent task: QUA-187
+Parent task: QUA-207
 
 References:
   - Grossmann, F. (2015) "The SPY-TLT Universal Investment Strategy." Logical Invest.
@@ -33,7 +33,7 @@ Transaction cost model (canonical, per Engineering Director AGENTS.md):
 
 Key risk — 2022 rate shock:
   The SPY-TLT negative correlation broke down in 2022 (both assets fell simultaneously).
-  The dual-vol regime filter (SPY 20d vol > 25% AND TLT 20d vol > 15%) is the primary
+  The dual-vol regime filter (SPY 20d vol > 20% AND TLT 20d vol > 12%) is the primary
   defense: triggers cash exit when simultaneous high vol indicates correlation breakdown.
   Engineering Director must verify this filter triggers before 2022-03-01 (see PF-4).
 """
@@ -49,14 +49,14 @@ PARAMETERS = {
     # Universe — 2-asset rotation
     "spy": "SPY",
     "tlt": "TLT",
-    # Momentum lookback in trading days — sweep: {10, 15, 20}
-    "mom_lookback_days": 15,
+    # Momentum lookback in trading days — sweep: {5, 10, 15}
+    "mom_lookback_days": 10,
     # Dead-band threshold: only rotate if |mom_diff| > threshold — sweep: {0.0, 0.005, 0.01}
     "threshold": 0.0,
     # Dual-vol regime filter: exit to cash when BOTH exceed their respective thresholds
     # Annualized vols (20-day rolling daily return std × sqrt(252))
-    "vol_filter_spy_pct": 0.25,    # 25% annualized — sweep: {0.20, 0.25, 0.30}
-    "vol_filter_tlt_pct": 0.15,    # 15% annualized
+    "vol_filter_spy_pct": 0.20,    # 20% annualized — sweep: {0.15, 0.20, 0.25}
+    "vol_filter_tlt_pct": 0.12,    # 12% annualized
     # Starting capital
     "init_cash": 25000,
     # Vol rolling window (days)
@@ -191,7 +191,7 @@ def compute_spy_tlt_signal(
     window_end: str,
 ) -> pd.DataFrame:
     """
-    Compute weekly SPY/TLT rotation signal at each Friday close.
+    Compute daily SPY/TLT rotation signal at every trading day close.
 
     Signal logic (no look-ahead — uses only prices at/before rebalance date):
       1. mom_spy = SPY.pct_change(lookback)    (trailing lookback-day return)
@@ -206,6 +206,9 @@ def compute_spy_tlt_signal(
              AND TLT 20d annualized vol > vol_filter_tlt_pct
            → exit all, hold cash (inflation / correlation-breakdown regime)
 
+    Rebalancing frequency: daily (every trading day close). Each day the signal
+    is re-evaluated and the portfolio is adjusted if the target allocation changed.
+
     Args:
         close:        Full price DataFrame (with pre-window buffer for vol/mom warm-up).
         params:       Strategy parameters.
@@ -213,7 +216,7 @@ def compute_spy_tlt_signal(
         window_end:   End date.
 
     Returns:
-        DataFrame indexed by rebalance date with columns:
+        DataFrame indexed by trading date with columns:
           - spy_weight: float (0.0, 0.5, or 1.0)
           - tlt_weight: float (0.0, 0.5, or 1.0)
           - regime_active: bool (True = vol filter triggered → cash)
@@ -235,7 +238,10 @@ def compute_spy_tlt_signal(
     vol_spy = compute_annualized_vol(close[spy], vol_window) if spy in close.columns else pd.Series(dtype=float)
     vol_tlt = compute_annualized_vol(close[tlt], vol_window) if tlt in close.columns else pd.Series(dtype=float)
 
-    rebalance_dates = get_weekly_rebalance_dates(close.index, window_start, window_end)
+    # Daily rebalancing: every trading day in the window is a rebalance date
+    rebalance_dates = close.index[
+        (close.index >= window_start) & (close.index <= window_end)
+    ].tolist()
 
     rows = []
     for date in rebalance_dates:
@@ -383,10 +389,10 @@ def simulate_spy_tlt_portfolio(
     volume_full: pd.DataFrame = None,
 ) -> dict:
     """
-    Simulate H18 SPY/TLT rotation portfolio from weekly rebalance signals.
+    Simulate H18 SPY/TLT rotation portfolio from daily rebalance signals.
 
     Execution model:
-    - Signal at Friday close T → execute at Friday close T (same-day EOD fill).
+    - Signal at daily close T → execute at daily close T (same-day EOD fill).
     - Rebalance: adjust SPY/TLT weights toward target allocation.
       Execution order: sell excess positions first, then buy new positions.
     - No action if target allocation equals current allocation (no unnecessary costs).
@@ -745,7 +751,7 @@ def run_backtest(
     signal_df = compute_spy_tlt_signal(close, params, start, end)
 
     if signal_df.empty:
-        raise ValueError(f"No weekly signals generated for period {start} to {end}.")
+        raise ValueError(f"No daily signals generated for period {start} to {end}.")
 
     # Trim to simulation window
     close_window = close.loc[start:end]
@@ -757,21 +763,21 @@ def run_backtest(
         close_full=close, volume_full=volume,
     )
 
-    # Signal allocation breakdown
-    spy_weeks = int(sum(1 for _, r in signal_df.iterrows() if r["spy_weight"] == 1.0))
-    tlt_weeks = int(sum(1 for _, r in signal_df.iterrows() if r["tlt_weight"] == 1.0))
-    neutral_weeks = int(sum(
+    # Signal allocation breakdown (daily counts)
+    spy_days = int(sum(1 for _, r in signal_df.iterrows() if r["spy_weight"] == 1.0))
+    tlt_days = int(sum(1 for _, r in signal_df.iterrows() if r["tlt_weight"] == 1.0))
+    neutral_days = int(sum(
         1 for _, r in signal_df.iterrows()
         if r["spy_weight"] == 0.5 and r["tlt_weight"] == 0.5
     ))
-    cash_weeks = int(sum(1 for _, r in signal_df.iterrows() if r["regime_active"]))
-    total_weeks = len(signal_df)
+    cash_days = int(sum(1 for _, r in signal_df.iterrows() if r["regime_active"]))
+    total_days = len(signal_df)
 
     holding_pct = {
-        "SPY_100pct": round(spy_weeks / max(total_weeks, 1), 4),
-        "TLT_100pct": round(tlt_weeks / max(total_weeks, 1), 4),
-        "neutral_50_50": round(neutral_weeks / max(total_weeks, 1), 4),
-        "_cash_regime": round(cash_weeks / max(total_weeks, 1), 4),
+        "SPY_100pct": round(spy_days / max(total_days, 1), 4),
+        "TLT_100pct": round(tlt_days / max(total_days, 1), 4),
+        "neutral_50_50": round(neutral_days / max(total_days, 1), 4),
+        "_cash_regime": round(cash_days / max(total_days, 1), 4),
     }
 
     is_years = (pd.Timestamp(end) - pd.Timestamp(start)).days / 365.25
@@ -799,16 +805,16 @@ def scan_parameters(
 ) -> dict:
     """
     Scan IS Sharpe ratio across 27 parameter combinations:
-      - mom_lookback_days ∈ {10, 15, 20}
+      - mom_lookback_days ∈ {5, 10, 15}
       - threshold ∈ {0.0, 0.005, 0.01}
-      - vol_filter_spy_pct ∈ {0.20, 0.25, 0.30}
-      (vol_filter_tlt_pct held at default 0.15)
+      - vol_filter_spy_pct ∈ {0.15, 0.20, 0.25}
+      (vol_filter_tlt_pct held at default 0.12)
 
     Returns dict with results for all 27 combinations and stability meta-analysis.
     """
-    lookbacks = [10, 15, 20]
+    lookbacks = [5, 10, 15]
     thresholds = [0.0, 0.005, 0.01]
-    vol_spy_filters = [0.20, 0.25, 0.30]
+    vol_spy_filters = [0.15, 0.20, 0.25]
 
     results = {}
     for lb in lookbacks:
@@ -881,16 +887,16 @@ if __name__ == "__main__":
         description="H18 SPY/TLT Weekly Momentum Rotation backtest."
     )
     parser.add_argument(
-        "--lookback", type=int, default=15, choices=[10, 15, 20],
-        help="Momentum lookback in trading days (default: 15)"
+        "--lookback", type=int, default=10, choices=[5, 10, 15],
+        help="Momentum lookback in trading days (default: 10)"
     )
     parser.add_argument(
         "--threshold", type=float, default=0.0,
         help="Dead-band threshold for neutral zone (default: 0.0)"
     )
     parser.add_argument(
-        "--vol-spy", type=float, default=0.25,
-        help="SPY vol filter threshold annualized (default: 0.25)"
+        "--vol-spy", type=float, default=0.20,
+        help="SPY vol filter threshold annualized (default: 0.20)"
     )
     parser.add_argument(
         "--scan", action="store_true",
@@ -906,7 +912,7 @@ if __name__ == "__main__":
     }
 
     print(
-        f"\nH18 SPY/TLT: IS backtest (2018-01-01 to 2022-12-31) "
+        f"\nH18 SPY/TLT v1.2: IS backtest (2018-01-01 to 2022-12-31) "
         f"lb={args.lookback}d thr={args.threshold} vol_spy={args.vol_spy}..."
     )
     is_result = run_backtest(params=params, start="2018-01-01", end="2022-12-31")
