@@ -31,6 +31,7 @@ import yfinance as yf
 from scipy import stats as scipy_stats
 
 from gate1_reporter import generate_and_save_verdict
+from oos_data_quality import validate_oos_data, OOSDataQualityError
 
 
 # ── Transaction Cost Model ────────────────────────────────────
@@ -872,6 +873,24 @@ def run():
             is_metrics = run_backtest(proposal["code"], in_sample, asset_class=asset_class)
             oos_metrics = run_backtest(proposal["code"], out_of_sample, asset_class=asset_class)
 
+            # ── OOS data quality validation ────────────────────────────────
+            # Detect NaN contamination before metrics flow into Gate 1 verdict.
+            # BLOCK-level findings abort this iteration; WARN is logged only.
+            strategy_name = proposal.get("strategy_name", f"iteration_{iteration}")
+            dq_report = validate_oos_data(out_of_sample, oos_metrics, strategy_name)
+            if dq_report["recommendation"] == "BLOCK":
+                print(
+                    f"  [DATA QUALITY BLOCK] OOS data quality check failed: "
+                    f"{dq_report['block_reasons']}"
+                )
+                raise OOSDataQualityError(dq_report)
+            if dq_report["recommendation"] == "WARN":
+                print(
+                    f"  [DATA QUALITY WARN] OOS data has quality issues "
+                    f"(coverage={dq_report['oos_data_coverage_pct']:.1f}%, "
+                    f"advisory={dq_report['advisory_nan_fields']})"
+                )
+
             metrics = {
                 "sharpe_in_sample": is_metrics["sharpe"],
                 "sharpe_out_of_sample": oos_metrics["sharpe"],
@@ -888,6 +907,7 @@ def run():
                 "equity_curve_oos": oos_metrics.get("equity_curve", []),
                 "trade_log_is": is_metrics.get("trade_log", []),
                 "trade_log_oos": oos_metrics.get("trade_log", []),
+                "oos_data_quality": dq_report,
             }
 
             print(f"  IS Sharpe: {metrics['sharpe_in_sample']:.2f}")

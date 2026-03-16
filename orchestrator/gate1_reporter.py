@@ -122,6 +122,7 @@ def generate_and_save_verdict(
         "recommendation": verdict.recommendation,
         "confidence": verdict.confidence,
         "disqualify_reason": verdict.disqualify_reason,
+        "oos_data_quality": metrics.get("oos_data_quality", None),
         "metrics": [
             {
                 "name": m.name,

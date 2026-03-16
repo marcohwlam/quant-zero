@@ -41,6 +41,47 @@ Execute vectorbt-based backtests on strategies provided by the Engineering Direc
   - `compute_dsr(returns_series, n_trials)` — Deflated Sharpe Ratio
   - `sensitivity_scan(base_code, param_name, values, data)` — sensitivity scanner
 
+## OOS Data Quality Validation (Required — run before Statistical Rigor Pipeline)
+
+Before running or reporting any OOS backtest metrics, validate the OOS data and
+returned metrics using `orchestrator/oos_data_quality.py`. This step was added
+to prevent silent NaN contamination from skewing OOS Sharpe and other stats
+(root cause: H17 failure, Engineering Director QUA-220).
+
+```python
+from oos_data_quality import validate_oos_data, OOSDataQualityError
+
+dq_report = validate_oos_data(out_of_sample, oos_metrics, strategy_name)
+
+if dq_report["recommendation"] == "BLOCK":
+    # Halt — do not report metrics. Mark task blocked with DQ report attached.
+    raise OOSDataQualityError(dq_report)
+
+if dq_report["recommendation"] == "WARN":
+    # Log the warning and continue, but include the report in output JSON.
+    print(f"[DATA QUALITY WARN] {dq_report['advisory_nan_fields']}")
+
+# Always attach the report to the metrics dict
+metrics["oos_data_quality"] = dq_report
+```
+
+**What the validator checks:**
+- Input OOS price DataFrame: NaN counts per column, row coverage %
+- Output metrics dict: NaN/None in critical fields (sharpe, max_drawdown, win_rate, profit_factor, total_trades, post_cost_sharpe)
+- Portfolio returns series: residual NaN count after dropna
+
+**Thresholds:**
+- `BLOCK`: any critical metric is NaN/None, OR data coverage < 90%
+- `WARN`: data coverage < 95%, OR any advisory field is NaN, OR any NaN cells present
+- `PASS`: all clear
+
+**On BLOCK:** mark task `blocked` with a comment that includes the full `dq_report` JSON.
+Do NOT report Gate 1 metrics for a BLOCK-level strategy. Return to Engineering Director.
+
+**Output JSON field:** `oos_data_quality` — always include in the metrics JSON and verdict JSON.
+
+---
+
 ## Statistical Rigor Pipeline
 
 After every backtest, run the following analyses before reporting results. All outputs must be included in the metrics JSON.
