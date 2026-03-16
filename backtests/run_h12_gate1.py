@@ -1,6 +1,9 @@
 """
 H12 SuperTrend ATR Momentum — Gate 1 Backtest Runner
 ======================================================
+STATUS: ARCHIVED — Gate 1 FAIL 2026-03-16. DO NOT RE-RUN.
+  See: docs/gate1-verdicts/H12_SuperTrend_ATR_Momentum_2026-03-16.md | QUA-148, QUA-180
+
 Produces standardized metrics JSON + verdict for QUA-154.
 
 IS period : 2018-01-01 — 2022-12-31  (5 years)

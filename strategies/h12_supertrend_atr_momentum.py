@@ -1,6 +1,13 @@
 """
 H12 — SuperTrend ATR Momentum
 ==============================
+STATUS: GATE 1 FAIL — ABANDONED 2026-03-16
+  IS Sharpe = -0.007 (auto-disqualify), IS MDD = -118.2% (auto-disqualify)
+  Permutation p = 0.806, WF: 0/4, sensitivity = 10,353%
+  Root cause: VIX regime gate suppresses all entries in volatile periods (2021, 2022).
+  See: docs/gate1-verdicts/H12_SuperTrend_ATR_Momentum_2026-03-16.md | QUA-148, QUA-180
+  DO NOT USE FOR LIVE OR PAPER TRADING.
+
 Gate 1 strategy implementation.
 
 Signal: ATR-adaptive SuperTrend band flip (long-only).
