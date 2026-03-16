@@ -1,0 +1,46 @@
+Gate 1 Verdict — H07_MultiAsset_TSMOM — 2026-03-16
+============================================================
+Overall: FAIL ✗
+
+Gate 1 Checks:
+  [PASS] is_sharpe_pass
+  [FAIL] oos_sharpe_pass
+  [PASS] is_mdd_pass
+  [PASS] oos_mdd_pass
+  [PASS] win_rate_pass
+  [PASS] win_loss_ratio_pass
+  [FAIL] trade_count_pass
+  [PASS] wf_windows_pass
+  [FAIL] wf_consistency_pass
+  [FAIL] sensitivity_pass
+  [PASS] dsr_pass
+  [FAIL] permutation_pass
+
+Key Metrics:
+  IS Sharpe:        1.2547  (> 1.0)
+  OOS Sharpe:       0.4680  (> 0.7)
+  IS MDD:           -0.1276  (< 0.20)
+  OOS MDD:          -0.0539  (< 0.25)
+  Win Rate:         0.6667  (> 0.50)
+  Win/Loss Ratio:   6.2607  (>= 1.0)
+  Trade Count (IS): 9  (>= 50)
+  DSR:              0.0000  (> 0)
+  WF Windows:       3/4  (>= 3)
+  MC p5 Sharpe:     6.3565
+  Permutation p:    0.4260  (FAIL)
+  Sensitivity:      FAIL
+
+Walk-Forward Table:
+  Window 1 (2018-01-01–2021-06-30): IS=1.16  OOS=1.67  [PASS]
+  Window 2 (2018-07-01–2021-12-31): IS=1.08  OOS=1.30  [PASS]
+  Window 3 (2019-01-01–2022-06-30): IS=1.10  OOS=0.71  [PASS]
+  Window 4 (2019-07-01–2022-12-31): IS=0.99  OOS=-0.69  [FAIL]
+
+USO/DBC Rolling Correlation: max=0.9398  flagged=YES — consider replacing USO with SLV/DBB
+
+Failing criteria:
+  - oos_sharpe_pass
+  - trade_count_pass
+  - wf_consistency_pass
+  - sensitivity_pass
+  - permutation_pass
