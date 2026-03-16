@@ -1,0 +1,67 @@
+H11 CVD-Confirmed Breakout — Gate 1 Verdict
+Date: 2026-03-16
+IS: 2018-01-01 to 2021-12-31  |  OOS: 2022-01-01 to 2023-12-31
+Active signal: combined
+============================================================
+OVERALL: FAIL
+
+Core Metrics:
+  IS Sharpe:             0.4834  FAIL (>1.0)
+  OOS Sharpe:            0.5665  FAIL (>0.7)
+  IS Max Drawdown:        -1.0%  PASS (<20%)
+  OOS Max Drawdown:       -0.6%  PASS (<25%)
+  Win Rate (IS):          43.6%  PASS (>50%)
+  Win/Loss Ratio:          1.54
+  Profit Factor:         1.1930
+  Trade Count (IS):         541  PASS (>=100)
+
+Sequential IC Validation (Research Director QUA-130):
+  Price Breakout IC:     0.0000  FAIL (>0.02)
+  CVD Proxy IC:          0.0000  FAIL (>0.02)
+  Combined IC:           0.0000
+  Decision: REJECT_BOTH
+
+Walk-Forward (4 windows):
+  Windows Passed:      1/4  FAIL
+  Consistency Score:     0.8150  PASS
+    W1: IS 0.4757 OOS 0.3311 [FAIL]
+    W2: IS 0.3085 OOS -0.3476 [FAIL]
+    W3: IS 0.4857 OOS 1.5267 [PASS]
+    W4: IS 0.9021 OOS 0.4938 [FAIL]
+
+Sub-Period Performance:
+  pre_covid_2018_2019: Sharpe=0.4757  MDD=-0.1%  Trades=138
+  stimulus_2020_2021: Sharpe=0.5845  MDD=-1.0%  Trades=284
+  rate_shock_2022: Sharpe=-0.2647  MDD=-0.5%  Trades=115
+  normalization_2023: Sharpe=0.4972  MDD=-0.3%  Trades=100
+
+CVD Threshold Sensitivity:
+  Variance: 1.9472 FAIL
+    cvd_mult_0p5: Sharpe=0.5458  Trades=296
+    cvd_mult_0p75: Sharpe=0.5389  Trades=273
+    cvd_mult_1p0: Sharpe=0.4834  Trades=541
+    cvd_mult_1p25: Sharpe=0.1107  Trades=712
+    cvd_mult_1p5: Sharpe=-0.0785  Trades=554
+    cvd_mult_2p0: Sharpe=0.3234  Trades=271
+
+Statistical Rigor:
+  DSR:                     0.000000  FAIL
+  MC p5 Sharpe:               0.077  FAIL
+  Sharpe CI [95%]:     [-0.229, 1.395]
+  Perm p-value:              0.7520  FAIL
+
+Risk Flags:
+  Survivorship bias:   PRESENT — current ticker universe inflates IS performance
+  Earnings exclusion:  NOT applied — earnings events included in backtest
+  Look-ahead bias:     None detected (signals computed at close, entry at open T+1)
+
+FAILING CRITERIA:
+  x is_sharpe_pass
+  x oos_sharpe_pass
+  x wf_windows_pass
+  x sensitivity_pass
+  x price_ic_pass
+  x cvd_ic_pass
+  x dsr_pass
+  x permutation_pass
+  x mc_p5_pass
