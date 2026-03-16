@@ -34,6 +34,55 @@ Before passing a strategy to the Engineering Director for backtesting, verify:
 - [ ] **Alpha decay analysis completed** (see Alpha Decay Review Gate below)
 - [ ] **Signal combination policy met** if multi-signal (see Signal Combination Policy below)
 - [ ] **ML anti-snooping check passed** if ML-based strategy (see ML Research Track below)
+- [ ] **Pre-flight gates PF-1 through PF-4 all passed** (see Pre-Flight Hard Gates below)
+- [ ] **Hypothesis class diversification mandate satisfied** (see Hypothesis Class Diversification Mandate below)
+- [ ] **Family iteration limit not exceeded** (see Family Iteration Limit below)
+
+### Pre-Flight Hard Gates (CEO Directive QUA-181 — 2026-03-16)
+
+**Mandatory before forwarding ANY hypothesis to Engineering Director.** A hypothesis failing any gate must be revised or rejected — do not forward to Engineering.
+
+**Gate PF-1: Walk-Forward Trade Viability**
+Estimated IS trade count ÷ 4 ≥ 30. Monthly-rebalancing strategies with <10 positions fail this gate.
+Root cause: H07c — monthly WF produced too few trades for robust IS/OOS split.
+
+**Gate PF-2: Long-Only MDD Stress**
+For any long-only equity strategy: estimated MDD < 40% in dot-com bust (2000–2002) AND GFC (2008–2009), using index/sector proxies (SPY, QQQ). Long-short academic papers converted to long-only automatically trigger this gate.
+Root cause: H16 — long-short paper stripped to long-only, structurally exposed to drawdown regimes.
+
+**Gate PF-3: Data Pipeline Availability**
+All required data must exist in current daily OHLCV pipeline (yfinance/Alpaca). Automatic reject if strategy requires: intraday CVD, session VWAP, options chains, tick data, or any source not already integrated.
+Root cause: H11 (CVD), H13 (VWAP) — both failed for missing data.
+
+**Gate PF-4: Rate-Shock Regime Plausibility**
+Written a priori rationale for why the strategy generates positive returns in the 2022 Rate-Shock regime. "The backtest might capture it" is not sufficient. Long-biased equity strategies with no short/hedging mechanism automatically fail this gate.
+Root cause: 2022 Rate-Shock is the most common IS failure regime across all strategies tested.
+
+Every hypothesis file must include a Pre-Flight Gate Checklist section with explicit pass/fail for each gate. See `research/hypotheses/README.md` for the checklist template.
+
+### Hypothesis Class Diversification Mandate (CEO Directive QUA-181 — 2026-03-16)
+
+**Maximum 1 momentum-class hypothesis per TV Discovery / QC Discovery batch.**
+
+Root cause: Momentum strategies consumed 8 of 11 Gate 1 slots with zero passes. Directional equity momentum is structurally hostile in the 2018–2022 IS window.
+
+Remaining slots must come from underrepresented classes (priority order):
+1. **Pattern-based / binary event-driven** (zone touches, candlestick, S/R confluences) — proven pass class
+2. **Calendar / seasonal effects** (monthly anomalies, options expiration effects)
+3. **Cross-asset relative value** (SPY/TLT ratio, equity/credit spread signals)
+4. **Event-driven** (post-earnings drift, FOMC drift, CPI release)
+
+For QC academic literature: prioritize papers explicitly long-only by design — not long-short stripped to long-only.
+
+### Family Iteration Limit (CEO Directive QUA-181 — 2026-03-16)
+
+**Maximum 2 Gate 1 iterations per hypothesis family before mandatory retirement.**
+
+A third iteration requires both:
+- Each prior iteration showed ≥ 0.1 IS Sharpe improvement, AND
+- Research Director posts explicit written rationale for why the structural bottleneck is resolved
+
+Root cause: TSMOM family used 3 Gate 1 slots (H07, H07b, H07c) with structural ceiling of ~0.85 IS Sharpe — architecturally below 1.0.
 
 ### Alpha Decay Review Gate
 
