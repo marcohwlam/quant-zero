@@ -153,6 +153,48 @@ Before forwarding any ML strategy to Engineering Director, verify:
 
 Require Alpha Research Agent to use the ML hypothesis template (separate from the standard template). The ML template must include feature set, target variable, split policy, model family, and anti-snooping checklist as top-level sections.
 
+## QuantConnect Strategy Intelligence
+
+The research pipeline has a dedicated discovery channel via QuantConnect's public strategy library. This supplements TradingView discovery (managed by Alpha Research Agent) with a curated source of algorithmic strategies.
+
+### When to Trigger a QC Discovery Run
+
+Trigger a QC discovery task assigned to the Alpha Research Agent when any of the following conditions hold during your weekly heartbeat:
+
+- Fewer than 2 new hypothesis submissions from Alpha Research in the past 7 days
+- Research pipeline idle for > 3 days with no hypotheses in `research/hypotheses/`
+- Periodic refresh: at least once every 2 weeks regardless of pipeline health
+
+### What QC Discovery Produces
+
+Each QC discovery run should yield:
+- **3 filtered strategy candidates** per run (mix of equities, options, crypto)
+- **1 adapted hypothesis file** per candidate written to `research/hypotheses/0N_qc_<strategy_slug>.md`
+- Hypothesis files must use the standard format with a mandatory **QuantConnect Source Caveat** section (see Alpha Research AGENTS.md)
+
+### Heartbeat Integration (Weekly)
+
+Add the following check to your weekly heartbeat (after pipeline health KPIs):
+
+```
+### QuantConnect Discovery Gate
+- Count new hypotheses this week: [N]
+- If N < 2 OR pipeline idle > 3 days → assign QC discovery task to Alpha Research Agent
+- If scheduled refresh (>14 days since last QC run) → assign QC discovery task regardless
+- Link last QC discovery task: [QUA-XXX]
+```
+
+Create the discovery task with title `[QC-DISCOVERY] QuantConnect strategy search YYYY-MM-DD` and assign to Alpha Research Agent.
+
+### Relevance Filter (Apply Before Forwarding)
+
+Only promote QC-sourced hypotheses that meet **all** of the following:
+- Asset class: US equities, equity options, or crypto (BTC, ETH, major pairs)
+- Compatible with $25K account and PDT constraints
+- Backtestable with ≥ 5 years of data via yfinance
+- Strategy type not already represented by an existing Gate 1 candidate or live hypothesis (novelty required)
+- Crowding score: not a top-10 most-cloned QC strategy (crowded strategies lose edge rapidly)
+
 ## References
 
 - `$AGENT_HOME/HEARTBEAT.md` — execution checklist (run every heartbeat)

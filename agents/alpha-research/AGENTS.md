@@ -240,6 +240,42 @@ When a task tagged `tv-discovery` or with `[TV-DISCOVERY]` in the title is assig
 - Skip ideas structurally identical to existing H01–H08 even if the author named them differently
 - Duplicate guard: check `research/findings/tv_ideas/` archive; skip already-processed TV IDs
 
+## QuantConnect Discovery Task Type
+
+When a task tagged `qc-discovery` or with `[QC-DISCOVERY]` in the title is assigned to you:
+
+### Discovery Steps
+
+1. **Acquire QC strategies** — Run `research/scripts/qc_strategy_discovery.py` (built by Engineering Director). This script:
+   - Fetches the QuantConnect public strategies listing (`quantconnect.com/strategies/`)
+   - Applies relevance filters (asset class, edge type, novelty vs H01–H08 and prior QC runs, duplicate guard)
+   - Writes raw results to `research/findings/qc_strategies/YYYY-MM-DD.json` and filtered results to `research/findings/qc_strategies/YYYY-MM-DD_filtered.json`
+
+2. **Synthesise hypotheses** — For each strategy in the filtered JSON (target: 3 per run, mixing asset classes):
+   - Read the QC strategy description and interpret the signal mechanics
+   - Map to canonical hypothesis format (standard or ML template as appropriate)
+   - Enrich with: economic rationale, alpha decay estimate (half-life + IC decay curve at T+1/T+5/T+20), Gate 1 outlook, capital/PDT compatibility
+   - Apply the full **Signal Validity Pre-Check** (see above)
+   - Write hypothesis file to `research/hypotheses/0N_qc_<strategy_slug>.md`
+
+3. **Include QC Source Caveat section** in each hypothesis (required):
+   - Original QC strategy name and URL
+   - QC backtest window and potential in-sample cherry-pick risk
+   - Clone/popularity rank (crowding risk — top-10 most-cloned strategies should be skipped or flagged)
+   - Novel signal insight: what makes this different from H01–H08 and prior QC-sourced hypotheses?
+
+4. **Submit to Research Director** — Create a Paperclip task for Research Director review for each hypothesis, linking the file.
+
+5. **Mark qc-discovery task done** when all hypotheses (or fewer if filtered results < 3) are submitted.
+
+### Quality Rules (QC-specific)
+
+- QuantConnect community strategies are often overfit to QC's default data feed — apply extra skepticism to IS Sharpe claims
+- Strategies shown on QC's public listing may have survivorship bias in discovery; note this in the caveat section
+- Skip ideas structurally identical to existing H01–H08 or prior `0N_qc_*.md` hypotheses even if named differently
+- Duplicate guard: check `research/findings/qc_strategies/` archive; skip already-processed QC strategy IDs
+- For options strategies sourced from QC: verify compatibility with our liquid-underlying constraint (SPY, QQQ, IWM, major single stocks)
+
 ## Feedback Integration
 
 When a backtest fails Gate 1:
