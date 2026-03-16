@@ -6,7 +6,7 @@
 **Last updated:** 2026-03-16 (v1.2 — PF-1 revision per QUA-185: tighten tier boundaries to 30th/60th pct + add Mitigation B VIX MA crossover)
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** hypothesis
+**Status:** retired — Gate 1 FAIL v1.2 (2026-03-16, QUA-200/QUA-214). Research Director disposition: RETIRE (no 2nd iteration). Permutation test failure (p=0.132, DSR=0.00) disqualifies — IS Sharpe likely spurious. WF catastrophe structural (regime-driven), requires fundamental redesign. Any regime-adaptive VIX strategy should be a new hypothesis.
 
 ## Economic Rationale
 
