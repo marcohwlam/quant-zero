@@ -1,0 +1,146 @@
+{
+  "strategy_name": "H27_PEAD_EarningsDrift",
+  "date": "2026-03-16",
+  "asset_class": "equities",
+  "is_start": "2007-01-01",
+  "is_end": "2021-12-31",
+  "oos_start": "2022-01-01",
+  "oos_end": "2025-12-31",
+  "alt_is_start": "2023-01-01",
+  "alt_is_end": "2024-06-30",
+  "is_sharpe": 0.0,
+  "is_max_drawdown": 0.0,
+  "is_win_rate": 0.0,
+  "is_profit_factor": 0.0,
+  "is_trade_count": 0,
+  "is_earnings_coverage_rate": 0.0,
+  "alt_is_sharpe": 0.0,
+  "alt_is_max_drawdown": 0.0,
+  "alt_is_trade_count": 0,
+  "oos_sharpe": 0.0,
+  "oos_max_drawdown": 0.0,
+  "win_rate": 0.0,
+  "profit_factor": 0.0,
+  "trade_count": 0,
+  "oos_trade_count": 0,
+  "oos_earnings_coverage_rate": 0.0,
+  "sharpe": 0.0,
+  "max_drawdown": 0.0,
+  "post_cost_sharpe": 0.0,
+  "dsr": -32.1527,
+  "wf_windows_passed": 0,
+  "wf_total_windows": 4,
+  "wf_consistency_score": 0.0,
+  "wf_avg_is_sharpe": 0.0,
+  "wf_avg_oos_sharpe": 0.0,
+  "wf_sharpe_std": 0.0,
+  "wf_sharpe_min": 0.0,
+  "wf_oos_sharpes": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "wf_is_sharpes": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "sensitivity_pass": false,
+  "sensitivity_results": {
+    "gap_0.02_hold_10": 0.0,
+    "gap_0.02_hold_20": 0.0,
+    "gap_0.02_hold_40": 0.0,
+    "gap_0.03_hold_10": 0.0,
+    "gap_0.03_hold_20": 0.0,
+    "gap_0.03_hold_40": 0.0,
+    "gap_0.04_hold_10": 0.0,
+    "gap_0.04_hold_20": 0.0,
+    "gap_0.04_hold_40": 0.0,
+    "gap_0.05_hold_10": 0.0,
+    "gap_0.05_hold_20": 0.0,
+    "gap_0.05_hold_40": 0.0
+  },
+  "sensitivity_max_change_pct": 0.0,
+  "mc_p5_sharpe": 0.0,
+  "mc_median_sharpe": 0.0,
+  "mc_p95_sharpe": 0.0,
+  "sharpe_ci_low": 0.0,
+  "sharpe_ci_high": 0.0,
+  "mdd_ci_low": 0.0,
+  "mdd_ci_high": 0.0,
+  "win_rate_ci_low": 0.0,
+  "win_rate_ci_high": 0.0,
+  "market_impact_bps": 0.0046,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 0.0,
+  "permutation_pvalue": 1.0,
+  "permutation_test_pass": false,
+  "regime_slices": {
+    "pre_gfc_2007": {
+      "sharpe": 0.0,
+      "trade_count": 0,
+      "max_drawdown": 0.0
+    },
+    "gfc_2008_2009": {
+      "sharpe": 0.0,
+      "trade_count": 0,
+      "max_drawdown": 0.0
+    },
+    "recovery_2010_2015": {
+      "sharpe": 0.0,
+      "trade_count": 0,
+      "max_drawdown": 0.0
+    },
+    "bull_2016_2019": {
+      "sharpe": 0.0,
+      "trade_count": 0,
+      "max_drawdown": 0.0
+    },
+    "covid_2020": {
+      "sharpe": 0.0,
+      "trade_count": 0,
+      "max_drawdown": 0.0
+    },
+    "rate_shock_2022": {
+      "sharpe": 0.0,
+      "trade_count": 0,
+      "max_drawdown": 0.0
+    },
+    "post_rate_2023_2025": {
+      "sharpe": 0.0,
+      "trade_count": 0,
+      "max_drawdown": 0.0
+    }
+  },
+  "pf2_trailing_mdd_2008_2009": null,
+  "pf2_trailing_mdd_2022": null,
+  "pf2_note": "No regime transitions or trades found",
+  "oos_data_quality": {
+    "strategy_name": "H27_PEAD_EarningsDrift",
+    "oos_total_rows": 1002,
+    "oos_clean_rows": 1002,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "Close": 0,
+      "High": 0,
+      "Low": 0,
+      "Open": 0,
+      "Volume": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "earnings_coverage_rate": 0.0,
+  "survivorship_bias_flag": true,
+  "data_quality_notes": "CRITICAL: yfinance earnings_dates covers only ~12 quarters (~3 years). IS window (2007\u20132021) generates near-zero trades. OOS window (2022\u20132025) uses available earnings data. Alt IS (2023\u20132024) used for sensitivity analysis and WF. Survivorship bias present: universe = current-day top 200 S&P 500.",
+  "look_ahead_bias_flag": false,
+  "gate1_pass": false
+}
