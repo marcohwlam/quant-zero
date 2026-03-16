@@ -1,0 +1,555 @@
+{
+  "strategy_name": "H09_TQQQSnapback",
+  "date": "2026-03-16",
+  "asset_class": "equities_leveraged_etf",
+  "ticker": "TQQQ",
+  "is_period": "2015-01-01 to 2021-12-31",
+  "oos_period": "2022-01-01 to 2023-12-31",
+  "is_sharpe": -0.472,
+  "oos_sharpe": -0.8029,
+  "is_max_drawdown": -0.22,
+  "oos_max_drawdown": -0.0672,
+  "win_rate": 0.5635,
+  "oos_win_rate": 0.5,
+  "win_loss_ratio": 0.5945,
+  "profit_factor": 0.7674,
+  "trade_count": 252,
+  "oos_trade_count": 60,
+  "total_return_is": -0.1517,
+  "total_return_oos": -0.0513,
+  "post_cost_sharpe": -0.472,
+  "dsr": 0.0,
+  "mc_p5_sharpe": -3.1286,
+  "mc_median_sharpe": -1.557,
+  "mc_p95_sharpe": 0.0382,
+  "sharpe_ci_low": -1.1639,
+  "sharpe_ci_high": 0.2107,
+  "mdd_ci_low": -0.3653,
+  "mdd_ci_high": -0.0737,
+  "win_rate_ci_low": 0.0883,
+  "win_rate_ci_high": 0.14,
+  "permutation_pvalue": 0.988,
+  "permutation_test_pass": false,
+  "wf_windows_passed": 1,
+  "wf_consistency_score": 1.563,
+  "wf_table": [
+    {
+      "window": 1,
+      "is_start": "2015-01-01",
+      "is_end": "2017-12-31",
+      "oos_start": "2018-01-01",
+      "oos_end": "2018-06-30",
+      "is_sharpe": -0.4961,
+      "oos_sharpe": -2.2731,
+      "is_mdd": -0.0614,
+      "oos_mdd": -0.1028,
+      "is_trade_count": 89,
+      "oos_trade_count": 31,
+      "pass": false
+    },
+    {
+      "window": 2,
+      "is_start": "2015-07-01",
+      "is_end": "2018-06-30",
+      "oos_start": "2018-07-01",
+      "oos_end": "2018-12-31",
+      "is_sharpe": -1.0835,
+      "oos_sharpe": -1.126,
+      "is_mdd": -0.1505,
+      "oos_mdd": -0.0492,
+      "is_trade_count": 92,
+      "oos_trade_count": 19,
+      "pass": false
+    },
+    {
+      "window": 3,
+      "is_start": "2016-01-01",
+      "is_end": "2018-12-31",
+      "oos_start": "2019-01-01",
+      "oos_end": "2019-06-30",
+      "is_sharpe": -1.1561,
+      "oos_sharpe": -1.9112,
+      "is_mdd": -0.1549,
+      "oos_mdd": -0.0406,
+      "is_trade_count": 93,
+      "oos_trade_count": 18,
+      "pass": false
+    },
+    {
+      "window": 4,
+      "is_start": "2016-07-01",
+      "is_end": "2019-06-30",
+      "oos_start": "2019-07-01",
+      "oos_end": "2019-12-31",
+      "is_sharpe": -1.1902,
+      "oos_sharpe": 1.2167,
+      "is_mdd": -0.1721,
+      "oos_mdd": -0.0265,
+      "is_trade_count": 102,
+      "oos_trade_count": 19,
+      "pass": true
+    }
+  ],
+  "wf_oos_sharpes": [
+    -2.2731,
+    -1.126,
+    -1.9112,
+    1.2167
+  ],
+  "wf_sharpe_std": 1.3582,
+  "wf_sharpe_min": -2.2731,
+  "regime_slices": {
+    "pre_covid_2018_2019": {
+      "sharpe": -1.1679,
+      "mdd": -0.1762,
+      "trade_count": 87
+    },
+    "stimulus_2020_2021": {
+      "sharpe": 0.2609,
+      "mdd": -0.0544,
+      "trade_count": 76
+    },
+    "rate_shock_2022": {
+      "sharpe": -0.9534,
+      "mdd": -0.0275,
+      "trade_count": 8
+    },
+    "normalization_2023": {
+      "sharpe": -0.7871,
+      "mdd": -0.0509,
+      "trade_count": 52
+    }
+  },
+  "regime_slice_verdict": {
+    "regimes_passing_08": 0,
+    "stress_regime_pass": false,
+    "regime_slice_pass": false,
+    "note": "Pass requires IS Sharpe \u2265 0.8 in \u22652/4 regimes (\u22651 stress regime)."
+  },
+  "sub_period_results": {
+    "post_gfc_recovery_2010_2011": {
+      "sharpe": -3.1037,
+      "mdd": -0.2018,
+      "trade_count": 42
+    },
+    "china_selloff_2015_2016": {
+      "sharpe": -0.5762,
+      "mdd": -0.0607,
+      "trade_count": 69
+    },
+    "q4_2018_correction": {
+      "sharpe": -1.7485,
+      "mdd": -0.1581,
+      "trade_count": 68
+    },
+    "covid_crash_2020": {
+      "sharpe": 0.4216,
+      "mdd": -0.0545,
+      "trade_count": 95
+    },
+    "bear_2022": {
+      "sharpe": -0.9534,
+      "mdd": -0.0275,
+      "trade_count": 8
+    },
+    "_gfc_note": "GFC 2008-2009 sub-period CANNOT be tested: TQQQ inception date is 2010-02-09. Post-GFC recovery (2010-02-10 to 2011-12-31) is the earliest available sub-period. This is a known limitation documented in hypothesis h09 notes."
+  },
+  "market_impact_note": "TQQQ ADV ~60-100M shares/day. At $25K\u00d715% sizing, Q\u224850-100 shares. Q/ADV \u2248 1.7e-6 << 0.01 threshold. Market impact negligible (< 0.01 bps). No liquidity constraint flagged.",
+  "market_impact_bps": 0.0,
+  "liquidity_constrained": false,
+  "liquidity_constrained_count": 0,
+  "order_to_adv_note": "Q/ADV << 0.01 \u2014 no liquidity constraint",
+  "sensitivity_scan_decline": {
+    "decline_2pct": {
+      "sharpe": -0.7422,
+      "trade_count": 442,
+      "max_drawdown": -0.2972
+    },
+    "decline_3pct": {
+      "sharpe": -0.6475,
+      "trade_count": 346,
+      "max_drawdown": -0.2637
+    },
+    "decline_5pct": {
+      "sharpe": -0.472,
+      "trade_count": 252,
+      "max_drawdown": -0.22
+    },
+    "decline_6pct": {
+      "sharpe": -0.3753,
+      "trade_count": 197,
+      "max_drawdown": -0.2005
+    },
+    "decline_7pct": {
+      "sharpe": -0.3609,
+      "trade_count": 146,
+      "max_drawdown": -0.1528
+    }
+  },
+  "sensitivity_scan_vix": {
+    "vix_25": {
+      "sharpe": -0.4525,
+      "trade_count": 214,
+      "max_drawdown": -0.2076
+    },
+    "vix_28": {
+      "sharpe": -0.5324,
+      "trade_count": 238,
+      "max_drawdown": -0.2181
+    },
+    "vix_30": {
+      "sharpe": -0.472,
+      "trade_count": 252,
+      "max_drawdown": -0.22
+    },
+    "vix_32": {
+      "sharpe": -0.3989,
+      "trade_count": 259,
+      "max_drawdown": -0.22
+    },
+    "vix_35": {
+      "sharpe": -0.3395,
+      "trade_count": 270,
+      "max_drawdown": -0.2156
+    }
+  },
+  "sensitivity_meta": {
+    "combined_variance_pct": 0.8401,
+    "sensitivity_pass": "False"
+  },
+  "is_exit_reasons": {
+    "stop_loss": 110,
+    "take_profit": 142
+  },
+  "oos_exit_reasons": {
+    "stop_loss": 30,
+    "take_profit": 30
+  },
+  "trade_log_sample": [
+    {
+      "entry_date": "2015-01-05",
+      "exit_date": "2015-01-06",
+      "entry_price": 1.8944,
+      "exit_price": 1.8423,
+      "shares": 1979,
+      "hold_days": 1,
+      "exit_reason": "stop_loss",
+      "gross_return_pct": -2.7506,
+      "entry_cost": 11.9362,
+      "exit_cost": 11.8801,
+      "net_pnl": -126.936,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-01-06",
+      "exit_date": "2015-01-07",
+      "entry_price": 1.8423,
+      "exit_price": 1.7965,
+      "shares": 2025,
+      "hold_days": 1,
+      "exit_reason": "stop_loss",
+      "gross_return_pct": -2.483,
+      "entry_cost": 12.1582,
+      "exit_cost": 12.1077,
+      "net_pnl": -116.8967,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-01-07",
+      "exit_date": "2015-01-08",
+      "entry_price": 1.7965,
+      "exit_price": 1.8779,
+      "shares": 2062,
+      "hold_days": 1,
+      "exit_reason": "take_profit",
+      "gross_return_pct": 4.5278,
+      "entry_cost": 12.3304,
+      "exit_cost": 12.2609,
+      "net_pnl": 143.1371,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-01-08",
+      "exit_date": "2015-01-09",
+      "entry_price": 1.8779,
+      "exit_price": 1.9532,
+      "shares": 1982,
+      "hold_days": 1,
+      "exit_reason": "take_profit",
+      "gross_return_pct": 4.014,
+      "entry_cost": 11.785,
+      "exit_cost": 11.912,
+      "net_pnl": 125.7014,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-01-13",
+      "exit_date": "2015-01-14",
+      "entry_price": 1.8896,
+      "exit_price": 1.7778,
+      "shares": 1986,
+      "hold_days": 1,
+      "exit_reason": "stop_loss",
+      "gross_return_pct": -5.9151,
+      "entry_cost": 11.8595,
+      "exit_cost": 11.7409,
+      "net_pnl": -245.5793,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-01-14",
+      "exit_date": "2015-01-15",
+      "entry_price": 1.7778,
+      "exit_price": 1.7423,
+      "shares": 2101,
+      "hold_days": 1,
+      "exit_reason": "stop_loss",
+      "gross_return_pct": -2.0,
+      "entry_cost": 12.4221,
+      "exit_cost": 12.3824,
+      "net_pnl": -99.5083,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-01-15",
+      "exit_date": "2015-01-16",
+      "entry_price": 1.8285,
+      "exit_price": 1.7275,
+      "shares": 2036,
+      "hold_days": 1,
+      "exit_reason": "stop_loss",
+      "gross_return_pct": -5.5254,
+      "entry_cost": 12.0886,
+      "exit_cost": 11.9846,
+      "net_pnl": -229.7777,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-01-16",
+      "exit_date": "2015-01-20",
+      "entry_price": 1.7275,
+      "exit_price": 1.8281,
+      "shares": 2125,
+      "hold_days": 1,
+      "exit_reason": "take_profit",
+      "gross_return_pct": 5.8255,
+      "entry_cost": 12.5096,
+      "exit_cost": 12.6184,
+      "net_pnl": 188.7224,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-01-28",
+      "exit_date": "2015-01-29",
+      "entry_price": 1.9091,
+      "exit_price": 1.7878,
+      "shares": 1935,
+      "hold_days": 1,
+      "exit_reason": "stop_loss",
+      "gross_return_pct": -6.3549,
+      "entry_cost": 11.5703,
+      "exit_cost": 11.4494,
+      "net_pnl": -257.7729,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-01-29",
+      "exit_date": "2015-01-30",
+      "entry_price": 1.7878,
+      "exit_price": 1.8395,
+      "shares": 2047,
+      "hold_days": 1,
+      "exit_reason": "take_profit",
+      "gross_return_pct": 2.8924,
+      "entry_cost": 12.1134,
+      "exit_cost": 12.1664,
+      "net_pnl": 81.5705,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-01-30",
+      "exit_date": "2015-02-02",
+      "entry_price": 1.8395,
+      "exit_price": 1.8027,
+      "shares": 1996,
+      "hold_days": 1,
+      "exit_reason": "stop_loss",
+      "gross_return_pct": -2.0,
+      "entry_cost": 11.8626,
+      "exit_cost": 11.824,
+      "net_pnl": -97.1182,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-02-02",
+      "exit_date": "2015-02-03",
+      "entry_price": 1.8132,
+      "exit_price": 1.8663,
+      "shares": 2016,
+      "hold_days": 1,
+      "exit_reason": "take_profit",
+      "gross_return_pct": 2.9286,
+      "entry_cost": 11.9536,
+      "exit_cost": 12.0068,
+      "net_pnl": 83.0932,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-03-09",
+      "exit_date": "2015-03-10",
+      "entry_price": 2.1642,
+      "exit_price": 2.121,
+      "shares": 1694,
+      "hold_days": 1,
+      "exit_reason": "stop_loss",
+      "gross_return_pct": -2.0,
+      "entry_cost": 10.3313,
+      "exit_cost": 10.2994,
+      "net_pnl": -93.9552,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-03-11",
+      "exit_date": "2015-03-12",
+      "entry_price": 2.0551,
+      "exit_price": 2.0077,
+      "shares": 1777,
+      "hold_days": 1,
+      "exit_reason": "stop_loss",
+      "gross_return_pct": -2.3033,
+      "entry_cost": 10.7417,
+      "exit_cost": 10.6993,
+      "net_pnl": -105.5524,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-03-12",
+      "exit_date": "2015-03-13",
+      "entry_price": 2.0077,
+      "exit_price": 2.0467,
+      "shares": 1813,
+      "hold_days": 1,
+      "exit_reason": "take_profit",
+      "gross_return_pct": 1.9415,
+      "entry_cost": 10.9163,
+      "exit_cost": 10.9501,
+      "net_pnl": 48.8053,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-03-13",
+      "exit_date": "2015-03-16",
+      "entry_price": 2.0467,
+      "exit_price": 2.0672,
+      "shares": 1782,
+      "hold_days": 1,
+      "exit_reason": "take_profit",
+      "gross_return_pct": 1.0,
+      "entry_cost": 10.7626,
+      "exit_cost": 10.7827,
+      "net_pnl": 14.9269,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-03-16",
+      "exit_date": "2015-03-17",
+      "entry_price": 2.0481,
+      "exit_price": 2.0851,
+      "shares": 1776,
+      "hold_days": 1,
+      "exit_reason": "take_profit",
+      "gross_return_pct": 1.8062,
+      "entry_cost": 10.7291,
+      "exit_cost": 10.7625,
+      "net_pnl": 44.2067,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-03-26",
+      "exit_date": "2015-03-27",
+      "entry_price": 1.9898,
+      "exit_price": 2.0171,
+      "shares": 1836,
+      "hold_days": 1,
+      "exit_reason": "take_profit",
+      "gross_return_pct": 1.3695,
+      "entry_cost": 11.0432,
+      "exit_cost": 11.0688,
+      "net_pnl": 27.9184,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-03-27",
+      "exit_date": "2015-03-30",
+      "entry_price": 2.0171,
+      "exit_price": 2.0817,
+      "shares": 1814,
+      "hold_days": 1,
+      "exit_reason": "take_profit",
+      "gross_return_pct": 3.2048,
+      "entry_cost": 10.9359,
+      "exit_cost": 10.9961,
+      "net_pnl": 95.3312,
+      "liquidity_constrained": false
+    },
+    {
+      "entry_date": "2015-03-30",
+      "exit_date": "2015-03-31",
+      "entry_price": 2.0817,
+      "exit_price": 2.1025,
+      "shares": 1759,
+      "hold_days": 1,
+      "exit_reason": "take_profit",
+      "gross_return_pct": 1.0,
+      "entry_cost": 10.6622,
+      "exit_cost": 10.6817,
+      "net_pnl": 15.2735,
+      "liquidity_constrained": false
+    }
+  ],
+  "trade_log_count": 252,
+  "data_quality": {
+    "survivorship_bias": "TQQQ is a single-instrument strategy \u2014 ProShares UltraPro QQQ. No survivorship bias: TQQQ has been continuously trading since 2010-02-09. IS window starts 2015-01-01 per Research Director mandate to capture multiple distinct market regimes.",
+    "price_source": "yfinance TQQQ, QQQ, ^VIX with auto_adjust=True (split-adjusted).",
+    "earnings_exclusion": "N/A \u2014 TQQQ and QQQ are ETFs with no earnings events.",
+    "delisted": "N/A \u2014 TQQQ is actively traded.",
+    "tqqq_inception_note": "TQQQ inception: 2010-02-09. GFC sub-period (2008-2009) cannot be tested. Post-GFC recovery (2010-02 to 2011-12) is the earliest available sub-period."
+  },
+  "gfc_limitation_note": "GFC 2008-2009 sub-period CANNOT be tested: TQQQ inception date is 2010-02-09. Post-GFC recovery (2010-02-10 to 2011-12-31) is the earliest available sub-period. This is a known limitation documented in hypothesis h09 notes.",
+  "gate1_checks": {
+    "is_sharpe_pass": false,
+    "oos_sharpe_pass": false,
+    "is_mdd_pass": false,
+    "oos_mdd_pass": true,
+    "win_rate_pass": true,
+    "trade_count_pass": true,
+    "wf_windows_pass": false,
+    "wf_consistency_pass": true,
+    "sensitivity_pass": false,
+    "regime_slice_pass": false,
+    "dsr_pass": false,
+    "permutation_pass": false,
+    "mc_p5_pass": false
+  },
+  "gate1_pass": false,
+  "failing_criteria": [
+    "is_sharpe_pass",
+    "oos_sharpe_pass",
+    "is_mdd_pass",
+    "wf_windows_pass",
+    "sensitivity_pass",
+    "regime_slice_pass",
+    "dsr_pass",
+    "permutation_pass",
+    "mc_p5_pass"
+  ],
+  "look_ahead_bias_flag": false,
+  "look_ahead_bias_notes": [
+    "Entry signal computed at close T; execution at open T+1 (shifted +1 bar).",
+    "Rolling high uses past prices only (no current bar).",
+    "QQQ SMA and VIX checked at close of signal bar \u2014 no future data used.",
+    "Regime gate suppresses NEW entries only; existing positions use TP/SL/time-stop."
+  ],
+  "win_rate_note": null,
+  "tasc_crowding_note": "TASC March 2026 publication. Monitor for post-publication edge decay. OOS period (2022-2023) predates publication \u2014 crowding risk in live trading only."
+}
