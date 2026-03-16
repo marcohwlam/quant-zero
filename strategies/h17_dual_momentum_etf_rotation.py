@@ -227,6 +227,8 @@ def simulate_gem_portfolio(
     signal_series: pd.Series,
     params: dict,
     volume: pd.DataFrame,
+    close_full: pd.DataFrame = None,
+    volume_full: pd.DataFrame = None,
 ) -> dict:
     """
     Simulate GEM portfolio: always 100% in one ETF.
@@ -242,6 +244,16 @@ def simulate_gem_portfolio(
     - Slippage: 0.05% of trade value
     - Market impact: k × σ × sqrt(Q / ADV), k=0.1
 
+    Args:
+        close:       Simulation window price data (IS or OOS period only).
+        signal_series: Monthly GEM signals (may include pre-window signal for first execution).
+        params:      Strategy parameters.
+        volume:      Simulation window volume data.
+        close_full:  Full buffered price data (includes pre-window history). Used for
+                     sigma/ADV computation to avoid NaN at window start. If None, falls
+                     back to close (may produce NaN sigma at start of short windows).
+        volume_full: Full buffered volume data. If None, falls back to volume.
+
     Returns:
         dict with daily portfolio values, trade log, and metrics.
     """
@@ -253,13 +265,21 @@ def simulate_gem_portfolio(
     order_qty   = params["order_qty"]
     k_impact    = 0.1  # Almgren-Chriss square-root model constant
 
-    # Precompute sigma (20-day rolling daily return std) and ADV for market impact
+    # Precompute sigma (20-day rolling daily return std) and ADV for market impact.
+    # Use full buffered data if provided so rolling windows are warm at simulation start.
+    # Bug fix: computing sigma/ADV from close_window only gives NaN on early dates
+    # (e.g., rolling(20).std() requires 20 returns; the first execution date may fall
+    # within the first 20 trading days of the window). Passing close_full ensures the
+    # rolling windows are warm before the simulation window begins.
+    _close_risk  = close_full if close_full is not None else close
+    _volume_risk = volume_full if volume_full is not None else volume
+
     sigma = {}
     adv = {}
     for etf in all_etfs:
-        if etf in close.columns:
-            sigma[etf] = close[etf].pct_change().rolling(20).std()
-            adv[etf] = (volume[etf] * close[etf]).rolling(20).mean()
+        if etf in _close_risk.columns:
+            sigma[etf] = _close_risk[etf].pct_change().rolling(20).std()
+            adv[etf] = (_volume_risk[etf] * _close_risk[etf]).rolling(20).mean() if etf in _volume_risk.columns else pd.Series(dtype=float)
 
     # Build execution schedule:
     # For each month-end signal, find the first trading day of the next month.
@@ -299,7 +319,10 @@ def simulate_gem_portfolio(
                     sell_price = close[current_holding].loc[date]
                     if not pd.isna(sell_price) and current_shares > 0:
                         # Apply sell costs
-                        sig_val = sigma.get(current_holding, pd.Series()).get(date, 0) or 0
+                        # NaN guard: pd.Series.get() may return NaN; `NaN or 0` = NaN in Python
+                        # because NaN is truthy. Use explicit pd.isna check instead.
+                        _sv = sigma.get(current_holding, pd.Series()).get(date, np.nan)
+                        sig_val = 0.0 if pd.isna(_sv) else float(_sv)
                         adv_val = adv.get(current_holding, pd.Series()).get(date, np.nan)
                         adv_val = adv_val if not np.isna(adv_val) and adv_val > 0 else 1e9
                         q_over_adv_sell = (current_shares * sell_price) / adv_val
@@ -336,7 +359,9 @@ def simulate_gem_portfolio(
                 # BUY target ETF with all available cash
                 buy_price = close[target].loc[date]
                 if not pd.isna(buy_price) and buy_price > 0:
-                    sig_val = sigma.get(target, pd.Series()).get(date, 0) or 0
+                    # NaN guard: same as sell side — use pd.isna check not `or 0`
+                    _sv = sigma.get(target, pd.Series()).get(date, np.nan)
+                    sig_val = 0.0 if pd.isna(_sv) else float(_sv)
                     adv_val = adv.get(target, pd.Series()).get(date, np.nan)
                     adv_val = adv_val if not np.isna(adv_val) and adv_val > 0 else 1e9
 
@@ -361,22 +386,32 @@ def simulate_gem_portfolio(
                     commission_buy = shares_bought * 0.005
                     cash_spent = shares_bought * effective_cost + commission_buy
 
-                    trade_log.append({
-                        "trade_id": f"buy_{target}_{date.date()}",
-                        "date": str(date.date()),
-                        "ticker": target,
-                        "side": "buy",
-                        "shares": round(shares_bought, 4),
-                        "price": round(buy_price, 4),
-                        "effective_cost": round(effective_cost, 4),
-                        "slippage_pct": round(slippage_buy, 6),
-                        "commission": round(commission_buy, 4),
-                        "cash_spent": round(cash_spent, 4),
-                        "liquidity_constrained": q_over_adv_buy > 0.01,
-                    })
-                    current_holding = target
-                    current_shares = shares_bought
-                    cash = 0.0  # Fully invested
+                    # Guard: abort if shares_bought is NaN or non-positive (prevents
+                    # cascade failure where NaN shares destroy portfolio valuation).
+                    if pd.isna(shares_bought) or shares_bought <= 0:
+                        warnings.warn(
+                            f"BUY skipped: {target} on {date.date()} — "
+                            f"shares_bought={shares_bought} (effective_cost={effective_cost:.4f}, "
+                            f"slippage={slippage_buy:.6f}). "
+                            "Likely cause: sigma NaN at window start (use close_full parameter)."
+                        )
+                    else:
+                        trade_log.append({
+                            "trade_id": f"buy_{target}_{date.date()}",
+                            "date": str(date.date()),
+                            "ticker": target,
+                            "side": "buy",
+                            "shares": round(shares_bought, 4),
+                            "price": round(buy_price, 4),
+                            "effective_cost": round(effective_cost, 4),
+                            "slippage_pct": round(slippage_buy, 6),
+                            "commission": round(commission_buy, 4),
+                            "cash_spent": round(cash_spent, 4),
+                            "liquidity_constrained": q_over_adv_buy > 0.01,
+                        })
+                        current_holding = target
+                        current_shares = shares_bought
+                        cash = 0.0  # Fully invested
 
         # Daily portfolio valuation
         if current_holding is not None and current_holding in close.columns:
@@ -547,8 +582,13 @@ def run_backtest(
     if signal_in_window.empty:
         raise ValueError(f"No GEM signals generated for period {start} to {end}.")
 
-    # Simulate portfolio
-    sim_result = simulate_gem_portfolio(close_window, signal_in_window, params, volume_window)
+    # Simulate portfolio.
+    # Pass full buffered close/volume as close_full/volume_full so sigma/ADV rolling
+    # windows are warm at the simulation window start (fixes NaN sigma on first trade).
+    sim_result = simulate_gem_portfolio(
+        close_window, signal_in_window, params, volume_window,
+        close_full=close, volume_full=volume,
+    )
 
     # Holdings breakdown (what fraction of time in each ETF)
     holding_counts = {}
