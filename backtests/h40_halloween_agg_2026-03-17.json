@@ -1,0 +1,27 @@
+{
+  "strategy": "H40_halloween_effect",
+  "run_date": "2026-03-17",
+  "summer_allocation": "agg",
+  "is_window": "1950-01-01 to 2018-12-31",
+  "oos_window": "2019-01-01 to 2026-03-01",
+  "is_sharpe": 0.5775760610463938,
+  "oos_sharpe": -0.05700895291774417,
+  "is_max_drawdown": -0.3071780206013572,
+  "oos_max_drawdown": -0.29835005246801,
+  "is_total_trades": 63,
+  "oos_total_trades": 5,
+  "win_rate": 0.7142857142857143,
+  "profit_factor": 4.125547368674359,
+  "is_annualized_return": 0.05049602104065065,
+  "oos_annualized_return": -0.005954822648024827,
+  "oos_data_quality": {
+    "note": "AGG variant \u2014 DQ validated on cash baseline"
+  },
+  "data_quality": {
+    "survivorship_bias": "not_applicable",
+    "price_adjustments": "auto_adjust=True for both ^GSPC and SPY via yfinance",
+    "data_gaps": "ok: max_consecutive_missing=2 (\u22645)",
+    "earnings_exclusion": "not_applicable",
+    "delisted_tickers": "not_applicable"
+  }
+}

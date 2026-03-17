@@ -1,0 +1,1170 @@
+{
+  "strategy": "H40_halloween_effect",
+  "run_date": "2026-03-17",
+  "summer_allocation": "cash",
+  "is_window": "1950-01-01 to 2018-12-31",
+  "oos_window": "2019-01-01 to 2026-03-01",
+  "is_sharpe": 0.5775760610463938,
+  "oos_sharpe": -0.05700895291774417,
+  "is_max_drawdown": -0.3071780206013572,
+  "oos_max_drawdown": -0.29835005246801,
+  "is_total_trades": 63,
+  "oos_total_trades": 5,
+  "win_rate": 0.7142857142857143,
+  "profit_factor": 4.125547368674359,
+  "is_annualized_return": 0.05049602104065065,
+  "oos_annualized_return": -0.005954822648024827,
+  "dsr": 0.0,
+  "post_cost_sharpe": 0.5775760610463938,
+  "mc_p5_sharpe": 5.587700871798763,
+  "mc_median_sharpe": 9.376590747301321,
+  "mc_p95_sharpe": 13.592222620671517,
+  "sharpe_ci_low": 0.39358849838167087,
+  "sharpe_ci_high": 0.8715303155063221,
+  "mdd_ci_low": -0.45300455673927953,
+  "mdd_ci_high": -0.19523015273849922,
+  "win_rate_ci_low": 0.2050586976636595,
+  "win_rate_ci_high": 0.2598398103169095,
+  "market_impact_bps": 0.007499782279978449,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 6.371391534529581e-07,
+  "permutation_pvalue": 0.59,
+  "permutation_test_pass": false,
+  "wf_windows": 131,
+  "wf_windows_passed": 52,
+  "wf_consistency": 0.5746244836322401,
+  "wf_variance": 1.1241141141020456,
+  "pct_positive_wf_windows": 0.3969465648854962,
+  "wf_sharpe_std": 1.1241141141020456,
+  "wf_sharpe_min": -1.420459526840092,
+  "low_trade_count_wf": true,
+  "sensitivity_pass": true,
+  "sensitivity_details": {
+    "circuit_breaker": [
+      {
+        "cb": 0.1,
+        "sharpe": 0.4036057859964825
+      },
+      {
+        "cb": 0.12,
+        "sharpe": 0.5419300822607727
+      },
+      {
+        "cb": 0.15,
+        "sharpe": 0.5775767842574415
+      },
+      {
+        "cb": 0.18,
+        "sharpe": 0.584135472748853
+      },
+      {
+        "cb": 0.2,
+        "sharpe": 0.6035976670354064
+      }
+    ],
+    "entry_month": [
+      {
+        "entry_month": 9,
+        "sharpe": 0.5453498582473297
+      },
+      {
+        "entry_month": 10,
+        "sharpe": 0.5775767842574415
+      },
+      {
+        "entry_month": 11,
+        "sharpe": 0.5068714660551384
+      }
+    ],
+    "exit_month": [
+      {
+        "exit_month": 3,
+        "sharpe": 0.5438750503482643
+      },
+      {
+        "exit_month": 4,
+        "sharpe": 0.5775767842574415
+      },
+      {
+        "exit_month": 5,
+        "sharpe": 0.5441587747161047
+      }
+    ]
+  },
+  "circuit_breaker_events": 7,
+  "liquidity_constrained_trades": 0,
+  "oos_data_quality": {
+    "strategy_name": "H40_halloween_effect",
+    "oos_total_rows": 1799,
+    "oos_clean_rows": 1799,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "Close": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "data_quality": {
+    "survivorship_bias": "not_applicable",
+    "price_adjustments": "auto_adjust=True for both ^GSPC and SPY via yfinance",
+    "data_gaps": "ok: max_consecutive_missing=2 (\u22645)",
+    "earnings_exclusion": "not_applicable",
+    "delisted_tickers": "not_applicable"
+  },
+  "wf_details": [
+    {
+      "fold_train_start": "1950-01-03",
+      "fold_train_end": "1953-01-03",
+      "fold_test_start": "1953-01-03",
+      "fold_test_end": "1953-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1950-07-03",
+      "fold_train_end": "1953-07-03",
+      "fold_test_start": "1953-07-03",
+      "fold_test_end": "1954-01-03",
+      "oos_sharpe": 0.5384857174380927,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1951-01-03",
+      "fold_train_end": "1954-01-03",
+      "fold_test_start": "1954-01-03",
+      "fold_test_end": "1954-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1951-07-03",
+      "fold_train_end": "1954-07-03",
+      "fold_test_start": "1954-07-03",
+      "fold_test_end": "1955-01-03",
+      "oos_sharpe": 3.782646205688175,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1952-01-03",
+      "fold_train_end": "1955-01-03",
+      "fold_test_start": "1955-01-03",
+      "fold_test_end": "1955-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1952-07-03",
+      "fold_train_end": "1955-07-03",
+      "fold_test_start": "1955-07-03",
+      "fold_test_end": "1956-01-03",
+      "oos_sharpe": 2.051851170451124,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1953-01-03",
+      "fold_train_end": "1956-01-03",
+      "fold_test_start": "1956-01-03",
+      "fold_test_end": "1956-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1953-07-03",
+      "fold_train_end": "1956-07-03",
+      "fold_test_start": "1956-07-03",
+      "fold_test_end": "1957-01-03",
+      "oos_sharpe": 0.36345791273044176,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1954-01-03",
+      "fold_train_end": "1957-01-03",
+      "fold_test_start": "1957-01-03",
+      "fold_test_end": "1957-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1954-07-03",
+      "fold_train_end": "1957-07-03",
+      "fold_test_start": "1957-07-03",
+      "fold_test_end": "1958-01-03",
+      "oos_sharpe": -0.36451191380376274,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1955-01-03",
+      "fold_train_end": "1958-01-03",
+      "fold_test_start": "1958-01-03",
+      "fold_test_end": "1958-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1955-07-03",
+      "fold_train_end": "1958-07-03",
+      "fold_test_start": "1958-07-03",
+      "fold_test_end": "1959-01-03",
+      "oos_sharpe": 2.5721701047768817,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1956-01-03",
+      "fold_train_end": "1959-01-03",
+      "fold_test_start": "1959-01-03",
+      "fold_test_end": "1959-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1956-07-03",
+      "fold_train_end": "1959-07-03",
+      "fold_test_start": "1959-07-03",
+      "fold_test_end": "1960-01-03",
+      "oos_sharpe": 2.1159885010592805,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1957-01-03",
+      "fold_train_end": "1960-01-03",
+      "fold_test_start": "1960-01-03",
+      "fold_test_end": "1960-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1957-07-03",
+      "fold_train_end": "1960-07-03",
+      "fold_test_start": "1960-07-03",
+      "fold_test_end": "1961-01-03",
+      "oos_sharpe": 3.635389966410549,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1958-01-03",
+      "fold_train_end": "1961-01-03",
+      "fold_test_start": "1961-01-03",
+      "fold_test_end": "1961-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1958-07-03",
+      "fold_train_end": "1961-07-03",
+      "fold_test_start": "1961-07-03",
+      "fold_test_end": "1962-01-03",
+      "oos_sharpe": 1.7508168368049741,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1959-01-03",
+      "fold_train_end": "1962-01-03",
+      "fold_test_start": "1962-01-03",
+      "fold_test_end": "1962-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1959-07-03",
+      "fold_train_end": "1962-07-03",
+      "fold_test_start": "1962-07-03",
+      "fold_test_end": "1963-01-03",
+      "oos_sharpe": 3.771600745372647,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1960-01-03",
+      "fold_train_end": "1963-01-03",
+      "fold_test_start": "1963-01-03",
+      "fold_test_end": "1963-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1960-07-03",
+      "fold_train_end": "1963-07-03",
+      "fold_test_start": "1963-07-03",
+      "fold_test_end": "1964-01-03",
+      "oos_sharpe": 0.46916273858132734,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1961-01-03",
+      "fold_train_end": "1964-01-03",
+      "fold_test_start": "1964-01-03",
+      "fold_test_end": "1964-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1961-07-03",
+      "fold_train_end": "1964-07-03",
+      "fold_test_start": "1964-07-03",
+      "fold_test_end": "1965-01-03",
+      "oos_sharpe": -0.07713290355600945,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1962-01-03",
+      "fold_train_end": "1965-01-03",
+      "fold_test_start": "1965-01-03",
+      "fold_test_end": "1965-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1962-07-03",
+      "fold_train_end": "1965-07-03",
+      "fold_test_start": "1965-07-03",
+      "fold_test_end": "1966-01-03",
+      "oos_sharpe": 0.00727370568315265,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1963-01-03",
+      "fold_train_end": "1966-01-03",
+      "fold_test_start": "1966-01-03",
+      "fold_test_end": "1966-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1963-07-03",
+      "fold_train_end": "1966-07-03",
+      "fold_test_start": "1966-07-03",
+      "fold_test_end": "1967-01-03",
+      "oos_sharpe": 0.06128803042971827,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1964-01-03",
+      "fold_train_end": "1967-01-03",
+      "fold_test_start": "1967-01-03",
+      "fold_test_end": "1967-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1964-07-03",
+      "fold_train_end": "1967-07-03",
+      "fold_test_start": "1967-07-03",
+      "fold_test_end": "1968-01-03",
+      "oos_sharpe": 1.2906779206238232,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1965-01-03",
+      "fold_train_end": "1968-01-03",
+      "fold_test_start": "1968-01-03",
+      "fold_test_end": "1968-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1965-07-03",
+      "fold_train_end": "1968-07-03",
+      "fold_test_start": "1968-07-03",
+      "fold_test_end": "1969-01-03",
+      "oos_sharpe": 0.31992167178018577,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1966-01-03",
+      "fold_train_end": "1969-01-03",
+      "fold_test_start": "1969-01-03",
+      "fold_test_end": "1969-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1966-07-03",
+      "fold_train_end": "1969-07-03",
+      "fold_test_start": "1969-07-03",
+      "fold_test_end": "1970-01-03",
+      "oos_sharpe": -1.4095965981264125,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1967-01-03",
+      "fold_train_end": "1970-01-03",
+      "fold_test_start": "1970-01-03",
+      "fold_test_end": "1970-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1967-07-03",
+      "fold_train_end": "1970-07-03",
+      "fold_test_start": "1970-07-03",
+      "fold_test_end": "1971-01-03",
+      "oos_sharpe": 4.291241631043517,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1968-01-03",
+      "fold_train_end": "1971-01-03",
+      "fold_test_start": "1971-01-03",
+      "fold_test_end": "1971-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1968-07-03",
+      "fold_train_end": "1971-07-03",
+      "fold_test_start": "1971-07-03",
+      "fold_test_end": "1972-01-03",
+      "oos_sharpe": 2.2458273284602037,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1969-01-03",
+      "fold_train_end": "1972-01-03",
+      "fold_test_start": "1972-01-03",
+      "fold_test_end": "1972-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1969-07-03",
+      "fold_train_end": "1972-07-03",
+      "fold_test_start": "1972-07-03",
+      "fold_test_end": "1973-01-03",
+      "oos_sharpe": 3.0418229265256724,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1970-01-03",
+      "fold_train_end": "1973-01-03",
+      "fold_test_start": "1973-01-03",
+      "fold_test_end": "1973-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1970-07-03",
+      "fold_train_end": "1973-07-03",
+      "fold_test_start": "1973-07-03",
+      "fold_test_end": "1974-01-03",
+      "oos_sharpe": -1.3316331472873415,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1971-01-03",
+      "fold_train_end": "1974-01-03",
+      "fold_test_start": "1974-01-03",
+      "fold_test_end": "1974-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1971-07-03",
+      "fold_train_end": "1974-07-03",
+      "fold_test_start": "1974-07-03",
+      "fold_test_end": "1975-01-03",
+      "oos_sharpe": -0.7645849022730429,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1972-01-03",
+      "fold_train_end": "1975-01-03",
+      "fold_test_start": "1975-01-03",
+      "fold_test_end": "1975-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1972-07-03",
+      "fold_train_end": "1975-07-03",
+      "fold_test_start": "1975-07-03",
+      "fold_test_end": "1976-01-03",
+      "oos_sharpe": 0.6310583845705876,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1973-01-03",
+      "fold_train_end": "1976-01-03",
+      "fold_test_start": "1976-01-03",
+      "fold_test_end": "1976-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1973-07-03",
+      "fold_train_end": "1976-07-03",
+      "fold_test_start": "1976-07-03",
+      "fold_test_end": "1977-01-03",
+      "oos_sharpe": 1.5640757327426071,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1974-01-03",
+      "fold_train_end": "1977-01-03",
+      "fold_test_start": "1977-01-03",
+      "fold_test_end": "1977-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1974-07-03",
+      "fold_train_end": "1977-07-03",
+      "fold_test_start": "1977-07-03",
+      "fold_test_end": "1978-01-03",
+      "oos_sharpe": 0.9578989984731684,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1975-01-03",
+      "fold_train_end": "1978-01-03",
+      "fold_test_start": "1978-01-03",
+      "fold_test_end": "1978-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1975-07-03",
+      "fold_train_end": "1978-07-03",
+      "fold_test_start": "1978-07-03",
+      "fold_test_end": "1979-01-03",
+      "oos_sharpe": 0.7868844482355272,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1976-01-03",
+      "fold_train_end": "1979-01-03",
+      "fold_test_start": "1979-01-03",
+      "fold_test_end": "1979-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1976-07-03",
+      "fold_train_end": "1979-07-03",
+      "fold_test_start": "1979-07-03",
+      "fold_test_end": "1980-01-03",
+      "oos_sharpe": 1.123789625375193,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1977-01-03",
+      "fold_train_end": "1980-01-03",
+      "fold_test_start": "1980-01-03",
+      "fold_test_end": "1980-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1977-07-03",
+      "fold_train_end": "1980-07-03",
+      "fold_test_start": "1980-07-03",
+      "fold_test_end": "1981-01-03",
+      "oos_sharpe": 1.386680994245904,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1978-01-03",
+      "fold_train_end": "1981-01-03",
+      "fold_test_start": "1981-01-03",
+      "fold_test_end": "1981-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1978-07-03",
+      "fold_train_end": "1981-07-03",
+      "fold_test_start": "1981-07-03",
+      "fold_test_end": "1982-01-03",
+      "oos_sharpe": 0.15580363680372636,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1979-01-03",
+      "fold_train_end": "1982-01-03",
+      "fold_test_start": "1982-01-03",
+      "fold_test_end": "1982-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1979-07-03",
+      "fold_train_end": "1982-07-03",
+      "fold_test_start": "1982-07-03",
+      "fold_test_end": "1983-01-03",
+      "oos_sharpe": 0.8387220687302,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1980-01-03",
+      "fold_train_end": "1983-01-03",
+      "fold_test_start": "1983-01-03",
+      "fold_test_end": "1983-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1980-07-03",
+      "fold_train_end": "1983-07-03",
+      "fold_test_start": "1983-07-03",
+      "fold_test_end": "1984-01-03",
+      "oos_sharpe": 0.3231295233520678,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1981-01-03",
+      "fold_train_end": "1984-01-03",
+      "fold_test_start": "1984-01-03",
+      "fold_test_end": "1984-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1981-07-03",
+      "fold_train_end": "1984-07-03",
+      "fold_test_start": "1984-07-03",
+      "fold_test_end": "1985-01-03",
+      "oos_sharpe": -0.12551005054008055,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1982-01-03",
+      "fold_train_end": "1985-01-03",
+      "fold_test_start": "1985-01-03",
+      "fold_test_end": "1985-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1982-07-03",
+      "fold_train_end": "1985-07-03",
+      "fold_test_start": "1985-07-03",
+      "fold_test_end": "1986-01-03",
+      "oos_sharpe": 3.324106705552551,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1983-01-03",
+      "fold_train_end": "1986-01-03",
+      "fold_test_start": "1986-01-03",
+      "fold_test_end": "1986-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1983-07-03",
+      "fold_train_end": "1986-07-03",
+      "fold_test_start": "1986-07-03",
+      "fold_test_end": "1987-01-03",
+      "oos_sharpe": 0.24833168277385134,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1984-01-03",
+      "fold_train_end": "1987-01-03",
+      "fold_test_start": "1987-01-03",
+      "fold_test_end": "1987-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1984-07-03",
+      "fold_train_end": "1987-07-03",
+      "fold_test_start": "1987-07-03",
+      "fold_test_end": "1988-01-03",
+      "oos_sharpe": -0.22352899996526351,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1985-01-03",
+      "fold_train_end": "1988-01-03",
+      "fold_test_start": "1988-01-03",
+      "fold_test_end": "1988-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1985-07-03",
+      "fold_train_end": "1988-07-03",
+      "fold_test_start": "1988-07-03",
+      "fold_test_end": "1989-01-03",
+      "oos_sharpe": -0.14170414891360603,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1986-01-03",
+      "fold_train_end": "1989-01-03",
+      "fold_test_start": "1989-01-03",
+      "fold_test_end": "1989-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1986-07-03",
+      "fold_train_end": "1989-07-03",
+      "fold_test_start": "1989-07-03",
+      "fold_test_end": "1990-01-03",
+      "oos_sharpe": 1.8015688660508047,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1987-01-03",
+      "fold_train_end": "1990-01-03",
+      "fold_test_start": "1990-01-03",
+      "fold_test_end": "1990-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1987-07-03",
+      "fold_train_end": "1990-07-03",
+      "fold_test_start": "1990-07-03",
+      "fold_test_end": "1991-01-03",
+      "oos_sharpe": 1.8627750773204377,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1988-01-03",
+      "fold_train_end": "1991-01-03",
+      "fold_test_start": "1991-01-03",
+      "fold_test_end": "1991-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1988-07-03",
+      "fold_train_end": "1991-07-03",
+      "fold_test_start": "1991-07-03",
+      "fold_test_end": "1992-01-03",
+      "oos_sharpe": 1.4341328652011058,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1989-01-03",
+      "fold_train_end": "1992-01-03",
+      "fold_test_start": "1992-01-03",
+      "fold_test_end": "1992-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1989-07-03",
+      "fold_train_end": "1992-07-03",
+      "fold_test_start": "1992-07-03",
+      "fold_test_end": "1993-01-03",
+      "oos_sharpe": 1.880225506174121,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1990-01-03",
+      "fold_train_end": "1993-01-03",
+      "fold_test_start": "1993-01-03",
+      "fold_test_end": "1993-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1990-07-03",
+      "fold_train_end": "1993-07-03",
+      "fold_test_start": "1993-07-03",
+      "fold_test_end": "1994-01-03",
+      "oos_sharpe": 0.06999427224482675,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1991-01-03",
+      "fold_train_end": "1994-01-03",
+      "fold_test_start": "1994-01-03",
+      "fold_test_end": "1994-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1991-07-03",
+      "fold_train_end": "1994-07-03",
+      "fold_test_start": "1994-07-03",
+      "fold_test_end": "1995-01-03",
+      "oos_sharpe": -0.9962647426063463,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1992-01-03",
+      "fold_train_end": "1995-01-03",
+      "fold_test_start": "1995-01-03",
+      "fold_test_end": "1995-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1992-07-03",
+      "fold_train_end": "1995-07-03",
+      "fold_test_start": "1995-07-03",
+      "fold_test_end": "1996-01-03",
+      "oos_sharpe": 2.5341324023478995,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1993-01-03",
+      "fold_train_end": "1996-01-03",
+      "fold_test_start": "1996-01-03",
+      "fold_test_end": "1996-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1993-07-03",
+      "fold_train_end": "1996-07-03",
+      "fold_test_start": "1996-07-03",
+      "fold_test_end": "1997-01-03",
+      "oos_sharpe": 1.3033484894808878,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1994-01-03",
+      "fold_train_end": "1997-01-03",
+      "fold_test_start": "1997-01-03",
+      "fold_test_end": "1997-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1994-07-03",
+      "fold_train_end": "1997-07-03",
+      "fold_test_start": "1997-07-03",
+      "fold_test_end": "1998-01-03",
+      "oos_sharpe": 1.2979252842029332,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1995-01-03",
+      "fold_train_end": "1998-01-03",
+      "fold_test_start": "1998-01-03",
+      "fold_test_end": "1998-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1995-07-03",
+      "fold_train_end": "1998-07-03",
+      "fold_test_start": "1998-07-03",
+      "fold_test_end": "1999-01-03",
+      "oos_sharpe": 2.3017469377066164,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1996-01-03",
+      "fold_train_end": "1999-01-03",
+      "fold_test_start": "1999-01-03",
+      "fold_test_end": "1999-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1996-07-03",
+      "fold_train_end": "1999-07-03",
+      "fold_test_start": "1999-07-03",
+      "fold_test_end": "2000-01-03",
+      "oos_sharpe": 2.2429196954446584,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1997-01-03",
+      "fold_train_end": "2000-01-03",
+      "fold_test_start": "2000-01-03",
+      "fold_test_end": "2000-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1997-07-03",
+      "fold_train_end": "2000-07-03",
+      "fold_test_start": "2000-07-03",
+      "fold_test_end": "2001-01-03",
+      "oos_sharpe": -1.2409814101333223,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1998-01-03",
+      "fold_train_end": "2001-01-03",
+      "fold_test_start": "2001-01-03",
+      "fold_test_end": "2001-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1998-07-03",
+      "fold_train_end": "2001-07-03",
+      "fold_test_start": "2001-07-03",
+      "fold_test_end": "2002-01-03",
+      "oos_sharpe": 2.0403677552123645,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1999-01-03",
+      "fold_train_end": "2002-01-03",
+      "fold_test_start": "2002-01-03",
+      "fold_test_end": "2002-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "1999-07-03",
+      "fold_train_end": "2002-07-03",
+      "fold_test_start": "2002-07-03",
+      "fold_test_end": "2003-01-03",
+      "oos_sharpe": 0.5185028588378716,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2000-01-03",
+      "fold_train_end": "2003-01-03",
+      "fold_test_start": "2003-01-03",
+      "fold_test_end": "2003-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2000-07-03",
+      "fold_train_end": "2003-07-03",
+      "fold_test_start": "2003-07-03",
+      "fold_test_end": "2004-01-03",
+      "oos_sharpe": 2.1659192616557132,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2001-01-03",
+      "fold_train_end": "2004-01-03",
+      "fold_test_start": "2004-01-03",
+      "fold_test_end": "2004-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2001-07-03",
+      "fold_train_end": "2004-07-03",
+      "fold_test_start": "2004-07-03",
+      "fold_test_end": "2005-01-03",
+      "oos_sharpe": 3.1364033131121873,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2002-01-03",
+      "fold_train_end": "2005-01-03",
+      "fold_test_start": "2005-01-03",
+      "fold_test_end": "2005-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2002-07-03",
+      "fold_train_end": "2005-07-03",
+      "fold_test_start": "2005-07-03",
+      "fold_test_end": "2006-01-03",
+      "oos_sharpe": 1.9793357513075138,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2003-01-03",
+      "fold_train_end": "2006-01-03",
+      "fold_test_start": "2006-01-03",
+      "fold_test_end": "2006-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2003-07-03",
+      "fold_train_end": "2006-07-03",
+      "fold_test_start": "2006-07-03",
+      "fold_test_end": "2007-01-03",
+      "oos_sharpe": 1.5296367363383188,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2004-01-03",
+      "fold_train_end": "2007-01-03",
+      "fold_test_start": "2007-01-03",
+      "fold_test_end": "2007-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2004-07-03",
+      "fold_train_end": "2007-07-03",
+      "fold_test_start": "2007-07-03",
+      "fold_test_end": "2008-01-03",
+      "oos_sharpe": -0.8719889827542681,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2005-01-03",
+      "fold_train_end": "2008-01-03",
+      "fold_test_start": "2008-01-03",
+      "fold_test_end": "2008-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2005-07-03",
+      "fold_train_end": "2008-07-03",
+      "fold_test_start": "2008-07-03",
+      "fold_test_end": "2009-01-03",
+      "oos_sharpe": -1.420459526840092,
+      "oos_trades": 1
+    },
+    {
+      "fold_train_start": "2006-01-03",
+      "fold_train_end": "2009-01-03",
+      "fold_test_start": "2009-01-03",
+      "fold_test_end": "2009-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2006-07-03",
+      "fold_train_end": "2009-07-03",
+      "fold_test_start": "2009-07-03",
+      "fold_test_end": "2010-01-03",
+      "oos_sharpe": 2.2636891337347733,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2007-01-03",
+      "fold_train_end": "2010-01-03",
+      "fold_test_start": "2010-01-03",
+      "fold_test_end": "2010-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2007-07-03",
+      "fold_train_end": "2010-07-03",
+      "fold_test_start": "2010-07-03",
+      "fold_test_end": "2011-01-03",
+      "oos_sharpe": 1.9320870023709733,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2008-01-03",
+      "fold_train_end": "2011-01-03",
+      "fold_test_start": "2011-01-03",
+      "fold_test_end": "2011-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2008-07-03",
+      "fold_train_end": "2011-07-03",
+      "fold_test_start": "2011-07-03",
+      "fold_test_end": "2012-01-03",
+      "oos_sharpe": 0.08841270970804697,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2009-01-03",
+      "fold_train_end": "2012-01-03",
+      "fold_test_start": "2012-01-03",
+      "fold_test_end": "2012-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2009-07-03",
+      "fold_train_end": "2012-07-03",
+      "fold_test_start": "2012-07-03",
+      "fold_test_end": "2013-01-03",
+      "oos_sharpe": 0.9903392582385614,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2010-01-03",
+      "fold_train_end": "2013-01-03",
+      "fold_test_start": "2013-01-03",
+      "fold_test_end": "2013-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2010-07-03",
+      "fold_train_end": "2013-07-03",
+      "fold_test_start": "2013-07-03",
+      "fold_test_end": "2014-01-03",
+      "oos_sharpe": 1.71711321696228,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2011-01-03",
+      "fold_train_end": "2014-01-03",
+      "fold_test_start": "2014-01-03",
+      "fold_test_end": "2014-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2011-07-03",
+      "fold_train_end": "2014-07-03",
+      "fold_test_start": "2014-07-03",
+      "fold_test_end": "2015-01-03",
+      "oos_sharpe": 0.7444460025266645,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2012-01-03",
+      "fold_train_end": "2015-01-03",
+      "fold_test_start": "2015-01-03",
+      "fold_test_end": "2015-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2012-07-03",
+      "fold_train_end": "2015-07-03",
+      "fold_test_start": "2015-07-03",
+      "fold_test_end": "2016-01-03",
+      "oos_sharpe": -0.3075894135923571,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2013-01-03",
+      "fold_train_end": "2016-01-03",
+      "fold_test_start": "2016-01-03",
+      "fold_test_end": "2016-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2013-07-03",
+      "fold_train_end": "2016-07-03",
+      "fold_test_start": "2016-07-03",
+      "fold_test_end": "2017-01-03",
+      "oos_sharpe": 2.2040376406932887,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2014-01-03",
+      "fold_train_end": "2017-01-03",
+      "fold_test_start": "2017-01-03",
+      "fold_test_end": "2017-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2014-07-03",
+      "fold_train_end": "2017-07-03",
+      "fold_test_start": "2017-07-03",
+      "fold_test_end": "2018-01-03",
+      "oos_sharpe": 2.862129144627352,
+      "oos_trades": 0
+    },
+    {
+      "fold_train_start": "2015-01-03",
+      "fold_train_end": "2018-01-03",
+      "fold_test_start": "2018-01-03",
+      "fold_test_end": "2018-07-03",
+      "oos_sharpe": 0.0,
+      "oos_trades": 0
+    }
+  ]
+}
