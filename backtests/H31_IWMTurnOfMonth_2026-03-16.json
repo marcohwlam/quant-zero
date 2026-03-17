@@ -1,0 +1,158 @@
+{
+  "strategy_name": "H31_IWMTurnOfMonth",
+  "date": "2026-03-16",
+  "asset_class": "equities",
+  "is_period": "2007-01-01 to 2021-12-31",
+  "oos_period": "2022-01-01 to 2025-12-31",
+  "is_sharpe": 0.2814,
+  "oos_sharpe": -0.545,
+  "is_max_drawdown": -0.1949,
+  "oos_max_drawdown": -0.2375,
+  "win_rate": 0.5703,
+  "oos_win_rate": 0.4444,
+  "profit_factor": 1.2607,
+  "oos_profit_factor": 0.5771,
+  "trade_count": 128,
+  "oos_trade_count": 27,
+  "dsr": 0.0,
+  "wf_windows_passed": 2,
+  "wf_consistency_score": -1.9367,
+  "wf_windows": [
+    {
+      "train_start": "2007-01-01",
+      "train_end": "2009-12-31",
+      "oos_start": "2010-01-01",
+      "oos_end": "2010-07-01",
+      "train_sharpe": -0.4842,
+      "oos_sharpe": 1.3768,
+      "oos_mdd": -0.0756,
+      "oos_trades": 5,
+      "passed": true
+    },
+    {
+      "train_start": "2010-07-01",
+      "train_end": "2013-06-30",
+      "oos_start": "2013-07-01",
+      "oos_end": "2014-01-01",
+      "train_sharpe": 0.4776,
+      "oos_sharpe": -0.2002,
+      "oos_mdd": -0.0306,
+      "oos_trades": 4,
+      "passed": false
+    },
+    {
+      "train_start": "2014-01-01",
+      "train_end": "2016-12-31",
+      "oos_start": "2017-01-01",
+      "oos_end": "2017-07-01",
+      "train_sharpe": -0.4235,
+      "oos_sharpe": 0.1386,
+      "oos_mdd": -0.0432,
+      "oos_trades": 5,
+      "passed": false
+    },
+    {
+      "train_start": "2017-07-01",
+      "train_end": "2020-06-30",
+      "oos_start": "2020-07-01",
+      "oos_end": "2021-01-01",
+      "train_sharpe": -0.246,
+      "oos_sharpe": 3.1268,
+      "oos_mdd": -0.0305,
+      "oos_trades": 5,
+      "passed": true
+    }
+  ],
+  "wf_sharpe_std": 1.3037355445027952,
+  "wf_sharpe_min": -0.2002,
+  "mc_p5_sharpe": -0.7748732880435213,
+  "mc_median_sharpe": 1.5173331258102567,
+  "mc_p95_sharpe": 3.698697780743518,
+  "sharpe_ci_low": -0.2860948940240464,
+  "sharpe_ci_high": 0.8178214967007209,
+  "mdd_ci_low": -0.3677545030507249,
+  "mdd_ci_high": -0.10014880376541332,
+  "win_rate_ci_low": 0.047299113141628595,
+  "win_rate_ci_high": 0.06558048911582907,
+  "market_impact_bps": 0.027279999864190784,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 3.0061052988163393e-06,
+  "permutation_pvalue": 0.506,
+  "permutation_test_pass": false,
+  "post_cost_sharpe": -0.545,
+  "sensitivity_pass": false,
+  "sensitivity_max_pct_change": 0.4915,
+  "sensitivity_results": {
+    "hold_days_2": {
+      "sharpe": 0.2853,
+      "trades": 128
+    },
+    "hold_days_3": {
+      "sharpe": 0.2814,
+      "trades": 128
+    },
+    "hold_days_4": {
+      "sharpe": 0.3127,
+      "trades": 128
+    },
+    "sma_window_150": {
+      "sharpe": 0.4197,
+      "trades": 128
+    },
+    "sma_window_200": {
+      "sharpe": 0.2814,
+      "trades": 128
+    },
+    "sma_window_250": {
+      "sharpe": 0.3362,
+      "trades": 128
+    }
+  },
+  "gfc_2008_2009_mdd": -0.1001,
+  "gfc_2008_2009_sharpe": -0.6738,
+  "gfc_2008_2009_trades": 8,
+  "stress_2022_mdd": -0.028,
+  "stress_2022_in_cash_pct": 90.9,
+  "stress_2022_regime_blocked": 10,
+  "stress_2022_tom_months": 11,
+  "look_ahead_bias_flag": false,
+  "pf1_status": "PASS (32.0/fold \u2265 30)",
+  "regime_blocked_count_is": 51,
+  "tom_months_in_window_is": 179,
+  "exit_reason_summary_is": {
+    "TOM_CLOSE": 128
+  },
+  "oos_data_quality": {
+    "strategy_name": "H31_IWMTurnOfMonth",
+    "recommendation": "PASS",
+    "critical_nan_fields": [],
+    "advisory_nan_fields": [],
+    "residual_nan_count": 0,
+    "oos_trade_count": 27
+  },
+  "gate1_pass": false,
+  "gate1_checks": {
+    "IS Sharpe > 1.0": false,
+    "OOS Sharpe > 0.7": false,
+    "IS Max Drawdown < 20%": true,
+    "OOS Max Drawdown < 25%": true,
+    "Win Rate > 50%": true,
+    "Trade Count >= 100": true,
+    "DSR > 0": false,
+    "WF >= 3/4 windows passed": false,
+    "WF OOS/IS consistency < 30%": false,
+    "Sensitivity pass": false,
+    "Permutation p <= 0.05": false,
+    "MC p5 Sharpe >= 0.5": false
+  },
+  "gate1_failing_criteria": [
+    "IS Sharpe > 1.0",
+    "OOS Sharpe > 0.7",
+    "DSR > 0",
+    "WF >= 3/4 windows passed",
+    "WF OOS/IS consistency < 30%",
+    "Sensitivity pass",
+    "Permutation p <= 0.05",
+    "MC p5 Sharpe >= 0.5"
+  ]
+}
