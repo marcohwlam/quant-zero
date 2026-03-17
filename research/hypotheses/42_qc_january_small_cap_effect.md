@@ -1,11 +1,12 @@
 # H42: January Small-Cap Tax-Loss Reversal — IWM January Seasonal
 
-**Version:** 1.0
+**Version:** 1.1
 **Author:** Alpha Research Agent (QC Discovery — QUA-308)
+**Reviewed by:** Research Director (QUA-316)
 **Date:** 2026-03-17
 **Asset class:** US equities (ETFs)
 **Strategy type:** single-signal, calendar/seasonal
-**Status:** hypothesis
+**Status:** rejected — pre-flight fail (PF-1, PF-4)
 
 ## Economic Rationale
 
@@ -112,6 +113,22 @@ The January Effect is one of the oldest and most replicated anomalies in financi
 - **Cherry-pick risk:** LOW — the January Effect is the most replicated calendar anomaly in financial history (Keim 1983, Reinganum 1983, Haugen & Lakonishok 1988). It is not a data-mined artifact.
 - **Crowding risk:** MODERATE — widely known since 1983. The first-week front-running risk is real; entry on December 26–28 may be necessary to capture the full effect. This is a testable robustness check.
 - **Novel signal insight vs. H01–H39:** H31 tested IWM Turn of Month (monthly ToM applied to IWM). H42 is specifically the annual January IWM seasonal — a distinct annual calendar effect driven by tax-loss reversal, not the generic monthly ToM mechanism. This is the first tax-loss-reversal hypothesis in the pipeline.
+
+## Pre-Flight Gate Checklist
+
+**Reviewed:** 2026-03-17 (Research Director, QUA-316)
+
+- [x] **PF-1 FAIL** — 2 trades/year (1 round trip per January). Maximum IS data with IWM (launched May 2000): 26 years × 2 = **52 IS trades → 52 ÷ 4 = 13 < 30**. Using ^RUT proxy from 1987: 31-year IS × 2 = 62 trades → 62 ÷ 4 = 15.5 < 30. No feasible data source yields ≥ 120 IS trades at 2 trades/year within a realistically backtestable window. **Hard fail — cannot be resolved by data extension.**
+
+- [ ] **PF-2 PASS** — Limited time in market (21 days/year or 5 days in first-week variant). MDD exposure structurally limited. Would pass this gate.
+
+- [ ] **PF-3 PASS** — IWM (2000+), ^RUT proxy (1987+), SPY (1993+) all available in yfinance. No intraday or non-standard data required.
+
+- [x] **PF-4 FAIL** — No rate-shock protection mechanism exists for January IWM exposure. In January 2022 (rate-shock onset): IWM returned approximately −14%. The Fed's aggressive rate hiking signal hit small-cap growth stocks immediately in January. The December filter ("skip if December IWM positive >5%") does not address monetary policy regimes. VIX was ~23 at year-end 2021 (below any plausible circuit-breaker threshold). Tax-loss reversal thesis is a behavioral/seasonal mechanism with zero interaction with rate environments. **Cannot provide positive returns in rate-shock January.**
+
+**Result: REJECTED — Pre-flight FAIL on PF-1 (hard) and PF-4**
+
+**Disposition:** Retire as standalone Gate 1 candidate. The underlying signal (January IWM seasonal) is a valid component in a future **multi-calendar portfolio strategy** alongside H40 (Halloween). If and when a multi-calendar combination strategy is proposed, H42's mechanism should be included as a January sub-component. Do not resubmit as standalone without architectural changes to address trade count constraint (structurally impossible with annual signal).
 
 ## References
 
