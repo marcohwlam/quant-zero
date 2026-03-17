@@ -1,0 +1,216 @@
+{
+  "strategy_name": "H36_Crypto_Momentum",
+  "date": "2026-03-16",
+  "asset_class": "crypto",
+  "universe": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "AVAX-USD"
+  ],
+  "is_period": "2018-01-01 to 2022-12-31",
+  "oos_period": "2023-01-01 to 2025-12-31",
+  "is_sharpe": 1.3762,
+  "oos_sharpe": 0.8578,
+  "is_max_drawdown": -0.5403,
+  "oos_max_drawdown": -0.5981,
+  "is_win_rate": 0.48,
+  "oos_win_rate": 0.4783,
+  "is_profit_factor": 2.6157,
+  "trade_count_is": 50,
+  "trade_count_oos": 69,
+  "is_total_return": 232.1117,
+  "oos_total_return": 3.3519,
+  "is_regime_on_pct": 0.4362,
+  "asset_breakdown_is": {
+    "AVAX-USD": {
+      "trade_count": 14,
+      "total_pnl": 1311375.84,
+      "win_rate": 0.2143
+    },
+    "BTC-USD": {
+      "trade_count": 13,
+      "total_pnl": 1194282.14,
+      "win_rate": 0.5385
+    },
+    "ETH-USD": {
+      "trade_count": 12,
+      "total_pnl": -550950.24,
+      "win_rate": 0.5
+    },
+    "SOL-USD": {
+      "trade_count": 11,
+      "total_pnl": 3969539.46,
+      "win_rate": 0.7273
+    }
+  },
+  "dsr": 0.010178,
+  "wf_windows_passed": 2,
+  "wf_consistency_score": 0.741,
+  "wf_table": [
+    {
+      "window": 1,
+      "is_start": "2018-01-01",
+      "is_end": "2020-12-31",
+      "oos_start": "2021-01-01",
+      "oos_end": "2021-06-30",
+      "is_sharpe": 1.2777,
+      "oos_sharpe": 2.2592,
+      "is_mdd": -0.5006,
+      "oos_mdd": -0.5403,
+      "is_trade_count": 25,
+      "oos_trade_count": 16,
+      "pass": true
+    },
+    {
+      "window": 2,
+      "is_start": "2018-07-01",
+      "is_end": "2021-06-30",
+      "oos_start": "2021-07-01",
+      "oos_end": "2021-12-31",
+      "is_sharpe": 1.6214,
+      "oos_sharpe": 1.939,
+      "is_mdd": -0.5403,
+      "oos_mdd": -0.4764,
+      "is_trade_count": 37,
+      "oos_trade_count": 10,
+      "pass": true
+    },
+    {
+      "window": 3,
+      "is_start": "2019-01-01",
+      "is_end": "2021-12-31",
+      "oos_start": "2022-01-01",
+      "oos_end": "2022-06-30",
+      "is_sharpe": 1.8054,
+      "oos_sharpe": 0.0,
+      "is_mdd": -0.5403,
+      "oos_mdd": 0.0,
+      "is_trade_count": 47,
+      "oos_trade_count": 0,
+      "pass": false
+    },
+    {
+      "window": 4,
+      "is_start": "2019-07-01",
+      "is_end": "2022-06-30",
+      "oos_start": "2022-07-01",
+      "oos_end": "2022-12-31",
+      "is_sharpe": 1.668,
+      "oos_sharpe": 0.0,
+      "is_mdd": -0.5403,
+      "oos_mdd": 0.0,
+      "is_trade_count": 46,
+      "oos_trade_count": 0,
+      "pass": false
+    }
+  ],
+  "wf_oos_sharpes": [
+    2.2592,
+    1.939,
+    0.0,
+    0.0
+  ],
+  "wf_sharpe_std": 1.0556,
+  "wf_sharpe_min": 0.0,
+  "mc_p5_sharpe": 0.8129,
+  "mc_median_sharpe": 1.3686,
+  "mc_p95_sharpe": 1.9062,
+  "sharpe_ci_low": 0.6282,
+  "sharpe_ci_high": 2.0345,
+  "mdd_ci_low": -0.8359,
+  "mdd_ci_high": -0.4414,
+  "win_rate_ci_low": 0.1606,
+  "win_rate_ci_high": 0.3123,
+  "market_impact_bps": 0.0,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 0.0,
+  "market_impact_note": "Crypto \u2014 market impact N/A. BTC/ETH/SOL/AVAX ADV >> $25K order size. Cost model: 0.10% taker fee + 0.05% slippage per leg = 0.30% round-trip.",
+  "permutation_pvalue": 0.002,
+  "permutation_test_pass": true,
+  "sensitivity_scan_ranking_window": {
+    "ranking_window_10d": 1.5058,
+    "ranking_window_15d": 1.3855,
+    "ranking_window_20d": 1.3762,
+    "ranking_window_25d": 1.3265,
+    "ranking_window_30d": 1.2259
+  },
+  "sensitivity_scan_hard_stop": {
+    "stop_8pct": 1.4688,
+    "stop_10pct": 1.4117,
+    "stop_12pct": 1.3762,
+    "stop_15pct": 1.3583
+  },
+  "sensitivity_scan_meta": {
+    "sharpe_range": 0.2799,
+    "sharpe_variance_pct": 0.2052,
+    "gate1_variance_flag": "PASS: Sharpe variance 20.5% \u2264 30% across 5 ranking window combinations."
+  },
+  "sensitivity_pass": true,
+  "data_quality_summary": {
+    "AVAX-USD": {
+      "bars_in_window": 832,
+      "missing_business_days": 49,
+      "data_start": "2020-07-13",
+      "data_end": "2022-12-30",
+      "available_at_is_start": false
+    },
+    "BTC-USD": {
+      "bars_in_window": 1825,
+      "missing_business_days": 0,
+      "data_start": "2016-09-28",
+      "data_end": "2022-12-30",
+      "available_at_is_start": true
+    },
+    "ETH-USD": {
+      "bars_in_window": 1825,
+      "missing_business_days": 0,
+      "data_start": "2017-11-09",
+      "data_end": "2022-12-30",
+      "available_at_is_start": true
+    },
+    "SOL-USD": {
+      "bars_in_window": 995,
+      "missing_business_days": 0,
+      "data_start": "2020-04-10",
+      "data_end": "2022-12-30",
+      "available_at_is_start": false
+    }
+  },
+  "look_ahead_bias_flag": false,
+  "look_ahead_bias_notes": [
+    "Rolling returns computed using pct_change(ranking_window) \u2014 backward-looking only.",
+    "Friday signal generated at close T, then shifted +1 bar \u2192 executed at Monday open T+1.",
+    "BTC 200-SMA computed on full warmup-inclusive series; no look-ahead.",
+    "Hard stop checked against close price \u2014 fill at stop threshold (conservative)."
+  ],
+  "gate1_checks": {
+    "is_sharpe_pass": true,
+    "oos_sharpe_pass": true,
+    "is_mdd_pass": false,
+    "oos_mdd_pass": false,
+    "win_rate_pass": true,
+    "trade_count_pass": false,
+    "wf_windows_pass": false,
+    "wf_consistency_pass": true,
+    "sensitivity_pass": true,
+    "dsr_pass": true,
+    "permutation_pass": true,
+    "mc_p5_pass": true
+  },
+  "gate1_pass": false,
+  "failing_criteria": [
+    "is_mdd_pass",
+    "oos_mdd_pass",
+    "trade_count_pass",
+    "wf_windows_pass"
+  ],
+  "ceo_exceptions": {
+    "trade_count_threshold_waived": true,
+    "reason": "Structural crypto IS window constraint \u2014 SOL/AVAX data from 2020 only. CEO exception granted in QUA-291."
+  },
+  "ceo_flags": {
+    "drawdown_risk": "Research Director estimated 25-40% drawdown. Gate 1 criterion is <20%. Measured IS MDD: -54.0%. EXCEEDS Gate 1 <20% criterion \u2014 FAIL.",
+    "correlation_note": "BTC/ETH/SOL/AVAX r>0.7. Cross-sectional momentum exploits relative performance within correlated assets (not mean-reversion pairs). QUA-281 correlation criterion does not technically apply."
+  }
+}
