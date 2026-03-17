@@ -1,0 +1,41 @@
+GATE 1 VERDICT: FAIL
+Strategy: H34b_RSI2_Oversold_SPY_Threshold20 v1.0
+Date: 2026-03-16
+Analyst: Overfit Detector Agent
+
+⛔ AUTO-DISQUALIFIED
+Reason: Auto-disqualify: IS Sharpe = 0.30 (threshold: > 1.0)
+
+QUANTITATIVE SUMMARY
+- Test period: 2007-01-01 – 2025-12-31, 19.0 years  [PASS, threshold ≥ 5 years]
+- IS Sharpe: 0.30  [FAIL, threshold > 1.0]
+- OOS Sharpe: 0.82  [PASS, threshold > 0.7]
+- Walk-forward windows passed: 1/4  [FAIL, threshold ≥ 3/4]
+- Walk-forward OOS/IS consistency: -0.76 mean OOS/IS ratio  [FAIL, threshold OOS within 30% of IS]
+- IS Max Drawdown: 11.8%  [PASS, threshold < 20%]
+- OOS Max Drawdown: 7.6%  [PASS, threshold < 25%]
+- Win Rate: 68.5%  [PASS, threshold > 50%]
+- Trade count: 213  [PASS, threshold > 50]
+- Deflated Sharpe Ratio (z-score): 13.59  [PASS, threshold > 0.0]
+- Parameter sensitivity: 38.2% max Sharpe Δ within ±20%  [FAIL, threshold < 30% Sharpe change]
+- Post-cost Sharpe: 0.82  [PASS, threshold > 0.7 (after realistic costs)]
+
+WALK-FORWARD WINDOW DETAIL
+  Window 1: IS=0.53, OOS=-2.42  [FAIL]
+  Window 2: IS=0.75, OOS=1.12  [PASS]
+  Window 3: IS=-0.07, OOS=2.32  [FAIL]
+  Window 4: IS=-0.21, OOS=0.94  [FAIL]
+
+QUALITATIVE ASSESSMENT
+- Economic rationale: VALID
+- Look-ahead bias: NONE DETECTED
+- Overfitting risk: MEDIUM
+- Notes:
+    * OOS Sharpe is above threshold but marginal (< 0.85).
+    * Post-cost Sharpe (0.82) is marginal; cost sensitivity is high.
+
+RECOMMENDATION: Reject
+CONFIDENCE: HIGH
+CONCERNS:
+  - OOS Sharpe is above threshold but marginal (< 0.85).
+  - Post-cost Sharpe (0.82) is marginal; cost sensitivity is high.
