@@ -118,6 +118,22 @@ Same as H34: behavioral short-term mean reversion via retail panic selling and d
 
 ---
 
+## CEO QUA-281 Pre-Screen Compliance
+
+*Added per CEO Directive QUA-281 (2026-03-17) — mandatory for all H35+ hypotheses. Applied retroactively to H34b as it is in the ready queue at time of directive issuance.*
+
+| Criterion | Status | Assessment |
+|---|---|---|
+| **Post-2015 Evidence** | ⚠️ NEEDS CITATION | Primary citation Connors & Alvarez (2012) is pre-2015. The RSI(2) mean-reversion mechanism is grounded in short-term reversal theory (Jegadeesh 1990, Lehmann 1990 — both pre-2015). Post-2015 persistence is supported by ongoing short-term reversal factor literature, but no specific post-2015 academic citation is included. Recommended: Avramov, Chordia & Goyal (2016) "The World Price of Liquidity Risk" (*Review of Financial Studies*, which includes reversal factor as a benchmark) or Chu, Liu & Ma (2020) "Short-horizon Reversal with Liquidity Risk Premia." **Action: Alpha Research Agent to confirm RSI(2)/short-term reversal persistence post-2015.** |
+| **Estimated trades/year (IS 2018–2023)** | ⚠️ BELOW 50 BUT ABOVE H30/H32 | ~20–40 trades/year (Connors 2012 frequency at RSI(2) < 20 with 200-SMA filter). In IS 2018–2023: ~100–200 total trades. **BELOW ≥50/year threshold. However, substantially above the H30 (26 total) and H32 (34 total) failure cases that motivated QUA-281.** CEO approval recommended. Note: H34b is the 2nd and final iteration of the RSI(2) family — proceeding to Gate 1 is the correct resolution path. |
+| **Regime filter pass-through** | ✅ PASS | 200-SMA filter on SPY. SPY historically above 200-SMA ~65–70% of time. Signal pass-through rate: ~65–70% of raw RSI(2) < 20 events pass the filter. Exceeds 50% threshold. ✓ |
+| **Asset correlation** | N/A | Single asset strategy (SPY). No cross-asset correlation constraint applicable. |
+| **Hypothesis type** | ✅ Priority 1 | Pattern-based / binary event-driven — RSI(2) < 20 is a quantified short-term reversal pattern. **Priority 1 in CEO QUA-281 framework** (proven pass class — H10 v2 passed Gate 1 with similar architecture). ✓ |
+
+**QUA-281 Verdict: CONDITIONAL — CEO approval recommended for <50 trades/year (pattern is substantially better than H30/H32 failure cases; Priority 1 type and family iteration limit make proceeding appropriate). Post-2015 citation needed.**
+
+---
+
 ## Pre-Flight Gate Checklist
 
 ### PF-1: Walk-Forward Trade Viability

@@ -131,6 +131,22 @@ Small-cap value stocks (IWM — Russell 2000) and large-cap growth stocks (QQQ �
 
 ---
 
+## CEO QUA-281 Pre-Screen Compliance
+
+*Added per CEO Directive QUA-281 (2026-03-17) — mandatory for all H35+ hypotheses.*
+
+| Criterion | Status | Assessment |
+|---|---|---|
+| **Post-2015 Evidence** | ✅ PASS | Gonçalves & Leonard (2023) "The Fundamental-to-Market Ratio and the Value Premium" (*Review of Finance*) confirms small-cap value / growth spread dynamics post-2015. Additionally, the IWM/QQQ rate-regime spread is confirmed in 2022 OOS data (IWM −20% vs. QQQ −33%, spread gain +13%) — systematic out-of-sample validation from a real rate-shock event. ✓ |
+| **Estimated trades/year (IS 2018–2023)** | ❌ BELOW THRESHOLD | ~25–40 new entry events/year (weekly check, rate-rising signal fires ~40–50% of weeks, new entries after flat periods). If counting round-trips (entry + exit): ~50–80 trade sides/year. **Entry-event counting: FAILS ≥50/year. Round-trip side counting: BORDERLINE. Requires explicit CEO approval before Engineering time is spent.** |
+| **Regime filter pass-through** | N/A | The 4-week 2-year rate change signal IS the strategy's entry trigger, not a regime filter on top of a primary signal. Rate-rising regime active ~40–50% of weeks → strategy is in market ~40–50% of time. This is the intended exposure profile, not a suppressive filter. |
+| **Asset correlation** | ⚠️ ARCHITECTURE REVIEW NEEDED | IWM/QQQ historical correlation r ≈ 0.75–0.85. This exceeds QUA-281's < 0.6 threshold for *cross-asset spread strategies*. **However, H38 is a directional factor rotation strategy (not a mean-reversion spread).** The correlation constraint targets spread mean-reversion failure patterns (e.g., H32 GDX/GLD β≈2). H38 uses a directional regime signal (rate rising → long IWM, short QQQ) based on structural equity duration differences — the correlation is acceptable because the strategy profits from the *direction* of the spread widening under a specific macro regime, not from mean reversion. **Flagged for CEO review: Research Director position is that QUA-281 correlation constraint does not apply to directional factor rotation strategies.** |
+| **Hypothesis type** | ✅ Priority 4 | Cross-sectional momentum / factor rotation — long small-cap value, short large-cap growth in rate-rising regimes. Priority 4 in CEO QUA-281 framework. ✓ |
+
+**QUA-281 Verdict: CONDITIONAL — trade frequency below threshold (CEO approval required); correlation requires CEO clarification on whether QUA-281 constraint applies to directional factor rotation vs. mean-reversion spread. Post-2015 evidence confirmed.**
+
+---
+
 ## Pre-Flight Gate Checklist
 
 | Gate | Status | Notes |

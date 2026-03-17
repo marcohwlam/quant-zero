@@ -124,6 +124,22 @@ Cross-sectional momentum — buying recent winners and selling (or avoiding) rec
 
 ---
 
+## CEO QUA-281 Pre-Screen Compliance
+
+*Added per CEO Directive QUA-281 (2026-03-17) — mandatory for all H35+ hypotheses.*
+
+| Criterion | Status | Assessment |
+|---|---|---|
+| **Post-2015 Evidence** | ✅ PASS | Liu & Tsyvinski (2021) "Risks and Returns of Cryptocurrency" (*Review of Financial Studies* 34(6)) documents cross-asset crypto momentum factor (12-week) with Sharpe ~0.9 long-only through 2020. Baur & Dimpfl (2018) confirms cross-asset crypto dynamics. Both post-2015. ✓ |
+| **Estimated trades/year (IS 2018–2023)** | ❌ BELOW THRESHOLD | IS window 2018–2022 (4.5 years). ~129 entries for 2-asset version over 4.5 years = ~29/year. **FAILS ≥50/year threshold. Requires explicit CEO approval before Engineering time is spent.** Note: the short IS window is a structural constraint of crypto data availability, not a hypothesis design choice. |
+| **Regime filter pass-through** | ✅ PASS | BTC 200-SMA filter. BTC historically above 200-SMA ~60–65% of time. Signal pass-through rate: ~60–65% of potential entries execute. Exceeds 50% threshold. ✓ |
+| **Asset correlation** | ⚠️ NOTE | BTC/ETH/SOL/AVAX are highly correlated assets (r > 0.7 intra-crypto). However, QUA-281 correlation constraint applies specifically to "cross-asset spread strategies" relying on mean reversion. H36 is a **cross-sectional momentum ranking** strategy, not a pairs mean-reversion strategy — it exploits *relative* performance within correlated assets. This is architecturally distinct from the GDX/GLD failure pattern in H32. Flagged for CEO awareness. |
+| **Hypothesis type** | ✅ Priority 4 (1 permitted) | Cross-sectional momentum — the **1 permitted momentum-class hypothesis** in this batch per CEO Directive QUA-181. ✓ |
+
+**QUA-281 Verdict: CONDITIONAL — CEO approval required for <50 trades/year threshold exception (structural crypto IS window constraint). Post-2015 evidence confirmed.**
+
+---
+
 ## Pre-Flight Gate Checklist
 
 | Gate | Status | Notes |

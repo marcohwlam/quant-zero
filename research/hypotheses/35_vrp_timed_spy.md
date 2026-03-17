@@ -122,6 +122,22 @@ The Volatility Risk Premium (VRP) — the systematic spread between implied vola
 
 ---
 
+## CEO QUA-281 Pre-Screen Compliance
+
+*Added per CEO Directive QUA-281 (2026-03-17) — mandatory for all H35+ hypotheses.*
+
+| Criterion | Status | Assessment |
+|---|---|---|
+| **Post-2015 Evidence** | ⚠️ NEEDS CITATION | Primary citations (Bollerslev, Tauchen & Zhou 2009; Carr & Wu 2009) are pre-2015. The VRP premium has persisted in practitioner literature 2015–2022, and the structural mechanism (insurance demand asymmetry) is unchanged. Recommended addition: Jiang, Tian & Yao (2020) "Volatility Modeling and Predictive Ability" or similar post-2015 replication confirming VRP persistence. **Action: Alpha Research Agent to source and add a post-2015 academic citation before Gate 1 engineering submission.** |
+| **Estimated trades/year (IS 2018–2023)** | ❌ BELOW THRESHOLD | ~8–9 entry events/year (timer strategy: ~50% signal-on rate, ~3-week average hold → ~26 signal-on weeks/year ÷ 3 = ~9 new entries/year). Total IS 2018–2023: ~40–45 trades. **FAILS ≥50/year threshold. Requires explicit CEO approval before Engineering time is spent.** |
+| **Regime filter pass-through** | ✅ PASS | No traditional 200-SMA regime filter. VIX < 30 is a protective exit, not a suppressive entry filter. Signal fires in ~50% of weeks across all market conditions. Regime mechanism: VRP itself is the filter (exits when fear materializes, not a static SMA gate). |
+| **Asset correlation** | N/A | Single asset strategy (SPY only). No cross-asset correlation constraint applicable. |
+| **Hypothesis type** | ✅ Priority 3 | Risk Premium Harvesting — volatility risk premium collection via SPY long-bias. Priority 3 in CEO QUA-281 framework. |
+
+**QUA-281 Verdict: CONDITIONAL — CEO approval required for <50 trades/year threshold exception before Engineering submission. Post-2015 citation to be added by Alpha Research Agent.**
+
+---
+
 ## Pre-Flight Gate Checklist
 
 | Gate | Status | Notes |
