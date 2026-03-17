@@ -1,0 +1,45 @@
+GATE 1 VERDICT — H31_IWMTurnOfMonth
+Date: 2026-03-16
+Overall: FAIL ❌
+============================================================
+IS Sharpe:         0.2814  (threshold > 1.0) ❌
+OOS Sharpe:        -0.5450  (threshold > 0.7) ❌
+IS Max Drawdown:   -19.49%  (threshold < 20%) ✅
+OOS Max Drawdown:  -23.75%  (threshold < 25%) ✅
+Win Rate (IS):     57.03%  (threshold > 50%) ✅
+Trade Count (IS):  128  (threshold >= 100) ✅
+DSR:               0.0000  (threshold > 0) ❌
+WF Windows Passed: 2/4  (threshold >= 3) ❌
+WF OOS/IS Ratio:   -1.937  (threshold >= 0.70) ❌
+Sensitivity Pass:  False  (max change 49.1%) ❌
+Permutation p:     0.5060  (threshold <= 0.05) ❌
+MC p5 Sharpe:      -0.7749  (threshold >= 0.5) ❌
+
+Statistical Rigor
+----------------------------------------
+MC median Sharpe:  1.5173
+MC p95 Sharpe:     3.6987
+Sharpe 95% CI:     [-0.2861, 0.8178]
+MDD 95% CI:        [-36.78%, -10.01%]
+Win Rate 95% CI:   [4.73%, 6.56%]
+Market Impact:     0.03 bps
+Liquidity OK:      True
+WF Sharpe Std:     1.3037
+WF Sharpe Min:     -0.2002
+
+Special Validation
+----------------------------------------
+GFC 2008-09 MDD:   -10.01%
+2022 In-Cash %:    90.9%
+Post-cost Sharpe:  -0.5450
+OOS Data Quality:  PASS
+
+FAILING CRITERIA:
+  ❌ IS Sharpe > 1.0
+  ❌ OOS Sharpe > 0.7
+  ❌ DSR > 0
+  ❌ WF >= 3/4 windows passed
+  ❌ WF OOS/IS consistency < 30%
+  ❌ Sensitivity pass
+  ❌ Permutation p <= 0.05
+  ❌ MC p5 Sharpe >= 0.5
