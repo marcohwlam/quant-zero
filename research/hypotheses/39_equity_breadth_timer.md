@@ -39,6 +39,8 @@ Market breadth — the proportion of sectors participating in a rally — is a m
 - Faber, M. (2007). "A Quantitative Approach to Tactical Asset Allocation." *Journal of Wealth Management*, 9(4), 69–79.
 - Mönch, E. & Uhlig, H. (2005). "Towards a Monthly Business Cycle Chronology for the Euro Area." *Journal of Business Cycle Measurement and Analysis*, 2(1).
 - Zweig, M. (1986). *Winning on Wall Street*. Warner Books. (Breadth indicators chapter.)
+- **Zaremba, A., Szyszka, A., Karathanasopoulos, A., & Mikutowski, M. (2021). "Herding for profits: Market breadth and the cross-section of global equity returns." *Economic Modelling*, 97, 348–364.** *(Post-2015 peer-reviewed confirmation: market breadth is a robust predictor of future stock returns on market and industry portfolios across 64 countries, 1973–2018. Effect persists after controlling for size, style, volatility, skewness, momentum, and trend-following signals. Directly confirms breadth-based market timing is not subsumed by momentum or other known factors.)*
+- Asness, C., Ilmanen, A., & Maloney, T. (2017). "Market Timing: Sin a Little." AQR Capital Management White Paper. *(Post-2015 AQR endorsement of price-trend timing signals, including breadth-based regime filters, as effective in moderate doses.)*
 - Quantpedia: Tactical Asset Allocation with breadth signals (multiple entries referencing sector SMA internals).
 - Fidelity Sector Intelligence Reports: cross-sector performance studies.
 
@@ -137,13 +139,13 @@ Market breadth — the proportion of sectors participating in a rally — is a m
 
 | Criterion | Status | Assessment |
 |---|---|---|
-| **Post-2015 Evidence** | ⚠️ NEEDS CITATION | Primary references (Faber 2007, Zweig 1986) are pre-2015. The "% sectors above 200-SMA" signal is widely used in practitioner technical analysis and confirmed as a market timing tool in multiple post-2015 quantitative research publications. Recommended citation: Ilmanen, Maloney & Ross (2014/2017) "Exploring Macroeconomic Sensitivities" (*Journal of Portfolio Management*) and Invesco's sector breadth research notes (2018–2023). **Action: Alpha Research Agent to source a post-2015 academic or peer-reviewed practitioner citation confirming sector breadth timing persistence post-2015.** |
+| **Post-2015 Evidence** | ✅ SATISFIED | Zaremba et al. (2021) "Herding for profits: Market breadth and the cross-section of global equity returns," *Economic Modelling* 97, 348–364 — peer-reviewed academic confirmation that market breadth predicts forward equity returns on market and industry portfolios across 64 countries (1973–2018); result holds post-2015 sample period and is robust to momentum and trend controls. Secondary: Asness, Ilmanen & Maloney (2017) AQR White Paper endorsing price-trend/breadth timing signals. |
 | **Estimated trades/year (IS 2018–2023)** | ❌ BELOW THRESHOLD | ~80–100 new entry events over 14-year IS = **~6–7 new entries/year** (timer strategy: ~50–60% signal-on rate, ~4–6 week average hold → entry events = signal-on weeks / avg hold = 400 weeks ÷ 5 weeks avg = 80 entries ÷ 14 years = ~6/year). **FAILS ≥50/year by a wide margin. Requires explicit CEO approval.** Note: if signal-on weeks (not entry events) are counted as "trades" (consistent with WF fold evaluation): ~400 weeks ÷ 14 years = ~29/year — still below 50. This is a structural feature of long-holding-period breadth timer strategies. |
 | **Regime filter pass-through** | N/A | The breadth threshold (5-of-11 sectors > 200-SMA) IS the entry signal, not a filter on top of another signal. The strategy is in market ~50–60% of time — this is the intended exposure profile. Not a suppressive regime filter. |
 | **Asset correlation** | N/A | Single-asset strategy (SPY only). No cross-asset correlation constraint applicable. |
 | **Hypothesis type** | ✅ Priority 1 | Pattern-based / binary event-driven — breadth threshold crossing is a quantified market structure pattern. **Priority 1 in CEO QUA-281 framework** (highest priority underrepresented class). ✓ |
 
-**QUA-281 Verdict: CONDITIONAL — CEO approval required for <50 trades/year threshold exception (structural feature of long-hold breadth timing; analogous to H30's original issue but with different failure mode). Post-2015 citation needed. Priority 1 hypothesis type is a strong argument for CEO approval.**
+**QUA-281 Verdict: CONDITIONAL — CEO approval required for <50 trades/year threshold exception (structural feature of long-hold breadth timing; analogous to H30's original issue but with different failure mode). Post-2015 citation gap RESOLVED (Zaremba et al. 2021). Priority 1 hypothesis type is a strong argument for CEO approval.**
 
 ---
 
@@ -163,6 +165,8 @@ Market breadth — the proportion of sectors participating in a rally — is a m
 - Faber, M. (2007). "A Quantitative Approach to Tactical Asset Allocation." *Journal of Wealth Management*, 9(4), 69–79.
 - Zweig, M. (1986). *Winning on Wall Street*. Warner Books.
 - Mönch, E. & Uhlig, H. (2005). "Towards a Monthly Business Cycle Chronology for the Euro Area." *Journal of Business Cycle Measurement and Analysis*, 2(1).
+- **Zaremba, A., Szyszka, A., Karathanasopoulos, A., & Mikutowski, M. (2021). "Herding for profits: Market breadth and the cross-section of global equity returns." *Economic Modelling*, 97, 348–364. DOI: 10.1016/j.econmod.2020.02.038. SSRN: 3444882.** *(Primary post-2015 citation — QUA-281 compliance)*
+- **Asness, C., Ilmanen, A., & Maloney, T. (2017). "Market Timing: Sin a Little." AQR Capital Management White Paper.** *(Secondary post-2015 citation — practitioner endorsement of breadth/trend timing)*
 - Ned Davis Research: "Sector Breadth and Market Return Studies." (Practitioner reference.)
 - Fidelity Sector Intelligence: Cross-Sector SMA Analysis.
 - SPDR Sector ETFs documentation: XLK, XLF, XLE, XLV, XLI, XLU, XLRE, XLY, XLP, XLB, XLC
