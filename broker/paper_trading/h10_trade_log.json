@@ -1,0 +1,34 @@
+[
+  {
+    "date": "2026-03-16 16:08:20",
+    "ticker": "BTC-USD",
+    "signal": 0,
+    "signal_type": "flat",
+    "target_notional": 0.0,
+    "has_position": false,
+    "action": "flat",
+    "order_id": null,
+    "fill_qty": null,
+    "fill_price": null,
+    "entry_backtest_price": null,
+    "entry_paper_price": null,
+    "entry_is_bps": null,
+    "dry_run": true
+  },
+  {
+    "date": "2026-03-16 16:08:20",
+    "ticker": "ETH-USD",
+    "signal": 0,
+    "signal_type": "flat",
+    "target_notional": 0.0,
+    "has_position": false,
+    "action": "flat",
+    "order_id": null,
+    "fill_qty": null,
+    "fill_price": null,
+    "entry_backtest_price": null,
+    "entry_paper_price": null,
+    "entry_is_bps": null,
+    "dry_run": true
+  }
+]
