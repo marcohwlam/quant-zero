@@ -1,0 +1,247 @@
+{
+  "strategy_name": "H36b_Crypto_Momentum",
+  "date": "2026-03-16",
+  "asset_class": "crypto",
+  "universe": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "AVAX-USD"
+  ],
+  "top_n": 2,
+  "position_sizing": "equal-weight (50%/50% per top-2 asset)",
+  "h36_revision_note": "H36 Gate 1 FAIL: IS Sharpe 1.38, OOS 0.86 PASS; MDD -54% FAIL. H36b fix: top_n=2 equal-weight to reduce single-asset concentration risk.",
+  "is_period": "2018-01-01 to 2022-12-31",
+  "oos_period": "2023-01-01 to 2025-12-31",
+  "is_sharpe": 1.5236,
+  "oos_sharpe": 0.9868,
+  "is_max_drawdown": -0.5244,
+  "oos_max_drawdown": -0.5272,
+  "is_win_rate": 0.4706,
+  "oos_win_rate": 0.4742,
+  "is_profit_factor": 3.6683,
+  "trade_count_is": 68,
+  "trade_count_oos": 97,
+  "is_total_return": 189.2727,
+  "oos_total_return": 4.3032,
+  "is_regime_on_pct": 0.4362,
+  "asset_breakdown_is": {
+    "AVAX-USD": {
+      "trade_count": 19,
+      "total_pnl": 918683.28,
+      "win_rate": 0.3684
+    },
+    "BTC-USD": {
+      "trade_count": 18,
+      "total_pnl": 456224.2,
+      "win_rate": 0.4444
+    },
+    "ETH-USD": {
+      "trade_count": 20,
+      "total_pnl": 528785.35,
+      "win_rate": 0.55
+    },
+    "SOL-USD": {
+      "trade_count": 11,
+      "total_pnl": 2797365.93,
+      "win_rate": 0.5455
+    }
+  },
+  "dsr": 0.203572,
+  "wf_windows_passed": 4,
+  "wf_regime_cash_count": 2,
+  "wf_consistency_score": 1.1521,
+  "wf_table": [
+    {
+      "window": 1,
+      "is_start": "2018-01-01",
+      "is_end": "2020-12-31",
+      "oos_start": "2021-01-01",
+      "oos_end": "2021-06-30",
+      "is_sharpe": 1.0802,
+      "oos_sharpe": 3.3245,
+      "is_mdd": -0.5244,
+      "oos_mdd": -0.3048,
+      "is_trade_count": 37,
+      "oos_trade_count": 18,
+      "regime_cash_window": false,
+      "pass": true
+    },
+    {
+      "window": 2,
+      "is_start": "2018-07-01",
+      "is_end": "2021-06-30",
+      "oos_start": "2021-07-01",
+      "oos_end": "2021-12-31",
+      "is_sharpe": 1.7839,
+      "oos_sharpe": 2.7309,
+      "is_mdd": -0.5244,
+      "oos_mdd": -0.3824,
+      "is_trade_count": 47,
+      "oos_trade_count": 15,
+      "regime_cash_window": false,
+      "pass": true
+    },
+    {
+      "window": 3,
+      "is_start": "2019-01-01",
+      "is_end": "2021-12-31",
+      "oos_start": "2022-01-01",
+      "oos_end": "2022-06-30",
+      "is_sharpe": 2.0957,
+      "oos_sharpe": 0.0,
+      "is_mdd": -0.5244,
+      "oos_mdd": 0.0,
+      "is_trade_count": 62,
+      "oos_trade_count": 0,
+      "regime_cash_window": true,
+      "pass": true
+    },
+    {
+      "window": 4,
+      "is_start": "2019-07-01",
+      "is_end": "2022-06-30",
+      "oos_start": "2022-07-01",
+      "oos_end": "2022-12-31",
+      "is_sharpe": 1.9528,
+      "oos_sharpe": 0.0,
+      "is_mdd": -0.4658,
+      "oos_mdd": 0.0,
+      "is_trade_count": 67,
+      "oos_trade_count": 0,
+      "regime_cash_window": true,
+      "pass": true
+    }
+  ],
+  "wf_oos_sharpes": [
+    3.3245,
+    2.7309,
+    0.0,
+    0.0
+  ],
+  "wf_sharpe_std": 1.5283,
+  "wf_sharpe_min": 0.0,
+  "mc_p5_sharpe": 0.9184,
+  "mc_median_sharpe": 1.5212,
+  "mc_p95_sharpe": 2.098,
+  "sharpe_ci_low": 0.6909,
+  "sharpe_ci_high": 2.3578,
+  "mdd_ci_low": -0.758,
+  "mdd_ci_high": -0.3823,
+  "win_rate_ci_low": 0.1672,
+  "win_rate_ci_high": 0.325,
+  "market_impact_bps": 0.0,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 0.0,
+  "market_impact_note": "Crypto \u2014 market impact N/A. BTC/ETH/SOL/AVAX ADV >> $25K order size. Cost model: 0.10% taker fee + 0.05% slippage per leg = 0.30% round-trip. H36b has 2 concurrent positions \u2192 ~2\u00d7 round-trip events per rebalance vs H36.",
+  "permutation_pvalue": 0.0,
+  "permutation_test_pass": true,
+  "sensitivity_scan_ranking_window": {
+    "ranking_window_10d": 1.3372,
+    "ranking_window_15d": 1.4988,
+    "ranking_window_20d": 1.5236,
+    "ranking_window_25d": 1.426,
+    "ranking_window_30d": 1.476
+  },
+  "sensitivity_scan_hard_stop": {
+    "stop_8pct": 1.5647,
+    "stop_10pct": 1.5312,
+    "stop_12pct": 1.5236,
+    "stop_15pct": 1.4853
+  },
+  "sensitivity_scan_top_n": {
+    "top_n_1": {
+      "sharpe": 1.3762,
+      "mdd": -0.5403,
+      "trades": 50
+    },
+    "top_n_2": {
+      "sharpe": 1.5236,
+      "mdd": -0.5244,
+      "trades": 68
+    },
+    "top_n_3": {
+      "sharpe": 1.3618,
+      "mdd": -0.4557,
+      "trades": 77
+    },
+    "top_n_4": {
+      "sharpe": 1.3486,
+      "mdd": -0.4755,
+      "trades": 49
+    }
+  },
+  "sensitivity_scan_meta": {
+    "sharpe_range": 0.1864,
+    "sharpe_variance_pct": 0.1283,
+    "gate1_variance_flag": "PASS: Sharpe variance 12.8% \u2264 30% across 5 ranking window combinations."
+  },
+  "sensitivity_pass": true,
+  "data_quality_summary": {
+    "AVAX-USD": {
+      "bars_in_window": 832,
+      "missing_business_days": 49,
+      "data_start": "2020-07-13",
+      "data_end": "2022-12-30",
+      "available_at_is_start": false
+    },
+    "BTC-USD": {
+      "bars_in_window": 1825,
+      "missing_business_days": 0,
+      "data_start": "2016-09-28",
+      "data_end": "2022-12-30",
+      "available_at_is_start": true
+    },
+    "ETH-USD": {
+      "bars_in_window": 1825,
+      "missing_business_days": 0,
+      "data_start": "2017-11-09",
+      "data_end": "2022-12-30",
+      "available_at_is_start": true
+    },
+    "SOL-USD": {
+      "bars_in_window": 995,
+      "missing_business_days": 0,
+      "data_start": "2020-04-10",
+      "data_end": "2022-12-30",
+      "available_at_is_start": false
+    }
+  },
+  "look_ahead_bias_flag": false,
+  "look_ahead_bias_notes": [
+    "Rolling returns computed using pct_change(ranking_window) \u2014 backward-looking only.",
+    "Friday signal generated at close T, then shifted +1 bar \u2192 executed at Monday open T+1.",
+    "BTC 200-SMA computed on full warmup-inclusive series; no look-ahead.",
+    "Hard stop checked against close price \u2014 fill at stop threshold (conservative).",
+    "Multi-position simulation: equal-weight allocation at Monday open, no future price data used."
+  ],
+  "gate1_checks": {
+    "is_sharpe_pass": true,
+    "oos_sharpe_pass": true,
+    "is_mdd_pass": false,
+    "oos_mdd_pass": false,
+    "win_rate_pass": true,
+    "trade_count_pass": false,
+    "wf_windows_pass": true,
+    "wf_consistency_pass": true,
+    "sensitivity_pass": true,
+    "dsr_pass": true,
+    "permutation_pass": true,
+    "mc_p5_pass": true
+  },
+  "gate1_pass": false,
+  "failing_criteria": [
+    "is_mdd_pass",
+    "oos_mdd_pass",
+    "trade_count_pass"
+  ],
+  "ceo_exceptions": {
+    "trade_count_threshold_waived": true,
+    "reason": "Structural crypto IS window constraint \u2014 SOL/AVAX data from 2020 only. CEO exception granted in QUA-291."
+  },
+  "ceo_flags": {
+    "drawdown_risk": "H36 MDD was -54% (Gate 1 FAIL). H36b target: <20%. Measured IS MDD: -52.4%. STILL EXCEEDS Gate 1 <20% criterion \u2014 FAIL.",
+    "wf_criterion_review": "WF windows with 0 trades in bear market (regime=CASH) flagged as REGIME_CASH, not FAIL. CEO to review WF criterion for crypto bear market windows per QUA-293. Regime-cash windows in this run: 2.",
+    "correlation_note": "BTC/ETH/SOL/AVAX r>0.7. Cross-sectional momentum exploits relative performance within correlated assets (not mean-reversion pairs). QUA-281 correlation criterion does not technically apply."
+  }
+}
