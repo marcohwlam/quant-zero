@@ -1,0 +1,58 @@
+GATE 1 VERDICT — H40 Halloween Effect Seasonal Switch
+Run date: 2026-03-17
+Strategy: H40_halloween_effect
+
+============================================================
+PRIMARY (CASH BASELINE) RESULTS
+============================================================
+  IS window:        1950-01-01 to 2018-12-31
+  OOS window:       2019-01-01 to 2026-03-01
+
+  IS Sharpe:        0.578  [threshold >1.0] FAIL
+  OOS Sharpe:       -0.057  [threshold >0.7] FAIL
+  IS Max DD:        -30.72%  [threshold <20%] FAIL
+  OOS Max DD:       -29.84%  [threshold <25%] FAIL
+  IS Trades:        63  [threshold >=100] FAIL
+  Win Rate:         71.4%  [threshold >50%] PASS
+  Profit Factor:    4.13
+  DSR:              0.0000  [threshold >0] FAIL
+  Post-cost Sharpe: 0.578
+
+  MC p5 Sharpe:     5.588  PASS
+  MC Median Sharpe: 9.377
+  Sharpe CI [95%]:  [0.394, 0.872]
+  MDD CI [95%]:     [-45.300%, -19.523%]
+
+  Permutation p:    0.5900  FAIL (p>0.05)
+  WF Windows:       52/131 positive
+  WF Pct Positive:  39.7%  FAIL
+  WF Sharpe Std:    1.124
+  WF Sharpe Min:    -1.420  WARNING: losing OOS window
+  Low-trade WF:     True (6 trades/fold — interpret carefully)
+  Market Impact:    0.01 bps  
+  Sensitivity Pass: True
+
+============================================================
+OVERALL GATE 1 VERDICT: FAIL
+Criteria passed: 1/9
+Failed criteria:
+  - IS Sharpe > 1.0
+  - OOS Sharpe > 0.7
+  - IS MaxDD < 20%
+  - OOS MaxDD < 25%
+  - IS Trades >= 100
+  - DSR > 0
+  - Permutation p <= 0.05
+  - WF majority positive
+
+============================================================
+AGG VARIANT COMPARISON
+============================================================
+  IS Sharpe (AGG):  0.578
+  OOS Sharpe (AGG): -0.057
+  IS Max DD (AGG):  -30.72%
+
+NOTE: With only ~2 trades/year, WF windows have ~6 trades each.
+Walk-forward results should be interpreted cautiously.
+IS Sharpe note: If CASH IS Sharpe is 0.6-0.9 with strong OOS,
+Engineering Director may evaluate conditional forward per H39 precedent.
