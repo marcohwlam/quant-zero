@@ -1,0 +1,176 @@
+=============================================================================
+GATE 1 VERDICT — H32 GLD/GDX Spread Mean Reversion
+Date: 2026-03-16
+Strategy File: strategies/h32_gld_gdx_spread_mean_reversion.py
+Backtest Runner: QUA-271
+=============================================================================
+
+OVERALL VERDICT: FAIL
+RECOMMENDATION: DO NOT PROCEED — Return to Strategy Coder for rework
+CONFIDENCE: HIGH
+
+=============================================================================
+IS PERIOD: 2007-01-01 to 2021-12-31
+OOS PERIOD: 2022-01-01 to 2025-12-31
+ASSET CLASS: Equities/Commodity ETF Pair (GDX long, GLD regime filter)
+=============================================================================
+
+METRIC SCORECARD
+─────────────────────────────────────────────────────────────────────────────
+Metric                          Value       Threshold   Status
+─────────────────────────────────────────────────────────────────────────────
+IS Sharpe                       0.0593      > 1.0       FAIL ❌
+OOS Sharpe                      0.7122      > 0.7       PASS ✅ (marginal)
+IS Max Drawdown                 -52.37%     < 20%       FAIL ❌
+OOS Max Drawdown                -8.25%      < 25%       PASS ✅
+Win Rate (IS)                   52.94%      > 50%       PASS ✅
+Profit Factor (IS)              0.97        > 1.0       FAIL ❌
+IS Trade Count                  34          ≥ 100       FAIL ❌
+Walk-Forward Windows            0/4         ≥ 3         FAIL ❌
+MC p5 Sharpe                   -4.926       ≥ 0.5       FAIL ❌
+Permutation p-value             0.202       ≤ 0.05      FAIL ❌
+DSR                             0.970       > 0         PASS ✅
+Parameter Sensitivity           340.8%      < 30%       FAIL ❌
+
+CRITICAL FAILING CRITERIA (8 failures):
+  1. IS Sharpe (0.06) — near-zero. No meaningful IS alpha.
+  2. IS Max Drawdown (-52.37%) — catastrophic. Far exceeds 20% threshold.
+     PF-2 FLAG: GFC 2008-09 MDD = -23.63% (also approaches/exceeds 20%).
+  3. Profit Factor (0.97) — below 1.0; losing strategy in IS period.
+  4. IS Trade Count (34) — critically low. Only 2.3 trades/yr.
+     Root cause: regime filter blocks 59% of valid signals (185/314).
+  5. Walk-Forward (0/4 windows) — no OOS windows passed ≥ 0.7 Sharpe.
+     OOS window 2013-2015 had ZERO trades (GLD below 200-SMA entire period).
+  6. MC p5 Sharpe (-4.93) — extremely negative pessimistic bound.
+  7. Permutation p-value (0.20) — no statistically significant alpha.
+  8. Sensitivity (340.8%) — hold_days change causes >300% Sharpe swing.
+
+=============================================================================
+STATISTICAL RIGOR PIPELINE
+=============================================================================
+
+Monte Carlo (1,000 resamples on IS trade PnL, n=34):
+  p5  = -4.93  [FAIL — catastrophic negative bound]
+  p50 = -0.14  [even median is negative!]
+  p95 =  4.98
+
+NOTE: MC median Sharpe is NEGATIVE. With only 34 trades, bootstrapping
+produces highly variable and mostly negative estimates. No robust alpha.
+
+Block Bootstrap CI (IS):
+  Sharpe 95% CI:   [-0.353, 0.669]  [spans zero — no statistical significance]
+  MDD 95% CI:      [-0.826, -0.151] [consistent catastrophic drawdown]
+
+Market Impact (GDX ~828 shares):
+  Impact: 0.1147 bps  [negligible]
+  Liquidity Constrained: No
+
+Permutation Test (500 permutations):
+  p-value = 0.202  [FAIL — p > 0.05]
+
+Walk-Forward Variance:
+  OOS Sharpe Std = 0.356  [moderate variance]
+  OOS Sharpe Min = -0.369 [negative window]
+
+DSR: 0.970  [PASS — however meaningful only with sufficient trades]
+
+=============================================================================
+SPECIAL VALIDATION
+=============================================================================
+
+GFC 2008-2009:
+  Sharpe: 0.66  |  MDD: -23.63%  |  Trades: 6
+  PF-2 FLAG: GFC MDD of -23.63% EXCEEDS 20% threshold.
+  Strategy performed modestly in GFC but drawdown violation flagged.
+
+2022 Regime Filter Effectiveness:
+  Sharpe: 0.62  |  MDD: -2.65%  |  Trades: 1
+  Only 1 trade executed in 2022 (12/13 signals regime-blocked by GLD<200SMA)
+  The regime filter was very effective at keeping strategy out of 2022 chaos,
+  but this also means near-zero activity in that period.
+
+Regime Filter Analysis (IS 2007-2021):
+  Z<-2.0 signals raw: 314
+  Regime-blocked (GLD<200SMA): 185 (59%)
+  Trades executed: 34 (~11% of raw signals actually traded)
+
+Note: 2013-2015 period had GLD in sustained bear market → 0 trades in that
+walk-forward OOS window. The strategy is completely inactive during gold
+bear markets, creating large performance cliffs.
+
+=============================================================================
+PARAMETER SENSITIVITY
+=============================================================================
+
+zscore_threshold changes:
+  z=1.5: Sharpe=0.124 (+109% change)  — 67 trades
+  z=2.0: Sharpe=0.059 (base)          — 34 trades
+  z=2.5: Sharpe=0.026 (-56% change)   — 16 trades
+
+hold_days changes:
+  hold=5:  Sharpe=-0.122 (-306% change) — 45 trades  [FAIL]
+  hold=10: Sharpe=0.059  (base)         — 34 trades
+  hold=20: Sharpe=0.261  (+341% change) — 29 trades  [FAIL]
+
+SENSITIVITY FAIL (max change 340.8% from hold_days=20).
+The strategy's behavior changes drastically with hold period:
+- 5-day hold loses money; 20-day hold profitable but still poor absolute Sharpe.
+- This indicates the strategy doesn't have a stable edge; results are highly
+  path-dependent on exit timing.
+
+=============================================================================
+WALK-FORWARD RESULTS
+=============================================================================
+
+Window  IS Period          OOS Period          IS SR   OOS SR  Trades  Result
+1       2007-2009(9T)      2010-2012(11T)      0.72    0.62    11      FAIL
+2       2010-2012(11T)     2013-2015(0T!)      0.62    0.00    0       FAIL
+3       2013-2015(0T!)     2016-2018(3T)       0.00    0.01    3       FAIL
+4       2016-2018(3T)      2019-2021(10T)      0.01   -0.37   10      FAIL
+
+WF: 0/4 PASS — Complete walk-forward failure.
+Windows 2 & 3 had 0 trades in either IS or OOS (GLD bear market blocked all).
+
+=============================================================================
+ROOT CAUSE ANALYSIS
+=============================================================================
+
+1. CRITICAL LOW TRADE COUNT: Only 34 IS trades (2.3/yr) due to regime filter
+   blocking 59% of entry signals. Insufficient statistical power for Gate 1.
+
+2. CATASTROPHIC IS DRAWDOWN (-52.37%): The strategy sustains large drawdowns
+   from GDX price stop-losses and z-score stops during adverse periods.
+   GDX is inherently volatile (mining stocks) — drawdowns compound.
+
+3. ZERO-ACTIVITY PERIODS: During gold bear markets (2013-2016), the 200-SMA
+   regime filter completely shuts off the strategy. This creates multi-year
+   idle periods, making walk-forward analysis impossible.
+
+4. HIGH PARAMETER SENSITIVITY: The strategy's performance varies wildly with
+   hold_days (5→20 days swings Sharpe from -0.12 to +0.26), indicating no
+   stable signal. The edge appears more timing-dependent than structural.
+
+5. OOS ANOMALY: OOS Sharpe (0.71) looks better than IS (0.06), but with only
+   8 OOS trades, this is statistically meaningless and likely lucky selection.
+
+=============================================================================
+RECOMMENDATION
+=============================================================================
+
+GATE 1: FAIL — DO NOT ADVANCE
+
+Actions for Strategy Coder:
+  1. CRITICAL: Reduce regime filter strictness or use alternative filter
+     (e.g., GLD 50-SMA or trend-agnostic entry) to increase trade count
+  2. Use different stop-loss mechanism to control drawdown (e.g., volatility-
+     normalized stop rather than fixed % from entry)
+  3. Consider pairs trading approach with explicit hedge ratio (GDX short GLD)
+     to reduce directional GDX risk contributing to large drawdowns
+  4. Re-evaluate z-score window (60-day may be too long given GDX volatility)
+  5. Require minimum 200 IS trades before Gate 1 submission
+
+Metrics Files:
+  - JSON: backtests/H32_GLDGDXSpread_2026-03-16.json
+  - Verdict: backtests/H32_GLDGDXSpread_2026-03-16_verdict.txt
+
+=============================================================================

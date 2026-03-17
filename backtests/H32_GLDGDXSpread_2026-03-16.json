@@ -1,0 +1,153 @@
+{
+  "strategy_name": "H32_GLDGDXSpread",
+  "date": "2026-03-16",
+  "asset_class": "equities",
+  "is_sharpe": 0.0593,
+  "oos_sharpe": 0.7122,
+  "is_max_drawdown": -0.5237,
+  "oos_max_drawdown": -0.0825,
+  "win_rate": 0.5294,
+  "profit_factor": 0.9721,
+  "trade_count": 34,
+  "oos_trade_count": 8,
+  "is_total_return": -0.0389,
+  "oos_total_return": 0.285,
+  "post_cost_sharpe": 0.7122,
+  "dsr": 0.970387,
+  "dsr_sr_annualized": 0.0593,
+  "dsr_sr_benchmark": 0.0217,
+  "wf_windows_passed": 0,
+  "wf_total_windows": 4,
+  "wf_consistency_score": 0.0,
+  "wf_oos_sharpes": [
+    0.6232,
+    0.0,
+    0.0117,
+    -0.3687
+  ],
+  "wf_sharpe_std": 0.35592808613538773,
+  "wf_sharpe_min": -0.3687,
+  "wf_results": [
+    {
+      "is_sharpe": 0.7233,
+      "oos_sharpe": 0.6232,
+      "passed": false,
+      "is_trades": 9,
+      "oos_trades": 11
+    },
+    {
+      "is_sharpe": 0.6232,
+      "oos_sharpe": 0.0,
+      "passed": false,
+      "is_trades": 11,
+      "oos_trades": 0
+    },
+    {
+      "is_sharpe": 0.0,
+      "oos_sharpe": 0.0117,
+      "passed": false,
+      "is_trades": 0,
+      "oos_trades": 3
+    },
+    {
+      "is_sharpe": 0.0107,
+      "oos_sharpe": -0.3687,
+      "passed": false,
+      "is_trades": 3,
+      "oos_trades": 10
+    }
+  ],
+  "sensitivity_pass": false,
+  "sensitivity_max_change_pct": 340.8094,
+  "sensitivity_results": [
+    {
+      "param": "zscore_threshold=1.5",
+      "sharpe": 0.124,
+      "trades": 67,
+      "change_pct": 109.10622106134554
+    },
+    {
+      "param": "zscore_threshold=2.0",
+      "sharpe": 0.0593,
+      "trades": 34,
+      "change_pct": 0.0
+    },
+    {
+      "param": "zscore_threshold=2.5",
+      "sharpe": 0.0263,
+      "trades": 16,
+      "change_pct": 55.64923176235552
+    },
+    {
+      "param": "hold_days=5",
+      "sharpe": -0.1223,
+      "trades": 45,
+      "change_pct": 306.2394087285989
+    },
+    {
+      "param": "hold_days=10",
+      "sharpe": 0.0593,
+      "trades": 34,
+      "change_pct": 0.0
+    },
+    {
+      "param": "hold_days=20",
+      "sharpe": 0.2614,
+      "trades": 29,
+      "change_pct": 340.80938603551675
+    }
+  ],
+  "mc_p5_sharpe": -4.9257508026323285,
+  "mc_median_sharpe": -0.14316262315013928,
+  "mc_p95_sharpe": 4.975045175021469,
+  "sharpe_ci_low": -0.35324805797823206,
+  "sharpe_ci_high": 0.6688264053758601,
+  "mdd_ci_low": -0.8258113507697121,
+  "mdd_ci_high": -0.1514076988238931,
+  "win_rate_ci_low": 0.029830690674549853,
+  "win_rate_ci_high": 0.06773044880408492,
+  "market_impact_bps": 0.11468697745837812,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 4.317880483884212e-05,
+  "permutation_pvalue": 0.202,
+  "permutation_test_pass": false,
+  "gfc_2008_2009_mdd": -0.2363,
+  "gfc_2008_2009_sharpe": 0.6562,
+  "gfc_2008_2009_trades": 6,
+  "stress_2022_mdd": -0.0265,
+  "stress_2022_sharpe": 0.6232,
+  "is_entry_signals_total": 314,
+  "is_regime_blocked_count": 185,
+  "is_exit_reason_summary": {
+    "TIME_STOP": 23,
+    "MEAN_REVERT": 6,
+    "GDX_STOP_LOSS": 3,
+    "ZSCORE_STOP": 2
+  },
+  "oos_exit_reason_summary": {
+    "TIME_STOP": 8
+  },
+  "oos_data_quality": {
+    "strategy_name": "H32_GLDGDXSpread",
+    "oos_total_rows": 1002,
+    "oos_clean_rows": 1002,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "Close": 0,
+      "High": 0,
+      "Low": 0,
+      "Open": 0,
+      "Volume": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "look_ahead_bias_flag": false,
+  "gate1_pass": false
+}
