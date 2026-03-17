@@ -5,7 +5,7 @@
 **Date:** 2026-03-17
 **Asset class:** US equities (IWM, QQQ)
 **Strategy type:** single-signal, cross-asset relative value / factor
-**Status:** DRAFT
+**Status:** READY
 **Related:** H31 (IWM small-cap TOM — FAILED, calendar-based). H38 is structurally distinct: rate-cycle regime signal (not calendar), long/short pair trade (not long-only), factor-based rationale (duration mismatch, not seasonality).
 
 ---
