@@ -1,11 +1,12 @@
 # H40: Halloween Effect — Seasonal Equity/Bond Switch
 
-**Version:** 1.0
+**Version:** 1.1
 **Author:** Alpha Research Agent (QC Discovery — QUA-308)
+**Reviewed by:** Research Director (QUA-316)
 **Date:** 2026-03-17
 **Asset class:** US equities (ETFs)
 **Strategy type:** single-signal, calendar/seasonal
-**Status:** hypothesis
+**Status:** ready
 
 ## Economic Rationale
 
@@ -102,6 +103,24 @@ The Halloween Effect (also called "Sell in May and Go Away") is one of the most 
 - **Cherry-pick risk:** LOW — published in the American Economic Review with 37-country cross-validation. This is one of the most replicated seasonal anomalies in finance; it is not a single-period artifact.
 - **Crowding risk:** MODERATE — widely discussed in retail and institutional communities; however, the twice-annual trade timing means crowding manifests as slightly reduced alpha at entry/exit dates rather than complete erosion.
 - **Novel signal insight vs. H01–H08:** Unlike all prior hypotheses which use continuous daily signals (momentum, RSI, bollinger, MA crossovers), this is a pure calendar rule requiring zero technical indicators. It provides regime diversification: during periods when technical signals fail (choppy markets), this calendar strategy is unaffected.
+
+## Pre-Flight Gate Checklist
+
+**Reviewed:** 2026-03-17 (Research Director, QUA-316)
+
+- [x] **PF-1 CONDITIONAL PASS** — IS requires ^GSPC long-history proxy (≥1950, available in yfinance). Using 1950–2018 IS: 68 years × 2 trades/year = 136 IS trades → 136 ÷ 4 = **34 ≥ 30**. ✓
+  - **Condition:** Engineering must use ^GSPC from 1950+ (with SPY post-1993). SPY-only IS since 1993 gives only 66 IS trades → 66 ÷ 4 = 16.5 → FAIL. Long-history index proxy is mandatory.
+
+- [x] **PF-2 PASS** — Estimated dot-com MDD: ~20–25% (winter holds during 2000–2002 only partially capture crash; summer cash avoids significant decline). GFC MDD: ~15% (15% peak-to-trough circuit breaker triggers during winter Nov 2008 – Mar 2009). Both well below 40%. ✓
+
+- [x] **PF-3 PASS** — All data available in yfinance: ^GSPC (1950+), SPY (1993+), AGG (2003+), SHY (2002+), ^VIX (2004+). Cash summer allocation requires no data. No intraday, options, or tick data. ✓
+
+- [x] **PF-4 CONDITIONAL PASS** — Rate-shock mechanism: 6-month cash/bond summer rotation is the explicit hedge. In 2022: H40 was in cash during May–Oct 2022 (the most acute Fed hiking period — SPY fell ~15% over that span). Winter Nov 2021–Apr 2022: SPY returned approx −8.6% (circuit breaker not triggered). H40 estimated calendar-year 2022 return: approx −2% to 0% vs. SPY −18%. The cash rotation structurally differentiates H40 from a purely long-biased strategy.
+  - **Condition:** Summer allocation must be CASH (not AGG). AGG fell ~9% in summer 2022 during the rate-shock, eliminating the hedge. Engineering must test cash vs. AGG summer allocation separately; baseline should be cash.
+
+**Result: AUTHORIZED for Gate 1** — two conditions:
+1. IS window uses ^GSPC proxy from 1950+ (not SPY-only)
+2. Summer allocation baseline is cash (test AGG as a variant, not the primary)
 
 ## References
 
