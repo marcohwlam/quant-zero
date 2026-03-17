@@ -1,2 +1,3 @@
-date,trend,volatility,momentum,liquidity,vix,spy_200d_delta,spy_12_1m,hurst_60d,summary
-2026-03-15,mildly-trending,high-vol,risk-on,liquid,27.19,+0.90%,+25.0%,0.732,mildly-trending/high-vol/risk-on/liquid
+date,trend,volatility,momentum,liquidity,correlation,vix,garch_vol_annualized,spy_200d_delta,spy_12_1m,hurst_60d,spy_btc_corr_60d,yield_2y,hyg_lqd_ratio,days_in_regime,summary
+2026-03-15,mildly-trending,high-vol,risk-on,liquid,,27.19,,+0.90%,+25.0%,0.732,,,,,mildly-trending/high-vol/risk-on/liquid
+2026-03-16,choppy,normal-vol,risk-on,liquid,crisis,23.51,14.55%,+1.86%,+22.56%,-0.003,0.615,3.605%,0.7310,1,choppy/normal-vol/risk-on/liquid/crisis-corr
