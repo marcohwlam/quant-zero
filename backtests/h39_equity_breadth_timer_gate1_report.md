@@ -1,0 +1,182 @@
+# H39 Equity Breadth Timer — Gate 1 Backtest Report
+
+**Run date:** 2026-03-17  
+**Strategy:** H39 Equity Breadth Timer — % Sectors Above 200-SMA as SPY Entry Signal  
+**Asset class:** Equities (SPY)  
+**References:** QUA-314, QUA-313, QUA-311  
+
+---
+
+## Executive Summary
+
+| | |
+|---|---|
+| **Gate 1 Verdict** | **FAIL** |
+| Checks passed | 6/12 |
+| IS Sharpe | 0.7248 (FAIL) |
+| OOS Sharpe | 0.5720 (FAIL) |
+| IS Max Drawdown | -19.35% (PASS) |
+| Walk-Forward | 1/4 folds passed (FAIL) |
+| DSR | -30.8318 (FAIL) |
+
+---
+
+## Gate 1 Checklist
+
+| Check | Result |
+|---|---|
+| IS Sharpe > 1.0 | ❌ FAIL |
+| OOS Sharpe > 0.7 | ❌ FAIL |
+| IS MDD < 20% | ✅ PASS |
+| OOS MDD < 25% | ✅ PASS |
+| Win Rate > 50% | ✅ PASS |
+| DSR > 0 | ❌ FAIL |
+| WF >= 3/4 folds | ❌ FAIL |
+| Trade count >= 50 (IS) | ❌ FAIL |
+| Sensitivity pass | ✅ PASS |
+| Permutation p <= 0.05 | ❌ FAIL |
+| MC p5 Sharpe >= 0.5 | ✅ PASS |
+| DQ not BLOCK | ✅ PASS |
+
+---
+
+## Primary Configuration Metrics
+
+**Parameters:** entry_threshold=7, exit_threshold=5, sma_lookback=200
+
+| Metric | IS (2007–2021) | OOS (2022–2025) | Threshold |
+|---|---|---|---|
+| Sharpe Ratio | 0.7248 | 0.5720 | IS>1.0, OOS>0.7 |
+| Max Drawdown | -19.35% | -21.73% | IS<20%, OOS<25% |
+| Win Rate | 61.11% | 42.86% | >50% |
+| Profit Factor | 4.49 | 1.36 | >1.0 |
+| Trade Count | 19 | 8 | ≥50 (CEO exception) |
+| Total Return | 225.62% | 26.54% | — |
+| Total TC | $785.23 | $169.21 | — |
+| Post-cost Sharpe | 0.7248 | — | embedded |
+
+---
+
+## Statistical Rigor
+
+### Monte Carlo (1,000 simulations, trade PnL bootstrap)
+
+| | Value |
+|---|---|
+| MC p5 Sharpe | 1.0342 |
+| MC median Sharpe | 6.7793 |
+| MC p95 Sharpe | 11.9556 |
+| MC pessimistic flag | NO |
+
+### Bootstrap 95% CI (Block bootstrap, block=√T)
+
+| Metric | Lower | Upper |
+|---|---|---|
+| Sharpe | 0.2264 | 1.1615 |
+| Max Drawdown | -39.22% | -14.23% |
+| Win Rate | 37.06% | 48.11% |
+
+### Market Impact (SPY, 100 shares)
+
+| | Value |
+|---|---|
+| Market impact | 0.01 bps |
+| Q/ADV ratio | 0.000001 |
+| Liquidity constrained | False |
+
+### Permutation Test (500 permutations)
+
+| | Value |
+|---|---|
+| p-value | 0.5320 |
+| Test pass (p≤0.05) | False |
+
+---
+
+## Walk-Forward Results
+
+| Fold | IS Window | OOS Window | IS Sharpe | OOS Sharpe | Consistency | Pass |
+|---|---|---|---|---|---|---|
+| 1 | 2007-01-01–2009-11-30 | 2009-12-01–2012-10-31 | 0.4600 | 0.2022 | 0.5604 | ❌ |
+| 2 | 2007-01-01–2012-10-31 | 2012-11-01–2015-09-30 | 0.3485 | 0.9543 | 1.7383 | ❌ |
+| 3 | 2007-01-01–2015-09-30 | 2015-10-01–2018-08-31 | 0.5501 | 1.2029 | 1.1867 | ❌ |
+| 4 | 2007-01-01–2018-08-31 | 2018-09-01–2021-07-31 | 0.6738 | 0.7733 | 0.1477 | ✅ |
+
+**WF Sharpe std:** 0.3685 | **WF Sharpe min:** 0.2022
+
+
+
+---
+
+## Parameter Sensitivity
+
+| entry | exit | sma | IS Sharpe | IS MDD | Win Rate | Trades |
+|---|---|---|---|---|---|---|
+| 7 | 5 | 200 | 0.7248 | -19.35% | 61.11% | 19 |
+| 6 | 4 | 200 | 0.7226 | -19.46% | 55.56% | 19 |
+| 8 | 6 | 200 | 0.6821 | -19.35% | 55.00% | 21 |
+| 7 | 5 | 150 | 0.6162 | -25.70% | 51.85% | 28 |
+| 7 | 5 | 250 | 0.6692 | -19.19% | 50.00% | 17 |
+
+**Primary Sharpe:** 0.7248  
+**Sensitivity pass (±30% threshold):** ✅ PASS
+
+---
+
+## OOS Data Quality
+
+| | |
+|---|---|
+| Recommendation | **PASS** |
+| Row coverage | 100.0% |
+| NaN critical fields | None |
+| Advisory NaN fields | None |
+
+---
+
+## Trade Log (IS, up to 30 trades shown)
+
+| Trade | Entry Date | Entry Price | Exit Date | Exit Price | PnL |
+|---|---|---|---|---|---|
+| 1 | 2007-01-03 | 100.0136 | 2008-01-07 | 101.5442 | $353.66 |
+| 2 | 2008-05-19 | 102.7665 | 2008-06-09 | 98.4849 | $-1,080.50 |
+| 3 | 2009-06-08 | 69.3047 | 2010-05-24 | 81.7544 | $4,327.52 |
+| 4 | 2010-07-26 | 83.7179 | 2010-08-16 | 81.4243 | $-813.88 |
+| 5 | 2010-09-20 | 85.9012 | 2011-08-08 | 90.2697 | $1,379.76 |
+| 6 | 2011-10-31 | 98.6919 | 2011-11-07 | 97.3182 | $-437.03 |
+| 7 | 2011-11-14 | 97.9391 | 2011-11-21 | 93.2901 | $-1,392.95 |
+| 8 | 2012-01-09 | 99.974 | 2012-11-19 | 109.3193 | $2,519.83 |
+| 9 | 2012-11-26 | 111.4993 | 2015-08-24 | 157.1479 | $12,149.36 |
+| 10 | 2015-10-26 | 174.6553 | 2015-11-02 | 175.5146 | $161.64 |
+| 11 | 2015-11-23 | 176.4077 | 2015-11-30 | 176.7194 | $29.93 |
+| 12 | 2016-03-14 | 171.3383 | 2016-11-07 | 179.4918 | $1,959.62 |
+| 13 | 2016-11-14 | 186.7903 | 2018-03-26 | 232.2745 | $10,682.20 |
+| 14 | 2018-04-16 | 236.5898 | 2018-05-07 | 236.4924 | $-79.48 |
+| 15 | 2018-05-14 | 242.2077 | 2018-06-25 | 243.3843 | $208.14 |
+| 16 | 2018-07-23 | 248.7338 | 2018-10-15 | 246.3726 | $-576.07 |
+| 17 | 2019-02-25 | 252.47 | 2020-03-02 | 273.2687 | $4,412.10 |
+| 18 | 2020-06-08 | 295.1634 | 2020-06-15 | 274.7005 | $-4,131.91 |
+| 19 | 2020-08-03 | 303.9613 | — | — | — |
+
+---
+
+## Data Warnings
+
+No data warnings.
+
+---
+
+## IS Shortfall Tracking Schema
+
+| Field | Value |
+|---|---|
+| strategy_name | H39_EquityBreadthTimer |
+| entry_backtest_price | 100.0136 |
+| backtest_sharpe_is | 0.7248 |
+| backtest_mdd_is | -19.35% |
+| gate1_run_date | 2026-03-17 |
+| gate1_verdict | FAIL |
+
+---
+
+*Generated by Backtest Runner Agent (QUA-314) on 2026-03-17*

@@ -1,0 +1,321 @@
+{
+  "strategy_name": "H39_EquityBreadthTimer",
+  "date": "2026-03-17",
+  "asset_class": "equities",
+  "is_sharpe": 0.7248,
+  "oos_sharpe": 0.572,
+  "is_max_drawdown": -0.1935,
+  "oos_max_drawdown": -0.2173,
+  "win_rate": 0.6111,
+  "oos_win_rate": 0.4286,
+  "profit_factor": 4.486,
+  "oos_profit_factor": 1.3551,
+  "trade_count": 19,
+  "oos_trade_count": 8,
+  "is_total_return": 2.2562,
+  "oos_total_return": 0.2654,
+  "dsr": -30.8318,
+  "wf_windows_passed": 1,
+  "wf_windows_total": 4,
+  "wf_consistency_score": 0.9083,
+  "wf_fold_results": [
+    {
+      "fold": 1,
+      "is_start": "2007-01-01",
+      "is_end": "2009-11-30",
+      "oos_start": "2009-12-01",
+      "oos_end": "2012-10-31",
+      "is_sharpe": 0.46,
+      "oos_sharpe": 0.2022,
+      "is_mdd": -0.1785,
+      "oos_mdd": -0.1932,
+      "consistency": 0.5604,
+      "fold_pass": "False"
+    },
+    {
+      "fold": 2,
+      "is_start": "2007-01-01",
+      "is_end": "2012-10-31",
+      "oos_start": "2012-11-01",
+      "oos_end": "2015-09-30",
+      "is_sharpe": 0.3485,
+      "oos_sharpe": 0.9543,
+      "is_mdd": -0.1935,
+      "oos_mdd": -0.1182,
+      "consistency": 1.7383,
+      "fold_pass": "False"
+    },
+    {
+      "fold": 3,
+      "is_start": "2007-01-01",
+      "is_end": "2015-09-30",
+      "oos_start": "2015-10-01",
+      "oos_end": "2018-08-31",
+      "is_sharpe": 0.5501,
+      "oos_sharpe": 1.2029,
+      "is_mdd": -0.1935,
+      "oos_mdd": -0.1007,
+      "consistency": 1.1867,
+      "fold_pass": "False"
+    },
+    {
+      "fold": 4,
+      "is_start": "2007-01-01",
+      "is_end": "2018-08-31",
+      "oos_start": "2018-09-01",
+      "oos_end": "2021-07-31",
+      "is_sharpe": 0.6738,
+      "oos_sharpe": 0.7733,
+      "is_mdd": -0.1935,
+      "oos_mdd": -0.1916,
+      "consistency": 0.1477,
+      "fold_pass": "True"
+    }
+  ],
+  "wf_sharpe_std": 0.36847059160128376,
+  "wf_sharpe_min": 0.2022,
+  "mc_p5_sharpe": 1.0341534272508115,
+  "mc_median_sharpe": 6.779297042937271,
+  "mc_p95_sharpe": 11.955591317258293,
+  "sharpe_ci_low": 0.2263608614019228,
+  "sharpe_ci_high": 1.1615022112313484,
+  "mdd_ci_low": -0.3922093617173483,
+  "mdd_ci_high": -0.14234424338271331,
+  "win_rate_ci_low": 0.37057914539102393,
+  "win_rate_ci_high": 0.48106691749529695,
+  "market_impact_bps": 0.013684460006922042,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 1.155897449471821e-06,
+  "post_cost_sharpe": 0.7248,
+  "permutation_pvalue": 0.532,
+  "permutation_test_pass": false,
+  "sensitivity_pass": true,
+  "sensitivity_sweep": [
+    {
+      "entry_threshold": 7,
+      "exit_threshold": 5,
+      "sma_lookback": 200,
+      "is_sharpe": 0.7248,
+      "is_mdd": -0.1935,
+      "win_rate": 0.6111,
+      "trade_count": 19
+    },
+    {
+      "entry_threshold": 6,
+      "exit_threshold": 4,
+      "sma_lookback": 200,
+      "is_sharpe": 0.7226,
+      "is_mdd": -0.1946,
+      "win_rate": 0.5556,
+      "trade_count": 19
+    },
+    {
+      "entry_threshold": 8,
+      "exit_threshold": 6,
+      "sma_lookback": 200,
+      "is_sharpe": 0.6821,
+      "is_mdd": -0.1935,
+      "win_rate": 0.55,
+      "trade_count": 21
+    },
+    {
+      "entry_threshold": 7,
+      "exit_threshold": 5,
+      "sma_lookback": 150,
+      "is_sharpe": 0.6162,
+      "is_mdd": -0.257,
+      "win_rate": 0.5185,
+      "trade_count": 28
+    },
+    {
+      "entry_threshold": 7,
+      "exit_threshold": 5,
+      "sma_lookback": 250,
+      "is_sharpe": 0.6692,
+      "is_mdd": -0.1919,
+      "win_rate": 0.5,
+      "trade_count": 17
+    }
+  ],
+  "oos_data_quality": {
+    "recommendation": "PASS",
+    "nan_critical_fields": [],
+    "advisory_nan_fields": [],
+    "row_coverage_pct": 100.0,
+    "total_rows": 1002,
+    "non_nan_rows": 1002
+  },
+  "gate1_pass": false,
+  "overall_verdict": "FAIL",
+  "gate1_checks": {
+    "IS Sharpe > 1.0": false,
+    "OOS Sharpe > 0.7": false,
+    "IS MDD < 20%": true,
+    "OOS MDD < 25%": true,
+    "Win Rate > 50%": true,
+    "DSR > 0": false,
+    "WF >= 3/4 folds": false,
+    "Trade count >= 50 (IS)": false,
+    "Sensitivity pass": true,
+    "Permutation p <= 0.05": false,
+    "MC p5 Sharpe >= 0.5": true,
+    "DQ not BLOCK": true
+  },
+  "gate1_checks_passed": "6/12",
+  "look_ahead_bias_flag": false,
+  "trade_log": [
+    {
+      "trade_id": 1,
+      "entry_date": "2007-01-03",
+      "entry_price": 100.0136,
+      "exit_date": "2008-01-07",
+      "exit_price": 101.5442,
+      "pnl": 353.66
+    },
+    {
+      "trade_id": 2,
+      "entry_date": "2008-05-19",
+      "entry_price": 102.7665,
+      "exit_date": "2008-06-09",
+      "exit_price": 98.4849,
+      "pnl": -1080.5
+    },
+    {
+      "trade_id": 3,
+      "entry_date": "2009-06-08",
+      "entry_price": 69.3047,
+      "exit_date": "2010-05-24",
+      "exit_price": 81.7544,
+      "pnl": 4327.52
+    },
+    {
+      "trade_id": 4,
+      "entry_date": "2010-07-26",
+      "entry_price": 83.7179,
+      "exit_date": "2010-08-16",
+      "exit_price": 81.4243,
+      "pnl": -813.88
+    },
+    {
+      "trade_id": 5,
+      "entry_date": "2010-09-20",
+      "entry_price": 85.9012,
+      "exit_date": "2011-08-08",
+      "exit_price": 90.2697,
+      "pnl": 1379.76
+    },
+    {
+      "trade_id": 6,
+      "entry_date": "2011-10-31",
+      "entry_price": 98.6919,
+      "exit_date": "2011-11-07",
+      "exit_price": 97.3182,
+      "pnl": -437.03
+    },
+    {
+      "trade_id": 7,
+      "entry_date": "2011-11-14",
+      "entry_price": 97.9391,
+      "exit_date": "2011-11-21",
+      "exit_price": 93.2901,
+      "pnl": -1392.95
+    },
+    {
+      "trade_id": 8,
+      "entry_date": "2012-01-09",
+      "entry_price": 99.974,
+      "exit_date": "2012-11-19",
+      "exit_price": 109.3193,
+      "pnl": 2519.83
+    },
+    {
+      "trade_id": 9,
+      "entry_date": "2012-11-26",
+      "entry_price": 111.4993,
+      "exit_date": "2015-08-24",
+      "exit_price": 157.1479,
+      "pnl": 12149.36
+    },
+    {
+      "trade_id": 10,
+      "entry_date": "2015-10-26",
+      "entry_price": 174.6553,
+      "exit_date": "2015-11-02",
+      "exit_price": 175.5146,
+      "pnl": 161.64
+    },
+    {
+      "trade_id": 11,
+      "entry_date": "2015-11-23",
+      "entry_price": 176.4077,
+      "exit_date": "2015-11-30",
+      "exit_price": 176.7194,
+      "pnl": 29.93
+    },
+    {
+      "trade_id": 12,
+      "entry_date": "2016-03-14",
+      "entry_price": 171.3383,
+      "exit_date": "2016-11-07",
+      "exit_price": 179.4918,
+      "pnl": 1959.62
+    },
+    {
+      "trade_id": 13,
+      "entry_date": "2016-11-14",
+      "entry_price": 186.7903,
+      "exit_date": "2018-03-26",
+      "exit_price": 232.2745,
+      "pnl": 10682.2
+    },
+    {
+      "trade_id": 14,
+      "entry_date": "2018-04-16",
+      "entry_price": 236.5898,
+      "exit_date": "2018-05-07",
+      "exit_price": 236.4924,
+      "pnl": -79.48
+    },
+    {
+      "trade_id": 15,
+      "entry_date": "2018-05-14",
+      "entry_price": 242.2077,
+      "exit_date": "2018-06-25",
+      "exit_price": 243.3843,
+      "pnl": 208.14
+    },
+    {
+      "trade_id": 16,
+      "entry_date": "2018-07-23",
+      "entry_price": 248.7338,
+      "exit_date": "2018-10-15",
+      "exit_price": 246.3726,
+      "pnl": -576.07
+    },
+    {
+      "trade_id": 17,
+      "entry_date": "2019-02-25",
+      "entry_price": 252.47,
+      "exit_date": "2020-03-02",
+      "exit_price": 273.2687,
+      "pnl": 4412.1
+    },
+    {
+      "trade_id": 18,
+      "entry_date": "2020-06-08",
+      "entry_price": 295.1634,
+      "exit_date": "2020-06-15",
+      "exit_price": 274.7005,
+      "pnl": -4131.91
+    },
+    {
+      "trade_id": 19,
+      "entry_date": "2020-08-03",
+      "entry_price": 303.9613,
+      "exit_date": null,
+      "exit_price": null,
+      "pnl": null
+    }
+  ],
+  "data_warnings": []
+}
