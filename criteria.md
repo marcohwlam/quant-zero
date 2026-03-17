@@ -1,9 +1,11 @@
 # Gate 1 Acceptance Criteria — Backtest Qualification
 
-**Version:** 1.2
+**Version:** 1.3
 **Locked by:** CEO
 **Date:** 2026-03-16
 **Change log:** v1.1 — Added Regime-Slice Sub-Criterion per QUA-133 analysis (Risk Director). Addresses regime-contamination pattern observed in H07 and H08 Gate 1 failures.
+v1.2 — Added Pattern-Based Strategy Exception per QUA-152 review.
+v1.3 — Added REGIME_CASH Walk-Forward Exemption per QUA-294/QUA-295 (H36b Gate 1 review).
 **Status:** LOCKED — only the CEO may modify these criteria after lock.
 
 ---
@@ -74,6 +76,22 @@ A strategy passing 2/4 sub-regimes while failing aggregate IS Sharpe > 1.0 is au
 | Win rate | **> 50%** | Baseline edge requirement. Win rate alone is insufficient — must be combined with favorable risk/reward. |
 | Average win / average loss ratio | **> 1.0** | A 50% win rate with 1:1 reward-risk breaks even. Prefer win rate > 50% OR reward/risk > 1.2. |
 | Minimum trade count (IS period) | **> 50 trades** | Fewer than 50 trades yields unreliable statistics. For low-frequency strategies, require minimum 30 trades in each walk-forward OOS window. |
+
+### Walk-Forward REGIME_CASH Exemption
+
+A walk-forward OOS window that produces **zero trades** because a regime filter (e.g., 200-SMA, VIX threshold, volatility filter) correctly placed the strategy in **CASH** during a known drawdown period (bear market, crash) is **exempt from the "strategy passes in ≥ 3 of 4 walk-forward windows" requirement** under the following conditions:
+
+1. The regime filter's cash signal is confirmed to cover the OOS window dates (e.g., BTC 200-SMA regime cash from 2022–2023).
+2. The drawdown avoided by the regime filter is documented and exceeds **30%** in the underlying asset during the OOS window.
+3. The Engineering Director explicitly flags the windows as REGIME_CASH in the verdict file and calculates WF windows excluding exempt windows.
+4. At least **2 non-exempt** walk-forward windows pass (i.e., regime-cash exemption cannot waive the requirement for all 4 windows).
+
+**Rationale:** A strategy that correctly avoids a catastrophic drawdown through regime detection is functioning as designed. Penalizing zero-trade windows in these periods creates a perverse incentive to disable effective regime filters.
+
+**Governance:** REGIME_CASH exemption must be explicitly requested in the verdict file and confirmed by the Risk Director. CEO acknowledgment required on first application per asset class.
+
+**Asset class precedent:**
+- Crypto (BTC 200-SMA): CEO-ratified 2026-03-16 (QUA-294). 2022–2023 crypto bear market qualifies as a REGIME_CASH exemption period when the BTC 200-SMA filter places the strategy in cash.
 
 ### Parameter Robustness
 
@@ -226,6 +244,7 @@ A "CONDITIONAL PASS" is permitted only when a strategy passes all quantitative t
 | 1.0 | 2026-03-15 | Initial criteria locked | Baseline Gate 1 standards |
 | 1.1 | 2026-03-16 | Added Regime-Slice Sub-Criterion | H07 and H08 failures revealed regime-contamination pattern: aggregate IS Sharpe inflated by single extreme regime. New sub-criterion requires IS Sharpe ≥ 0.8 in ≥ 2 of 4 sub-regimes, with at least one stress regime passing. Proposed by Risk Director (QUA-133), approved by CEO (QUA-127). |
 | 1.2 | 2026-03-16 | Added Pattern-Based Strategy Exception | H10 EQL/EQH v2 review (QUA-152) revealed IC > 0.02 threshold is methodologically incompatible with binary sparse pattern signals (signal flat on ~99% of days forces IC → 0 regardless of actual predictive power). Research Director approved IC substitute (zone-touch directional accuracy ≥ 55%, n ≥ 50) and MC/permutation override for IS trade count < 100 backed by fully positive block bootstrap CI and DSR > 0. Engineering Director proposed formalizing for reuse (QUA-159). CEO ratified 2026-03-16. |
+| 1.3 | 2026-03-16 | Added REGIME_CASH Walk-Forward Exemption | H36b Gate 1 review (QUA-295) identified a gap: WF windows where the strategy is correctly in CASH during a bear market (regime filter functioning as designed) produced zero OOS trades, causing a WF FAIL despite the filter doing its job. Risk Director and Engineering Director recommended formalizing an exemption. CEO ratified 2026-03-16 (QUA-294). Requires: drawdown avoided ≥ 30%, Engineering Director flags windows, Risk Director confirms, ≥ 2 non-exempt windows still pass. First precedent: Crypto (BTC 200-SMA) 2022–2023 bear market. |
 
 ---
 
