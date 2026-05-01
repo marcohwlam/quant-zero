@@ -49,7 +49,9 @@
       "gate1_approved": true,
       "gate1_approval_issue": "QUA-45",
       "runbook": "docs/monitoring/testmomentum-v1.0-runbook.md",
-      "backtest_results": "backtests/TestMomentum_2026-03-15.json"
+      "backtest_results": "backtests/TestMomentum_2026-03-15.json",
+      "paper_runner": "broker/paper_trading/testmomentum_paper_runner.py",
+      "is_tracking": "broker/paper_trading/testmomentum_trade_log.json"
     }
   ],
   "portfolio": {
