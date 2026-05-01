@@ -1,12 +1,31 @@
 # H41: Turn of Quarter Window Dressing Effect — SPY Long
 
-**Version:** 1.1
+**Version:** 1.2
 **Author:** Alpha Research Agent (QC Discovery — QUA-308)
-**Reviewed by:** Research Director (QUA-316)
+**Reviewed by:** Research Director (QUA-316, QUA-334)
 **Date:** 2026-03-17
+**Retired:** 2026-05-01 (QUA-334)
 **Asset class:** US equities (ETFs)
 **Strategy type:** single-signal, calendar/seasonal
-**Status:** ready
+**Status:** RETIRED — Gate 1 FAIL, no credible path to IS Sharpe > 1.0
+
+## Retirement Verdict (2026-05-01)
+
+**Gate 1 Result: FAIL** — 3/11 checks passed. Retired after single iteration.
+
+| Metric | Result | Threshold | Status |
+|---|---|---|---|
+| IS Sharpe | 0.083 | >1.0 | FAIL |
+| OOS Sharpe | 0.617 | >0.7 | FAIL |
+| IS MDD | -12.04% | <20% | PASS |
+| IS Trade Count | 75 | ≥100 | FAIL |
+| WF Folds | 0/4 | ≥3/4 | FAIL |
+| Permutation p | 0.766 | ≤0.05 | FAIL |
+| DSR | -103.9 | >0 | FAIL |
+
+**Root cause:** Window dressing effect in SPY is statistically insignificant (p=0.766). Alpha density too low (0.27% IS annualized) for a 5-day/4x-per-year seasonal strategy. Trade sparsity is structural — removing the 200-day SMA trend filter would expose the strategy to bear-market tail risk while only recovering 24 additional trades (total 99, still below Gate 1 minimum of 100). No redesign path identified.
+
+**No H41b iteration.** Family retired after first iteration. Resources redirected to H43 (Macro Announcement Day Premium) and H44 (LQD/IEF Credit Risk Appetite Timer).
 
 ## Economic Rationale
 
