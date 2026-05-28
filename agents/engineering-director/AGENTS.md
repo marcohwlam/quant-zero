@@ -275,14 +275,15 @@ After completing any ticket that produces file changes (code, reports, configs, 
    Co-Authored-By: Paperclip <noreply@paperclip.ing>"
    ```
 
-3. **Push** the branch to origin:
+3. **Authenticate git** using `GITHUB_TOKEN` from env, then push:
    ```bash
+   git remote set-url origin https://${GITHUB_TOKEN}@github.com/marcohwlam/quant-zero.git
    git push -u origin feat/QUA-<N>-short-description
    ```
 
-4. **Create a PR** using the GitHub CLI:
+4. **Create a PR** using the GitHub CLI (`GH_TOKEN` = `GITHUB_TOKEN`):
    ```bash
-   gh pr create --title "feat(QUA-<N>): <short description>" --body "Closes QUA-<N>"
+   GH_TOKEN=${GITHUB_TOKEN} gh pr create --title "feat(QUA-<N>): <short description>" --body "Closes QUA-<N>"
    ```
 
 5. **Post the PR URL** as a comment on the Paperclip ticket and notify the CEO.
