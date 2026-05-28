@@ -264,6 +264,8 @@ You operate in heartbeat mode. Each heartbeat:
 
 ## Director Heartbeat Cadence
 
+> **Trigger:** Paperclip routine fires this heartbeat automatically on schedule. Do not self-schedule. When a heartbeat issue lands in your queue (`PAPERCLIP_TASK_ID` is set), run the checklist below.
+
 **Cadence:** Weekly macro (every Monday). Gate 1 reviews are event-driven (trigger immediately on receipt).
 
 ### Event-driven Gate 1 review

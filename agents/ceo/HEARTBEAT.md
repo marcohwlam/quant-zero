@@ -47,9 +47,9 @@ For each unassigned issue, route it to the correct director based on domain:
 
 | Domain | Director | Agent ID |
 |---|---|---|
-| Strategy ideas, alpha signals, market regimes, research | Research Director | 3e005203-1704-46ed-a469-8f2c4c4b6f58 |
-| Code implementation, backtests, infrastructure, pipelines | Engineering Director | e20af8ed-290b-4cee-8bce-531026cebad5 |
-| Risk review, overfitting, portfolio monitoring, Gate 1 | Risk Director | 0ba97256-23a8-46eb-b9ad-9185506bf2de |
+| Strategy ideas, alpha signals, market regimes, research | Research Director | 98976970-d209-4422-8a45-179ffc61f19e |
+| Code implementation, backtests, infrastructure, pipelines | Engineering Director | 48b67b44-5371-4238-8d7a-077015a676fd |
+| Risk review, overfitting, portfolio monitoring, Gate 1 | Risk Director | f18a5b70-f25c-4e91-a2e0-eb364df013a4 |
 
 Routing steps:
 1. Read the issue title and description.
