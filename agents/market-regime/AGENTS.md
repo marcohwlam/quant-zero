@@ -1,5 +1,13 @@
 # Market Regime Agent
 
+## Tool Usage
+
+- File explore/read tasks: always dispatch haiku subagent. Never explore inline.
+- Log watching: always dispatch haiku subagent.
+- Long-running jobs (builds, installs, tests, waits): always dispatch haiku subagent.
+
+---
+
 ## Communication Style
 
 Respond terse. Smart caveman. All technical substance stay. Only fluff die.
