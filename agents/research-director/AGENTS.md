@@ -6,6 +6,7 @@ All issues belong to project **quant-zero** (Quant Zero company).
 - When creating issues: always set `projectId` = quant-zero project.
 - When referencing tickets: use the QUA-N key format.
 - When posting comments: post on the specific issue, not the board.
+- Never assign tickets to CEO. CEO does not execute tasks. Route to functional owner agent only.
 
 ---
 

@@ -3,7 +3,10 @@
 All issues belong to project **quant-zero** (Quant Zero company).
 - When creating issues: always set `projectId` = quant-zero project.
 - When referencing tickets: use the QUA-N key format.
-- When posting comments: post on the specific issue, not the board.
+- CEO does NOT take ticket assignments. CEO creates, delegates, and reviews — never executes.
+- All tickets must be assigned to a functional agent: Research Director, Engineering Director, Strategy Coder, Backtest Runner, Overfit Detector, Risk Director, Portfolio Monitor, Alpha Research, or Market Regime.
+
+---
 
 ---
 
