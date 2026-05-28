@@ -1,0 +1,119 @@
+GATE 1 VERDICT: FAIL
+Strategy: H07c_MultiAsset_TSMOM_YieldCurve (3rd and final iteration)
+Date: 2026-03-16
+Reviewed by: Risk Director
+Source data: backtests/H07c_MultiAsset_TSMOM_YieldCurve_2026-03-16.json
+
+IS period:  2018-01-01 to 2021-12-31
+OOS period: 2022-01-01 to 2023-12-31
+
+NOTE: The issue description (QUA-2) listed IS Sharpe=1.25, OOS Sharpe=0.47, trade count=9.
+These conflict with the actual backtest output (JSON file above), which is the authoritative
+source. The verdict below uses actual backtest data only.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUANTITATIVE SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+- IS Sharpe:               0.8481  FAIL  [threshold > 1.0] *** AUTO-DISQUALIFICATION ***
+- OOS Sharpe:              0.7528  PASS  [threshold > 0.7]
+- Walk-forward consistency:  N/A   FAIL  [all 4 windows errored — see note below]
+- IS Max Drawdown:          -5.84%  PASS  [threshold < 20%]
+- OOS Max Drawdown:         -4.50%  PASS  [threshold < 25%]
+- Win Rate:                 61.36%  PASS  [threshold > 50%]
+- IS Trade Count:              88   PASS  [threshold > 50 per criteria.md]
+- Deflated Sharpe Ratio:     ~0.0   MARGINAL  [rounds to 0.0 at 4dp; actual value marginally > 0 per code]
+- Parameter sensitivity:   PASS  [variance 26.3% ≤ 30%]
+- Walk-forward windows:     0/4   FAIL  *** AUTO-DISQUALIFICATION ***  [threshold ≥ 3/4]
+- Post-cost performance:    N/A   [YC-blocked entries reduce trade count; no explicit cost model run]
+- Regime-slice (Pre-COVID 2018–2019):    Sharpe=1.2567  PASS
+- Regime-slice (Stimulus 2020–2021):     Sharpe=0.8845  PASS
+- Regime-slice (Rate-shock 2022):        ERROR — insufficient data (251 days < 272 required)  FAIL
+- Regime-slice (Normalization 2023):     ERROR — insufficient data (250 days < 272 required)  FAIL
+- Regime-slice overall:     2 of 4 regimes assessable; 0 stress regimes passing  FAIL
+  [Need ≥2 passing with ≥1 stress regime; rate_shock_2022 not assessable]
+
+AUTOMATIC DISQUALIFICATION FLAGS TRIGGERED (stop, no promotion):
+  1. IS Sharpe 0.8481 < 1.0
+  2. Walk-forward windows 0/4 (threshold: ≥3/4)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+KELLY CRITERION ANALYSIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+(Computed for documentation only — strategy rejected, Kelly cap does not bind)
+
+- mu (IS annualized mean return): 0.1382 / 4y = 3.455%
+- sigma (IS annualized vol):      mu / Sharpe = 0.03455 / 0.8481 = 4.07%
+- Kelly fraction (f* = mu/sigma²): 0.03455 / (0.04074)² = 20.81
+- Recommended max position (25% Kelly × capital): 0.25 × 20.81 × $25,000 = $130,063
+- Binding cap (Rule 2: 25% max strategy cap):      $6,250
+- Kelly flag: OK (f* = 20.81, well above 0.10 low-edge threshold)
+
+Note: The very high f* is an artifact of low annualized volatility from the ETF/monthly
+rebalancing design, not indicative of extraordinary edge. Not actionable given FAIL verdict.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUALITATIVE ASSESSMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+- Economic rationale:    VALID  [momentum persistence is an established factor]
+- Look-ahead bias:       NONE DETECTED  [monthly rebalancing on lagged signals; YC spread lagged]
+- Overfitting risk:      HIGH  [multiple add-ons across 3 iterations; WF framework fails to validate
+                                due to structural data requirements vs. window lengths — a design that
+                                cannot be properly validated has elevated overfitting risk by definition]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STRUCTURAL ROOT CAUSE ANALYSIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The walk-forward framework requires each OOS window to have ≥272 trading days, but the
+standard 6-month OOS windows provide only ~124–127 days. Every single WF window errored.
+This is not a tuning issue — it is a fundamental incompatibility between the strategy's
+lookback requirements and the WF validation methodology.
+
+The same incompatibility surfaces in regime-slice analysis: rate_shock_2022 (1 year = ~251
+days) and normalization_2023 (~250 days) both fail the minimum data requirement. This means
+the strategy cannot be properly stress-tested against the rate-shock regime at all.
+
+This structural problem has persisted across all three H07 iterations:
+  H07:  IS Sharpe insufficient; OOS degraded
+  H07b: Added multi-asset expansion; OOS ceiling ~0.85; WF incompatible
+  H07c: Added YC regime filter + dynamic lookback; IS Sharpe degraded to 0.8481; WF still
+        structurally incompatible with standard validation framework
+
+The yield curve filter, while conceptually sound for suppressing rate-shock drawdowns, reduced
+entry opportunities further (7.6% IS block rate, 17.9% OOS block rate) and degraded the IS
+Sharpe. The filter was intended to improve OOS stability, but the OOS data shows 56.9% of OOS
+days had an inverted yield curve, causing the filter to be highly active precisely when the
+strategy would otherwise have been generating trades. This structural conflict between the filter
+design and the OOS environment is likely the primary driver of the performance degradation.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FAMILY RETIREMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Per CEO Directive QUA-181: a 3rd TSMOM iteration required written rationale demonstrating
+the structural bottleneck (OOS ceiling ~0.85, WF incompatibility) was resolved. No such
+rationale was provided with H07c. The structural validation incompatibility is worse, not
+better, in H07c vs. H07b.
+
+FAMILY H07 (Time-Series Momentum Multi-Asset) is permanently retired.
+No further iterations should be submitted without CEO authorization to reopen the family.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RECOMMENDATION: REJECT — do not promote to paper trading
+CONFIDENCE: HIGH
+CONCERNS:
+  - Permutation p-value 0.97: IS returns are indistinguishable from random permutations.
+    This is the most damning statistical result — the strategy shows no exploitable signal
+    that permutation-destroys the autocorrelation structure.
+  - DSR ~0.0: Deflated Sharpe effectively zero; edge is not reliably above luck threshold
+    given 12 parameter combinations tested.
+  - WF total failure (0/4 windows): Cannot validate OOS robustness by any standard method.
+  - Structural WF incompatibility means no amount of parameter tuning will fix this without
+    fundamentally redesigning the strategy's minimum data requirements.
+  - IS Sharpe degraded iteration-over-iteration: H07 → H07b → H07c saw IS Sharpe move in
+    wrong direction as complexity increased (classic overfitting signature).
+
+VERDICT: FAIL — FAMILY PERMANENTLY RETIRED
