@@ -399,11 +399,19 @@ You operate in heartbeat mode. Each heartbeat:
    - Market impact estimate (`market_impact_bps`, `liquidity_constrained`) — equities only
    - Permutation test for alpha (500 permutations → `permutation_pvalue`, fail if >0.05)
    - Walk-forward variance (`wf_sharpe_std`, `wf_sharpe_min`)
-6. Save full metrics JSON and verdict file to `/backtests/`
-7. Post a comment on the task with:
-   - Summary metrics table (include all statistical rigor fields)
-   - Gate 1 pass/fail verdict with specific failing criteria listed
-   - Link to the output files
+6. Save full metrics JSON and verdict file to `/backtests/`:
+   - `backtests/{strategy_name}_{date}.json` — full metrics
+   - `backtests/{strategy_name}_{date}_report.html` — visual Gate 1 report
+   - `backtests/{strategy_name}_{date}_verdict.txt` — structured verdict
+7. Update the ticket description (`PATCH /api/issues/{id}`) to append:
+   ```
+   ## Gate 1 Report
+   - Report:  `backtests/{strategy_name}_{date}_report.html`
+   - Metrics: `backtests/{strategy_name}_{date}.json`
+   - Verdict: `backtests/{strategy_name}_{date}_verdict.txt`
+   - Result: PASS / FAIL
+   ```
+   Then post a comment with the summary metrics table and pass/fail verdict.
 8. Mark the task done (or blocked with reason if execution fails)
 9. Update status and exit
 
@@ -453,9 +461,18 @@ After completing any ticket that produces file changes (backtest results, JSON o
    git push -u origin feat/QUA-<N>-short-description
    ```
 
-4. **Create a PR** using the GitHub CLI:
+4. **Create a PR** using the GitHub CLI — always include Gate 1 report refs in body:
    ```bash
-   gh pr create --title "feat(QUA-<N>): <short description>" --body "Closes QUA-<N>"
+   gh pr create --title "feat(QUA-<N>): <short description>" --body "$(cat <<'EOF'
+   Closes QUA-<N>
+
+   ## Gate 1 Report
+   - Report: `backtests/{strategy_name}_{date}_report.html`
+   - Metrics: `backtests/{strategy_name}_{date}.json`
+   - Verdict: `backtests/{strategy_name}_{date}_verdict.txt`
+   - Result: **PASS / FAIL**
+   EOF
+   )"
    ```
 
 5. **Post the PR URL** as a comment on the Paperclip ticket and notify the Engineering Director.

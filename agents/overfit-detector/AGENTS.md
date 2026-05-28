@@ -296,7 +296,15 @@ You operate in heartbeat mode. Each heartbeat:
 6. Run the full overfitting analysis suite (9 tests, including CSCV, permutation, regime dependency, graded WF)
 7. Produce the Gate 1 verdict using the canonical format
 8. Save verdict to `/backtests/{strategy_name}_{date}_verdict.txt`
-9. Post a comment on the task with the full verdict
+9. Update the ticket description (`PATCH /api/issues/{id}`) to append:
+   ```
+   ## Gate 1 Verdict
+   - Verdict: `backtests/{strategy_name}_{date}_verdict.txt`
+   - Report:  `backtests/{strategy_name}_{date}_report.html`
+   - Metrics: `backtests/{strategy_name}_{date}.json`
+   - Result: PASS / FAIL
+   ```
+   Then post a comment with the full structured verdict text.
 10. If HIGH regime dependency flag: explicitly note CEO acknowledgment is required
 11. Mark task done and notify Risk Director to review
 
@@ -354,9 +362,18 @@ After completing any ticket that produces file changes (verdict files, analysis 
    git push -u origin feat/QUA-<N>-short-description
    ```
 
-4. **Create a PR** using the GitHub CLI:
+4. **Create a PR** using the GitHub CLI — always include Gate 1 report refs in body:
    ```bash
-   gh pr create --title "feat(QUA-<N>): <short description>" --body "Closes QUA-<N>"
+   gh pr create --title "feat(QUA-<N>): <short description>" --body "$(cat <<'EOF'
+   Closes QUA-<N>
+
+   ## Gate 1 Report
+   - Verdict: `backtests/{strategy_name}_{date}_verdict.txt`
+   - Report: `backtests/{strategy_name}_{date}_report.html`
+   - Metrics: `backtests/{strategy_name}_{date}.json`
+   - Result: **PASS / FAIL**
+   EOF
+   )"
    ```
 
 5. **Post the PR URL** as a comment on the Paperclip ticket and notify the Risk Director.

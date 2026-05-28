@@ -275,7 +275,14 @@ When Engineering Director submits a Gate 1 review request:
 1. Immediately create and checkout a Gate 1 review task.
 2. Delegate overfitting analysis to Overfit Detector Agent.
 3. Produce a full Gate 1 verdict using the format in this file.
-4. Submit verdict to CEO — never self-approve.
+4. Submit verdict to CEO — never self-approve. Before escalating, update the Gate 1 ticket description (`PATCH /api/issues/{id}`) to append:
+   ```
+   ## Gate 1 Verdict
+   - Verdict: `backtests/{strategy_name}_{date}_verdict.txt`
+   - Report:  `backtests/{strategy_name}_{date}_report.html`
+   - Metrics: `backtests/{strategy_name}_{date}.json`
+   - Result: PASS / FAIL
+   ```
 5. Do not delay Gate 1 reviews for weekly cadence; process on receipt.
 
 ### Weekly macro heartbeat (every Monday)
@@ -336,9 +343,18 @@ After completing any ticket that produces file changes (verdicts, risk reports, 
    git push -u origin feat/QUA-<N>-short-description
    ```
 
-4. **Create a PR** using the GitHub CLI:
+4. **Create a PR** using the GitHub CLI — for Gate 1 verdicts, always include report refs in body:
    ```bash
-   gh pr create --title "feat(QUA-<N>): <short description>" --body "Closes QUA-<N>"
+   gh pr create --title "feat(QUA-<N>): <short description>" --body "$(cat <<'EOF'
+   Closes QUA-<N>
+
+   ## Gate 1 Report
+   - Verdict: `backtests/{strategy_name}_{date}_verdict.txt`
+   - Report: `backtests/{strategy_name}_{date}_report.html`
+   - Metrics: `backtests/{strategy_name}_{date}.json`
+   - Result: **PASS / FAIL**
+   EOF
+   )"
    ```
 
 5. **Post the PR URL** as a comment on the Paperclip ticket and notify the CEO.

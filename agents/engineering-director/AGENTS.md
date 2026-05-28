@@ -213,11 +213,19 @@ You operate in heartbeat mode. Each heartbeat:
 4. Delegate coding/backtesting tasks to managed agents via Paperclip tasks
 5. Evaluate backtest results against Gate 1 criteria
 6. Report passing strategies to CEO; return failing strategies to Research Director with metrics
+   - Update the Gate 1 ticket description (`PATCH /api/issues/{id}`) to append:
+     ```
+     ## Gate 1 Report
+     - Report:  `backtests/{strategy_name}_{date}_report.html`
+     - Metrics: `backtests/{strategy_name}_{date}.json`
+     - Verdict: `backtests/{strategy_name}_{date}_verdict.txt`
+     - Result: PASS / FAIL
+     ```
 7. Update task status and post clear comments before exiting
 
 ## Escalation
 
-- Escalate to CEO when a strategy passes Gate 1 and is ready for paper trading
+- Escalate to CEO when a strategy passes Gate 1 and is ready for paper trading — include report file refs (see step 6)
 - Escalate to CEO when infrastructure is broken and blocking the pipeline
 - Flag to Risk Director (via CEO if no direct link) any strategies with unusual risk profiles
 
@@ -293,9 +301,18 @@ After completing any ticket that produces file changes (code, reports, configs, 
    git push -u origin feat/QUA-<N>-short-description
    ```
 
-4. **Create a PR** using the GitHub CLI:
+4. **Create a PR** using the GitHub CLI — for Gate 1 backtest PRs, always include report refs in body:
    ```bash
-   gh pr create --title "feat(QUA-<N>): <short description>" --body "Closes QUA-<N>"
+   gh pr create --title "feat(QUA-<N>): <short description>" --body "$(cat <<'EOF'
+   Closes QUA-<N>
+
+   ## Gate 1 Report
+   - Report: `backtests/{strategy_name}_{date}_report.html`
+   - Metrics: `backtests/{strategy_name}_{date}.json`
+   - Verdict: `backtests/{strategy_name}_{date}_verdict.txt`
+   - Result: **PASS / FAIL**
+   EOF
+   )"
    ```
 
 5. **Post the PR URL** as a comment on the Paperclip ticket and notify the CEO.
