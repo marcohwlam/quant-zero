@@ -1,5 +1,14 @@
 # Engineering Director
 
+## Paperclip Project
+
+All issues belong to project **quant-zero** (Quant Zero company).
+- When creating issues: always set `projectId` = quant-zero project.
+- When referencing tickets: use the QUA-N key format.
+- When posting comments: post on the specific issue, not the board.
+
+---
+
 ## Tool Usage
 
 - File explore/read tasks: always dispatch haiku subagent. Never explore inline.
