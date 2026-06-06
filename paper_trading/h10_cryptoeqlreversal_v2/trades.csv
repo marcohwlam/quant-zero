@@ -1,0 +1,15 @@
+date,ticker,signal,signal_type,target_notional,has_position,action,order_id,fill_qty,fill_price,entry_backtest_price,entry_paper_price,entry_is_bps,dry_run
+2026-03-16 16:08:20,BTC-USD,0,flat,0.0,False,flat,,,,,,,True
+2026-03-16 16:08:20,ETH-USD,0,flat,0.0,False,flat,,,,,,,True
+2026-05-29 14:19:05,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-05-29 14:19:05,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-05-29 18:23:54,BTC-USD,0,flat,0.0,False,flat,,,,,,,True
+2026-05-29 18:23:55,ETH-USD,0,flat,0.0,False,flat,,,,,,,True
+2026-05-30 21:03:07,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-05-30 21:03:08,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-02 21:02:12,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-02 21:02:13,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-06 20:08:48,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-06 20:08:48,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-06 20:10:30,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-06 20:10:31,ETH-USD,0,flat,0.0,False,flat,,,,,,,False

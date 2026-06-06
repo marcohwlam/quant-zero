@@ -1,0 +1,23 @@
+date,ticker,signal,momentum_score,has_position,target_notional,action,order_id,fill_qty,fill_price,entry_paper_price,dry_run,signal_type,error
+2026-05-01 12:47:21,SPY,sell,0.10505265471572445,False,0.0,flat,,,,,True,,
+2026-05-01 12:47:21,QQQ,buy,0.15690079127441958,False,2500.0,buy,,,,,True,,
+2026-05-01 12:47:22,XLV,sell,-0.004228873300637037,False,0.0,flat,,,,,True,,
+2026-05-01 12:47:22,XLF,sell,0.05590443986110705,False,0.0,flat,,,,,True,,
+2026-05-01 12:47:22,XLE,sell,-0.0262813718538476,False,0.0,flat,,,,,True,,
+2026-05-01 12:47:22,IWM,buy,0.12084677911573838,False,2500.0,buy,,,,,True,,
+2026-06-06 20:08:50,SPY,1,0.0,False,2500.0,buy,df3274a6-c2ef-4f2d-8dae-9e060986a54e,0.0,0.0,0.0,False,momentum_long,
+2026-06-06 20:09:22,QQQ,1,0.0,True,2500.0,hold,,,,,False,momentum_long,
+2026-06-06 20:09:23,IWM,0,0.0,True,0.0,close,248404bf-074a-4568-97f9-93ed10b4c581,,,,False,flat,
+2026-06-06 20:09:23,DIA,0,0.0,False,0.0,flat,,,,,False,flat,
+2026-06-06 20:09:23,XLF,0,0.0,False,0.0,flat,,,,,False,flat,
+2026-06-06 20:09:23,XLE,0,0.0,False,0.0,flat,,,,,False,flat,
+2026-06-06 20:09:23,XLK,0,0.0,False,0.0,flat,,,,,False,flat,
+2026-06-06 20:09:24,XLV,0,0.0,False,0.0,flat,,,,,False,flat,
+2026-06-06 20:10:33,SPY,0,0.257912,False,0.0,flat,,,,,False,flat,
+2026-06-06 20:10:33,QQQ,0,0.350012,True,0.0,close,7ed57faa-1361-4058-8650-b3112e9359ec,,,,False,flat,
+2026-06-06 20:10:33,IWM,0,0.3652,True,0.0,close,,,,,False,flat,403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/positions/IWM
+2026-06-06 20:10:34,DIA,0,0.220619,False,0.0,flat,,,,,False,flat,
+2026-06-06 20:10:34,XLF,0,0.048521,False,0.0,flat,,,,,False,flat,
+2026-06-06 20:10:34,XLE,1,0.454048,False,2500.0,buy,c9b72b49-6a81-4bd0-9fc0-1d0899c6ed38,0.0,0.0,0.0,False,momentum_long,
+2026-06-06 20:11:07,XLK,1,0.535852,False,2500.0,buy,,,,,False,momentum_long,"HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Read timed out. (read timeout=10)"
+2026-06-06 20:11:26,XLV,0,0.170001,False,0.0,flat,,,,,False,flat,
