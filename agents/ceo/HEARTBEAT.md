@@ -1,5 +1,10 @@
 # HEARTBEAT.md -- CEO Heartbeat Checklist
 
+> **Reactive only.** This checklist handles event-driven work: wake reasons, assigned issues,
+> unblocking, and routing new unassigned issues. Proactive periodic work (pipeline health,
+> workspace audit, KPI review, paper-trading status) runs as Routines defined in AGENTS.md —
+> do NOT run those scans here.
+
 Run this checklist on every heartbeat. This covers both your local planning/memory work and your organizational coordination via the Paperclip skill.
 
 ## 1. Identity and Context
@@ -35,31 +40,20 @@ If `PAPERCLIP_APPROVAL_ID` is set:
 - Never retry a 409 -- that task belongs to someone else.
 - Do the work. Update status and comment when done.
 
-## 6. Review Unassigned Issues
+## 6. Route Newly Surfaced Unassigned Issues (reactive, bounded)
 
-After completing assigned work (or if no assignments exist), scan the backlog for unassigned issues:
-
-```
-GET /api/companies/{companyId}/issues?status=todo,backlog&assigneeAgentId=none
-```
-
-For each unassigned issue, route it to the correct director based on domain:
+Only when an event surfaces an unassigned issue (a wake reason, a mention, or one you encounter
+while working an assignment) — route it. Do NOT proactively scan the whole backlog here; the
+daily-morning routine owns pipeline-wide review.
 
 | Domain | Director | Agent ID |
 |---|---|---|
-| Strategy ideas, alpha signals, market regimes, research | Research Director | 3e005203-1704-46ed-a469-8f2c4c4b6f58 |
-| Code implementation, backtests, infrastructure, pipelines | Engineering Director | e20af8ed-290b-4cee-8bce-531026cebad5 |
-| Risk review, overfitting, portfolio monitoring, Gate 1 | Risk Director | 0ba97256-23a8-46eb-b9ad-9185506bf2de |
+| Strategy ideas, alpha signals, market regimes, research, KPI methodology | Research Director | 3e005203-1704-46ed-a469-8f2c4c4b6f58 |
+| Code implementation, backtests, infrastructure, pipelines, dashboard build | Engineering Director | e20af8ed-290b-4cee-8bce-531026cebad5 |
+| Risk review, overfitting, portfolio monitoring, Gate 1, dashboard spec | Risk Director | 0ba97256-23a8-46eb-b9ad-9185506bf2de |
 
-Routing steps:
-1. Read the issue title and description.
-2. Determine the appropriate director.
-3. `PATCH /api/issues/{issueId}` with `assigneeAgentId` set to the director's ID.
-4. Add a comment explaining the routing decision.
-5. If scope is unclear, post a comment asking the board to clarify — do not assign blindly.
-6. If an issue spans multiple domains, break it into subtasks and assign each to the right director.
-
-**Do not route more than 5 issues per heartbeat** to avoid runaway assignment loops.
+Route at most 5 issues per heartbeat. If scope is unclear, comment asking the board to clarify
+instead of assigning blindly. PATCH `assigneeAgentId` and leave a one-line routing-decision comment.
 
 ## 7. Delegation
 
@@ -67,12 +61,10 @@ Routing steps:
 - Use `paperclip-create-agent` skill when hiring new agents.
 - Assign work to the right director for the job.
 
-## 8. Fact Extraction
+## 8. Fact Extraction (light, reactive)
 
-1. Check for new conversations since last extraction.
-2. Extract durable facts to the relevant entity in `$AGENT_HOME/life/` (PARA).
-3. Update `$AGENT_HOME/memory/YYYY-MM-DD.md` with timeline entries.
-4. Update access metadata (timestamp, access_count) for any referenced facts.
+Extract durable facts only from the conversation this heartbeat touched. Deep periodic synthesis
+runs on its own cadence — do not sweep all history every heartbeat.
 
 ## 9. Exit
 
