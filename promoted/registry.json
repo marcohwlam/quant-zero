@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "portfolio": {
+    "total_capital": 25000,
+    "cash_buffer_minimum": 0.20,
+    "max_total_exposure": 0.80,
+    "max_strategy_concentration": 0.25,
+    "portfolio_drawdown_warn": 0.06,
+    "portfolio_drawdown_pause": 0.08
+  },
+  "strategies": [
+    {
+      "strat_id": "h10_crypto_eql_reversal_v2",
+      "name": "H10 Crypto EQL/EQH Liquidity Reversal",
+      "version": "v2.0",
+      "status": "paper",
+      "asset_class": "crypto",
+      "assets": ["BTC-USD", "ETH-USD"],
+      "capital_allocated": 5000,
+      "demotion_drawdown_threshold": 0.161,
+      "warning_drawdown_threshold": 0.107,
+      "paper_start_date": "2026-03-16",
+      "live_start_date": null,
+      "gate1": {
+        "approval_date": "2026-03-16",
+        "approval_issue": "QUA-152",
+        "is_period": "2017-01-01 to 2022-12-31",
+        "oos_period": "2023-01-01 to 2024-12-31",
+        "is_sharpe": 1.1981,
+        "oos_sharpe": 1.4385,
+        "is_max_drawdown": 0.107,
+        "oos_max_drawdown": 0.105,
+        "win_rate": 0.614,
+        "deflated_sharpe": 0.002238,
+        "kelly_fraction": 0.41,
+        "kelly_position_cap_usd": 2562,
+        "look_ahead_certified": true,
+        "backtest_results_file": "backtests/H10_CryptoEQLReversal_v2_2026-03-16.json",
+        "verdict_file": "backtests/H10_CryptoEQLReversal_v2_2026-03-16_verdict.txt",
+        "oos_equity_csv": null
+      },
+      "ceo_paper_approval_issue": "QUA-160",
+      "ceo_live_approval_issue": null,
+      "strategy_file": "strategies/h10_crypto_eql_reversal.py",
+      "paper_runner": "broker/paper_trading/h10_paper_runner.py",
+      "notes": "CEO approved paper trading 2026-03-16. Long-only EQL zones (BTC/ETH). Short leg not approved. Gate 1 PASS with approved exceptions: IC methodology exception (pattern-based strategy), MC p5 and permutation override (small-n artifact, fully positive block bootstrap CI [0.923, 1.666]).",
+      "retired_date": null,
+      "retired_reason": null
+    }
+  ]
+}
