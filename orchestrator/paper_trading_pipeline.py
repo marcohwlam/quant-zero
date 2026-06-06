@@ -49,7 +49,9 @@ REPO_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
 PAPER_TRADING_DIR = REPO_ROOT / "paper_trading"
-REGISTRY_PATH = REPO_ROOT / "broker" / "strategy_registry.json"
+# Prefer promoted/registry.json (canonical) over legacy broker/strategy_registry.json
+PROMOTED_REGISTRY_PATH = REPO_ROOT / "promoted" / "registry.json"
+REGISTRY_PATH = PROMOTED_REGISTRY_PATH if PROMOTED_REGISTRY_PATH.exists() else REPO_ROOT / "broker" / "strategy_registry.json"
 
 # Flag as stale if not updated in this many hours.
 # 80h covers Fri→Mon with market-holiday buffer.
@@ -128,16 +130,21 @@ def check_health(strat_id: str) -> dict:
     except Exception as exc:
         return {"strat_id": strat_id, "status": "ERROR", "detail": f"meta.json parse error: {exc}"}
 
-    last_updated_str = meta.get("last_updated")
+    # Accept both "last_updated" (pipeline format) and "last_update" (runner format)
+    last_updated_str = meta.get("last_updated") or meta.get("last_update")
     if not last_updated_str:
         return {"strat_id": strat_id, "status": "STALE", "detail": "last_updated missing"}
 
     try:
-        last_updated = datetime.fromisoformat(last_updated_str)
+        last_updated = datetime.fromisoformat(last_updated_str.replace("Z", "+00:00"))
+        # Normalize both to naive UTC for comparison
+        if last_updated.tzinfo is not None:
+            from datetime import timezone
+            last_updated = last_updated.astimezone(timezone.utc).replace(tzinfo=None)
     except ValueError:
         return {"strat_id": strat_id, "status": "STALE", "detail": f"unparseable timestamp: {last_updated_str}"}
 
-    age_hours = (datetime.now() - last_updated).total_seconds() / 3600
+    age_hours = (datetime.utcnow() - last_updated).total_seconds() / 3600
     if age_hours > STALE_HOURS_THRESHOLD:
         return {
             "strat_id": strat_id,
@@ -185,7 +192,9 @@ def _load_registry() -> dict:
 
 
 def _strat_id(strat: dict) -> str:
-    """Derive a filesystem-safe strat_id from the strategy name."""
+    """Return canonical strat_id: use explicit field if present, else derive from name."""
+    if "strat_id" in strat:
+        return strat["strat_id"]
     return strat["name"].lower().replace(" ", "_").replace("/", "_")
 
 
@@ -264,6 +273,10 @@ def run_testmomentum(client, dry_run: bool) -> dict:
 
 
 STRATEGY_RUNNERS = {
+    # Canonical strat_ids from promoted/registry.json
+    "h10_crypto_eql_reversal_v2": run_h10,
+    "bollinger_band_mean_reversion_v1": run_testmomentum,
+    # Legacy names from broker/strategy_registry.json (fallback)
     "h10_cryptoeqlreversal_v2": run_h10,
     "testmomentum": run_testmomentum,
 }

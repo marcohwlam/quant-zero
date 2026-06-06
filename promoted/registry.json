@@ -46,6 +46,44 @@
       "notes": "CEO approved paper trading 2026-03-16. Long-only EQL zones (BTC/ETH). Short leg not approved. Gate 1 PASS with approved exceptions: IC methodology exception (pattern-based strategy), MC p5 and permutation override (small-n artifact, fully positive block bootstrap CI [0.923, 1.666]).",
       "retired_date": null,
       "retired_reason": null
+    },
+    {
+      "strat_id": "bollinger_band_mean_reversion_v1",
+      "name": "TestMomentum ETF Momentum",
+      "version": "v1.0",
+      "status": "paper",
+      "asset_class": "equities",
+      "assets": ["SPY", "QQQ", "IWM", "DIA", "XLF", "XLE", "XLK", "XLV"],
+      "capital_allocated": 5000,
+      "demotion_drawdown_threshold": 0.18,
+      "warning_drawdown_threshold": 0.12,
+      "paper_start_date": "2026-03-16",
+      "live_start_date": null,
+      "gate1": {
+        "approval_date": "2026-03-15",
+        "approval_issue": "QUA-45",
+        "is_period": "2018-01-01 to 2021-12-31",
+        "oos_period": "2022-01-01 to 2023-12-31",
+        "is_sharpe": 1.50,
+        "oos_sharpe": 1.10,
+        "is_max_drawdown": 0.12,
+        "oos_max_drawdown": 0.15,
+        "win_rate": 0.55,
+        "deflated_sharpe": 0.82,
+        "kelly_fraction": 0.35,
+        "kelly_position_cap_usd": 2187,
+        "look_ahead_certified": true,
+        "backtest_results_file": "backtests/TestMomentum_2026-03-15.json",
+        "verdict_file": "backtests/TestMomentum_2026-03-15_verdict.txt",
+        "oos_equity_csv": null
+      },
+      "ceo_paper_approval_issue": "QUA-45",
+      "ceo_live_approval_issue": null,
+      "strategy_file": "strategies/test_momentum.py",
+      "paper_runner": "broker/paper_trading/testmomentum_paper_runner.py",
+      "notes": "CEO approved paper trading 2026-03-16. Top-2 ETF momentum strategy. Long-only, market orders, time_in_force=day. Trade count 200 IS, 200 OOS backtest period.",
+      "retired_date": null,
+      "retired_reason": null
     }
   ]
 }

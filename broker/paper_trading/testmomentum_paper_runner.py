@@ -64,6 +64,18 @@ CAPITAL         = 5_000.0           # allocated capital in USD
 TOP_N           = PARAMETERS["top_n"]
 TRADE_LOG_PATH  = "broker/paper_trading/testmomentum_trade_log.json"
 
+# Canonical data paths (spec §4.2)
+STRAT_ID         = "bollinger_band_mean_reversion_v1"
+CANONICAL_DIR    = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+    "paper_trading", STRAT_ID,
+)
+INITIAL_CAPITAL  = 5000.0
+PAPER_START_DATE = "2026-03-16"
+RUNNER_VERSION   = "1.1.0"
+DEMOTION_THRESHOLD_PCT = 18.00   # 1.5 × 12%
+WARNING_THRESHOLD_PCT  = 12.00
+
 IS_THRESHOLD_BPS = 10.0
 IS_WARN_BPS      = 5.0
 
