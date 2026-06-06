@@ -132,6 +132,23 @@ open an issue to Engineering if the pipeline is broken.
 Note: the `daily-dashboard` routine (run the dashboard generator) is owned and created by the
 Engineering Director, not the CEO.
 
+## Bootstrap Checklist (one-time, run at company launch)
+
+These goals must exist in Paperclip before the pipeline can flow. Check each off once created.
+
+| # | Goal | Owner | Notes |
+|---|---|---|---|
+| ☑ | Define the minute-level KPI objective function | Research Director | Delegate to Quant Metrics; deliverable `docs/kpi-minute-level.md`; Risk co-sign required before CEO lock. Blocks Gate 1 v2.0 finalization. |
+| ☑ | Calibrate Gate 1 v2.0 thresholds with real 2022-2024 data | Engineering Director | Replace PLACEHOLDER values in `criteria.md`; CEO locks after calibration. Blocked by KPI goal. |
+| ☑ | Source minute-level strategies from quality references | Research Director | Populate `knowledge_base/` with book/paper-derived hypotheses + provenance. |
+| ☑ | Find a strategy meeting all minute-level KPIs (full backtest + report) | Research Director | Core company goal. Requires Gate 1 v2.0 pass. Blocked by KPI + calibration + sourcing goals. |
+| ☑ | Paper Trading Infrastructure | Engineering Director | Live signal pipeline + broker connection; writes to `paper_trading/<strat>/`. Monitored by `weekly-trading` routine. |
+| ☑ | Quant Zero Dashboard | Risk Director (spec) / Engineering Director (build) | Risk owns data format + spec; Engineering builds `scripts/build_dashboard.py`. CEO sets the goal only. |
+
+All goals created 2026-06-06 (QUA-45). Do not re-create; they live in Paperclip.
+
+---
+
 ## Issue Routing (Unassigned Work)
 
 When you find unassigned issues in the backlog, route them by domain:
