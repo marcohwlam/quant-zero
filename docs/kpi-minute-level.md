@@ -173,12 +173,98 @@ Once calibration data is available, populate this table:
 
 ---
 
+## Risk Director Co-Sign — v0 Review
+
+**Date:** 2026-06-06  
+**Reviewer:** Risk Director  
+**Verdict:** CONDITIONAL CO-SIGN — 3 required changes before CEO lock, 3 flags for CEO decision
+
+---
+
+### Required Changes (block CEO lock)
+
+**R1 — Add MDD as a hard gate with absolute ceiling**
+
+Current design: MDD is only a composite score component (20% weight). A strategy scoring 0.0 on MDD (worst possible intraday drawdown) can still pass CS ≥ 0.60 if NetSharpe and PpT are strong (0.40 + 0.30 = 0.70). This allows structurally unsafe strategies to reach paper trading.
+
+Risk constitution anchor: Rule 5 (1.5× backtest MDD → auto-demotion) and Rule 9 (8% portfolio halt). Strategies that barely clear the MDD composite floor are demotion landmines.
+
+**Required addition to §Hard Gates:**
+
+> **Gate 6 — Max intraday/session MDD exceeds absolute ceiling (hard gate)**  
+> If a strategy's max intraday or session drawdown exceeds [2× the asset-class MDD threshold], reject regardless of composite score. Calibrate the ceiling alongside the CS threshold. This gate prevents catastrophically-drawing strategies from passing via high Sharpe + PpT.
+
+Both the CS component (penalizes MDD proportionally) and the hard gate (absolute ceiling) are needed.
+
+---
+
+**R2 — Reconcile trade count as a hard gate**
+
+The per-asset tables label `TC_eq`, `TC_cr`, `TC_fx` with Gate Role = "Hard gate". The §Hard Gates section lists 5 gates and does not include minimum trade count. This inconsistency must be resolved before CEO lock: either add trade count as Gate 6 in §Hard Gates (preferred — keeps it explicit) or correct the per-asset table Gate Role column to "CS component only."
+
+Risk Director preference: keep trade count as a hard gate. Statistical adequacy is binary — a strategy with 15 IS trades and Sharpe 2.0 is untrustworthy regardless of composite score.
+
+---
+
+**R3 — Futures MDD threshold: anchor to account equity, not contract notional**
+
+Current placeholder: `MDD_fx < 2.0% of contract notional`. At full ES notional (~$250K at ES ≈ 5000), 2% = $5,000 — 20% of the $25K account. A single session drawdown of this magnitude would:
+- Trigger the Rule 9 8% portfolio halt
+- Potentially violate Rule 5 (1.5× backtest MDD) on the first adverse session
+
+The threshold must be reanchored to **account equity impact**. Recommended reframe:
+
+> `MDD_fx < [X]% of account equity allocated to the strategy`
+
+Where X is calibrated to align with the equities/crypto approach (both are anchored to equity %). Alternatively, document an explicit position sizing constraint (e.g., micro contracts only at $25K account size) and confirm the notional-to-equity ratio is bounded before using notional-based MDD.
+
+---
+
+### Flags for CEO Decision (not blockers, but require explicit ruling at lock)
+
+**F1 — Crypto 3% 24h MDD vs. 2% per-trade stop**
+
+Mission statement specifies "2% max per trade" for crypto (tighter stops due to 3–5× vol). The 3% 24h MDD ceiling is mildly inconsistent: with multiple trades in 24h, cumulative MDD of 3% is plausible even with 2% individual stops. Acceptable as a working placeholder pending calibration, but CEO should confirm at lock whether 3% is intentionally above the per-trade stop or should be tightened to 2%.
+
+**F2 — Alpha decay gate for equities intraday**
+
+The document correctly notes: "Equities intraday edges are fastest-decaying. Expect IC half-life 1–10 days. Require decay analysis per Alpha Decay Review Gate before promotion." This is referenced as a requirement but is not formalized as a hard gate in this document or in `criteria.md`. CEO should confirm: is alpha decay certification a Gate 1 hard gate, a Gate 2 condition, or a required pre-promotion step documented elsewhere?
+
+**F3 — PDT compliance certification**
+
+PDT constraint is noted as a design requirement ("Strategy design must be PDT-compatible") but is not a hard gate. For margin accounts, a strategy that silently violates PDT rules could be frozen by the broker mid-paper-trading. CEO should confirm whether PDT compliance should be a hard gate (auto-reject if design is not PDT-compatible) or is adequately handled as a design constraint.
+
+---
+
+### Approved Elements
+
+The following are co-signed without reservation:
+
+- **Composite score structure and weights** (40/30/20/10): well-motivated for minute-level trading. PpT at 30% correctly elevates cost coverage to near-primary status. MDD at 20% is appropriate as CS weight (concerns above are about the missing hard gate, not the weight itself).
+- **Decision to defer all threshold values to calibration**: correct governance. Placeholder values are clearly labeled and the calibration protocol is sound.
+- **Net-only Sharpe for gating**: gross Sharpe is reported but never gates. Mandatory at minute scale.
+- **Per-bar Sharpe prohibition**: correct. Per-bar Sharpe inflates with bar count.
+- **Metric rationale vs. alternatives considered**: thorough. PpT over profit factor, intraday MDD over annual MDD, IS trade count over OOS — all defensible.
+- **Per-asset cost models**: consistent with `criteria.md` v2.0.
+- **Calibration protocol (40th percentile floor)**: appropriate conservatism for a first lock.
+
+---
+
+### Co-Sign Condition
+
+This document may proceed to CEO lock **after** Required Changes R1, R2, and R3 are resolved in the text. Flags F1–F3 require a CEO ruling at lock time but do not block the co-sign.
+
+Upon resolution: update version to 0.2, re-submit for final Risk Director sign-off, then escalate to CEO for lock.
+
+---
+
 ## Version History
 
 | Version | Date | Change | Author |
 |---|---|---|---|
 | 0.1 | 2026-06-06 | Initial draft — objective function structure, per-class KPIs, rationale, calibration protocol | Research Director |
+| 0.1-rc | 2026-06-06 | Risk Director co-sign review — conditional co-sign, 3 required changes, 3 CEO flags | Risk Director |
 
 ---
 
-*Next step: Risk Director co-sign → CEO lock → populate TBD thresholds after calibration sweep.*
+*Next step: Research Director resolves R1/R2/R3 → Risk Director final co-sign (v0.2) → CEO lock → populate TBD thresholds after calibration sweep.*
