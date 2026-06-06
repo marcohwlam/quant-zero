@@ -276,6 +276,10 @@ research/           research notebooks and hypotheses
 strategies/         strategy implementations
 tests/              test suite
 visualization/      plotting and report rendering
+promoted/           registry.json — Gate1-passing strategies (Risk-defined format)
+paper_trading/      <strat_id>/{equity.csv, trades.csv, meta.json} (Risk-defined format)
+dashboard/          generated static dashboard output (Eng-built, do not hand-edit)
+scripts/            shared scripts incl. build_dashboard.py
 workflow-contracts/ per-role LLM-vs-script contracts + git.md
 criteria.md         Gate 1 (CEO-locked)
 workspace-structure.md  this file (CEO-locked)
@@ -312,6 +316,61 @@ Analogous contracts for `engineering.md` and `risk.md`.
 
 ---
 
+### 10. Quant Zero Dashboard (visibility + live monitoring)
+
+A generated static dashboard surfaces (a) strategies that passed Gate 1 and their reports, and (b) live paper-trading results. The generator is pure Python reading structured data — no LLM (script > LLM).
+
+**Ownership (CEO is NOT the owner):**
+- **Risk Director owns the spec** — what the dashboard shows, alert thresholds, and the data format for monitoring. This is capital-preservation work; Portfolio Monitor (under Risk) is the primary consumer.
+- **Engineering Director owns the build** — `scripts/build_dashboard.py`, chart rendering, and serving.
+- **CEO only sets the goal** that the dashboard must exist and references it in `workspace-structure.md`.
+
+**Data flow:**
+
+```
+Gate1 PASS --> CEO promotion decision --> promoted/registry.json   (structured record)
+                                                |
+Paper trading --> broker/ writes --> paper_trading/<strat>/{equity.csv, trades.csv, meta.json}
+                                                |
+                                                v
+                                 scripts/build_dashboard.py  (pure Python, no LLM)
+                                                |
+                            reads registry + equity/trades + links backtests/ reports
+                                                |
+                                                v
+                                  dashboard/index.html + charts/*.png  --> served via nginx/homelab
+```
+
+**Canonical data formats (Risk Director defines, recorded in workspace-structure.md):**
+
+```
+promoted/registry.json        one record per Gate1-passing strategy:
+                              {id, name, asset, gate1_version, net_oos_sharpe,
+                               report_path, promoted_at, status: active|paused|retired}
+
+paper_trading/<strat_id>/
+  equity.csv                  daily: date, equity, daily_pnl, cum_return
+  trades.csv                  per trade: ts, side, qty, price, pnl
+  meta.json                   broker, start_date, capital, last_update
+```
+
+**Dashboard must render:**
+- Promoted leaderboard — sorted by net OOS Sharpe, links to `backtests/` reports.
+- Live paper trading — per active strategy: equity-curve PNG, last-7d and since-inception return, trade count, last-update timestamp.
+- Staleness flag — if a strategy's `equity.csv` is older than the Risk-defined threshold, mark it red (signal pipeline likely broken).
+
+**Driving and monitoring:**
+- Engineering Director creates a `daily-dashboard` routine (assigned to itself) that runs the generator.
+- Portfolio Monitor watches the dashboard; on paper-trading drift or staleness, it flags Risk Director.
+- The CEO `weekly-trading` routine reads the staleness flags and opens an issue to Engineering Director if the pipeline is broken.
+
+### Routine ownership note
+
+Routines are assigned to the agent that owns the work, not centralized on the CEO:
+- CEO routines: `daily-morning`, `daily-evening`, `weekly-kpi`, `weekly-trading` (oversight).
+- Engineering Director routine: `daily-dashboard` (build the dashboard).
+Each agent creates and manages only its own routines via the routines API.
+
 ## Goals the CEO Creates First
 
 1. **Define the minute-level KPI objective function** — owner Research Director, delegated to Quant Metrics; deliverable `docs/kpi-minute-level.md`; gated by Risk co-sign + CEO lock. Blocks Gate 1 v2.0 finalization.
@@ -319,6 +378,7 @@ Analogous contracts for `engineering.md` and `risk.md`.
 3. **Source strategies from quality references** — owner Research Director; populate `knowledge_base/` with book/paper-derived hypotheses.
 4. **Find a strategy meeting all minute-level KPIs** — the core company goal; full backtest + report; passes Gate 1 v2.0.
 5. **Paper Trading Infrastructure** — owner Engineering Director; live signal pipeline + broker connection, monitored by weekly-trading routine.
+6. **Quant Zero Dashboard** — Risk Director owns the spec (what to show, alert thresholds, data format); Engineering Director builds `scripts/build_dashboard.py` and serving. Depends on `promoted/registry.json` and `paper_trading/` format being defined by Risk Director. CEO sets this goal but does not own the deliverable.
 
 ---
 
