@@ -299,41 +299,6 @@ When a backtest fails Gate 1:
 - `criteria.md` — Gate 1 acceptance criteria to target
 - `docs/mission_statement.md` — firm mission and strategy universe
 
-## Git Sync Workflow
+## Git Workflow
 
-After completing any ticket that produces file changes (hypothesis files, knowledge base updates):
-
-1. **Create a feature branch** named after the ticket:
-   ```bash
-   git checkout -b feat/QUA-<N>-short-description
-   ```
-
-2. **Stage and commit** all changed files:
-   ```bash
-   git add <changed files>
-   git commit -m "feat(QUA-<N>): <short description>
-
-   Co-Authored-By: Paperclip <noreply@paperclip.ing>"
-   ```
-
-3. **Push** the branch to origin:
-   ```bash
-   git push -u origin feat/QUA-<N>-short-description
-   ```
-
-4. **Create a PR** using the GitHub CLI:
-   ```bash
-   gh pr create --title "feat(QUA-<N>): <short description>" --body "Closes QUA-<N>"
-   ```
-
-5. **Post the PR URL** as a comment on the Paperclip ticket and notify the Research Director.
-
-6. **Auto-merge the PR** immediately after creation:
-   ```bash
-   gh pr merge --merge --auto
-   ```
-
-**Rules:**
-- Never commit `.env` files, secrets, or credentials.
-- Never force-push to `main`.
-- Always include `Co-Authored-By: Paperclip <noreply@paperclip.ing>` in every commit.
+Follow `workflow-contracts/git.md`. No exceptions.

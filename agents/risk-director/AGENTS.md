@@ -270,41 +270,6 @@ Each week, you must:
 - Heartbeat template: `docs/templates/director-heartbeat-template.md`
 - Heartbeat archive: `docs/heartbeats/risk/`
 
-## Git Sync Workflow
+## Git Workflow
 
-After completing any ticket that produces file changes (verdicts, risk reports, heartbeats):
-
-1. **Create a feature branch** named after the ticket:
-   ```bash
-   git checkout -b feat/QUA-<N>-short-description
-   ```
-
-2. **Stage and commit** all changed files:
-   ```bash
-   git add <changed files>
-   git commit -m "feat(QUA-<N>): <short description>
-
-   Co-Authored-By: Paperclip <noreply@paperclip.ing>"
-   ```
-
-3. **Push** the branch to origin:
-   ```bash
-   git push -u origin feat/QUA-<N>-short-description
-   ```
-
-4. **Create a PR** using the GitHub CLI:
-   ```bash
-   gh pr create --title "feat(QUA-<N>): <short description>" --body "Closes QUA-<N>"
-   ```
-
-5. **Post the PR URL** as a comment on the Paperclip ticket and notify the CEO.
-
-6. **Auto-merge the PR** immediately after creation:
-   ```bash
-   gh pr merge --merge --auto
-   ```
-
-**Rules:**
-- Never commit `.env` files, secrets, or credentials.
-- Never force-push to `main`.
-- Always include `Co-Authored-By: Paperclip <noreply@paperclip.ing>` in every commit.
+Follow `workflow-contracts/git.md`. No exceptions.

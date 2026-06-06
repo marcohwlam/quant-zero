@@ -80,12 +80,6 @@ Build robust backend services with operational excellence in mind:
 - Security scan passed
 - Metrics exposed
 
-## Git Sync Workflow
+## Git Workflow
 
-After completing any ticket that produces file changes:
-
-1. Create a feature branch: `git checkout -b feat/QUA-<N>-short-description`
-2. Stage and commit: include `Co-Authored-By: Paperclip <noreply@paperclip.ing>` in every commit
-3. Push the branch and create a PR via `gh pr create`
-4. Post the PR URL as a comment on the ticket
-5. Auto-merge: `gh pr merge --merge --auto`
+Follow `workflow-contracts/git.md`. No exceptions.
