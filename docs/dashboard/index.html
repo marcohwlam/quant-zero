@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quant Zero Dashboard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f5;color:#1a1a2e}
+.topbar{background:#1a1a2e;color:#fff;padding:12px 28px;display:flex;justify-content:space-between;align-items:center}
+.topbar h1{font-size:1.3em;font-weight:700;letter-spacing:.5px}
+.as-of{font-size:.8em;color:#aaa}
+.container{max-width:1500px;margin:0 auto;padding:18px 24px}
+.summary{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:18px}
+.card{background:#fff;border-radius:8px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.card .lbl{font-size:.7em;color:#6c757d;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.card .val{font-size:1.35em;font-weight:700}
+.section{background:#fff;border-radius:8px;padding:18px 20px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.section h2{font-size:1em;color:#495057;border-bottom:1px solid #dee2e6;padding-bottom:8px;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:.86em}
+th{background:#f8f9fa;padding:8px 10px;text-align:left;font-weight:600;border-bottom:2px solid #dee2e6;white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid #f0f0f0}
+tr:hover td{background:#fafafa}
+.badge-paper{background:#cce5ff;color:#004085;padding:2px 8px;border-radius:10px;font-size:.8em;font-weight:600}
+.badge-live{background:#d4edda;color:#155724;padding:2px 8px;border-radius:10px;font-size:.8em;font-weight:600}
+.badge-retired{background:#e2e3e5;color:#383d41;padding:2px 8px;border-radius:10px;font-size:.8em;font-weight:600}
+.alert-OK{color:#28a745;font-weight:700}
+.alert-WARNING{color:#856404;font-weight:700}
+.alert-CRITICAL{color:#721c24;font-weight:700}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>⚡ Quant Zero Dashboard</h1>
+  <span class="as-of">As of 2026-06-06T20:11:26Z</span>
+</div>
+<div class="container">
+  <div class="summary">
+    <div class="card"><div class="lbl">Total Capital</div><div class="val">$25,000</div></div>
+    <div class="card"><div class="lbl">Deployed</div><div class="val">$10,000 <small style="font-size:.55em;color:#6c757d">(40%)</small></div></div>
+    <div class="card"><div class="lbl">Cash Buffer</div><div class="val">$15,000 <small style="font-size:.55em;color:#6c757d">(60%)</small></div></div>
+    <div class="card"><div class="lbl">Portfolio Drawdown</div><div class="val" style="color:#28a745">0.00%</div></div>
+    <div class="card"><div class="lbl">Alert State</div><div class="val" style="color:#28a745">OK</div></div>
+    <div class="card"><div class="lbl">Active Strategies</div><div class="val">2</div></div>
+  </div>
+
+  <div class="section">
+    <h2>Strategy Leaderboard</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Strategy ID</th><th>Name</th><th>Status</th><th>Asset Class</th>
+          <th>Capital</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>Paper Sharpe</th>
+          <th>Backtest MDD</th><th>Current DD</th><th>Demotion Threshold</th>
+          <th>Alert</th><th>Last Update</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>h10_crypto_eql_reversal_v2</td>
+        <td>H10 Crypto EQL/EQH Liquidity Reversal</td>
+        <td><span class="badge-paper">paper</span></td>
+        <td>crypto</td>
+        <td>$5,000</td>
+        <td>1.20</td>
+        <td>1.44</td>
+        <td>—</td>
+        <td>10.7%</td>
+        <td>0.00%</td>
+        <td>16.1%</td>
+        <td class="alert-OK">OK</td>
+        <td style="font-size:.8em">2026-06-06T20:10:31Z</td>
+      </tr>
+      <tr>
+        <td>bollinger_band_mean_reversion_v1</td>
+        <td>TestMomentum ETF Momentum</td>
+        <td><span class="badge-paper">paper</span></td>
+        <td>equities</td>
+        <td>$5,000</td>
+        <td>1.50</td>
+        <td>1.10</td>
+        <td>—</td>
+        <td>12.0%</td>
+        <td>0.00%</td>
+        <td>18.0%</td>
+        <td class="alert-OK">OK</td>
+        <td style="font-size:.8em">2026-06-06T20:11:26Z</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Active Alerts</h2>
+    <table>
+      <thead><tr><th>Severity</th><th>Strategy</th><th>Message</th><th>Timestamp</th></tr></thead>
+      <tbody><tr><td colspan="4" style="text-align:center;color:#28a745;padding:12px">✓ No active alerts</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

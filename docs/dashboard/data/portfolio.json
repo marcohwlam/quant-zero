@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "total_capital": 25000,
+  "deployed_capital": 10000,
+  "cash_buffer": 15000,
+  "deployed_pct": 40.0,
+  "cash_pct": 60.0,
+  "portfolio_drawdown_pct": 0.0,
+  "alert_state": "OK",
+  "as_of_utc": "2026-06-06T20:11:26Z",
+  "active_strategy_count": 2
+}

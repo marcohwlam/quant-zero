@@ -1,0 +1,38 @@
+[
+  {
+    "strat_id": "h10_crypto_eql_reversal_v2",
+    "name": "H10 Crypto EQL/EQH Liquidity Reversal",
+    "status": "paper",
+    "asset_class": "crypto",
+    "capital_allocated": 5000,
+    "is_sharpe": 1.1981,
+    "oos_sharpe": 1.4385,
+    "paper_sharpe": null,
+    "backtest_mdd_pct": 10.7,
+    "current_drawdown_pct": 0.0,
+    "demotion_threshold_pct": 16.1,
+    "warning_threshold_pct": 10.7,
+    "alert": "OK",
+    "last_update": "2026-06-06T20:10:31Z",
+    "is_stale": false,
+    "paper_start_date": "2026-03-16"
+  },
+  {
+    "strat_id": "bollinger_band_mean_reversion_v1",
+    "name": "TestMomentum ETF Momentum",
+    "status": "paper",
+    "asset_class": "equities",
+    "capital_allocated": 5000,
+    "is_sharpe": 1.5,
+    "oos_sharpe": 1.1,
+    "paper_sharpe": null,
+    "backtest_mdd_pct": 12.0,
+    "current_drawdown_pct": 0.0,
+    "demotion_threshold_pct": 18.0,
+    "warning_threshold_pct": 12.0,
+    "alert": "OK",
+    "last_update": "2026-06-06T20:11:26Z",
+    "is_stale": false,
+    "paper_start_date": "2026-03-16"
+  }
+]
