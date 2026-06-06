@@ -1,0 +1,102 @@
+{
+  "strategy_name": "H41b_SPSeasonalCalendar",
+  "date": "2026-05-28",
+  "overall_verdict": "FAIL",
+  "recommendation": "Do not advance \u2014 Gate 1 criteria not met",
+  "confidence": "LOW",
+  "disqualify_reason": null,
+  "oos_data_quality": {
+    "strategy_name": "H41b_SPSeasonalCalendar",
+    "oos_total_rows": 2010,
+    "oos_clean_rows": 2010,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "SPY": 0,
+      "XLF": 0,
+      "XLK": 0,
+      "XLE": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "metrics": [
+    {
+      "name": "IS Sharpe",
+      "value": 0.4323,
+      "threshold": "> 1.0",
+      "passed": false
+    },
+    {
+      "name": "OOS Sharpe",
+      "value": 0.0651,
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    {
+      "name": "IS Max Drawdown",
+      "value": -0.4639,
+      "threshold": "< -0.20",
+      "passed": false
+    },
+    {
+      "name": "OOS Max Drawdown",
+      "value": -0.2371,
+      "threshold": "< -0.20",
+      "passed": false
+    },
+    {
+      "name": "Win Rate",
+      "value": 0.5649,
+      "threshold": "> 0.50",
+      "passed": true
+    },
+    {
+      "name": "Trade count",
+      "value": 655,
+      "threshold": ">= 100",
+      "passed": true
+    },
+    {
+      "name": "Deflated Sharpe Ratio (z-score)",
+      "value": -18.4938,
+      "threshold": "> 0",
+      "passed": false
+    },
+    {
+      "name": "Walk-forward windows passed",
+      "value": 0,
+      "threshold": ">= 3/4",
+      "passed": false
+    },
+    {
+      "name": "Walk-forward OOS/IS consistency",
+      "value": 1.7643,
+      "threshold": "<= 0.30",
+      "passed": false
+    },
+    {
+      "name": "Post-cost Sharpe",
+      "value": 0.0651,
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    {
+      "name": "Parameter sensitivity",
+      "value": "True",
+      "threshold": "3/5 pass",
+      "passed": true
+    },
+    {
+      "name": "Test period",
+      "value": "1993-01-01\u21922025-12-31",
+      "threshold": ">= 5 years",
+      "passed": true
+    }
+  ]
+}

@@ -48,9 +48,9 @@ daily-morning routine owns pipeline-wide review.
 
 | Domain | Director | Agent ID |
 |---|---|---|
-| Strategy ideas, alpha signals, market regimes, research, KPI methodology | Research Director | 3e005203-1704-46ed-a469-8f2c4c4b6f58 |
-| Code implementation, backtests, infrastructure, pipelines, dashboard build | Engineering Director | e20af8ed-290b-4cee-8bce-531026cebad5 |
-| Risk review, overfitting, portfolio monitoring, Gate 1, dashboard spec | Risk Director | 0ba97256-23a8-46eb-b9ad-9185506bf2de |
+| Strategy ideas, alpha signals, market regimes, research, KPI methodology | Research Director | 98976970-d209-4422-8a45-179ffc61f19e |
+| Code implementation, backtests, infrastructure, pipelines, dashboard build | Engineering Director | 48b67b44-5371-4238-8d7a-077015a676fd |
+| Risk review, overfitting, portfolio monitoring, Gate 1, dashboard spec | Risk Director | f18a5b70-f25c-4e91-a2e0-eb364df013a4 |
 
 Route at most 5 issues per heartbeat. If scope is unclear, comment asking the board to clarify
 instead of assigning blindly. PATCH `assigneeAgentId` and leave a one-line routing-decision comment.
