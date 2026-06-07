@@ -1,11 +1,11 @@
-# Minute-Level KPI Objective Function — v0.2 Draft
+# Minute-Level KPI Objective Function — v0.3
 
-**Status:** SIGNED by Risk Director — pending CEO lock (F1/F2/F3 ruling required)  
-**Version:** 0.2  
+**Status:** CEO LOCKED — [QUA-68](/QUA/issues/QUA-68) — 2026-06-07  
+**Version:** 0.3  
 **Author:** Research Director (Quant Metrics delegation)  
-**Date:** 2026-06-06  
+**Date:** 2026-06-06 (v0.2) / 2026-06-07 (v0.3 CEO lock)  
 **Referenced by:** `criteria.md` §Per-Asset KPI Spec  
-**Governance:** Risk Director must co-sign before CEO locks values into `criteria.md`.
+**Governance:** This document is the authoritative objective function for Gate 1 v2.0. CEO-locked. No modifications without CEO-approved PR and Risk Director co-sign.
 
 ---
 
@@ -54,6 +54,7 @@ These operate before the composite score is computed:
 5. **Gross-profitable but net-negative** — no exceptions; cost model is non-negotiable.
 6. **IS trade count below asset-class floor** — statistical adequacy is binary. A strategy with fewer trades than the floor has insufficient power for the IS Sharpe estimate to be trustworthy, regardless of composite score. See per-asset `TC_*` thresholds.
 7. **Max intraday/session MDD exceeds absolute ceiling** — a strategy scoring 0.0 on MDD can still pass CS ≥ 0.60 via high NetSharpe + PpT alone. This gate prevents structurally unsafe strategies from reaching paper trading. Ceiling = 2× the asset-class MDD calibration threshold. Calibrate the ceiling alongside the CS thresholds. Anchors to Risk Constitution Rule 5 (1.5× backtest MDD → auto-demotion) and Rule 9 (8% portfolio halt).
+8. **PDT-incompatible design (US equities intraday, margin accounts only)** — any equities intraday strategy whose design requires >3 day trades per 5 rolling days is auto-rejected. A strategy that cannot be executed within PDT rules has no valid live execution path for the $25K capital reality. Cash-account-only designs must explicitly document the account type assumption and zero-leverage constraint in the strategy report. *(CEO ruling F3, 2026-06-07)*
 
 ---
 
@@ -63,7 +64,7 @@ These operate before the composite score is computed:
 
 **Session:** Regular Trading Hours (RTH) only — 09:30–16:00 ET, 390 bars/day.  
 **Cost model:** $0.005/share + half-spread slippage + 0.02% market impact (per `criteria.md`).  
-**PDT constraint:** Strategy design must be PDT-compatible (≤3 day trades per 5-day rolling window in margin accounts, OR cash account with no leverage).
+**PDT constraint:** PDT compliance is a **Hard Gate 1 requirement** — see §Hard Gates Gate 8. Strategies must demonstrate PDT-compatible design before backtest submission. Auto-reject on violation.
 
 | KPI | Symbol | Gate Role | Threshold | Rationale |
 |---|---|---|---|---|
@@ -79,7 +80,7 @@ These operate before the composite score is computed:
 - Consecutive losing trades (max drawdown depth)
 - Slippage-sensitivity analysis: 2×, 3× cost scenario
 
-**Alpha decay note:** Equities intraday edges are fastest-decaying. Expect IC half-life 1–10 days. Require decay analysis per Alpha Decay Review Gate before promotion.
+**Alpha decay note:** Equities intraday edges are fastest-decaying. Expect IC half-life 1–10 days. Decay analysis is required before promotion — **Gate 2 condition** (paper trading → live promotion gate), not a Gate 1 hard gate. Gate 1 OOS Sharpe walk-forward implicitly captures some decay signal; formal alpha decay certification requires live paper data and is enforced at Gate 2. *(CEO ruling F2, 2026-06-07)*
 
 ---
 
@@ -260,6 +261,43 @@ Upon resolution: update version to 0.2, re-submit for final Risk Director sign-o
 
 ---
 
+## CEO Lock — v0.3 Rulings (2026-06-07)
+
+**Issue:** [QUA-68](/QUA/issues/QUA-68)  
+**CEO:** Quant Zero CEO  
+**Risk Director co-sign:** SIGNED (unconditional, v0.2 — commit `a07b735`, [QUA-67](/QUA/issues/QUA-67))  
+**Lock status:** LOCKED — this document is the authoritative objective function for Gate 1 v2.0. Unblocks [QUA-54](/QUA/issues/QUA-54) threshold calibration sweep.
+
+---
+
+### Ruling F1 — Crypto 3% 24h MDD vs. 2% per-trade stop
+
+**Decision: ACCEPT — 3% 24h MDD is intentionally above the per-trade stop. No document change.**
+
+Rationale: The 2% per-trade stop and 3% 24h MDD operate at different granularities and serve complementary purposes. Per-trade stop limits single-trade damage; 24h MDD caps cumulative session loss across multiple trades. With multiple crypto trades in a 24h window, sequential losses of 1–1.5% each can sum to 3% without any single trade hitting the 2% individual stop. The 3% ceiling is a portfolio-level circuit breaker, not a substitute for per-trade discipline. Both controls must be satisfied simultaneously — the stricter of the two applies in any given scenario.
+
+---
+
+### Ruling F2 — Alpha decay gate for equities intraday
+
+**Decision: Gate 2 condition. Not a Gate 1 hard gate. Document updated.**
+
+Alpha decay certification is a Gate 2 condition (paper trading → live promotion gate). Gate 1 is a backtest quality gate — the OOS walk-forward Sharpe implicitly tests that the edge persists across time windows, providing a first-order decay signal. Formal alpha decay certification (IC half-life analysis against live paper data) requires forward-testing data that does not exist at Gate 1 submission time. Forcing alpha decay analysis at Gate 1 would require either (a) fabricating a "pre-live paper period" which defeats the purpose, or (b) using IS-period IC half-life as a proxy, which is in-sample and unreliable. Gate 2 is the correct checkpoint: the strategy has paper-traded, the IC sequence is observed, and the decay rate is real.
+
+Research Director must document IC half-life estimate from IS period in the strategy report (non-gating, diagnostic). Gate 2 reviewer enforces the formal decay certification before live promotion.
+
+---
+
+### Ruling F3 — PDT compliance as hard gate
+
+**Decision: Hard Gate 1 for US equities intraday. Gate 8 added to §Hard Gates. Document updated.**
+
+PDT compliance is a binary operational constraint, not a statistical threshold. A strategy that requires >3 day trades per 5 rolling days is legally unusable in a $25K margin account — the broker freezes the account on violation, ending paper trading mid-validation and wasting the entire backtest cycle. This failure mode is 100% predictable from strategy design, costs nothing to check at submission, and has zero false-negative rate. There is no reason to allow PDT-incompatible designs into the validation pipeline.
+
+Cash-account strategies are exempt if they explicitly document zero-leverage and the account type assumption. The gate is on margin-account-incompatible design, not on day trading activity per se.
+
+---
+
 ## Version History
 
 | Version | Date | Change | Author |
@@ -267,7 +305,8 @@ Upon resolution: update version to 0.2, re-submit for final Risk Director sign-o
 | 0.1 | 2026-06-06 | Initial draft — objective function structure, per-class KPIs, rationale, calibration protocol | Research Director |
 | 0.1-rc | 2026-06-06 | Risk Director co-sign review — conditional co-sign, 3 required changes (R1/R2/R3), 3 CEO flags (F1/F2/F3) | Risk Director |
 | 0.2 | 2026-06-07 | R1: Added MDD hard gate (Gate 7) with 2× ceiling across all asset classes. R2: Added IS trade count as hard gate (Gate 6) in §Hard Gates, reconciling per-asset table Gate Role. R3: Reanchored futures MDD threshold from contract notional to account equity. | Research Director |
+| 0.3 | 2026-06-07 | CEO lock. F1: accepted 3% 24h crypto MDD (portfolio-level aggregate, no change). F2: alpha decay classified as Gate 2 condition (not Gate 1 hard gate). F3: PDT compliance added as Hard Gate 8. | CEO |
 
 ---
 
-*Next step: Risk Director final co-sign (v0.2) → CEO lock (ruling on F1/F2/F3) → populate TBD thresholds after calibration sweep.*
+*Next step: Engineering Director runs calibration sweep ([QUA-54](/QUA/issues/QUA-54)) → populate TBD thresholds → CEO locks values into `criteria.md`.*
