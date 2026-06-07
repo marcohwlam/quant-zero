@@ -457,6 +457,7 @@ def write_canonical_meta(
     signals: dict,
     execution_log: list,
     signal_count: int,
+    account_baseline: float = 0.0,
 ):
     """Overwrite meta.json with current runner state (spec §4.2.3)."""
     _ensure_canonical_headers()
@@ -471,6 +472,10 @@ def write_canonical_meta(
         pass
 
     portfolio_value = account_value if account_value > 0 else INITIAL_CAPITAL
+    # account_baseline persisted across runs so peak/drawdown track strategy P&L, not Alpaca equity
+    _stored_baseline = float(existing.get("account_baseline", 0) or 0)
+    if account_baseline <= 0:
+        account_baseline = _stored_baseline
     prev_peak = float(existing.get("peak_value", INITIAL_CAPITAL) or INITIAL_CAPITAL)
     peak_value = max(prev_peak, portfolio_value)
     cumulative_pnl = portfolio_value - INITIAL_CAPITAL
@@ -521,6 +526,7 @@ def write_canonical_meta(
         "runner_version": RUNNER_VERSION,
         "paper_start_date": PAPER_START_DATE,
         "initial_capital": INITIAL_CAPITAL,
+        "account_baseline": round(account_baseline, 2),
         "current_portfolio_value": round(portfolio_value, 2),
         "current_cash": round(portfolio_value, 2),  # conservative: no open positions tracked
         "current_invested": 0.0,
@@ -654,7 +660,31 @@ def main(dry_run: bool = False, shortfall_report_only: bool = False):
         logger.warning(f"ACTION REQUIRED: {is_report.get('action_note')}")
 
     # 6. Write canonical equity.csv and meta.json
-    account_value = float(account.get("portfolio_value", 0))
+    #
+    # Alpaca paper accounts default to $100k, but our strategy capital is INITIAL_CAPITAL.
+    # We store the Alpaca balance at paper-start as account_baseline in meta.json, then
+    # compute portfolio_value = INITIAL_CAPITAL + (raw_balance - baseline) so that
+    # cumulative P&L tracks strategy returns, not the arbitrary Alpaca starting balance.
+    raw_account_value = float(account.get("portfolio_value", 0))
+
+    _existing_meta: dict = {}
+    try:
+        with open(_canonical_meta_path()) as _f:
+            _existing_meta = json.load(_f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+
+    account_baseline = float(_existing_meta.get("account_baseline", 0) or 0)
+    if account_baseline <= 0 and raw_account_value > 0:
+        account_baseline = raw_account_value  # first run: snapshot Alpaca starting balance
+
+    if raw_account_value > 0 and account_baseline > 0:
+        account_value = INITIAL_CAPITAL + (raw_account_value - account_baseline)
+    else:
+        account_value = (
+            float(_existing_meta.get("current_portfolio_value", 0) or 0) or INITIAL_CAPITAL
+        )
+
     signal_count = len(UNIVERSE)
     fill_count = sum(
         1 for r in execution_log
@@ -662,17 +692,20 @@ def main(dry_run: bool = False, shortfall_report_only: bool = False):
         and r.get("fill_qty") is not None and float(r.get("fill_qty") or 0) > 0
     )
     write_canonical_equity(account_value, signal_count, fill_count)
-    write_canonical_meta(account_value, signals, execution_log, signal_count)
+    write_canonical_meta(account_value, signals, execution_log, signal_count,
+                         account_baseline=account_baseline)
 
     # 7. Summary
     summary = {
-        "date":           datetime.now().strftime("%Y-%m-%d"),
-        "strategy":       STRATEGY_NAME,
-        "dry_run":        dry_run,
-        "signals":        {k: v for k, v in signals.items() if k != "timestamp"},
-        "execution":      execution_log,
-        "is_report":      is_report,
-        "account_value":  float(account.get("portfolio_value", 0)),
+        "date":                    datetime.now().strftime("%Y-%m-%d"),
+        "strategy":                STRATEGY_NAME,
+        "dry_run":                 dry_run,
+        "signals":                 {k: v for k, v in signals.items() if k != "timestamp"},
+        "execution":               execution_log,
+        "is_report":               is_report,
+        "account_value":           round(account_value, 2),
+        "raw_alpaca_balance":      raw_account_value,
+        "account_baseline":        account_baseline,
     }
     logger.info("Run complete.")
     return summary
