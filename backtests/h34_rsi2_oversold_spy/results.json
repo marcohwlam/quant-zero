@@ -1,0 +1,228 @@
+{
+  "strategy": "H34 RSI(2) Oversold SPY Mean Reversion",
+  "run_date": "2026-06-07",
+  "gate1_version": "v2.0",
+  "task": "QUA-72",
+  "is": {
+    "window": "2008-01-01 to 2021-12-31",
+    "sharpe": 0.4205,
+    "max_drawdown": -0.1665,
+    "total_return": 0.3589,
+    "win_rate": 0.6667,
+    "profit_factor": 1.5073,
+    "trade_count": 111,
+    "trades_per_year": 7.9,
+    "regime_pct": 0.7904,
+    "exit_breakdown": {
+      "SMA_EXIT": 92,
+      "TIME_STOP": 10,
+      "STOP_LOSS": 9
+    }
+  },
+  "oos": {
+    "window": "2022-01-01 to 2024-12-31",
+    "sharpe": 0.2515,
+    "max_drawdown": -0.0701,
+    "total_return": 0.033,
+    "win_rate": 0.6154,
+    "profit_factor": 1.2456,
+    "trade_count": 26,
+    "trades_per_year": 8.7,
+    "regime_pct": 0.7074,
+    "exit_breakdown": {
+      "SMA_EXIT": 22,
+      "TIME_STOP": 3,
+      "STOP_LOSS": 1
+    }
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "window": "2008-01-01 to 2011-06-30",
+        "sharpe": 0.3898,
+        "max_drawdown": -0.0937,
+        "win_rate": 0.619,
+        "trade_count": 21,
+        "passed": false
+      },
+      {
+        "window": "2011-07-01 to 2014-12-31",
+        "sharpe": 0.666,
+        "max_drawdown": -0.0762,
+        "win_rate": 0.7241,
+        "trade_count": 29,
+        "passed": true
+      },
+      {
+        "window": "2015-01-01 to 2018-06-30",
+        "sharpe": 0.2748,
+        "max_drawdown": -0.0772,
+        "win_rate": 0.6667,
+        "trade_count": 33,
+        "passed": false
+      },
+      {
+        "window": "2018-07-01 to 2021-12-31",
+        "sharpe": 0.427,
+        "max_drawdown": -0.1172,
+        "win_rate": 0.6786,
+        "trade_count": 28,
+        "passed": false
+      }
+    ],
+    "pass_count": 1,
+    "pass_fraction": 0.25,
+    "stable": false,
+    "sharpe_floor": 0.5
+  },
+  "parameter_sensitivity": {
+    "baseline_sharpe": 0.4205,
+    "results": [
+      {
+        "parameter_set": "rsi_entry_threshold=5",
+        "sharpe": 0.4292,
+        "max_drawdown": -0.1023,
+        "win_rate": 0.7541,
+        "trade_count": 61,
+        "sharpe_reduction_pct": -2.1
+      },
+      {
+        "parameter_set": "rsi_entry_threshold=15",
+        "sharpe": 0.4243,
+        "max_drawdown": -0.1214,
+        "win_rate": 0.6914,
+        "trade_count": 162,
+        "sharpe_reduction_pct": -0.9
+      },
+      {
+        "parameter_set": "sma_period=150",
+        "sharpe": 0.4005,
+        "max_drawdown": -0.1573,
+        "win_rate": 0.6759,
+        "trade_count": 108,
+        "sharpe_reduction_pct": 4.8
+      },
+      {
+        "parameter_set": "sma_period=250",
+        "sharpe": 0.3148,
+        "max_drawdown": -0.1661,
+        "win_rate": 0.6667,
+        "trade_count": 111,
+        "sharpe_reduction_pct": 25.1
+      },
+      {
+        "parameter_set": "exit_sma_period=3",
+        "sharpe": 0.2333,
+        "max_drawdown": -0.1724,
+        "win_rate": 0.6228,
+        "trade_count": 114,
+        "sharpe_reduction_pct": 44.5
+      },
+      {
+        "parameter_set": "exit_sma_period=10",
+        "sharpe": 0.358,
+        "max_drawdown": -0.2166,
+        "win_rate": 0.6667,
+        "trade_count": 108,
+        "sharpe_reduction_pct": 14.9
+      },
+      {
+        "parameter_set": "time_stop_days=3",
+        "sharpe": 0.2226,
+        "max_drawdown": -0.1914,
+        "win_rate": 0.625,
+        "trade_count": 112,
+        "sharpe_reduction_pct": 47.1
+      },
+      {
+        "parameter_set": "time_stop_days=7",
+        "sharpe": 0.4442,
+        "max_drawdown": -0.1655,
+        "win_rate": 0.6667,
+        "trade_count": 111,
+        "sharpe_reduction_pct": -5.6
+      },
+      {
+        "parameter_set": "stop_loss_pct=0.03",
+        "sharpe": 0.5154,
+        "max_drawdown": -0.1343,
+        "win_rate": 0.6696,
+        "trade_count": 112,
+        "sharpe_reduction_pct": -22.6
+      },
+      {
+        "parameter_set": "stop_loss_pct=0.06",
+        "sharpe": 0.327,
+        "max_drawdown": -0.1748,
+        "win_rate": 0.6667,
+        "trade_count": 111,
+        "sharpe_reduction_pct": 22.2
+      }
+    ],
+    "max_reduction_pct": 47.1,
+    "stable": true
+  },
+  "gate1_v2_criteria": {
+    "IS Sharpe (2008-2021)": {
+      "value": 0.4205,
+      "threshold": "> 1.0",
+      "passed": false
+    },
+    "OOS Sharpe (2022-2024)": {
+      "value": 0.2515,
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    "IS Max Drawdown": {
+      "value": -0.1665,
+      "threshold": "> -20.0%",
+      "passed": true
+    },
+    "IS Win Rate": {
+      "value": 0.6667,
+      "threshold": "> 50%",
+      "passed": true
+    },
+    "IS Trade Count": {
+      "value": 111,
+      "threshold": ">= 100",
+      "passed": true
+    },
+    "Walk-Forward Stability": {
+      "value": "1/4 windows",
+      "threshold": ">= 3/4 windows",
+      "passed": false
+    },
+    "Parameter Sensitivity": {
+      "value": "max reduction 47.1%",
+      "threshold": "< 50% Sharpe reduction",
+      "passed": true
+    }
+  },
+  "verdict": {
+    "criteria_passed": 4,
+    "criteria_total": 7,
+    "overall": "FAIL"
+  },
+  "params": {
+    "ticker": "SPY",
+    "rsi_period": 2,
+    "rsi_entry_threshold": 10,
+    "sma_period": 200,
+    "exit_sma_period": 5,
+    "time_stop_days": 5,
+    "stop_loss_pct": 0.04,
+    "rearm_rsi_level": 40,
+    "init_cash": 25000
+  },
+  "data_quality": {
+    "survivorship_bias_flag": "SPY is a market ETF \u2014 no survivorship bias",
+    "price_adjusted": true,
+    "auto_adjust": true,
+    "warmup_bars": 230,
+    "gap_flags": [],
+    "na_close_count": 0,
+    "earnings_exclusion": "N/A \u2014 ETF strategy",
+    "delisted_tickers": "N/A \u2014 SPY still active"
+  }
+}
