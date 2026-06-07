@@ -37,7 +37,7 @@ import json
 import logging
 import argparse
 import warnings
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 
 import numpy as np
 import pandas as pd
@@ -459,8 +459,6 @@ def write_canonical_meta(
     signal_count: int,
 ):
     """Overwrite meta.json with current runner state (spec §4.2.3)."""
-    from datetime import timezone as _tz
-
     _ensure_canonical_headers()
     meta_path = _canonical_meta_path()
 
