@@ -5,8 +5,8 @@
 **Date:** 2026-03-16
 **Asset class:** US equity (SPY ETF)
 **Strategy type:** single-signal, pattern-based / binary event-driven
-**Status:** READY
-**Family:** RSI(2) Mean Reversion (Iteration 2 of 2 — Family Iteration Limit reached after this gate)
+**Status:** RETIRED (preemptive — QUA-73, 2026-06-07) — sensitivity data shows RSI<15 yields identical Sharpe 0.42; sqrt(N) argument invalidated; family retired after H34 iteration 1
+**Family:** RSI(2) Mean Reversion (Iteration 2 of 2 — Family Iteration Limit — retired without Gate 1 test)
 **Predecessor:** H34 (IS Sharpe 0.35, FAIL — root cause: insufficient trade frequency)
 
 ---
