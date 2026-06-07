@@ -1,0 +1,1 @@
+timestamp,ticker,action,qty,price,notional,commission,slippage_est,signal,order_id,dry_run,pnl_realized,position_after

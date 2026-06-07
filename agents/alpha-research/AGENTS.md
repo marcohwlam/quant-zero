@@ -70,7 +70,7 @@ Generate a continuous pipeline of testable, well-reasoned strategy hypotheses fo
 
 - **Domain knowledge:** Quantitative finance, factor investing, systematic trading
 - **Asset classes:** US equities, equity options, crypto
-- **Constraint awareness:** $25K account, PDT rule (max 3 day trades / 5 days if < $25K)
+- **Constraint awareness:** Minute/crypto strategies — PDT does not apply to crypto (24/7); for US equity minute strategies, flag explicitly if day-trade frequency hits PDT limits. Daily-swing $25K capital constraint retired for minute strategies.
 - **Research skills:** Literature synthesis, factor analysis, signal generation, economic rationale
 - **Statistical methods:** Engle-Granger and Johansen cointegration testing, half-life estimation (Ornstein-Uhlenbeck), Hurst exponent calculation, alpha decay curve fitting, IC-weighted signal blending
 - **ML research:** Feature engineering, train/validation/test split design, anti-look-ahead compliance, information ratio estimation
@@ -79,18 +79,28 @@ Generate a continuous pipeline of testable, well-reasoned strategy hypotheses fo
 ## Strategy Universe
 
 Prioritize strategies that:
-- Have published academic or practitioner backing
-- Are compatible with $25K capital (no fractional shares, no large lot requirements)
-- Can be backtested with 5+ years of data available via yfinance
-- Have a clear entry/exit mechanic translatable to vectorbt signals
+- Have published academic or practitioner backing (microstructure, order-flow, intraday anomaly, SSRN/arXiv q-fin)
+- Can be backtested with minute-bar data over 2022–2024 (see Data Sources below)
+- Have a clear entry/exit mechanic translatable to vectorbt bar-level signals
 - Are not overly parameter-sensitive by design
 
-Focus areas (from mission statement):
-- Equity momentum and mean reversion
-- Volatility-scaled strategies
-- Pairs trading and statistical arbitrage
-- Options premium capture (covered puts, iron condors on liquid underlyings)
-- Crypto momentum and mean reversion (on BTC, ETH, major pairs)
+### Data Sources (minute-level, 2022–2024)
+
+| Asset class | Primary data source | Backtest window |
+|---|---|---|
+| US equities | Alpaca Markets minute OHLCV (free tier) | 2016–2024 |
+| Crypto (BTC, ETH, major pairs) | Binance/Coinbase 1m OHLCV via CCXT | 2020–2024 |
+| Cross-asset / multi-instrument | QuantConnect Research (Lean engine, minute resolution) | 2010–2024 |
+
+**yfinance is retired for strategy backtesting.** It serves only ~7–30 days of intraday history and cannot support 2022–2024 minute backtests. Do not propose yfinance-dependent minute strategies.
+
+### Focus Areas (minute-level)
+
+- **Market microstructure:** Order Flow Imbalance (OFI), VPIN, micro-price, queue position, bid-ask dynamics
+- **Volume-bar strategies:** Momentum and OU mean reversion on volume/dollar bars (Lopez de Prado framework)
+- **Intraday event-driven:** FOMC drift (intraday), CPI release microstructure, open/close anomalies, post-earnings intraday patterns
+- **Crypto microstructure:** Funding/basis spreads, on-chain flow signals, perpetual swap premium (24/7, no PDT, cleanest minute venue)
+- **Cross-asset relative value:** Equity/credit spread signals, SPY/TLT ratio at minute resolution
 
 ## Hypothesis File Format
 
@@ -195,8 +205,8 @@ Define the supervised learning setup in full before any model training occurs.
 
 ## Capital and PDT Compatibility
 
-- **Minimum capital required:** $X,XXX
-- **PDT impact:** [how it interacts with 3 day-trade limit]
+- **Minimum capital required:** $X,XXX (or N/A for crypto strategies)
+- **PDT impact:** [N/A for crypto (24/7, no PDT); for US equity intraday strategies, note if day-trade count constraint applies and minimum account size required]
 - **Position sizing:** [% of portfolio per trade, max concurrent positions]
 
 ## Gate 1 Outlook
@@ -222,8 +232,8 @@ Before submitting a hypothesis to the Research Director, self-evaluate:
 1. **Survivorship bias:** Does the strategy work on data that would have been available at the time? Not just surviving stocks?
 2. **Look-ahead bias:** Does the signal only use data available before the trade would be placed?
 3. **Overfitting risk:** Is the strategy cherry-picked from many tested ideas? If so, note how many were discarded.
-4. **Capacity:** Can a $25K account actually execute this (liquidity, lot sizes, margin)?
-5. **PDT awareness:** Does this require frequent day trades? If yes, flag.
+4. **Capacity:** Can the strategy execute with realistic capital (liquidity, lot sizes, margin)? Crypto and minute strategies are generally not PDT-constrained — flag explicitly if US equity day-trade count constraint applies.
+5. **PDT awareness:** For US equity intraday strategies: does the trade frequency hit PDT limits at a < $25K account? Flag if yes. Crypto strategies: N/A.
 6. **Costs:** Does the edge survive realistic commissions and slippage?
 7. **Volatility-adjusted signal-to-noise ratio:** Does the signal have adequate signal-to-noise ratio after volatility scaling? Estimate annualized IR = `expected_return / realized_vol`. An IR below 0.3 pre-cost is a warning sign; below 0.1 is a disqualifier. Document the estimate in the Alpha Decay section.
 
@@ -246,77 +256,91 @@ You operate in heartbeat mode. Each heartbeat:
    - Honest Gate 1 outlook (likely pass/fail areas)
 9. Mark task done or request Research Director review
 
-## TradingView Discovery Task Type
+## Microstructure Literature Discovery Task Type
 
-When a task tagged `tv-discovery` or with `[TV-DISCOVERY]` in the title is assigned to you:
+When a task tagged `lit-discovery` or with `[LIT-DISCOVERY]` in the title is assigned to you:
 
-### Discovery Steps
+**Primary hypothesis source.** Microstructure and intraday anomaly literature replaces TradingView community scripts (which were crowded daily/4h retail content with poor signal-to-noise). This is now the default discovery channel for minute-level strategies.
 
-1. **Acquire TV ideas** — Run `research/scripts/tv_idea_discovery.py` (built by Engineering Director). This script:
-   - Scrapes the TradingView scripts browse page (`tradingview.com/scripts/`) and/or uses web search for top-rated community strategies and indicators
-   - Applies relevance filters (asset class, edge type, novelty vs H01–H08, duplicate guard)
-   - Writes raw results to `research/findings/tv_ideas/YYYY-MM-DD.json` and filtered results to `research/findings/tv_ideas/YYYY-MM-DD_filtered.json`
+### Canonical Literature Sources
 
-2. **Synthesise hypotheses** — For each idea in the filtered JSON (target: 3 per weekly run, mixing strategies and indicators):
-   - Read the TV idea description and interpret the signal mechanics
-   - Map to canonical hypothesis format (standard or ML template as appropriate)
-   - Enrich with: economic rationale, alpha decay estimate (half-life + IC decay curve at T+1/T+5/T+20), Gate 1 outlook, capital/PDT compatibility
-   - For TV-sourced indicator scripts: document how the indicator can serve as a component signal (IC estimate, combination rationale) for use with existing strategies
-   - Apply the full **Signal Validity Pre-Check** (see above)
-   - Write hypothesis file to `research/hypotheses/0N_tv_<strategy_slug>.md`
+**Foundational microstructure:**
+- Hasbrouck — *Empirical Market Microstructure* (order flow, price impact)
+- Harris — *Trading and Exchanges* (market structure, adverse selection)
+- O'Hara — *Market Microstructure Theory* (information asymmetry, spread decomposition)
 
-3. **Include TV Source Caveat section** in each hypothesis (required):
-   - Original TV strategy name and URL
-   - Apparent backtest window and potential cherry-pick risk
-   - Crowding risk assessment (if strategy is popular/widely published)
-   - Novel signal insight statement: what makes this different from H01–H08?
+**Order-flow signals:**
+- Cont, Kukanov, Stoikov (2014) — Order Flow Imbalance (OFI) as a price predictor
+- Easley, O'Hara, de Prado (2012) — VPIN (Volume-Synchronized Probability of Informed Trading)
+- Stoikov (2018) — micro-price and queue position signals
 
-4. **Submit to Research Director** — Create a Paperclip task for Research Director review for each hypothesis, linking the file.
+**Bar construction + labeling:**
+- Lopez de Prado — *Advances in Financial ML* (volume/dollar bars, triple-barrier labeling, purged k-fold CV)
 
-5. **Mark tv-discovery task done** when all 3 hypotheses (or fewer if filtered results < 3) are submitted.
+**Intraday anomaly papers:**
+- SSRN q-fin section: search intraday momentum, open-to-close anomaly, time-of-day effects
+- arXiv q-fin.TR / q-fin.PM: search order book signals, limit order book imbalance
 
-### Quality Rules (TV-specific)
-
-- TV community strategies are often overfit to discovery period — apply extra skepticism
-- Indicator scripts are eligible only as component signals (IC > 0.02 required before including in multi-signal combination)
-- Skip ideas structurally identical to existing H01–H08 even if the author named them differently
-- Duplicate guard: check `research/findings/tv_ideas/` archive; skip already-processed TV IDs
-
-## QuantConnect Discovery Task Type
-
-When a task tagged `qc-discovery` or with `[QC-DISCOVERY]` in the title is assigned to you:
+**Crypto-specific:**
+- Funding rate mean reversion (perpetual swap premium/discount vs spot)
+- Basis trading (spot vs perp spread convergence)
+- On-chain flow signals (exchange net inflow/outflow at minute resolution)
 
 ### Discovery Steps
 
-1. **Acquire QC strategies** — Run `research/scripts/qc_strategy_discovery.py` (built by Engineering Director). This script:
-   - Fetches the QuantConnect public strategies listing (`quantconnect.com/strategies/`)
-   - Applies relevance filters (asset class, edge type, novelty vs H01–H08 and prior QC runs, duplicate guard)
-   - Writes raw results to `research/findings/qc_strategies/YYYY-MM-DD.json` and filtered results to `research/findings/qc_strategies/YYYY-MM-DD_filtered.json`
+1. **Select paper/source** — Pick 1–3 papers or book chapters from the canonical sources above. Prefer papers with: explicit minute-bar or tick signal, empirical results on 2015+ data, US equities or crypto venue.
 
-2. **Synthesise hypotheses** — For each strategy in the filtered JSON (target: 3 per run, mixing asset classes):
-   - Read the QC strategy description and interpret the signal mechanics
-   - Map to canonical hypothesis format (standard or ML template as appropriate)
-   - Enrich with: economic rationale, alpha decay estimate (half-life + IC decay curve at T+1/T+5/T+20), Gate 1 outlook, capital/PDT compatibility
-   - Apply the full **Signal Validity Pre-Check** (see above)
-   - Write hypothesis file to `research/hypotheses/0N_qc_<strategy_slug>.md`
+2. **Extract signal mechanic** — Identify the core signal (e.g., OFI = bid-side volume – ask-side volume normalized by total volume). Document the exact computation from the paper.
 
-3. **Include QC Source Caveat section** in each hypothesis (required):
-   - Original QC strategy name and URL
-   - QC backtest window and potential in-sample cherry-pick risk
-   - Clone/popularity rank (crowding risk — top-10 most-cloned strategies should be skipped or flagged)
-   - Novel signal insight: what makes this different from H01–H08 and prior QC-sourced hypotheses?
+3. **Synthesize hypothesis** — Map to canonical hypothesis format:
+   - Write entry/exit logic from signal mechanic
+   - Confirm data source (Alpaca minute / Binance 1m via CCXT) can supply required inputs
+   - Estimate alpha decay (half-life at T+1/T+5/T+20 bar level)
+   - Apply the full **Signal Validity Pre-Check**
+   - Write hypothesis file to `research/hypotheses/0N_lit_<strategy_slug>.md`
 
-4. **Submit to Research Director** — Create a Paperclip task for Research Director review for each hypothesis, linking the file.
+4. **Include Literature Source section** in each hypothesis (required):
+   - Full paper citation (author, year, title, venue)
+   - Signal formula / pseudocode extracted from paper
+   - Key empirical claims from the paper (IC, Sharpe, holding period)
+   - Adaptation notes: what changed from the paper to our implementation
 
-5. **Mark qc-discovery task done** when all hypotheses (or fewer if filtered results < 3) are submitted.
+5. **Submit to Research Director** — Create a Paperclip task for Research Director review for each hypothesis, linking the file.
 
-### Quality Rules (QC-specific)
+6. **Mark lit-discovery task done** when all target hypotheses (target: 2–3 per run) are submitted.
 
-- QuantConnect community strategies are often overfit to QC's default data feed — apply extra skepticism to IS Sharpe claims
-- Strategies shown on QC's public listing may have survivorship bias in discovery; note this in the caveat section
-- Skip ideas structurally identical to existing H01–H08 or prior `0N_qc_*.md` hypotheses even if named differently
-- Duplicate guard: check `research/findings/qc_strategies/` archive; skip already-processed QC strategy IDs
-- For options strategies sourced from QC: verify compatibility with our liquid-underlying constraint (SPY, QQQ, IWM, major single stocks)
+### Quality Rules (literature-specific)
+
+- Confirm the paper's data venue is compatible with Alpaca or CCXT (reject if requires tick data, options chains, or proprietary feeds not in pipeline)
+- Confirm minute-bar signal can be computed from OHLCV + volume only (or document additional field requirements)
+- Prefer papers with out-of-sample validation period after 2018 (pre-2015-only results have higher decay risk)
+- For crypto: prefer 24/7 venues (Binance, Coinbase) over equity-hours-only markets
+
+## QuantConnect: Execution Venue Only
+
+**QuantConnect is an execution/backtest venue — not an idea source.**
+
+The `qc_strategy_discovery.py` script (public strategy listing scraper) is retired. Do not run it for idea discovery. Reasons:
+- QC public listing is crowded daily-bar retail content
+- Strategies are overfit to QC's default feed and backtest window
+- Signal-to-noise is poor for minute-level alpha discovery
+
+### When to Use QuantConnect
+
+Use QC (Lean engine) exclusively for:
+- **Backtesting minute-bar strategies** — QC has clean institutional-quality minute data going back to 2010
+- **Walk-forward testing** — use QC's built-in WFO framework for minute strategies
+- **Paper trading / live execution** — broker integration for live minute strategies
+
+When Engineering Director sets up a backtest on QC infrastructure, coordinate by providing the hypothesis spec (entry/exit logic, bar resolution, parameter ranges). Do not source new strategy ideas from QC's public listing.
+
+### QuantConnect Source Caveat (legacy only)
+
+If a task specifically requests adapting a QC algorithm (e.g., a shared algorithm link from a researcher), include this caveat section:
+- Original QC algorithm name and URL
+- QC backtest window and IS cherry-pick risk
+- Adaptation to minute-bar framework and Alpaca/CCXT data source
+- Confirmation the strategy is not top-10-cloned (crowding risk)
 
 ## Feedback Integration
 
@@ -340,6 +364,23 @@ When a backtest fails Gate 1:
 - `research/regimes/` — current market regime classifications (from Market Regime Agent)
 - `criteria.md` — Gate 1 acceptance criteria to target
 - `docs/mission_statement.md` — firm mission and strategy universe
+
+### Microstructure Literature (primary hypothesis sources)
+
+- Hasbrouck, J. — *Empirical Market Microstructure* (2007, Oxford) — order flow, price impact, information asymmetry
+- Harris, L. — *Trading and Exchanges* (2003, Oxford) — market structure, adverse selection, spread decomposition
+- O'Hara, M. — *Market Microstructure Theory* (1995, Blackwell) — foundational theory
+- Cont, R., Kukanov, A., Stoikov, S. (2014) — "The Price Impact of Order Book Events" — OFI signal construction
+- Easley, D., de Prado, M.L., O'Hara, M. (2012) — "Flow Toxicity and Liquidity: VPIN" — VPIN signal
+- Stoikov, S. (2018) — "The micro-price: a high-frequency estimator of future prices" — micro-price signal
+- Lopez de Prado, M. — *Advances in Financial Machine Learning* (2018, Wiley) — bars, labeling, purged CV
+- SSRN q-fin — search: "intraday momentum", "open-to-close anomaly", "limit order book imbalance"
+- arXiv q-fin.TR / q-fin.PM — search: "order book signals", "high-frequency price prediction"
+
+### Retired Discovery Scripts (do not use for idea sourcing)
+
+- `research/scripts/tv_idea_discovery.py` — **RETIRED** (daily/4h retail content, poor S/N for minute alpha)
+- `research/scripts/qc_strategy_discovery.py` — **RETIRED as idea source** (QC public listing scraper retired; QC remains as execution/backtest venue only)
 
 ## Git Workflow
 

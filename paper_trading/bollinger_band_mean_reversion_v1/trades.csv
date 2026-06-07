@@ -1,0 +1,7 @@
+timestamp,ticker,action,qty,price,notional,commission,slippage_est,signal,order_id,dry_run,pnl_realized,position_after
+2026-05-01 12:47:21,QQQ,buy,0.0,0.0,2500.0,0.0,0.0,momentum_long,dry_run,true,0.0,0.0
+2026-05-01 12:47:22,IWM,buy,0.0,0.0,2500.0,0.0,0.0,momentum_long,dry_run,true,0.0,0.0
+2026-06-06 20:08:50,SPY,buy,0.0,0.0,2500.0,0.0,0.0,momentum_long,df3274a6-c2ef-4f2d-8dae-9e060986a54e,false,0.0,0.0
+2026-06-06 20:09:23,IWM,close,0.0,0.0,0.0,0.0,0.0,flat,248404bf-074a-4568-97f9-93ed10b4c581,false,0.0,0.0
+2026-06-06 20:10:33,QQQ,close,0.0,0.0,0.0,0.0,0.0,flat,7ed57faa-1361-4058-8650-b3112e9359ec,false,0.0,0.0
+2026-06-06 20:10:34,XLE,buy,0.0,0.0,2500.0,0.0,0.0,momentum_long,c9b72b49-6a81-4bd0-9fc0-1d0899c6ed38,false,0.0,0.0

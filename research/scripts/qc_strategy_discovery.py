@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 """
+DEPRECATED as idea source (QUA-70): QC public strategy listing is crowded daily-bar retail
+content overfit to QC's default feed. Retired as a hypothesis-sourcing tool.
+QuantConnect remains the execution/backtest venue — use it for running minute-bar backtests,
+not for discovering strategy ideas. See agents/alpha-research/AGENTS.md for the replacement
+discovery workflow (lit-discovery task type from microstructure literature).
+
 QuantConnect Public Strategy Discovery Script (QUA-146)
 
 Discovers quantitative trading strategies from the QuantConnect public strategy library:

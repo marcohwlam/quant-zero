@@ -1,0 +1,184 @@
+{
+  "calibration_date": "2026-06-06",
+  "data_source": "yfinance daily adjusted close (auto_adjust=True)",
+  "data_caveat": "DAILY BARS proxy for minute-level behavior. Actual minute distributions will differ: higher trade counts, higher per-trade cost drag, finer intraday drawdown texture.",
+  "universe": [
+    "SPY",
+    "QQQ",
+    "IWM",
+    "AAPL",
+    "MSFT"
+  ],
+  "n_windows": 6,
+  "strategy": "RSI(2) mean-reversion, long-only, next-bar fill",
+  "cost_model": {
+    "fixed_per_share": 0.005,
+    "slippage_pct_one_way": 0.0005,
+    "market_impact": "0.1 * sigma * sqrt(Q/ADV)"
+  },
+  "window_results": [
+    {
+      "window_id": 1,
+      "is_period": "2022-01-01 to 2022-03-31",
+      "oos_period": "2022-04-01 to 2022-04-30",
+      "net_oos_sharpe": -17.5026,
+      "net_profit_per_trade_bps": -176.97,
+      "max_intraday_drawdown_pct": -5.519,
+      "is_trade_count": 41,
+      "oos_trade_count": 16,
+      "cost_to_gross_ratio": 0.0024
+    },
+    {
+      "window_id": 2,
+      "is_period": "2022-07-01 to 2022-09-30",
+      "oos_period": "2022-10-01 to 2022-10-31",
+      "net_oos_sharpe": -3.1145,
+      "net_profit_per_trade_bps": -38.63,
+      "max_intraday_drawdown_pct": -1.936,
+      "is_trade_count": 37,
+      "oos_trade_count": 14,
+      "cost_to_gross_ratio": 0.004
+    },
+    {
+      "window_id": 3,
+      "is_period": "2023-01-01 to 2023-03-31",
+      "oos_period": "2023-04-01 to 2023-04-30",
+      "net_oos_sharpe": 13.3922,
+      "net_profit_per_trade_bps": 135.85,
+      "max_intraday_drawdown_pct": 0.0,
+      "is_trade_count": 44,
+      "oos_trade_count": 13,
+      "cost_to_gross_ratio": 0.0034
+    },
+    {
+      "window_id": 4,
+      "is_period": "2023-07-01 to 2023-09-30",
+      "oos_period": "2023-10-01 to 2023-10-31",
+      "net_oos_sharpe": 0.2681,
+      "net_profit_per_trade_bps": 2.91,
+      "max_intraday_drawdown_pct": -1.583,
+      "is_trade_count": 47,
+      "oos_trade_count": 14,
+      "cost_to_gross_ratio": 0.0068
+    },
+    {
+      "window_id": 5,
+      "is_period": "2024-01-01 to 2024-03-31",
+      "oos_period": "2024-04-01 to 2024-04-30",
+      "net_oos_sharpe": -15.9346,
+      "net_profit_per_trade_bps": -104.97,
+      "max_intraday_drawdown_pct": -2.761,
+      "is_trade_count": 50,
+      "oos_trade_count": 13,
+      "cost_to_gross_ratio": 0.0047
+    },
+    {
+      "window_id": 6,
+      "is_period": "2024-07-01 to 2024-09-30",
+      "oos_period": "2024-10-01 to 2024-10-31",
+      "net_oos_sharpe": 15.8623,
+      "net_profit_per_trade_bps": 45.13,
+      "max_intraday_drawdown_pct": -0.008,
+      "is_trade_count": 38,
+      "oos_trade_count": 14,
+      "cost_to_gross_ratio": 0.0043
+    }
+  ],
+  "distributions": {
+    "net_oos_sharpe": {
+      "values": [
+        -17.5026,
+        -3.1145,
+        13.3922,
+        0.2681,
+        -15.9346,
+        15.8623
+      ],
+      "mean": -1.1715,
+      "std": 14.0908,
+      "p10": -16.7186,
+      "p25": -12.7296,
+      "p50": -1.4232,
+      "p75": 10.1112,
+      "p90": 14.6273,
+      "min": -17.5026,
+      "max": 15.8623
+    },
+    "net_profit_per_trade_bps": {
+      "values": [
+        -176.97,
+        -38.63,
+        135.85,
+        2.91,
+        -104.97,
+        45.13
+      ],
+      "mean": -22.78,
+      "std": 110.6492,
+      "p10": -140.97,
+      "p25": -88.385,
+      "p50": -17.86,
+      "p75": 34.575,
+      "p90": 90.49,
+      "min": -176.97,
+      "max": 135.85
+    },
+    "max_intraday_drawdown_pct": {
+      "values": [
+        -5.519,
+        -1.936,
+        0.0,
+        -1.583,
+        -2.761,
+        -0.008
+      ],
+      "mean": -1.9678,
+      "std": 2.0544,
+      "p10": -4.14,
+      "p25": -2.5548,
+      "p50": -1.7595,
+      "p75": -0.4017,
+      "p90": -0.004,
+      "min": -5.519,
+      "max": 0.0
+    },
+    "is_trade_count": {
+      "values": [
+        41.0,
+        37.0,
+        44.0,
+        47.0,
+        50.0,
+        38.0
+      ],
+      "mean": 42.8333,
+      "std": 5.1153,
+      "p10": 37.5,
+      "p25": 38.75,
+      "p50": 42.5,
+      "p75": 46.25,
+      "p90": 48.5,
+      "min": 37.0,
+      "max": 50.0
+    },
+    "cost_to_gross_ratio": {
+      "values": [
+        0.0024,
+        0.004,
+        0.0034,
+        0.0068,
+        0.0047,
+        0.0043
+      ],
+      "mean": 0.0043,
+      "std": 0.0015,
+      "p10": 0.0029,
+      "p25": 0.0035,
+      "p50": 0.0042,
+      "p75": 0.0046,
+      "p90": 0.0057,
+      "min": 0.0024,
+      "max": 0.0068
+    }
+  }
+}

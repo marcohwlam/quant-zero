@@ -1,0 +1,38 @@
+{
+  "strat_id": "bollinger_band_mean_reversion_v1",
+  "last_update": "2026-06-06T20:11:26Z",
+  "runner_version": "1.0.0",
+  "paper_start_date": "2026-03-16",
+  "initial_capital": 5000.00,
+  "current_portfolio_value": 5000.00,
+  "current_cash": 5000.00,
+  "current_invested": 0.00,
+  "cumulative_pnl": 0.00,
+  "cumulative_return_pct": 0.00,
+  "current_drawdown_pct": 0.00,
+  "peak_value": 5000.00,
+  "max_drawdown_since_paper_start_pct": 0.00,
+  "demotion_threshold_pct": 18.00,
+  "warning_threshold_pct": 12.00,
+  "total_trades": 0,
+  "total_signal_evaluations": 22,
+  "days_in_paper": 82,
+  "rolling_sharpe_30d": null,
+  "rolling_sharpe_since_start": null,
+  "status": "ok",
+  "alert": null,
+  "open_positions": [],
+  "last_signal_evaluation": {
+    "timestamp": "2026-06-06T20:11:26Z",
+    "signals": {
+      "SPY": "flat",
+      "QQQ": "flat",
+      "IWM": "flat",
+      "DIA": "flat",
+      "XLF": "flat",
+      "XLE": "momentum_long",
+      "XLK": "momentum_long",
+      "XLV": "flat"
+    }
+  }
+}

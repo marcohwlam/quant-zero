@@ -1,0 +1,9 @@
+[
+  {
+    "type": "strategy_stale",
+    "severity": "WARNING",
+    "strat_id": "h10_crypto_eql_reversal_v2",
+    "message": "Strategy data stale. Last update: 2026-06-07T00:05:31Z",
+    "timestamp": "2026-06-07T02:29:34.150082+00:00"
+  }
+]

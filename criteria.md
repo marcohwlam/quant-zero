@@ -60,8 +60,9 @@ then CEO-locked. Setting numbers without data violates the data-driven rule.
 | Trade count (IS) | > TBD | > TBD | > TBD |
 | Cost-to-gross-profit ratio | < TBD | < TBD | < TBD |
 
-The objective function that balances return and stability across these metrics is owned by
-the Quant Metrics agent and specified in `docs/kpi-minute-level.md` (Risk co-signed, CEO-locked).
+The objective function that balances return and stability across these metrics is defined in
+`docs/kpi-minute-level.md` **v0.3 (CEO-locked 2026-06-07, QUA-68)**. That document is authoritative
+for the composite score formula, hard gate definitions, and per-asset KPI specifications.
 
 ---
 
@@ -76,17 +77,23 @@ the Quant Metrics agent and specified in `docs/kpi-minute-level.md` (Risk co-sig
 
 ## Per-Asset KPI Spec
 
-See `docs/kpi-minute-level.md` — owned by Quant Metrics, Risk co-signed, CEO-locked.
+See `docs/kpi-minute-level.md` v0.3 — CEO-locked 2026-06-07 ([QUA-68](/QUA/issues/QUA-68)).  
+Hard gates 1–8 (including Gate 8 PDT compliance for equities intraday) are defined there.
 
 ---
 
 ## Automatic Disqualification (any single flag = reject)
+
+Full hard gate list is in `docs/kpi-minute-level.md` §Hard Gates (Gates 1–8). Summary:
 
 - Net OOS Sharpe below the asset threshold.
 - Same-bar fill assumption (latency cheating).
 - Cost-to-profit ratio above the asset ceiling.
 - Profitable gross but unprofitable net.
 - Look-ahead bias detected (rewrite and re-test from scratch).
+- IS trade count below asset-class floor (statistical adequacy).
+- Max intraday/session MDD exceeds absolute ceiling (2× CS threshold).
+- **PDT-incompatible design (US equities intraday, margin accounts)** — requires >3 day trades per 5 rolling days. *(Gate 8, CEO ruling F3, 2026-06-07)*
 
 ---
 
@@ -103,3 +110,4 @@ See `docs/kpi-minute-level.md` — owned by Quant Metrics, Risk co-signed, CEO-l
 |---------|------|--------|-----------|
 | 1.0–1.3 | 2026-03 | Daily/swing criteria | Preserved in git history. |
 | 2.0 | 2026-06-06 | Rewrite for minute-level, all assets | Company pivot to minute-level trading; cost realism promoted to top-level gate; thresholds deferred to data calibration. |
+| 2.0.1 | 2026-06-07 | Reference `docs/kpi-minute-level.md` v0.3 (CEO-locked). Added Gate 8 (PDT) to auto-disqualification summary. KPI doc is the authoritative objective function. | CEO — [QUA-68](/QUA/issues/QUA-68) |

@@ -37,7 +37,7 @@ import json
 import logging
 import argparse
 import warnings
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 
 import numpy as np
 import pandas as pd
@@ -63,6 +63,18 @@ MAX_POSITION_PCT = 0.10   # max 10% of portfolio per position
 MAX_CRYPTO_PCT   = 0.20   # max 20% combined BTC+ETH exposure
 CAPITAL_SPLIT    = {"BTC-USD": 0.60, "ETH-USD": 0.40}  # per strategy spec
 TRADE_LOG_PATH   = "broker/paper_trading/h10_trade_log.json"
+
+# Canonical data paths (spec §4.2)
+STRAT_ID         = "h10_crypto_eql_reversal_v2"
+CANONICAL_DIR    = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+    "paper_trading", STRAT_ID,
+)
+INITIAL_CAPITAL  = 5000.0
+PAPER_START_DATE = "2026-03-16"
+RUNNER_VERSION   = "1.1.0"
+DEMOTION_THRESHOLD_PCT = 16.05   # 1.5 × 10.7%
+WARNING_THRESHOLD_PCT  = 10.70
 
 # IS tracking: implementation shortfall
 IS_THRESHOLD_BPS = 10.0   # flag trades where IS > 10 bps
@@ -295,6 +307,252 @@ def append_trade_log(new_entries: list):
     logger.info(f"Trade log updated: {len(log)} total entries → {TRADE_LOG_PATH}")
 
 
+# ── Canonical file writers (spec §4.2) ────────────────────────────────────────
+
+def _canonical_equity_path() -> str:
+    return os.path.join(CANONICAL_DIR, "equity.csv")
+
+
+def _canonical_trades_path() -> str:
+    return os.path.join(CANONICAL_DIR, "trades.csv")
+
+
+def _canonical_meta_path() -> str:
+    return os.path.join(CANONICAL_DIR, "meta.json")
+
+
+EQUITY_COLUMNS = [
+    "date", "portfolio_value", "cash", "invested", "daily_pnl",
+    "cumulative_pnl", "cumulative_return_pct", "drawdown_pct",
+    "peak_value", "trade_count_today", "signal_count_today",
+]
+
+TRADES_COLUMNS = [
+    "timestamp", "ticker", "action", "qty", "price", "notional",
+    "commission", "slippage_est", "signal", "order_id", "dry_run",
+    "pnl_realized", "position_after",
+]
+
+
+def _ensure_canonical_headers():
+    """Initialise CSV files with headers if they don't exist."""
+    import csv as _csv
+    os.makedirs(CANONICAL_DIR, exist_ok=True)
+    eq_path = _canonical_equity_path()
+    if not os.path.exists(eq_path):
+        with open(eq_path, "w", newline="") as f:
+            _csv.writer(f).writerow(EQUITY_COLUMNS)
+    tr_path = _canonical_trades_path()
+    if not os.path.exists(tr_path):
+        with open(tr_path, "w", newline="") as f:
+            _csv.writer(f).writerow(TRADES_COLUMNS)
+
+
+def write_canonical_equity(account_value: float, signal_count: int, trade_count: int = 0):
+    """Append one equity row for today. Dedup on date — latest wins (spec §4.2.1)."""
+    import csv as _csv
+    _ensure_canonical_headers()
+    eq_path = _canonical_equity_path()
+    today = date.today().strftime("%Y-%m-%d")
+
+    # Read existing rows
+    rows = []
+    try:
+        with open(eq_path, newline="") as f:
+            rows = list(_csv.DictReader(f))
+    except FileNotFoundError:
+        pass
+
+    # Compute running state
+    if rows:
+        prev = rows[-1]
+        prev_value = float(prev.get("portfolio_value", INITIAL_CAPITAL) or INITIAL_CAPITAL)
+        prev_cum_pnl = float(prev.get("cumulative_pnl", 0) or 0)
+        prev_peak = float(prev.get("peak_value", INITIAL_CAPITAL) or INITIAL_CAPITAL)
+    else:
+        prev_value = INITIAL_CAPITAL
+        prev_cum_pnl = 0.0
+        prev_peak = INITIAL_CAPITAL
+
+    # H10 is all-crypto, no separate cash/invested tracking without positions API
+    portfolio_value = account_value if account_value > 0 else prev_value
+    cash = portfolio_value  # conservative: assume flat until position data wired in
+    invested = 0.0
+    daily_pnl = portfolio_value - prev_value
+    cumulative_pnl = prev_cum_pnl + daily_pnl
+    cumulative_return_pct = (portfolio_value / INITIAL_CAPITAL - 1) * 100
+    peak_value = max(prev_peak, portfolio_value)
+    drawdown_pct = max(0.0, (1 - portfolio_value / peak_value) * 100) if peak_value > 0 else 0.0
+
+    new_row = {
+        "date": today,
+        "portfolio_value": round(portfolio_value, 2),
+        "cash": round(cash, 2),
+        "invested": round(invested, 2),
+        "daily_pnl": round(daily_pnl, 2),
+        "cumulative_pnl": round(cumulative_pnl, 2),
+        "cumulative_return_pct": round(cumulative_return_pct, 4),
+        "drawdown_pct": round(drawdown_pct, 4),
+        "peak_value": round(peak_value, 2),
+        "trade_count_today": trade_count,
+        "signal_count_today": signal_count,
+    }
+
+    # Dedup: remove existing row for today if present, then append
+    rows = [r for r in rows if r.get("date") != today]
+    rows.append(new_row)
+
+    with open(eq_path, "w", newline="") as f:
+        writer = _csv.DictWriter(f, fieldnames=EQUITY_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    logger.info(f"Canonical equity.csv updated: {eq_path}")
+
+
+def write_canonical_trades(execution_log: list):
+    """Append fill records to canonical trades.csv. Flat/hold actions are skipped."""
+    import csv as _csv
+    _ensure_canonical_headers()
+    tr_path = _canonical_trades_path()
+
+    fill_actions = {"buy", "sell", "close"}
+    new_rows = []
+    for rec in execution_log:
+        action = (rec.get("action") or "flat").lower()
+        if action not in fill_actions:
+            continue
+        ticker = rec.get("ticker", "")
+        qty = rec.get("fill_qty") or 0.0
+        price = rec.get("fill_price") or 0.0
+        target_notional = rec.get("target_notional") or 0.0
+        notional = float(qty) * float(price) if float(qty) * float(price) > 0 else target_notional
+        order_id = rec.get("order_id") or ("dry_run" if rec.get("dry_run") else "")
+        new_rows.append({
+            "timestamp": rec.get("date", ""),
+            "ticker": ticker,
+            "action": action,
+            "qty": qty if qty is not None else 0.0,
+            "price": price if price is not None else 0.0,
+            "notional": round(float(notional), 4),
+            "commission": 0.0,
+            "slippage_est": 0.0,
+            "signal": rec.get("signal_type", ""),
+            "order_id": order_id,
+            "dry_run": str(rec.get("dry_run", False)).lower(),
+            "pnl_realized": 0.0,
+            "position_after": 0.0,
+        })
+
+    if not new_rows:
+        return
+
+    with open(tr_path, "a", newline="") as f:
+        writer = _csv.DictWriter(f, fieldnames=TRADES_COLUMNS)
+        writer.writerows(new_rows)
+    logger.info(f"Canonical trades.csv appended: {len(new_rows)} rows → {tr_path}")
+
+
+def write_canonical_meta(
+    account_value: float,
+    signals: dict,
+    execution_log: list,
+    signal_count: int,
+    account_baseline: float = 0.0,
+):
+    """Overwrite meta.json with current runner state (spec §4.2.3)."""
+    _ensure_canonical_headers()
+    meta_path = _canonical_meta_path()
+
+    # Read existing meta for running totals
+    existing = {}
+    try:
+        with open(meta_path) as f:
+            existing = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+
+    portfolio_value = account_value if account_value > 0 else INITIAL_CAPITAL
+    # account_baseline persisted across runs so peak/drawdown track strategy P&L, not Alpaca equity
+    _stored_baseline = float(existing.get("account_baseline", 0) or 0)
+    if account_baseline <= 0:
+        account_baseline = _stored_baseline
+    prev_peak = float(existing.get("peak_value", INITIAL_CAPITAL) or INITIAL_CAPITAL)
+    peak_value = max(prev_peak, portfolio_value)
+    cumulative_pnl = portfolio_value - INITIAL_CAPITAL
+    cumulative_return_pct = (portfolio_value / INITIAL_CAPITAL - 1) * 100
+    current_drawdown_pct = max(0.0, (1 - portfolio_value / peak_value) * 100) if peak_value > 0 else 0.0
+    max_dd_ever = max(
+        float(existing.get("max_drawdown_since_paper_start_pct", 0) or 0),
+        current_drawdown_pct,
+    )
+
+    prev_total_trades = int(existing.get("total_trades", 0) or 0)
+    fill_actions = {"buy", "sell", "close"}
+    new_fills = sum(
+        1 for r in execution_log
+        if (r.get("action") or "").lower() in fill_actions
+        and r.get("fill_qty") is not None
+        and float(r.get("fill_qty") or 0) > 0
+    )
+    total_trades = prev_total_trades + new_fills
+
+    prev_evals = int(existing.get("total_signal_evaluations", 0) or 0)
+    total_evals = prev_evals + signal_count
+
+    paper_start = datetime.strptime(PAPER_START_DATE, "%Y-%m-%d")
+    days_in_paper = (datetime.now() - paper_start).days
+
+    if current_drawdown_pct >= DEMOTION_THRESHOLD_PCT:
+        status = "demotion_alert"
+        alert = f"Drawdown {current_drawdown_pct:.2f}% hit demotion threshold {DEMOTION_THRESHOLD_PCT:.2f}%"
+    elif current_drawdown_pct >= WARNING_THRESHOLD_PCT:
+        status = "warn"
+        alert = f"Drawdown {current_drawdown_pct:.2f}% at warning threshold {WARNING_THRESHOLD_PCT:.2f}%"
+    else:
+        status = "ok"
+        alert = None
+
+    last_sig = {
+        "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "signals": {
+            t: signals.get(t, {}).get("signal_type", "flat")
+            for t in UNIVERSE
+        },
+    }
+
+    meta = {
+        "strat_id": STRAT_ID,
+        "last_update": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "runner_version": RUNNER_VERSION,
+        "paper_start_date": PAPER_START_DATE,
+        "initial_capital": INITIAL_CAPITAL,
+        "account_baseline": round(account_baseline, 2),
+        "current_portfolio_value": round(portfolio_value, 2),
+        "current_cash": round(portfolio_value, 2),  # conservative: no open positions tracked
+        "current_invested": 0.0,
+        "cumulative_pnl": round(cumulative_pnl, 2),
+        "cumulative_return_pct": round(cumulative_return_pct, 4),
+        "current_drawdown_pct": round(current_drawdown_pct, 4),
+        "peak_value": round(peak_value, 2),
+        "max_drawdown_since_paper_start_pct": round(max_dd_ever, 4),
+        "demotion_threshold_pct": DEMOTION_THRESHOLD_PCT,
+        "warning_threshold_pct": WARNING_THRESHOLD_PCT,
+        "total_trades": total_trades,
+        "total_signal_evaluations": total_evals,
+        "days_in_paper": days_in_paper,
+        "rolling_sharpe_30d": None,
+        "rolling_sharpe_since_start": None,
+        "status": status,
+        "alert": alert,
+        "open_positions": [],
+        "last_signal_evaluation": last_sig,
+    }
+
+    with open(meta_path, "w") as f:
+        json.dump(meta, f, indent=2)
+    logger.info(f"Canonical meta.json updated: {meta_path}")
+
+
 # ── IS Shortfall Report ────────────────────────────────────────────────────────
 
 def compute_shortfall_report(trade_log: list) -> dict:
@@ -387,8 +645,9 @@ def main(dry_run: bool = False, shortfall_report_only: bool = False):
     logger.info(f"Executing signals{'(dry run — no orders)' if dry_run else ''}...")
     execution_log = execute_signals(client, signals, dry_run=dry_run)
 
-    # 4. Log trades
+    # 4. Log trades (legacy JSON + canonical CSV)
     append_trade_log(execution_log)
+    write_canonical_trades(execution_log)
 
     # 5. IS report
     all_trades = load_trade_log()
@@ -400,15 +659,53 @@ def main(dry_run: bool = False, shortfall_report_only: bool = False):
     if is_report.get("action_triggered"):
         logger.warning(f"ACTION REQUIRED: {is_report.get('action_note')}")
 
-    # 6. Summary
+    # 6. Write canonical equity.csv and meta.json
+    #
+    # Alpaca paper accounts default to $100k, but our strategy capital is INITIAL_CAPITAL.
+    # We store the Alpaca balance at paper-start as account_baseline in meta.json, then
+    # compute portfolio_value = INITIAL_CAPITAL + (raw_balance - baseline) so that
+    # cumulative P&L tracks strategy returns, not the arbitrary Alpaca starting balance.
+    raw_account_value = float(account.get("portfolio_value", 0))
+
+    _existing_meta: dict = {}
+    try:
+        with open(_canonical_meta_path()) as _f:
+            _existing_meta = json.load(_f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+
+    account_baseline = float(_existing_meta.get("account_baseline", 0) or 0)
+    if account_baseline <= 0 and raw_account_value > 0:
+        account_baseline = raw_account_value  # first run: snapshot Alpaca starting balance
+
+    if raw_account_value > 0 and account_baseline > 0:
+        account_value = INITIAL_CAPITAL + (raw_account_value - account_baseline)
+    else:
+        account_value = (
+            float(_existing_meta.get("current_portfolio_value", 0) or 0) or INITIAL_CAPITAL
+        )
+
+    signal_count = len(UNIVERSE)
+    fill_count = sum(
+        1 for r in execution_log
+        if (r.get("action") or "").lower() in {"buy", "sell", "close"}
+        and r.get("fill_qty") is not None and float(r.get("fill_qty") or 0) > 0
+    )
+    write_canonical_equity(account_value, signal_count, fill_count)
+    write_canonical_meta(account_value, signals, execution_log, signal_count,
+                         account_baseline=account_baseline)
+
+    # 7. Summary
     summary = {
-        "date":           datetime.now().strftime("%Y-%m-%d"),
-        "strategy":       STRATEGY_NAME,
-        "dry_run":        dry_run,
-        "signals":        {k: v for k, v in signals.items() if k != "timestamp"},
-        "execution":      execution_log,
-        "is_report":      is_report,
-        "account_value":  float(account.get("portfolio_value", 0)),
+        "date":                    datetime.now().strftime("%Y-%m-%d"),
+        "strategy":                STRATEGY_NAME,
+        "dry_run":                 dry_run,
+        "signals":                 {k: v for k, v in signals.items() if k != "timestamp"},
+        "execution":               execution_log,
+        "is_report":               is_report,
+        "account_value":           round(account_value, 2),
+        "raw_alpaca_balance":      raw_account_value,
+        "account_baseline":        account_baseline,
     }
     logger.info("Run complete.")
     return summary

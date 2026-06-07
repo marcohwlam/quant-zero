@@ -5,7 +5,7 @@
 **Date:** 2026-03-16
 **Asset class:** US equity (SPY ETF)
 **Strategy type:** single-signal, pattern-based / binary event-driven
-**Status:** READY
+**Status:** FAILED (Gate 1 v2.0, QUA-72, 2026-06-07) — IS Sharpe 0.42 vs 1.0 threshold; family retired
 **Tier:** CEO Directive QUA-254 — Pattern-Based / Binary Event Class (QUA-181 Priority 1 — proven pass class)
 
 ---

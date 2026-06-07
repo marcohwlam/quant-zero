@@ -16,6 +16,9 @@ build/
 broker/.env
 orchestrator/.env
 
+# Claude Code local settings (may contain GH_TOKEN — never commit)
+.claude/settings.json
+
 # Database
 *.db
 *.sqlite
