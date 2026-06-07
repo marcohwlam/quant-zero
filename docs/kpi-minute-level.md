@@ -1,6 +1,6 @@
 # Minute-Level KPI Objective Function — v0.2 Draft
 
-**Status:** DRAFT — pending Risk Director final co-sign (v0.2) and CEO lock  
+**Status:** SIGNED by Risk Director — pending CEO lock (F1/F2/F3 ruling required)  
 **Version:** 0.2  
 **Author:** Research Director (Quant Metrics delegation)  
 **Date:** 2026-06-06  
