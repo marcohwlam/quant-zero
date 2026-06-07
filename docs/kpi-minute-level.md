@@ -1,7 +1,7 @@
-# Minute-Level KPI Objective Function — v0 Draft
+# Minute-Level KPI Objective Function — v0.2 Draft
 
-**Status:** DRAFT — pending Risk Director co-sign and CEO lock  
-**Version:** 0.1  
+**Status:** DRAFT — pending Risk Director final co-sign (v0.2) and CEO lock  
+**Version:** 0.2  
 **Author:** Research Director (Quant Metrics delegation)  
 **Date:** 2026-06-06  
 **Referenced by:** `criteria.md` §Per-Asset KPI Spec  
@@ -52,6 +52,8 @@ These operate before the composite score is computed:
 3. **Same-bar fill assumption** — latency cheating; automatic disqualification (per `criteria.md`).
 4. **Look-ahead bias detected** — rewrite and re-test from scratch.
 5. **Gross-profitable but net-negative** — no exceptions; cost model is non-negotiable.
+6. **IS trade count below asset-class floor** — statistical adequacy is binary. A strategy with fewer trades than the floor has insufficient power for the IS Sharpe estimate to be trustworthy, regardless of composite score. See per-asset `TC_*` thresholds.
+7. **Max intraday/session MDD exceeds absolute ceiling** — a strategy scoring 0.0 on MDD can still pass CS ≥ 0.60 via high NetSharpe + PpT alone. This gate prevents structurally unsafe strategies from reaching paper trading. Ceiling = 2× the asset-class MDD calibration threshold. Calibrate the ceiling alongside the CS thresholds. Anchors to Risk Constitution Rule 5 (1.5× backtest MDD → auto-demotion) and Rule 9 (8% portfolio halt).
 
 ---
 
@@ -67,7 +69,7 @@ These operate before the composite score is computed:
 |---|---|---|---|---|
 | Net OOS Sharpe (annualized) | `NetSharpe_eq` | Hard gate + CS component | > **TBD** (placeholder; propose 0.8 as working floor) | Annualize via daily PnL aggregation; sqrt(252). RTH-only baseline. |
 | Net profit per trade (bps) | `PpT_eq` | Hard gate + CS component | > **TBD** (placeholder; propose 2 bps minimum) | Must exceed half-spread + commission. 2 bps is break-even estimate for liquid large-caps. |
-| Max intraday drawdown (session) | `MDD_eq` | CS component | < **TBD** (placeholder; propose 1.5% of equity) | Per-session MDD. Intraday strategies with >2% session swings are incompatible with risk budget. |
+| Max intraday drawdown (session) | `MDD_eq` | Hard gate (Gate 7) + CS component | < **TBD** (placeholder; propose 1.5% of account equity). Hard gate ceiling = 2× CS threshold (i.e., ~3% until calibrated). | Per-session MDD anchored to account equity. Intraday strategies with >2% session swings are incompatible with risk budget. |
 | IS trade count | `TC_eq` | Hard gate | > **TBD** (placeholder; propose 300 over IS window) | 300 trades provides ~90% CI on IS Sharpe estimate. |
 | Cost-to-gross-profit ratio | `CPR_eq` | Hard gate | < **TBD** (placeholder; propose 0.40 = costs ≤ 40% of gross) | If costs eat >40% of gross profit, net edge is fragile to cost drift. |
 
@@ -91,7 +93,7 @@ These operate before the composite score is computed:
 |---|---|---|---|---|
 | Net OOS Sharpe (annualized) | `NetSharpe_cr` | Hard gate + CS component | > **TBD** (placeholder; propose 1.0) | Crypto has higher vol; same annualized Sharpe implies better raw edge. Higher floor than equities justified. |
 | Net profit per trade (bps) | `PpT_cr` | Hard gate + CS component | > **TBD** (placeholder; propose 8 bps minimum) | Taker fee alone is 5 bps; strategy must clear 5 bps just to break even. 8 bps net provides margin. |
-| Max 24h drawdown | `MDD_cr` | CS component | < **TBD** (placeholder; propose 3% of equity) | Crypto vol is 3–5× equity; 3% 24h MDD consistent with 10% portfolio drawdown budget. |
+| Max 24h drawdown | `MDD_cr` | Hard gate (Gate 7) + CS component | < **TBD** (placeholder; propose 3% of account equity). Hard gate ceiling = 2× CS threshold (i.e., ~6% until calibrated). | Crypto vol is 3–5× equity; 3% 24h MDD consistent with 10% portfolio drawdown budget. |
 | IS trade count | `TC_cr` | Hard gate | > **TBD** (placeholder; propose 200 over IS window) | 24/7 window generates more bars; 200 trades sufficient for significance. |
 | Cost-to-gross-profit ratio | `CPR_cr` | Hard gate | < **TBD** (placeholder; propose 0.35) | Stricter than equities because crypto cost model is a percentage (not fixed per share); scales with notional. |
 
@@ -113,7 +115,7 @@ These operate before the composite score is computed:
 |---|---|---|---|---|
 | Net OOS Sharpe (annualized) | `NetSharpe_fx` | Hard gate + CS component | > **TBD** (placeholder; propose 0.9) | Between equities and crypto; futures have moderate inherent leverage that amplifies both edges and drawdowns. |
 | Net profit per trade (ticks or bps) | `PpT_fx` | Hard gate + CS component | > **TBD** (placeholder; propose 0.5 ticks net after commission) | Absolute tick-based floor: must exceed 1 round-trip tick cost. Bps equivalent also tracked for cross-class comparison. |
-| Max session drawdown (per contract) | `MDD_fx` | CS component | < **TBD** (placeholder; propose 2.0% of contract notional) | Futures session drawdowns compound with leverage. 2% on notional is risk-budget-consistent. |
+| Max session drawdown | `MDD_fx` | Hard gate (Gate 7) + CS component | < **TBD** (placeholder; propose 2.0% of **account equity allocated to the strategy**). Hard gate ceiling = 2× CS threshold (i.e., ~4% until calibrated). | Anchored to account equity, not contract notional. At full ES notional (~$250K), a 2%-of-notional ceiling = $5K = 20% of a $25K account — inconsistent with risk budget. Equity-based anchoring aligns with equities/crypto approach and Risk Constitution Rule 9. |
 | IS trade count | `TC_fx` | Hard gate | > **TBD** (placeholder; propose 150 over IS window) | Futures strategies often lower-frequency than crypto; 150 IS trades is statistical floor. |
 | Cost-to-gross-profit ratio | `CPR_fx` | Hard gate | < **TBD** (placeholder; propose 0.35) | Same as crypto; commission + tick slippage is material per trade. |
 
@@ -263,8 +265,9 @@ Upon resolution: update version to 0.2, re-submit for final Risk Director sign-o
 | Version | Date | Change | Author |
 |---|---|---|---|
 | 0.1 | 2026-06-06 | Initial draft — objective function structure, per-class KPIs, rationale, calibration protocol | Research Director |
-| 0.1-rc | 2026-06-06 | Risk Director co-sign review — conditional co-sign, 3 required changes, 3 CEO flags | Risk Director |
+| 0.1-rc | 2026-06-06 | Risk Director co-sign review — conditional co-sign, 3 required changes (R1/R2/R3), 3 CEO flags (F1/F2/F3) | Risk Director |
+| 0.2 | 2026-06-07 | R1: Added MDD hard gate (Gate 7) with 2× ceiling across all asset classes. R2: Added IS trade count as hard gate (Gate 6) in §Hard Gates, reconciling per-asset table Gate Role. R3: Reanchored futures MDD threshold from contract notional to account equity. | Research Director |
 
 ---
 
-*Next step: Research Director resolves R1/R2/R3 → Risk Director final co-sign (v0.2) → CEO lock → populate TBD thresholds after calibration sweep.*
+*Next step: Risk Director final co-sign (v0.2) → CEO lock (ruling on F1/F2/F3) → populate TBD thresholds after calibration sweep.*
