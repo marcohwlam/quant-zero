@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 """
+DEPRECATED (QUA-70): TradingView community scripts are daily/4h retail content with poor
+signal-to-noise for minute-level alpha. This script is retired as an idea-sourcing tool.
+Use microstructure literature discovery (lit-discovery task type) instead.
+
 TradingView Strategy Discovery Script — Phase 1 (QUA-108 / QUA-115)
 
 Discovers TradingView community strategy and indicator scripts by:
