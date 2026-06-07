@@ -1,7 +1,7 @@
-## Paperclip Project
+## Ticket Creation
 
-All issues belong to project **quant-zero** (Quant Zero company).
-- When creating issues: always set `projectId` = quant-zero project.
+Follow `workflow-contracts/ticket-creation.md`. Always set `projectId` from `$PAPERCLIP_PROJECT_ID`.
+
 - When referencing tickets: use the QUA-N key format.
 - CEO does NOT take ticket assignments. CEO creates, delegates, and reviews — never executes.
 - All tickets must be assigned to a functional agent: Research Director, Engineering Director, Strategy Coder, Backtest Runner, Overfit Detector, Risk Director, Portfolio Monitor, Alpha Research, or Market Regime.
