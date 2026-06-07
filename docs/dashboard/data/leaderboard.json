@@ -12,9 +12,9 @@
     "current_drawdown_pct": 0.0,
     "demotion_threshold_pct": 16.1,
     "warning_threshold_pct": 10.7,
-    "alert": "OK",
-    "last_update": "2026-06-06T20:10:31Z",
-    "is_stale": false,
+    "alert": "WARNING",
+    "last_update": "2026-06-07T00:05:31Z",
+    "is_stale": true,
     "paper_start_date": "2026-03-16"
   },
   {

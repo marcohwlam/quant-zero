@@ -32,7 +32,7 @@ tr:hover td{background:#fafafa}
 <body>
 <div class="topbar">
   <h1>⚡ Quant Zero Dashboard</h1>
-  <span class="as-of">As of 2026-06-06T20:11:26Z</span>
+  <span class="as-of">As of 2026-06-07T00:05:31Z</span>
 </div>
 <div class="container">
   <div class="summary">
@@ -56,8 +56,8 @@ tr:hover td{background:#fafafa}
         </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>h10_crypto_eql_reversal_v2</td>
+      <tr style="background:#fff3cd">
+        <td>h10_crypto_eql_reversal_v2 <span style="color:#999;font-size:.8em">[STALE]</span></td>
         <td>H10 Crypto EQL/EQH Liquidity Reversal</td>
         <td><span class="badge-paper">paper</span></td>
         <td>crypto</td>
@@ -68,8 +68,8 @@ tr:hover td{background:#fafafa}
         <td>10.7%</td>
         <td>0.00%</td>
         <td>16.1%</td>
-        <td class="alert-OK">OK</td>
-        <td style="font-size:.8em">2026-06-06T20:10:31Z</td>
+        <td class="alert-WARNING">WARNING</td>
+        <td style="font-size:.8em">2026-06-07T00:05:31Z</td>
       </tr>
       <tr>
         <td>bollinger_band_mean_reversion_v1</td>
@@ -94,7 +94,13 @@ tr:hover td{background:#fafafa}
     <h2>Active Alerts</h2>
     <table>
       <thead><tr><th>Severity</th><th>Strategy</th><th>Message</th><th>Timestamp</th></tr></thead>
-      <tbody><tr><td colspan="4" style="text-align:center;color:#28a745;padding:12px">✓ No active alerts</td></tr>
+      <tbody>
+      <tr>
+        <td style="color:#856404;font-weight:700">WARNING</td>
+        <td>h10_crypto_eql_reversal_v2</td>
+        <td>Strategy data stale. Last update: 2026-06-07T00:05:31Z</td>
+        <td style="font-size:.8em">2026-06-07T02:29:34.150082+00:00</td>
+      </tr>
       </tbody>
     </table>
   </div>
