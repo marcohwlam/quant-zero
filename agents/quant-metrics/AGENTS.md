@@ -60,6 +60,10 @@ You operate in heartbeat mode. Each heartbeat:
 - `docs/kpi-minute-level.md` — your primary deliverable
 - `workflow-contracts/research.md` — script vs LLM boundary
 
+## Ticket Creation
+
+Follow `workflow-contracts/ticket-creation.md`. Always set `projectId` from `$PAPERCLIP_PROJECT_ID`.
+
 ## Git Workflow
 
 Follow `workflow-contracts/git.md`. No exceptions.
