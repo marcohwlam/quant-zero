@@ -1,0 +1,29 @@
+H20 Sector Momentum Weekly Rotation — Gate 1 Verdict
+Date: 2026-03-16 (backtest) | Formal verdict: 2026-06-08 (Risk Director — heartbeat QUA-94)
+IS Window: 2018-01-01 to 2022-12-31
+OOS Window: 2023-01-01 to 2025-12-31
+============================================================
+OVERALL: FAIL — 2 automatic disqualifications
+
+Core Metrics:
+  IS Sharpe:         0.4558  FAIL (>1.0) — AUTO-DISQUALIFY
+  OOS Sharpe:        0.1458  FAIL (>0.7)
+  IS Max Drawdown:  -23.1%   FAIL (<20%) — AUTO-DISQUALIFY
+  OOS Max Drawdown: (not evaluated — auto-disqualified at IS stage)
+  Win Rate (IS):     51.0%   MARGINAL PASS (>50%)
+  Trade Count (IS):  196     PASS (39.2/yr >= 30/yr)
+  DSR:               0.00    FAIL (>0)
+
+Block Bootstrap CI (IS): [-0.261, 1.244] — CI brackets zero, additional evidence of weak IS edge
+
+AUTOMATIC DISQUALIFICATIONS:
+  DQ-1: IS Sharpe 0.4558 < 1.0 threshold — mandatory reject
+  DQ-2: IS Max Drawdown -23.1% > -20.0% threshold — mandatory reject
+
+GATE 1 VERDICT: FAIL
+Strategy: H20 Sector Momentum Weekly Rotation
+Not eligible for iteration — both fails are structural (insufficient edge + excessive drawdown)
+Action: Return to research for complete redesign or retire hypothesis
+
+Note: Formal verdict filed 2026-06-08 by Risk Director to close audit gap.
+Backtest data: backtests/H20_SectorMomentum_2026-03-16.json
