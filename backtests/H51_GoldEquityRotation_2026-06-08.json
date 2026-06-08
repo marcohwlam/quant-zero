@@ -1,0 +1,267 @@
+{
+  "strategy": "H51 Gold/Equity Relative Momentum Risk Timer",
+  "run_date": "2026-06-08",
+  "gate1_version": "v2.0",
+  "task": "QUA-113",
+  "is": {
+    "window": "2005-01-01 to 2021-12-31",
+    "sharpe": 0.6457,
+    "max_drawdown": -0.2984,
+    "total_return": 2.3204,
+    "win_rate": 0.5196,
+    "profit_factor": 2.1557,
+    "trade_count": 204,
+    "trades_per_year": 12.0,
+    "avg_pnl_bps": 62.42,
+    "regime_pct_spy": 0.5347,
+    "risk_off_months": 95,
+    "risk_on_months": 109,
+    "n_transitions": 102,
+    "transitions_per_year": 6.0,
+    "total_cost_pct": 0.138001
+  },
+  "oos": {
+    "window": "2022-01-01 to 2024-12-31",
+    "sharpe": -0.0625,
+    "max_drawdown": -0.3005,
+    "total_return": -0.0452,
+    "win_rate": 0.4444,
+    "profit_factor": 0.9453,
+    "trade_count": 36,
+    "trades_per_year": 12.0,
+    "avg_pnl_bps": -6.91,
+    "regime_pct_spy": 0.5798,
+    "risk_off_months": 15,
+    "risk_on_months": 21,
+    "n_transitions": 21
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "window": "2005-01-01 to 2007-12-31",
+        "sharpe": 0.7461,
+        "max_drawdown": -0.0643,
+        "win_rate": 0.4444,
+        "trade_count": 36,
+        "risk_off_months": 21,
+        "passed": true
+      },
+      {
+        "window": "2008-01-01 to 2010-12-31",
+        "sharpe": 0.4301,
+        "max_drawdown": -0.2984,
+        "win_rate": 0.6111,
+        "trade_count": 36,
+        "risk_off_months": 20,
+        "passed": true
+      },
+      {
+        "window": "2011-01-01 to 2013-12-31",
+        "sharpe": 1.5044,
+        "max_drawdown": -0.0955,
+        "win_rate": 0.6389,
+        "trade_count": 36,
+        "risk_off_months": 15,
+        "passed": true
+      },
+      {
+        "window": "2014-01-01 to 2016-12-31",
+        "sharpe": 0.2702,
+        "max_drawdown": -0.1781,
+        "win_rate": 0.3889,
+        "trade_count": 36,
+        "risk_off_months": 14,
+        "passed": false
+      },
+      {
+        "window": "2017-01-01 to 2019-12-31",
+        "sharpe": 0.3111,
+        "max_drawdown": -0.2076,
+        "win_rate": 0.5,
+        "trade_count": 36,
+        "risk_off_months": 14,
+        "passed": true
+      },
+      {
+        "window": "2020-01-01 to 2021-12-31",
+        "sharpe": 0.8436,
+        "max_drawdown": -0.1138,
+        "win_rate": 0.5,
+        "trade_count": 24,
+        "risk_off_months": 11,
+        "passed": true
+      }
+    ],
+    "pass_count": 5,
+    "pass_fraction": 0.833,
+    "stable": true,
+    "sharpe_floor": 0.3
+  },
+  "parameter_sensitivity": {
+    "baseline_sharpe": 0.6457,
+    "results": [
+      {
+        "parameter_set": "lookback=10d",
+        "sharpe": 0.6386,
+        "max_drawdown": -0.2486,
+        "win_rate": 0.5294,
+        "trade_count": 204,
+        "avg_pnl_bps": 58.02,
+        "risk_off_months": 103,
+        "sharpe_reduction_pct": 1.1
+      },
+      {
+        "parameter_set": "lookback=15d",
+        "sharpe": 0.531,
+        "max_drawdown": -0.3486,
+        "win_rate": 0.4902,
+        "trade_count": 204,
+        "avg_pnl_bps": 51.25,
+        "risk_off_months": 95,
+        "sharpe_reduction_pct": 17.8
+      },
+      {
+        "parameter_set": "lookback=25d",
+        "sharpe": 0.6611,
+        "max_drawdown": -0.2491,
+        "win_rate": 0.4951,
+        "trade_count": 204,
+        "avg_pnl_bps": 61.7,
+        "risk_off_months": 86,
+        "sharpe_reduction_pct": -2.4
+      },
+      {
+        "parameter_set": "lookback=30d",
+        "sharpe": 0.7296,
+        "max_drawdown": -0.2127,
+        "win_rate": 0.5049,
+        "trade_count": 204,
+        "avg_pnl_bps": 64.66,
+        "risk_off_months": 96,
+        "sharpe_reduction_pct": -13.0
+      },
+      {
+        "parameter_set": "lookback=40d",
+        "sharpe": 0.4599,
+        "max_drawdown": -0.2127,
+        "win_rate": 0.5,
+        "trade_count": 204,
+        "avg_pnl_bps": 40.61,
+        "risk_off_months": 87,
+        "sharpe_reduction_pct": 28.8
+      },
+      {
+        "parameter_set": "threshold=+1pct",
+        "sharpe": 0.7649,
+        "max_drawdown": -0.2984,
+        "win_rate": 0.549,
+        "trade_count": 204,
+        "avg_pnl_bps": 78.11,
+        "risk_off_months": 77,
+        "sharpe_reduction_pct": -18.5
+      },
+      {
+        "parameter_set": "threshold=-1pct",
+        "sharpe": 0.6474,
+        "max_drawdown": -0.2984,
+        "win_rate": 0.5147,
+        "trade_count": 204,
+        "avg_pnl_bps": 59.9,
+        "risk_off_months": 108,
+        "sharpe_reduction_pct": -0.3
+      },
+      {
+        "parameter_set": "ma_filter=True_200d",
+        "sharpe": 0.6439,
+        "max_drawdown": -0.2076,
+        "win_rate": 0.4902,
+        "trade_count": 204,
+        "avg_pnl_bps": 48.5,
+        "risk_off_months": 109,
+        "sharpe_reduction_pct": 0.3
+      }
+    ],
+    "max_reduction_pct": 28.8,
+    "stable": true
+  },
+  "composite_score": {
+    "value": 0.5291,
+    "components": {
+      "net_sharpe_norm": 0.3229,
+      "ppt_norm": 1.0,
+      "stability_norm": 0.0,
+      "trade_norm": 1.0
+    },
+    "pass_bar": 0.6,
+    "passed": false
+  },
+  "gate1_v2_criteria": {
+    "IS Sharpe (2005-01-01\u20132021-12-31)": {
+      "value": 0.6457,
+      "threshold": "> 1.0",
+      "passed": false
+    },
+    "OOS Sharpe (2022-01-01\u20132024-12-31)": {
+      "value": -0.0625,
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    "IS Max Drawdown": {
+      "value": -0.2984,
+      "threshold": "> -20%",
+      "passed": false
+    },
+    "IS Win Rate": {
+      "value": 0.5196,
+      "threshold": "> 50%",
+      "passed": true
+    },
+    "IS Trade Count": {
+      "value": 204,
+      "threshold": ">= 120",
+      "passed": true
+    },
+    "Walk-Forward Stability": {
+      "value": "5/6 windows",
+      "threshold": ">= 4/6 windows",
+      "passed": true
+    },
+    "Parameter Sensitivity": {
+      "value": "max reduction 28.8%",
+      "threshold": "< 50% Sharpe reduction",
+      "passed": true
+    }
+  },
+  "verdict": {
+    "criteria_passed": 4,
+    "criteria_total": 7,
+    "overall": "FAIL"
+  },
+  "params": {
+    "lookback_days": 20,
+    "safe_harbor_asset": "SHY",
+    "signal_threshold": 0.0,
+    "ma_filter": false,
+    "ma_window": 200,
+    "fixed_cost_per_share": 0.005,
+    "slippage_pct": 0.0005,
+    "market_impact_k": 0.1,
+    "sigma_window": 20,
+    "adv_window": 20,
+    "order_qty": 100,
+    "liquidity_threshold": 0.01,
+    "init_cash": 25000.0
+  },
+  "data_quality": {
+    "survivorship_bias_flag": "not_applicable \u2014 SPY, GLD, SHY are all current active ETFs with no delisting risk. GLD inception Nov 2004 constrains IS start to Jan 2005.",
+    "price_adjusted": true,
+    "auto_adjust": true,
+    "earnings_exclusion": "not_applicable \u2014 ETF rotation strategy. Monthly hold periods make individual earnings events irrelevant.",
+    "delisted_tickers": "not_applicable \u2014 SPY (inception 1993), GLD (Nov 2004), SHY (2002) all currently active.",
+    "gap_flags": {
+      "spy": "ok: max_consecutive_missing=2 (<=5)",
+      "gld": "ok: max_consecutive_missing=2 (<=5)",
+      "shy": "ok: max_consecutive_missing=2 (<=5)"
+    }
+  }
+}
