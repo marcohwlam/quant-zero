@@ -1,0 +1,169 @@
+Gate 1 v2.0 Verdict: H49 Sell-in-September SPY/SHY Calendar Rotation
+
+Run date  : 2026-06-08
+Task      : QUA-111
+Strategy  : strategies/h49_sell_in_september.py
+Verdict   : FAIL (4/7 criteria)
+
+=================================================================
+GATE 1 v2.0 CRITERIA SUMMARY
+=================================================================
+
+Criterion                                     Value     Threshold  Result
+---------------------------------------------------------------------------
+  IS Sharpe (2002-2017)                      0.5496         > 1.0    FAIL
+  OOS Sharpe (2018-2024)                     0.8546         > 0.7    PASS
+  IS Max Drawdown                           -51.30%      > -20.0%    FAIL
+  IS September Win Rate                      31.25%         > 50%    FAIL
+  IS Monthly Hold Periods                       186        >= 100    PASS
+  Walk-Forward Stability                5/6 windows  >= 4/6 windows    PASS
+  Parameter Sensitivity             max reduction 4.4%  < 50% Sharpe reduction    PASS
+
+=================================================================
+COMPOSITE SCORE (KPI Spec v0.3)
+=================================================================
+
+  NetSharpe    (40%)  : 0.2748
+  ProfitPerTrade(30%) : 0.0594
+  Stability    (20%)  : 0.0000
+  TradeAdequacy(10%)  : 0.9688
+  Composite Score     : 0.2246  (pass bar >= 0.60)  FAIL
+
+=================================================================
+IN-SAMPLE PERFORMANCE (2002-2017)
+=================================================================
+
+  Sharpe ratio        : 0.5496
+  Annualized return   : 9.76%
+  Max drawdown        : -51.30%
+  Volatility          : 17.76%
+  September cycles    : 16
+  Monthly hold periods: 186
+  Total transitions   : 32
+  Total cost drag     : 3.9165%
+  Avg avoidance alpha : 11.9 bps/September
+  Sept avoidance rate : 31.25%
+
+September avoidance by year (IS):
+  Year     SPY Sep   SHY Sep  InSHY  Alpha (bps)
+  --------------------------------------------------
+  2002      -6.94%     0.50%    Yes         +744
+  2003      -2.36%     1.08%    Yes         +344
+  2004       0.84%    -0.12%    Yes          -96
+  2005       0.90%    -0.42%    Yes         -132
+  2006       2.09%     0.32%    Yes         -177
+  2007       2.87%     0.56%    Yes         -231
+  2008      -8.32%     0.66%    Yes         +897
+  2009       5.78%     0.16%    Yes         -563
+  2010       5.70%     0.18%    Yes         -552
+  2011      -5.80%    -0.13%    Yes         +567
+  2012       2.65%     0.02%    Yes         -262
+  2013       2.69%     0.26%    Yes         -243
+  2014      -1.30%     0.01%    Yes         +132
+  2015       0.60%     0.26%    Yes          -34
+  2016       0.08%     0.08%    Yes           +0
+  2017       1.87%    -0.17%    Yes         -203
+
+=================================================================
+OUT-OF-SAMPLE PERFORMANCE (2018-2024)
+=================================================================
+
+  Sharpe ratio        : 0.8546
+  Annualized return   : 16.17%
+  Max drawdown        : -33.72%
+  Volatility          : 18.92%
+  September cycles    : 7
+  Avg avoidance alpha : 223.1 bps/September
+  Sept avoidance rate : 57.14%
+
+September avoidance by year (OOS):
+  Year     SPY Sep   SHY Sep  InSHY  Alpha (bps)
+  --------------------------------------------------
+  2018       0.78%    -0.12%    Yes          -90
+  2019       2.54%    -0.21%    Yes         -275
+  2020      -4.52%     0.02%    Yes         +454
+  2021      -4.76%    -0.09%    Yes         +466
+  2022      -9.76%    -1.12%    Yes         +864
+  2023      -5.00%    -0.02%    Yes         +497
+  2024       4.21%     0.66%    Yes         -354
+
+=================================================================
+WALK-FORWARD ANALYSIS (6 sub-windows, Sharpe floor=0.3)
+=================================================================
+
+  Result: 5/6 windows pass → STABLE
+
+  Window                           Sharpe    MaxDD   Win%  Cycles  Pass
+  --------------------------------------------------------------------
+  2002-01-01 to 2004-09-30         1.0568  -14.18% 66.67%       3  PASS
+  2004-10-01 to 2007-06-30         1.1062   -7.59%  0.00%       2  PASS
+  2007-07-01 to 2010-06-30        -0.2993  -51.30% 33.33%       3  FAIL
+  2010-07-01 to 2013-06-30         1.0374  -17.31% 33.33%       3  PASS
+  2013-07-01 to 2016-06-30         0.8649  -12.82% 33.33%       3  PASS
+  2016-07-01 to 2017-12-31         2.6049   -4.47%  0.00%       2  PASS
+
+=================================================================
+PARAMETER SENSITIVITY (IS 2002-2017)
+=================================================================
+
+  Baseline Sharpe: 0.5496
+  Max reduction: 4.4% → STABLE
+
+  Parameter Set                          Sharpe    MaxDD   Win%   Sharpe Δ
+  --------------------------------------------------------------------------
+  ma_filter=True                         0.6373  -23.14% 31.25%      -16.0%
+  reentry_month=10 (Sep+Oct)             0.5253  -41.52% 31.25%       +4.4%
+  exit_month=7 (Jul exit)                0.6127  -51.93% 31.25%      -11.5%
+  order_qty=500                          0.5496  -51.30% 31.25%       +0.0%
+  order_qty=50                           0.5496  -51.30% 31.25%       -0.0%
+  slippage=2x                            0.5355  -51.50% 31.25%       +2.6%
+
+  Note: safe_harbor=TLT/BIL tests skipped — PARAMETERS['safe_harbor_asset']
+  not wired to data loader. Follow-up required.
+
+=================================================================
+HARD GATE CHECKS
+=================================================================
+
+  HG-1 Net OOS Sharpe floor (>0.7)  : PASS
+  HG-2 Same-bar fill                 : PASS — all transitions at month-end close
+  HG-3 Look-ahead bias               : PASS — calendar signal; no price look-ahead
+  HG-4 Net-positive                  : PASS
+  HG-5 IS monthly holds >= 100       : PASS
+  HG-6 MDD < 40% absolute ceiling    : FAIL
+  HG-7 PDT compliance                : PASS — 2 transitions/year; multi-month holds
+
+=================================================================
+DATA QUALITY CHECKLIST
+=================================================================
+
+  Survivorship bias  : not_applicable — SPY and SHY are both current active ETFs with no delisting risk. SPY tracks S&P 500 (index survivorship is a separate issue; irrelevant here as we trade the ETF vehicle). SHY tracks 1-3yr Treasury index; zero delisting risk.
+  Price adjustments  : auto_adjust=True via yfinance for both SPY and SHY
+  Data gaps SPY      : ok: max_consecutive_missing=2 (<=5)
+  Data gaps SHY      : ok: max_consecutive_missing=2 (<=5)
+  Backtest window    : 2002-01-01 to 2024-12-31 (SHY inception ~July 2002)
+
+=================================================================
+NARRATIVE
+=================================================================
+
+H49 Sell-in-September FAILS Gate 1 v2.0 (4/7 criteria).
+
+Failing criteria (3):
+  - IS Sharpe (2002-2017): value=0.5495972917896755, threshold=> 1.0
+  - IS Max Drawdown: value=-0.5130037128420476, threshold=> -20.0%
+  - IS September Win Rate: value=0.3125, threshold=> 50%
+
+Root cause assessment:
+  - IS Sharpe 0.5496 below 1.0. The 11-month SPY hold drags the Sharpe by including non-September losses. Net September avoidance alpha of 12 bps/yr is diluted across the full-year equity curve, reducing annualized Sharpe.
+  - IS MDD -51.30% exceeds the –20% threshold. The strategy holds SPY 11 of 12 months and fully participates in the dot-com bust (2000-2002) and GFC (2008-2009) non-September drawdowns. The –20% MDD threshold is designed for short-hold strategies; a calendar rotation holding SPY 11 months will structurally produce higher MDD. Consider applying the MA filter (200d SMA) as a secondary MDD control, or evaluating as a combination ingredient rather than standalone.
+
+Recommendations:
+  1. Apply 200-day MA filter (ma_filter=True) to reduce non-September drawdowns
+  2. Evaluate H49 as a combination ingredient (overlay on existing strategies)
+  3. Consider extended avoidance (Aug-Oct) for higher avoidance alpha
+  4. Relax MDD threshold for monthly-rotation strategies (requires CEO approval)
+
+=================================================================
+
+Generated by Engineering Director | QUA-111 | 2026-06-08
