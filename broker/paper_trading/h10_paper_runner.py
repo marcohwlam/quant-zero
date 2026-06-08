@@ -114,10 +114,11 @@ def get_current_signal(lookback_days: int = 60) -> dict:
                 continue
 
             last_trade = ticker_trades[-1]
-            side = last_trade.get("side", "flat")
-            if side == "buy":
+            # Trade log stores "direction": "long"/"short" (not "side": "buy"/"sell")
+            direction = last_trade.get("direction", "flat")
+            if direction == "long":
                 signal_info[ticker] = {"signal": 1, "signal_type": "eql_long"}
-            elif side == "sell":
+            elif direction == "short":
                 signal_info[ticker] = {"signal": -1, "signal_type": "eqh_short"}
             else:
                 signal_info[ticker] = {"signal": 0, "signal_type": "flat"}
