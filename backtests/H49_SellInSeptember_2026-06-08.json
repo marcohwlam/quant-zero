@@ -1,0 +1,408 @@
+{
+  "strategy": "H49 Sell-in-September SPY/SHY Calendar Rotation",
+  "run_date": "2026-06-08",
+  "gate1_version": "v2.0",
+  "task": "QUA-111",
+  "is": {
+    "window": "2002-01-01 to 2017-12-31",
+    "sharpe": 0.5495972917896755,
+    "max_drawdown": -0.5130037128420476,
+    "annualized_return": 0.09758212730742444,
+    "volatility": 0.17755205268509217,
+    "total_return": 3.1999458800466813,
+    "win_rate": 0.3125,
+    "sept_cycles": 16,
+    "monthly_holds": 186,
+    "total_transitions": 32,
+    "total_cost_pct": 0.03916526266685397,
+    "lc_legs": 0,
+    "avg_ppt_bps": 11.888589847191405,
+    "sept_stats": [
+      {
+        "year": 2002,
+        "spy_sept_return": -0.0694,
+        "shy_sept_return": 0.005,
+        "strategy_in_shy": true,
+        "avoidance_alpha": 0.0744
+      },
+      {
+        "year": 2003,
+        "spy_sept_return": -0.0236,
+        "shy_sept_return": 0.0108,
+        "strategy_in_shy": true,
+        "avoidance_alpha": 0.0344
+      },
+      {
+        "year": 2004,
+        "spy_sept_return": 0.0084,
+        "shy_sept_return": -0.0012,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.0096
+      },
+      {
+        "year": 2005,
+        "spy_sept_return": 0.009,
+        "shy_sept_return": -0.0042,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.0132
+      },
+      {
+        "year": 2006,
+        "spy_sept_return": 0.0209,
+        "shy_sept_return": 0.0032,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.0177
+      },
+      {
+        "year": 2007,
+        "spy_sept_return": 0.0287,
+        "shy_sept_return": 0.0056,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.0231
+      },
+      {
+        "year": 2008,
+        "spy_sept_return": -0.0832,
+        "shy_sept_return": 0.0066,
+        "strategy_in_shy": true,
+        "avoidance_alpha": 0.0897
+      },
+      {
+        "year": 2009,
+        "spy_sept_return": 0.0578,
+        "shy_sept_return": 0.0016,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.0563
+      },
+      {
+        "year": 2010,
+        "spy_sept_return": 0.057,
+        "shy_sept_return": 0.0018,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.0552
+      },
+      {
+        "year": 2011,
+        "spy_sept_return": -0.058,
+        "shy_sept_return": -0.0013,
+        "strategy_in_shy": true,
+        "avoidance_alpha": 0.0567
+      },
+      {
+        "year": 2012,
+        "spy_sept_return": 0.0265,
+        "shy_sept_return": 0.0002,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.0262
+      },
+      {
+        "year": 2013,
+        "spy_sept_return": 0.0269,
+        "shy_sept_return": 0.0026,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.0243
+      },
+      {
+        "year": 2014,
+        "spy_sept_return": -0.013,
+        "shy_sept_return": 0.0001,
+        "strategy_in_shy": true,
+        "avoidance_alpha": 0.0132
+      },
+      {
+        "year": 2015,
+        "spy_sept_return": 0.006,
+        "shy_sept_return": 0.0026,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.0034
+      },
+      {
+        "year": 2016,
+        "spy_sept_return": 0.0008,
+        "shy_sept_return": 0.0008,
+        "strategy_in_shy": true,
+        "avoidance_alpha": 0.0
+      },
+      {
+        "year": 2017,
+        "spy_sept_return": 0.0187,
+        "shy_sept_return": -0.0017,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.0203
+      }
+    ]
+  },
+  "oos": {
+    "window": "2018-01-01 to 2024-12-31",
+    "sharpe": 0.8545539693650501,
+    "max_drawdown": -0.3371725827933008,
+    "annualized_return": 0.1617118285116843,
+    "volatility": 0.1892353605610647,
+    "total_return": 1.8487580888954467,
+    "win_rate": 0.5714285714285714,
+    "sept_cycles": 7,
+    "monthly_holds": 84,
+    "total_transitions": 14,
+    "total_cost_pct": 0.026183308978858608,
+    "avg_ppt_bps": 223.1464999240789,
+    "sept_stats": [
+      {
+        "year": 2018,
+        "spy_sept_return": 0.0078,
+        "shy_sept_return": -0.0012,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.009
+      },
+      {
+        "year": 2019,
+        "spy_sept_return": 0.0254,
+        "shy_sept_return": -0.0021,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.0275
+      },
+      {
+        "year": 2020,
+        "spy_sept_return": -0.0452,
+        "shy_sept_return": 0.0002,
+        "strategy_in_shy": true,
+        "avoidance_alpha": 0.0454
+      },
+      {
+        "year": 2021,
+        "spy_sept_return": -0.0476,
+        "shy_sept_return": -0.0009,
+        "strategy_in_shy": true,
+        "avoidance_alpha": 0.0466
+      },
+      {
+        "year": 2022,
+        "spy_sept_return": -0.0976,
+        "shy_sept_return": -0.0112,
+        "strategy_in_shy": true,
+        "avoidance_alpha": 0.0864
+      },
+      {
+        "year": 2023,
+        "spy_sept_return": -0.05,
+        "shy_sept_return": -0.0002,
+        "strategy_in_shy": true,
+        "avoidance_alpha": 0.0497
+      },
+      {
+        "year": 2024,
+        "spy_sept_return": 0.0421,
+        "shy_sept_return": 0.0066,
+        "strategy_in_shy": true,
+        "avoidance_alpha": -0.0354
+      }
+    ]
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "window": "2002-01-01 to 2004-09-30",
+        "sharpe": 1.0568471385511482,
+        "max_drawdown": -0.14175166277792817,
+        "win_rate": 0.6666666666666666,
+        "sept_cycles": 3,
+        "monthly_holds": 27,
+        "avg_ppt_bps": 327.110983726141,
+        "passed": true
+      },
+      {
+        "window": "2004-10-01 to 2007-06-30",
+        "sharpe": 1.1061737506532359,
+        "max_drawdown": -0.075930843116897,
+        "win_rate": 0.0,
+        "sept_cycles": 2,
+        "monthly_holds": 33,
+        "avg_ppt_bps": -154.41411487249812,
+        "passed": true
+      },
+      {
+        "window": "2007-07-01 to 2010-06-30",
+        "sharpe": -0.2992911472107602,
+        "max_drawdown": -0.5130042752039418,
+        "win_rate": 0.3333333333333333,
+        "sept_cycles": 3,
+        "monthly_holds": 36,
+        "avg_ppt_bps": 34.37282903270167,
+        "passed": false
+      },
+      {
+        "window": "2010-07-01 to 2013-06-30",
+        "sharpe": 1.0374322550349242,
+        "max_drawdown": -0.17308127118425132,
+        "win_rate": 0.3333333333333333,
+        "sept_cycles": 3,
+        "monthly_holds": 36,
+        "avg_ppt_bps": -82.44647222295639,
+        "passed": true
+      },
+      {
+        "window": "2013-07-01 to 2016-06-30",
+        "sharpe": 0.8649439541475807,
+        "max_drawdown": -0.12820733065295958,
+        "win_rate": 0.3333333333333333,
+        "sept_cycles": 3,
+        "monthly_holds": 36,
+        "avg_ppt_bps": -48.63964591948304,
+        "passed": true
+      },
+      {
+        "window": "2016-07-01 to 2017-12-31",
+        "sharpe": 2.60486001619077,
+        "max_drawdown": -0.04471864242752542,
+        "win_rate": 0.0,
+        "sept_cycles": 2,
+        "monthly_holds": 18,
+        "avg_ppt_bps": -101.50070023360102,
+        "passed": true
+      }
+    ],
+    "pass_count": 5,
+    "pass_fraction": 0.833,
+    "stable": true,
+    "sharpe_floor": 0.3
+  },
+  "parameter_sensitivity": {
+    "baseline_sharpe": 0.5495972917896755,
+    "results": [
+      {
+        "parameter_set": "ma_filter=True",
+        "sharpe": 0.6372877759870805,
+        "max_drawdown": -0.23136902735189677,
+        "win_rate": 0.3125,
+        "sept_cycles": 13,
+        "avg_ppt_bps": 11.888589847191405,
+        "sharpe_reduction_pct": -16.0
+      },
+      {
+        "parameter_set": "reentry_month=10 (Sep+Oct)",
+        "sharpe": 0.5253252304713953,
+        "max_drawdown": -0.41524231146911883,
+        "win_rate": 0.3125,
+        "sept_cycles": 16,
+        "avg_ppt_bps": 11.888589847191405,
+        "sharpe_reduction_pct": 4.4
+      },
+      {
+        "parameter_set": "exit_month=7 (Jul exit)",
+        "sharpe": 0.6126620639171404,
+        "max_drawdown": -0.5193072720131671,
+        "win_rate": 0.3125,
+        "sept_cycles": 16,
+        "avg_ppt_bps": 11.888589847191405,
+        "sharpe_reduction_pct": -11.5
+      },
+      {
+        "parameter_set": "order_qty=500",
+        "sharpe": 0.5495967846034823,
+        "max_drawdown": -0.513003798168907,
+        "win_rate": 0.3125,
+        "sept_cycles": 16,
+        "avg_ppt_bps": 11.888589847191405,
+        "sharpe_reduction_pct": 0.0
+      },
+      {
+        "parameter_set": "order_qty=50",
+        "sharpe": 0.5495974119702636,
+        "max_drawdown": -0.513003692623371,
+        "win_rate": 0.3125,
+        "sept_cycles": 16,
+        "avg_ppt_bps": 11.888589847191405,
+        "sharpe_reduction_pct": -0.0
+      },
+      {
+        "parameter_set": "slippage=2x",
+        "sharpe": 0.5354842399031047,
+        "max_drawdown": -0.5150491474334494,
+        "win_rate": 0.3125,
+        "sept_cycles": 16,
+        "avg_ppt_bps": 11.888589847191405,
+        "sharpe_reduction_pct": 2.6
+      }
+    ],
+    "max_reduction_pct": 4.4,
+    "stable": true,
+    "note": "safe_harbor=TLT/BIL not tested: strategy downloads SHY unconditionally. A follow-up task should wire PARAMETERS['safe_harbor_asset'] to the data loader."
+  },
+  "composite_score": {
+    "value": 0.2246,
+    "components": {
+      "net_sharpe_norm": 0.2748,
+      "ppt_norm": 0.0594,
+      "stability_norm": 0.0,
+      "trade_norm": 0.9688
+    },
+    "pass_bar": 0.6,
+    "passed": false
+  },
+  "gate1_v2_criteria": {
+    "IS Sharpe (2002-2017)": {
+      "value": 0.5495972917896755,
+      "threshold": "> 1.0",
+      "passed": false
+    },
+    "OOS Sharpe (2018-2024)": {
+      "value": 0.8545539693650501,
+      "threshold": "> 0.7",
+      "passed": true
+    },
+    "IS Max Drawdown": {
+      "value": -0.5130037128420476,
+      "threshold": "> -20.0%",
+      "passed": false
+    },
+    "IS September Win Rate": {
+      "value": 0.3125,
+      "threshold": "> 50%",
+      "passed": false
+    },
+    "IS Monthly Hold Periods": {
+      "value": 186,
+      "threshold": ">= 100",
+      "passed": true
+    },
+    "Walk-Forward Stability": {
+      "value": "5/6 windows",
+      "threshold": ">= 4/6 windows",
+      "passed": true
+    },
+    "Parameter Sensitivity": {
+      "value": "max reduction 4.4%",
+      "threshold": "< 50% Sharpe reduction",
+      "passed": true
+    }
+  },
+  "verdict": {
+    "criteria_passed": 4,
+    "criteria_total": 7,
+    "overall": "FAIL"
+  },
+  "params": {
+    "safe_harbor_asset": "SHY",
+    "exit_timing_month": 8,
+    "reentry_timing_month": 9,
+    "ma_filter": "False",
+    "ma_window": 200,
+    "fixed_cost_per_share": 0.005,
+    "slippage_pct": 0.0005,
+    "market_impact_k": 0.1,
+    "sigma_window": 20,
+    "adv_window": 20,
+    "order_qty": 100,
+    "liquidity_threshold": 0.01,
+    "init_cash": 25000.0
+  },
+  "data_quality": {
+    "survivorship_bias": "not_applicable \u2014 SPY and SHY are both current active ETFs with no delisting risk. SPY tracks S&P 500 (index survivorship is a separate issue; irrelevant here as we trade the ETF vehicle). SHY tracks 1-3yr Treasury index; zero delisting risk.",
+    "price_adjustments": "auto_adjust=True via yfinance for both SPY and SHY",
+    "data_gaps": "checked \u2014 see data_gaps_spy and data_gaps_shy",
+    "backtest_window": "2002-01-01 to 2024-12-31 (SHY inception ~July 2002)",
+    "is_window": "2002-01-01 to 2017-12-31",
+    "oos_window": "2018-01-01 to 2024-12-31",
+    "data_gaps_spy": "ok: max_consecutive_missing=2 (<=5)",
+    "data_gaps_shy": "ok: max_consecutive_missing=2 (<=5)"
+  }
+}
