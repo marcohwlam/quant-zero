@@ -5,7 +5,7 @@
 **Date:** 2026-06-08
 **Asset class:** US equities (ETFs) / short-duration Treasuries
 **Strategy type:** single-signal, calendar/seasonal
-**Status:** READY
+**Status:** RETIRED — Gate 1 v2.0 FAIL (4/7). IS Sharpe 0.5496, MDD -51.30%, Sep Win Rate 31.2%. H49b iteration delta +0.088 below ≥0.10 threshold; IS Sharpe ceiling ~0.64. Family retired. See `research/findings/49_sell_in_september_gate1_failure_2026-06-08.md`.
 
 ---
 
