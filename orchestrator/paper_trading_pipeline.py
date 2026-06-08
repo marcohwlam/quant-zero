@@ -81,7 +81,7 @@ def append_equity_row(strat_id: str, portfolio_value: float) -> None:
     rows.append({"date": today_str, "portfolio_value": round(portfolio_value, 4)})
 
     with open(path, "w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=["date", "portfolio_value"])
+        w = csv.DictWriter(f, fieldnames=["date", "portfolio_value"], extrasaction="ignore")
         w.writeheader()
         w.writerows(rows)
 
