@@ -114,12 +114,17 @@ def get_current_signal(lookback_days: int = 60) -> dict:
                 continue
 
             last_trade = ticker_trades[-1]
-            # Trade log stores "direction": "long"/"short" (not "side": "buy"/"sell")
-            direction = last_trade.get("direction", "flat")
-            if direction == "long":
-                signal_info[ticker] = {"signal": 1, "signal_type": "eql_long"}
-            elif direction == "short":
-                signal_info[ticker] = {"signal": -1, "signal_type": "eqh_short"}
+            # Only carry a long/short signal if the last trade was force-closed at
+            # end-of-data (position still open). Normal exits (stop_loss, take_profit,
+            # time_stop) mean the strategy is flat — don't re-enter automatically.
+            if last_trade.get("exit_reason") == "end_of_data":
+                direction = last_trade.get("direction", "flat")
+                if direction == "long":
+                    signal_info[ticker] = {"signal": 1, "signal_type": "eql_long"}
+                elif direction == "short":
+                    signal_info[ticker] = {"signal": -1, "signal_type": "eqh_short"}
+                else:
+                    signal_info[ticker] = {"signal": 0, "signal_type": "flat"}
             else:
                 signal_info[ticker] = {"signal": 0, "signal_type": "flat"}
 
