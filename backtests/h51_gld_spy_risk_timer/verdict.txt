@@ -1,0 +1,23 @@
+H51 GLD/SPY Risk Timer — Gate 1 v2.0 Verdict — 2026-06-08
+============================================================
+IS Sharpe: 0.6879  (>1.0: False)
+OOS Sharpe: 0.3807  (>0.7: False)
+OOS/IS Sharpe ratio: 0.553
+IS MDD: -30.07%  (<20%: False)
+OOS MDD: -28.86%  (<25%: False)
+IS Rebalances: 204  (>=100: True)
+IS Transitions: 102  (regime switches)
+Risk-off months (IS): 95 (46.6%)
+Win Rate (IS): 69.23%  (>50%: True)
+DSR: 1.000000  (>0: True)
+MC p5 Sharpe: 2.0934  (>0: True)
+Sharpe CI 95%: [0.2713, 1.1243]
+Permutation p-value: 1.0000  (<=0.05: False)
+WF windows passed: 3/4  (>=3: True)
+WF OOS Sharpes: [0.944, -0.396, 1.072, 0.848]
+WF std: 0.5900  WF min: -0.3955
+Sensitivity pass: True  (range=0.3156)
+Stress windows all pass: True
+
+OVERALL VERDICT: FAIL
+FAILING CRITERIA: is_sharpe_gt_1, oos_sharpe_gt_0.7, is_mdd_lt_20pct, oos_mdd_lt_25pct, wf_consistency, permutation_test

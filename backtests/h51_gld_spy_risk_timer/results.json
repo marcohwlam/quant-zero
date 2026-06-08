@@ -1,0 +1,298 @@
+{
+  "strategy_name": "h51_gld_spy_risk_timer",
+  "date": "2026-06-08",
+  "asset_class": "equities_etf",
+  "hypothesis": "research/hypotheses/51_qc_gold_equity_risk_rotation.md",
+  "is_sharpe": 0.6879,
+  "is_max_drawdown": -0.3007,
+  "is_trade_count": 204,
+  "is_transitions": 102,
+  "is_win_rate": 0.6923,
+  "is_profit_factor": 2.762559322614674,
+  "is_total_return": 2.6106,
+  "is_riskoff_pct": 0.4657,
+  "is_riskoff_months": 95,
+  "oos_sharpe": 0.3807,
+  "oos_max_drawdown": -0.2886,
+  "oos_trade_count": 48,
+  "oos_transitions": 23,
+  "oos_win_rate": 0.5833,
+  "oos_profit_factor": 1.4336549951389537,
+  "oos_total_return": 0.1537,
+  "oos_riskoff_pct": 0.5,
+  "oos_is_sharpe_ratio": 0.5534234546674887,
+  "sharpe": 0.6879,
+  "win_rate": 0.6923,
+  "profit_factor": 2.762559322614674,
+  "trade_count": 204,
+  "max_drawdown": -0.3007,
+  "dsr": 1.0,
+  "mc_p5_sharpe": 2.0933517460180284,
+  "mc_median_sharpe": 5.801157040019424,
+  "mc_p95_sharpe": 9.409133305666527,
+  "mc_pessimistic_flag": false,
+  "sharpe_ci_low": 0.27133885628420495,
+  "sharpe_ci_high": 1.1243235185305624,
+  "mdd_ci_low": -0.40934415120841733,
+  "mdd_ci_high": -0.1429398663943355,
+  "win_rate_ci_low": 0.502715976331361,
+  "win_rate_ci_high": 0.5353905325443786,
+  "permutation_pvalue": 1.0,
+  "permutation_test_pass": false,
+  "wf_sharpe_std": 0.5900232341823498,
+  "wf_sharpe_min": -0.3955,
+  "wf_windows_passed": 3,
+  "wf_consistency_score": 0.0,
+  "wf_results": [
+    {
+      "fold": 1,
+      "is_start": "2005-01-01",
+      "is_end": "2008-12-31",
+      "oos_start": "2009-01-01",
+      "oos_end": "2009-12-31",
+      "is_sharpe": 0.2899,
+      "oos_sharpe": 0.9442,
+      "is_rebalances": 48,
+      "oos_rebalances": 12,
+      "is_riskoff_pct": 0.6042,
+      "oos_riskoff_pct": 0.4167,
+      "passed": true
+    },
+    {
+      "fold": 2,
+      "is_start": "2006-01-01",
+      "is_end": "2009-12-31",
+      "oos_start": "2010-01-01",
+      "oos_end": "2010-12-31",
+      "is_sharpe": 0.7295,
+      "oos_sharpe": -0.3955,
+      "is_rebalances": 48,
+      "oos_rebalances": 12,
+      "is_riskoff_pct": 0.5417,
+      "oos_riskoff_pct": 0.5833,
+      "passed": false
+    },
+    {
+      "fold": 3,
+      "is_start": "2007-01-01",
+      "is_end": "2010-12-31",
+      "oos_start": "2011-01-01",
+      "oos_end": "2011-12-31",
+      "is_sharpe": 0.5264,
+      "oos_sharpe": 1.072,
+      "is_rebalances": 48,
+      "oos_rebalances": 12,
+      "is_riskoff_pct": 0.5625,
+      "oos_riskoff_pct": 0.5,
+      "passed": true
+    },
+    {
+      "fold": 4,
+      "is_start": "2008-01-01",
+      "is_end": "2011-12-31",
+      "oos_start": "2012-01-01",
+      "oos_end": "2012-12-31",
+      "is_sharpe": 0.4911,
+      "oos_sharpe": 0.8478,
+      "is_rebalances": 48,
+      "oos_rebalances": 12,
+      "is_riskoff_pct": 0.5208,
+      "oos_riskoff_pct": 0.5833,
+      "passed": true
+    }
+  ],
+  "wf_oos_sharpes": [
+    0.9442,
+    -0.3955,
+    1.072,
+    0.8478
+  ],
+  "stress_windows": {
+    "gfc_2008_2009": {
+      "mdd": -0.3003,
+      "sharpe": 0.6753,
+      "rebalances": 36,
+      "riskoff_pct": 0.5556,
+      "passed": true
+    },
+    "rate_shock_2022": {
+      "mdd": -0.2886,
+      "sharpe": -1.4636,
+      "rebalances": 12,
+      "riskoff_pct": 0.6667,
+      "passed": true
+    },
+    "dot_com_gcf_proxy": {
+      "mdd": -0.3183,
+      "sharpe": -0.0433,
+      "rebalances": 60,
+      "riskoff_pct": 0.5333,
+      "pf2_note": "GC=F proxy used for gold signal (GLD inception Nov 2004)",
+      "passed": true
+    }
+  },
+  "stress_all_pass": true,
+  "sensitivity_pass": true,
+  "sensitivity_results": {
+    "grid": {
+      "lb10_SHY_monthly": {
+        "sharpe": 0.6857,
+        "mdd": -0.2483,
+        "rebalances": 204,
+        "riskoff_pct": 0.5098
+      },
+      "lb10_SHY_biweekly": {
+        "sharpe": 0.5777,
+        "mdd": -0.2852,
+        "rebalances": 444,
+        "riskoff_pct": 0.4414
+      },
+      "lb10_TLT_monthly": {
+        "sharpe": 0.5629,
+        "mdd": -0.2612,
+        "rebalances": 204,
+        "riskoff_pct": 0.5098
+      },
+      "lb10_TLT_biweekly": {
+        "sharpe": 0.6149,
+        "mdd": -0.3667,
+        "rebalances": 444,
+        "riskoff_pct": 0.4414
+      },
+      "lb20_SHY_monthly": {
+        "sharpe": 0.6879,
+        "mdd": -0.3007,
+        "rebalances": 204,
+        "riskoff_pct": 0.4657
+      },
+      "lb20_SHY_biweekly": {
+        "sharpe": 0.4949,
+        "mdd": -0.2527,
+        "rebalances": 444,
+        "riskoff_pct": 0.455
+      },
+      "lb20_TLT_monthly": {
+        "sharpe": 0.7573,
+        "mdd": -0.3259,
+        "rebalances": 204,
+        "riskoff_pct": 0.4657
+      },
+      "lb20_TLT_biweekly": {
+        "sharpe": 0.5955,
+        "mdd": -0.3006,
+        "rebalances": 444,
+        "riskoff_pct": 0.455
+      },
+      "lb30_SHY_monthly": {
+        "sharpe": 0.7646,
+        "mdd": -0.2115,
+        "rebalances": 204,
+        "riskoff_pct": 0.4706
+      },
+      "lb30_SHY_biweekly": {
+        "sharpe": 0.738,
+        "mdd": -0.2482,
+        "rebalances": 444,
+        "riskoff_pct": 0.4459
+      },
+      "lb30_TLT_monthly": {
+        "sharpe": 0.8105,
+        "mdd": -0.2602,
+        "rebalances": 204,
+        "riskoff_pct": 0.4706
+      },
+      "lb30_TLT_biweekly": {
+        "sharpe": 0.8084,
+        "mdd": -0.2505,
+        "rebalances": 444,
+        "riskoff_pct": 0.4459
+      }
+    },
+    "base_sharpe": 0.6879,
+    "sharpe_variance": 0.009967407430555554,
+    "sharpe_range": 0.3156,
+    "sharpe_values": [
+      0.6857,
+      0.5777,
+      0.5629,
+      0.6149,
+      0.6879,
+      0.4949,
+      0.7573,
+      0.5955,
+      0.7646,
+      0.738,
+      0.8105,
+      0.8084
+    ],
+    "unstable": false,
+    "instability_notes": [],
+    "sensitivity_pass": true
+  },
+  "post_cost_sharpe": 0.6879,
+  "post_cost_sharpe_oos": 0.3807,
+  "combo_candidate_h50_h51": false,
+  "combo_note": "Not in combo candidate range",
+  "gate1_checks": {
+    "is_sharpe_gt_1": false,
+    "oos_sharpe_gt_0.7": false,
+    "is_mdd_lt_20pct": false,
+    "oos_mdd_lt_25pct": false,
+    "min_rebalances_100": true,
+    "win_rate_gt_50pct": true,
+    "dsr_gt_0": true,
+    "wf_windows_3of4": true,
+    "wf_consistency": false,
+    "sensitivity_pass": true,
+    "stress_mdd_lt_40pct": true,
+    "permutation_test": false,
+    "mc_p5_gt_0": true
+  },
+  "gate1_pass": false,
+  "gate1_verdict": "FAIL",
+  "gate1_failing_criteria": [
+    "is_sharpe_gt_1",
+    "oos_sharpe_gt_0.7",
+    "is_mdd_lt_20pct",
+    "oos_mdd_lt_25pct",
+    "wf_consistency",
+    "permutation_test"
+  ],
+  "look_ahead_bias_flag": false,
+  "data_quality": {
+    "survivorship_bias_flag": "SPY/GLD/SHY are live ETFs \u2014 no survivorship bias",
+    "price_adjusted": true,
+    "auto_adjust": true,
+    "spy_ticker": "SPY",
+    "gold_ticker": "GLD",
+    "harbor_ticker": "SHY",
+    "gld_inception": "2004-11-18",
+    "gcf_proxy_used": false,
+    "earnings_exclusion": "N/A \u2014 ETF strategy",
+    "delisted_tickers": "N/A \u2014 SPY/GLD/SHY are active ETFs",
+    "forward_fill_policy": "Silent forward-fill NOT applied for gaps >= 5 days",
+    "signal_lag": "GLD/SPY signal at month-end T uses only close data through T; execution at same T close (no look-ahead \u2014 institutional rebalancing window)"
+  },
+  "oos_data_quality": {
+    "strategy_name": "h51_gld_spy_risk_timer",
+    "recommendation": "PASS",
+    "critical_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "oos_rebalances": 48
+  },
+  "is_warnings": [],
+  "oos_warnings": [],
+  "params": {
+    "spy_ticker": "SPY",
+    "gld_ticker": "GLD",
+    "gcf_proxy_ticker": "GC=F",
+    "safe_harbor": "SHY",
+    "lookback_days": 20,
+    "rebalance_frequency": "monthly",
+    "signal_threshold": 0.0,
+    "use_gcf_proxy": false,
+    "gld_inception": "2004-11-18",
+    "init_cash": 25000
+  }
+}
