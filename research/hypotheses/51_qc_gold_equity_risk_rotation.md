@@ -5,7 +5,37 @@
 **Date:** 2026-06-08
 **Asset class:** US equity (SPY ETF) / gold ETF / short-duration Treasuries
 **Strategy type:** single-signal, cross-asset relative value
-**Status:** READY
+**Status:** RETIRED — 2026-06-09
+
+---
+
+## RETIREMENT NOTICE
+
+**Retired by:** Research Director (QUA-134)
+**Date:** 2026-06-09
+**Reason:** Gate 1 v2.0 FAIL — permutation p=1.0 (signal indistinguishable from noise)
+
+**Gate 1 Results:**
+
+| Criterion | Required | Actual | Status |
+|-----------|----------|--------|--------|
+| IS Sharpe | > 1.0 | 0.6879 | FAIL |
+| OOS Sharpe | > 0.7 | 0.3807 | FAIL |
+| IS MDD | < 20% | -30.07% | FAIL |
+| OOS MDD | < 25% | -28.86% | FAIL |
+| Permutation p | ≤ 0.05 | **1.0000** | FAIL |
+| WF consistency | pass | 0.0 | FAIL |
+| Trade count (IS) | ≥ 100 | 204 | PASS |
+
+**Retirement rationale:**
+1. Permutation p=1.0 is definitive statistical evidence of no predictive signal — 100% of random permutations outperformed the strategy. No parameter adjustment can rescue a fundamentally absent signal.
+2. Parameter sensitivity ceiling: lb30+TLT gives IS Sharpe 0.81 maximum — still 0.19 below threshold, with overfitting risk if additional factors are added.
+3. Structural 2022 failure: OOS Sharpe -1.46 in rate-shock regime. Both GLD and SPY decline under rising real rates, rendering the relative signal inoperable. Fixing this requires a short/hedge mechanism that would constitute a new hypothesis, not H51b.
+4. WF fold 2 collapse (2010 OOS Sharpe -0.40): signal does not generalize across sub-periods, indicating non-stationarity in the GLD/SPY relationship.
+
+**Do not commission H51b.** Findings: `research/findings/h51_gld_spy_risk_timer_gate1_failure_2026-06-09.md`
+
+---
 
 ---
 
