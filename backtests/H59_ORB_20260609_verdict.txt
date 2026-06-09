@@ -1,0 +1,59 @@
+H59 Opening Range Breakout — Gate 1 Verdict
+Date: 2026-06-09
+Strategy: H59 ORB | Ticker: SPY | PDT Account: $25,001
+IS: 2016-01-01 -> 2021-12-31  |  OOS: 2022-01-01 -> 2024-12-31
+
+IS METRICS:
+  Sharpe:           -2.0879
+  Max Drawdown:     -57.81%
+  Win Rate:         45.99%
+  Profit Factor:    1.2467
+  Trade Count:      1146
+  Avg Gross (bps):  3.13
+  Avg Net (bps):    -7.28
+
+OOS METRICS:
+  Sharpe:           -2.6554
+  Max Drawdown:     -62.11%
+  Trade Count:      585
+
+STATISTICAL RIGOR:
+  MC p5 Sharpe:     -3.2352
+  MC p50 Sharpe:    -2.4405
+  MC p95 Sharpe:    -1.6012
+  Permutation p:    0.868
+  Bootstrap 95% CI: [-3.047, -1.3709]
+  WF Sharpe Std:    2.2871
+  WF Sharpe Min:    -7.4594
+
+WALK-FORWARD: 3/31 windows passing OOS Sharpe >= 0.5
+WF Pass Rate:       9.7%
+WF Min Trades / 4:  42 (threshold >= 30)
+
+QQQ ROBUSTNESS:
+  QQQ OOS Sharpe:   -1.5189
+
+FOMC EXCLUSION:
+  FOMC days in sample: 59
+  Baseline IS Sharpe:  -2.0879
+  Ex-FOMC IS Sharpe:   -2.0891  (delta: -0.0012)
+  Baseline OOS Sharpe: -2.6554
+  Ex-FOMC OOS Sharpe:  -2.5726  (delta: 0.0828)
+
+GATE 1 CRITERIA:
+  [FAIL] is_sharpe_gt_1
+  [FAIL] oos_sharpe_gt_07
+  [FAIL] mdd_lt_20pct
+  [PASS] is_trades_gte_100
+  [FAIL] wf_pass_rate_gte_50pct
+  [FAIL] permutation_p_lte_05
+  [FAIL] mc_p5_sharpe_gt_0
+  [PASS] wf_trade_count_ok
+
+FINAL VERDICT: FAIL
+Passed: 2/8 criteria
+
+PDT COMPLIANCE: account_size=$25,001 (PDT-compliant).
+DATA: Alpaca 1-min OHLCV, RTH 09:30-16:00 ET, adjustment='all'.
+COSTS: $0.005/share fixed + 0.05% slippage + 0.1*sigma*sqrt(Q/ADV) market impact.
+SEE: QUA-147 for Engineering Director commentary.

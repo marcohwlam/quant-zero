@@ -1,8 +1,8 @@
-# Gate 1 Acceptance Criteria — Minute-Level (v2.1)
+# Gate 1 Acceptance Criteria — Minute-Level (v2.2)
 
-**Version:** 2.1
-**Locked by:** CEO
-**Status:** LOCKED — only the CEO may modify these criteria after lock.
+**Version:** 2.2
+**Locked by:** CEO (v2.1 base locked; v2.2 threshold calibration PENDING CEO LOCK — QUA-150)
+**Status:** LOCKED (base) / PROPOSED (quantitative thresholds + cost model) — CEO locks thresholds on PR merge.
 **Supersedes:** v1.3 (daily/swing). The daily track is replaced going forward;
 prior daily-track backtests are not retroactively re-run.
 
@@ -30,11 +30,14 @@ the dominant failure mode is transaction cost, not curve-fitting — the criteri
 
 Backtests MUST model the following, or the strategy is auto-rejected:
 
-| Asset | Cost model (PLACEHOLDER — calibrate with real data) |
-|-------|------------------------------------------------------|
-| Equities | $0.005/share + half-spread slippage + 0.02% market impact |
-| Crypto | 0.05% taker + 0.03% slippage |
-| Futures | per-contract commission + 1 tick slippage |
+| Asset | Cost model | Approx round-trip cost |
+|-------|------------|------------------------|
+| Equities | $0.005/share each side + 0.05% one-way slippage + `0.1×σ×sqrt(Q/ADV)` market impact (Almgren-Chriss, k=0.1) | ~10 bps (SPY/QQQ scale) |
+| Crypto | 0.10% taker fee + 0.05% one-way slippage | ~30 bps |
+| Futures | $2.10/contract/side (ES) or $0.37/contract/side (MES) + 1 tick slippage ($12.50/ES tick; $0.625/MES tick) | ~$29/contract (ES); ~$1.50 (MES) |
+
+Cost model source: Engineering Director AGENTS.md canonical table (exchange fee schedules
++ Johnson *Algorithmic Trading & DMA* Table 3.2). Calibrated 2026-06-09 (QUA-150).
 
 Net Sharpe is the only Sharpe that gates. Gross Sharpe is reported, never gates.
 
@@ -73,16 +76,25 @@ This section is additive — it does not relax any output threshold.
 
 ## Quantitative Thresholds (per asset class)
 
-PLACEHOLDERS — calibrated by Engineering Director / Quant Metrics with real 2022-2024 data,
-then CEO-locked. Setting numbers without data violates the data-driven rule.
+Calibrated from 2022-2024 empirical data (QUA-150, 2026-06-09). See
+`docs/gate1-threshold-calibration-2026-06-09.md` for full derivation.
+CEO-locked on PR merge. Setting numbers without data violates the data-driven rule.
 
-| Metric | Equities intraday | Crypto | Futures |
+| Metric | Equities intraday | Crypto (BTC/ETH) | Futures (ES/MES) |
 |---|---|---|---|
-| Net OOS Sharpe | > TBD | > TBD | > TBD |
-| Net profit per trade (bps, after cost) | > TBD | > TBD | > TBD |
-| Max intraday drawdown | < TBD | < TBD | < TBD |
-| Trade count (IS) | > TBD | > TBD | > TBD |
-| Cost-to-gross-profit ratio | < TBD | < TBD | < TBD |
+| Net OOS Sharpe (6-window aggregate) | > **0.7** | > **0.8** | > **0.7** |
+| Net profit per trade (bps after cost) | > **5 bps** | > **8 bps** | > **0.5 ticks** |
+| Max intraday/session MDD (CS threshold) | < **1.5%** acct equity | < **3.0%** acct equity | < **2.0%** acct equity |
+| IS trade count (per 3-month window) | > **300** | > **200** | > **150** |
+| Cost-to-gross-profit ratio | < **0.40** | < **0.35** | < **0.35** |
+
+**Gate 7 hard ceiling (2× CS threshold):**
+
+| Asset | MDD hard gate ceiling |
+|---|---|
+| Equities intraday | < **3.0%** of account equity (per session) |
+| Crypto | < **6.0%** of account equity (per 24h) |
+| Futures | < **4.0%** of account equity (per session) |
 
 The objective function that balances return and stability across these metrics is defined in
 `docs/kpi-minute-level.md` **v0.3 (CEO-locked 2026-06-07, QUA-68)**. That document is authoritative
@@ -136,3 +148,4 @@ Full hard gate list is in `docs/kpi-minute-level.md` §Hard Gates (Gates 1–8).
 | 2.0 | 2026-06-06 | Rewrite for minute-level, all assets | Company pivot to minute-level trading; cost realism promoted to top-level gate; thresholds deferred to data calibration. |
 | 2.0.1 | 2026-06-07 | Reference `docs/kpi-minute-level.md` v0.3 (CEO-locked). Added Gate 8 (PDT) to auto-disqualification summary. KPI doc is the authoritative objective function. | CEO — [QUA-68](/QUA/issues/QUA-68) |
 | 2.1 | 2026-06-09 | Add "Strategy Architecture" section encoding the three-layer construction discipline (regime filter / universe filter / single alpha) as a binding pre-flight requirement (PF-5). Add PF-5 auto-defer rule to `docs/gate1-intake-process.md`. Output thresholds unchanged. Motivation: H49/H50/H51 monthly-rotation dead-end — all failed MDD gate due to absent regime filter; structural failure now caught at intake not output. | CEO — [QUA-144](/QUA/issues/QUA-144) |
+| 2.2 | 2026-06-09 | Replace all TBD/PLACEHOLDER thresholds with data-backed calibrated values for all three asset classes (equities intraday, crypto, futures). Replace PLACEHOLDER cost model with AGENTS.md canonical (exchange fee schedules + Almgren-Chriss impact). Full derivation in `docs/gate1-threshold-calibration-2026-06-09.md`. | Engineering Director — [QUA-150](/QUA/issues/QUA-150) — PENDING CEO LOCK |

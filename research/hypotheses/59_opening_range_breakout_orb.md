@@ -7,7 +7,7 @@
 **Review date:** 2026-06-09
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** ready
+**Status:** retired
 
 ---
 
@@ -299,3 +299,13 @@ Exit: close all at 15:55 ET if neither stop nor target hit
 - Alpaca Markets minute OHLCV — `https://alpaca.markets` (RTH 09:30–16:00 ET, 2016–2024)
 - `research/hypotheses/57_intraday_momentum_gao2018.md` — related intraday momentum hypothesis
 - `research/findings/h53_faber_gtaa5_gate1_failure_retirement_2026-06-09.md` — prior MDD failure context
+
+---
+
+## Retirement Notice
+
+**Date:** 2026-06-09
+**Reason:** Gate 1 FAIL — gross edge (3.13 bps) insufficient vs. any realistic cost model.
+Projected OOS Sharpe ~0.44 even with SPY-accurate slippage; below 0.7 threshold.
+All 9 parameter combinations (or_window × r_mult) negative OOS Sharpe.
+**See:** research/findings/h59_orb_gate1_failure_retirement_2026-06-09.md
