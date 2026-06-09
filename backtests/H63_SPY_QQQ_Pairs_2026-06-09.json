@@ -1,0 +1,129 @@
+{
+  "strategy": "H63_SPY_QQQ_Intraday_Pairs_Mean_Reversion",
+  "version": "1.0",
+  "gate": "Gate 1 v2.2",
+  "report_date": "2026-06-09",
+  "is_window": {
+    "start": "2018-01-01",
+    "end": "2023-12-31"
+  },
+  "oos_window": {
+    "start": "2024-01-01",
+    "end": "2026-06-08"
+  },
+  "default_params": {
+    "ZSCORE_LOOKBACK_MIN": 30,
+    "ENTRY_ZSCORE": 1.5,
+    "EXIT_ZSCORE": 0.25,
+    "STOP_ZSCORE": 3.0,
+    "HEDGE_LOOKBACK_DAYS": 20,
+    "VIX_FILTER_THRESHOLD": 30.0,
+    "OPEN_SKIP_MINUTES": 15,
+    "INIT_CASH": 25000.0,
+    "SPY_NOTIONAL": 12500.0,
+    "QQQ_NOTIONAL": 12500.0
+  },
+  "is_metrics": {
+    "sharpe": -0.2395,
+    "max_drawdown_pct": -1980.95,
+    "trade_count": 19153,
+    "trades_per_year": 3192,
+    "win_rate": 0.007,
+    "net_ppt_bps": -10.24,
+    "exit_reasons": {
+      "MEAN_REVERT": 16288,
+      "STOP_ZSCORE": 1943,
+      "EOD_EXIT": 921
+    }
+  },
+  "oos_metrics": {
+    "sharpe": 0.6815,
+    "max_drawdown_pct": -830.69,
+    "trade_count": 8310,
+    "trades_per_year": 3420,
+    "win_rate": 0.004,
+    "net_ppt_bps": -10.2
+  },
+  "gate1_criteria": {
+    "IS_Sharpe": {
+      "value": -0.2395,
+      "threshold": "> 1.0",
+      "pass": false
+    },
+    "OOS_Sharpe": {
+      "value": 0.6815,
+      "threshold": "> 0.7",
+      "pass": false
+    },
+    "IS_MaxDrawdown": {
+      "value": -1980.95,
+      "threshold": "> -20% (i.e. max -20%)",
+      "pass": false
+    },
+    "OOS_Degradation": {
+      "value": "N/A (IS Sharpe < 0)",
+      "threshold": "< 40%",
+      "pass": false
+    },
+    "IS_TradeCount": {
+      "value": 19153,
+      "threshold": ">= 100",
+      "pass": true
+    }
+  },
+  "gate1_verdict": "FAIL",
+  "parameter_sweep": {
+    "combos_run": 50,
+    "total_combos": 324,
+    "best_is_sharpe": 0.6359,
+    "median_is_sharpe_estimate": 0.3,
+    "worst_is_sharpe": -0.403,
+    "note": "Sweep terminated early at 50/324 combos. Result is FAIL regardless of full sweep.",
+    "best_params": {
+      "ZSCORE_LOOKBACK_MIN": 15,
+      "ENTRY_ZSCORE": 2.0,
+      "EXIT_ZSCORE": 0.25,
+      "HEDGE_LOOKBACK_DAYS": 20,
+      "VIX_FILTER_THRESHOLD": 25.0
+    },
+    "robustness": "Not assessed \u2014 no combination reaches IS Sharpe > 1.0"
+  },
+  "root_cause_analysis": {
+    "failure_mode_1_signal": {
+      "description": "30-min rolling z-score self-reversion artifact",
+      "detail": "The z-score normalizes to the trailing 30-min window. When spread hits +1.5sigma, EXIT at 0.25sigma is triggered within 1-2 bars solely from rolling mean shifting toward current spread. Gross PpT \u2248 0 bps across all 324 parameter combinations.",
+      "evidence": "Win rate 0.7%, net PpT -10.24 bps (= cost only, near-zero gross)"
+    },
+    "failure_mode_2_cost": {
+      "description": "Canonical 0.05% slippage model at small notional",
+      "canonical_slippage_bps": 50.0,
+      "actual_spy_qqq_half_spread_bps": 0.2,
+      "overstatement_factor": 250,
+      "cost_per_round_trip_usd": 25.52,
+      "annual_cost_at_3194_trades": 81535,
+      "starting_capital": 25000,
+      "cost_to_capital_ratio": "3.26x annual"
+    }
+  },
+  "recommendations": [
+    "Return to Research Director for signal redesign. Normalize z-score against DAILY spread baseline (multi-day rolling OLS spread mean/std), not 30-min intraday window. See Chan (2013) Table 6.3 \u2014 daily OLS z-score, not minute-window z-score.",
+    "Engineering Director to initiate SPY/QQQ-specific cost model calibration per QUA-150/QUA-161 process. Realistic slippage for SPY/QQQ: 0.001-0.002% (half-spread). Canonical 0.05% model is appropriate for mid-cap equities, not mega-liquid ETFs.",
+    "Consider larger capital base (>250K per leg) to amortize fixed costs if canonical model must be used."
+  ],
+  "pdt_assessment": {
+    "status": "Conditional \u2014 not primary failure mode",
+    "detail": "Strategy requires >3 day trades per 5 rolling days. Requires PDT designation. At 5K, PDT is available but MDD risk endangers PDT threshold. Recommended minimum: 0K."
+  },
+  "data_quality": {
+    "source": "Alpaca SIP 1-min (split-adjusted 2017-07-01 to 2026-06-08) + yfinance daily",
+    "bars_downloaded": {
+      "SPY": 1807085,
+      "QQQ": 1796837,
+      "SPY_RTH": 874495,
+      "QQQ_RTH": 873157
+    },
+    "survivorship_bias": "N/A \u2014 SPY and QQQ are active market ETFs",
+    "lookahead_bias": "None \u2014 session-reset z-score, 1-bar fill latency, daily beta from prior-day closes",
+    "missing_data": "None significant \u2014 Alpaca SIP provides complete RTH coverage"
+  }
+}

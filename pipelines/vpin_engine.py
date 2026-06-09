@@ -39,8 +39,9 @@ class VPINEngine:
 
         # Stable Z: replace zero/nan sigma with running std up to that point
         fallback_sigma = df["price_change"].expanding(min_periods=2).std()
-        sigma = df["sigma_close"].fillna(fallback_sigma).replace(0, fallback_sigma)
-        sigma = sigma.replace(0, np.nan)  # if truly zero, leave z as nan → Phi(nan)=0.5
+        sigma = df["sigma_close"].fillna(fallback_sigma)
+        sigma = sigma.where(sigma != 0, other=fallback_sigma)
+        sigma = sigma.where(sigma != 0, other=np.nan)  # if truly zero everywhere, leave as nan → Phi(nan)=0.5
 
         df["sigma_close"] = sigma
         df["z_score"] = df["price_change"] / sigma
