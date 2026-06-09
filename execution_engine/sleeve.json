@@ -1,0 +1,13 @@
+{
+  "strategies": [
+    {
+      "strategy_id": "h10_crypto_eql_reversal_v2",
+      "module": "execution_engine.strategies.h10_live",
+      "class_name": "H10LiveStrategy",
+      "capital_allocated": 5000,
+      "bar_frequency": "1d",
+      "universe": ["BTC-USD", "ETH-USD"],
+      "params": {}
+    }
+  ]
+}

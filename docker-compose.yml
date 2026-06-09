@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  execution-engine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - ALPACA_API_KEY=${ALPACA_API_KEY}
+      - ALPACA_API_SECRET=${ALPACA_API_SECRET}
+      - EXECUTION_DB_PATH=/data/execution.db
+      - EXECUTION_ALERT_DIR=/data/alerts
+      - EXECUTION_SLEEVE_PATH=/app/execution_engine/sleeve.json
+    volumes:
+      # Durable store: survives container restarts and image rebuilds
+      - execution_data:/data
+      # Mount paper_trading output dir so engine can write IS shortfall data
+      # (optional; engine writes to /data but QUA-151 reads from paper_trading/)
+      - ./paper_trading:/app/paper_trading
+    healthcheck:
+      test: ["CMD", "python", "execution_engine/healthcheck.py"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+volumes:
+  execution_data:
+    # Named volume: persists across `docker compose down` (use -v to remove)
