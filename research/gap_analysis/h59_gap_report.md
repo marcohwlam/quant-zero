@@ -1,6 +1,12 @@
-# H59 ORB — Backtest-to-Live Gap Report
+# H59 ORB — Backtest-to-Live Gap Report (Phase 1: Model-Based Baseline)
 **Ticker:** SPY | **Window:** 2026-05-01 to 2026-06-06 | **Trading days:** 25
 **Generated:** 2026-06-09 | **Issue:** QUA-151
+
+> **⚠ Phase 1 caveat:** Fill prices in this report are **model-based estimates**, not actual Alpaca paper-trading order fills.
+> The "realistic fill" is computed from OHLCV bar data (spread proxy + OHLCV momentum component) — it does not reflect
+> queue dynamics, partial fills, or latency tail events that a live execution engine would surface.
+> Phase 2 (actual fills) is gated on [QUA-160] — the always-on execution service currently in progress.
+> Use these estimates for directional QUA-145 cost-model calibration only; do not treat as ground truth.
 
 ---
 
@@ -96,3 +102,25 @@ Note: both Sharpe values may be negative over a short 25-day window; the *delta*
 
 The current 5 bps / leg spread assumption is conservative (4.2× actual for SPY).
 Tightening to 3–5 bps / leg would still leave a safety margin while better reflecting realised execution.
+
+---
+
+## Phase 2: Actual Fills (Pending QUA-160)
+
+This Phase 1 analysis uses modelled fill estimates. Phase 2 will replace these with **actual Alpaca paper-trading fills**
+recorded by the always-on execution service ([QUA-160] — in progress).
+
+**Difference between Phase 1 and Phase 2:**
+
+| Aspect | Phase 1 (this report) | Phase 2 (post QUA-160) |
+|--------|----------------------|----------------------|
+| Fill prices | Modelled (OHLCV proxy) | Actual Alpaca paper fills |
+| Queue dynamics | Not captured | Captured |
+| Partial fills | Assumed 0% | Measured |
+| Latency tail events | Not captured | Captured |
+| Agent-wake dependency | None (offline replay) | None (always-on service) |
+| Dropped/missed orders | Assumed 0% | Measured |
+
+To complete Phase 2: once QUA-160's execution engine has logged ≥ 20 H59 fills,
+re-run `research/gap_analysis/h59_gap_analysis.py` with `--actual-fills` mode
+(to be added once the execution service exposes a fills export endpoint).
