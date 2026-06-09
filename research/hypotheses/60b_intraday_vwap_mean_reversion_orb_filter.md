@@ -1,13 +1,14 @@
 # H60b: Intraday VWAP Mean Reversion v2 — ORB Session Filter + Tightened VPIN Gate
 
-**Version:** 1.0
+**Version:** 1.1
 **Author:** Research Director
 **Date:** 2026-06-09
+**IC Re-estimation:** Alpha Research Agent, 2026-06-09 (QUA-169)
 **Reviewed by:** Research Director
 **Review date:** 2026-06-09
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** DRAFT — IC re-estimation pending (see QUA-168 subtask)
+**Status:** RETIRED — IC re-estimation complete; ORB filter ineffective; IC negative (QUA-169)
 **Parent hypothesis:** H60 (`60_intraday_vwap_mean_reversion.md`)
 **Parent Gate 1 result:** FAIL (QUA-166, backtested 2026-06-09)
 
@@ -196,26 +197,65 @@ VIX_ELEVATED = 35.0   # Reduced: 4% of portfolio
 
 ## Alpha Decay
 
-**IC estimates — pending re-estimation**
+**IC re-estimation completed: 2026-06-09 (QUA-169)**
 
-The H60 IC estimates from Kissell (2014) are confirmed stale by the Gate 1 backtest. H60b uses preliminary compressed estimates pending Alpha Research re-estimation from 2022-2024 OOS trade data.
+Alpha Research Agent computed actual IC from all 352 H60 OOS trades against 2022-2024 SPY minute data. Results below supersede all preliminary estimates.
 
-| Timepoint | Kissell 2014 (H60) | Observed 2022-2024 (preliminary) | H60b target (post-filter) |
+### ORB Filter Segmentation Result
+
+**ORB filter at 1.5% threshold = zero sessions filtered.**
+
+| ORB Threshold | Sessions Filtered | % of 124 sessions |
+|---|---|---|
+| > 1.5% | **0** | **0.0%** |
+| > 1.0% | 1 | 0.8% |
+| > 0.75% | 10 | 8.1% |
+| > 0.50% | 40 | 32.3% |
+
+SPY ORB statistics (2022-2024 OOS period, 124 sessions):
+- Mean ORB: **0.430%** — well below the 1.5% threshold
+- Median ORB: **0.376%**
+- Max ORB: **1.143%** (2022-04-27)
+- 90th percentile: 0.741%
+
+**The H60b primary fix is a no-op.** The 1.5% ORB threshold was never exceeded in the 2022-2024 data. All 352 trades from the H60 OOS backtest pass through the H60b ORB filter unchanged — the "redesign" does not change a single trade.
+
+### IC Estimates (Post-ORB-Filter = Full 352-Trade Sample)
+
+Since zero sessions are filtered, the H60b IC estimates equal the H60 full-sample IC.
+
+| Timepoint | Kissell 2014 (H60 baseline) | H60 observed (all 352) | H60b target (post-filter) | vs. Kissell |
+|---|---|---|---|---|
+| T+5 min | IC +0.12 | **IC –0.1002** (t = –1.88) | **–0.1002** | −0.22 |
+| T+15 min | IC +0.08 | **IC –0.0623** (t = –1.17) | **–0.0623** | −0.14 |
+| T+30 min | IC +0.04 | **IC –0.0819** (t = –1.54) | **–0.0819** | −0.12 |
+
+**IC is negative at all horizons.** The VWAP z-score signal is not merely compressed — it is actively anti-predictive. Being below VWAP (long signal) is associated with continued price declines; being above VWAP (short signal) is associated with continued price rises. The market trended, not mean-reverted, in this period.
+
+Direction-decomposed IC (T+5):
+| Direction | n | IC | Avg fwd return |
 |---|---|---|---|
-| T+0 (entry) | IC 0.12–0.15 | ~0.06–0.09 (compressed) | TBD (Alpha Research) |
-| T+15 min | IC 0.08 | ~0.04–0.06 | TBD |
-| T+30 min | IC 0.04 | ~0.02–0.03 | TBD |
-| T+60 min | IC 0.01 | ~0.01 | TBD |
+| Long (price below VWAP) | 186 | +0.0306 | –0.0163% |
+| Short (price above VWAP) | 162 | +0.1058 | +0.0052% |
+| **Combined** | **351** | **–0.1002** | –0.0061% |
 
-**Post-filter IC hypothesis:** The ORB filter removes trend sessions where the mean reversion signal was noise (negative IC contribution). Removing those sessions should improve observed IC in the filtered sample. Alpha Research Agent will compute actual IC from the 352 OOS trade records, segmented by ORB threshold, to validate this hypothesis.
+*The positive within-direction ICs reflect that more extreme z-scores have marginally better outcomes within each direction — but the DIRECTION of the signal (below/above VWAP) predicts the WRONG forward return sign. This is the classic trending-market failure mode: VWAP deviations persist and widen rather than revert.*
 
-**Signal half-life:** Unchanged — 20–45 minutes intraday (structural property of VWAP algorithm response, not crowding-dependent).
+**Annualized IR estimate (H60b, Grinold-Kahn):**
+- IC (T+5): –0.1002
+- Annual trade rate (H60b filtered): ~202 trades/year (no change — ORB removes nothing)
+- **IR = IC × √N = –0.1002 × √202 = –1.43**
+- IS Sharpe > 1.0 achievable: **NO — impossible at negative IC**
 
-**Transaction cost viability (unchanged):**
-- SPY round-trip: 0.003–0.005% (deep liquid midday)
-- Break-even IC at these costs: ~0.01–0.02
-- Even compressed IC (0.06): far above break-even
-- Transaction cost viability confirmed — edge not cost-destructive at SPY scale
+**Signal half-life:** Moot — the signal has no positive IC to decay.
+
+**Transaction cost viability:** Moot — negative IC means the edge is not cost-destructive but direction-destructive.
+
+### Retirement Decision
+
+**IC < 0.04 threshold at all horizons; ORB filter is ineffective. H60 VWAP mean reversion family RETIRED.**
+
+Per the decision gate in the Gate 1 Outlook section: *"If Alpha Research IC re-estimation shows compressed IC < 0.04 even in filtered sample, this hypothesis family should be retired without Gate 1 backtest."* IC is not merely below 0.04 — it is negative. No Gate 1 backtest warranted.
 
 ---
 
@@ -314,34 +354,30 @@ Trade frequency reduction (ORB filter): fewer day trades per week. Engineering D
 
 ---
 
-## IC Re-Estimation Requirement (OPEN — Must Complete Before Gate 1)
+## IC Re-Estimation Result (CLOSED — QUA-169)
 
-**Delegated to:** Alpha Research Agent (via QUA-168 subtask)
+**Completed by:** Alpha Research Agent, 2026-06-09
 
-**Task:** Compute actual IC from H60 OOS trade data (352 trades, `backtests/h60_intraday_vwap_mean_reversion_2026-06-09_oos_trades.json`):
+**Finding:** ORB filter at 1.5% filters zero sessions from the H60 OOS data. IC is negative (–0.10 at T+5). The strategy family is retired. See Alpha Decay section for full analysis.
 
-1. Segment trades by ORB filter: which trades would be filtered by H60b's 1.5% ORB threshold?
-2. For non-filtered trades only: compute IC at T+5, T+15, T+30 (using `exit_z_score` and forward returns)
-3. Compare against Kissell 2014 estimates and update the Alpha Decay section
-4. Provide revised annualized IR estimate under H60b filter regime
-
-**This document is DRAFT until IC re-estimation is complete. Do not forward to Engineering Director until Alpha Research delivers updated IC estimates.**
+**Do not forward to Engineering Director. Do not backtest H60b.**
 
 ---
 
 ## Gate 1 Outlook (H60b)
 
-| Criterion | Threshold | H60b Estimate | Assessment |
+**RETIRED — no Gate 1 backtest.** IC re-estimation (QUA-169) found:
+1. ORB filter (1.5%) filters zero sessions — primary redesign fix is a no-op
+2. IC = –0.10 at T+5 — negative at all horizons, not merely compressed
+3. Grinold-Kahn IR = –1.43 — impossible to achieve IS Sharpe > 1.0
+
+| Criterion | Threshold | H60b Result | Assessment |
 |---|---|---|---|
-| IS Sharpe | > 1.0 | Unknown (IC re-estimation pending) | **UNCERTAIN** |
-| OOS Sharpe | > 0.7 | Unknown | **UNCERTAIN** |
-| WF stability | ≥ 3/6 | Improved vs H60 (ORB filter removes worst sessions) | **LIKELY IMPROVED** |
-| MDD | < -20% | < 5% (intraday-flat) | **VERY LIKELY PASS** |
-| Trade count | ≥ 30/IS window | 37–50 | **MARGINAL PASS** |
-
-**Key uncertainty:** Whether IC after ORB filtering is sufficient for IS Sharpe > 1.0. The ORB filter removes the worst sessions but the remaining sessions must show positive IC to produce Sharpe > 1.0.
-
-**Decision gate:** If Alpha Research IC re-estimation shows compressed IC < 0.04 even in filtered sample, this hypothesis family should be retired without Gate 1 backtest (structure cannot produce Sharpe > 1.0 at realistic IC levels). Alpha Research Agent must explicitly assess this.
+| IS Sharpe | > 1.0 | Impossible (IC < 0) | **FAIL — retire** |
+| OOS Sharpe | > 0.7 | Impossible | **FAIL** |
+| WF stability | ≥ 3/6 | N/A | **N/A** |
+| MDD | < -20% | N/A | **N/A** |
+| Trade count | ≥ 30/IS window | N/A | **N/A** |
 
 ---
 
