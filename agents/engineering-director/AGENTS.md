@@ -89,9 +89,12 @@ This is the canonical cost model for all Quant Zero strategy implementations. St
 
 | Asset Class | Fixed Cost | Slippage | Market Impact |
 |---|---|---|---|
-| Equities/ETFs | $0.005/share | 0.05% | `0.1 × σ × sqrt(Q / ADV)` |
+| Equities/ETFs (standard, ADV ≤ 50M/day) | $0.005/share | 0.05% | `0.1 × σ × sqrt(Q / ADV)` |
+| Equities/ETFs (ultra-liquid: ADV > 50M/day, e.g. SPY/QQQ/IWM) | $0.005/share | **0.005%** | `0.1 × σ × sqrt(Q / ADV)` |
 | Options | $0.65/contract | 0.10% | N/A |
 | Crypto | 0.10% taker fee | 0.05% | N/A |
+
+> **Ruling ED-SLIP-001 (2026-06-09):** Ultra-liquid ETF slippage tier (0.005%) established for instruments with 20-day ADV > 50M shares/day. See `docs/rulings/slippage-spy-large-cap-etf-2026-06-09.md`. Applies to SPY, QQQ, IWM and any future instrument meeting the ADV threshold. Standard 0.05% remains for all other equities/ETFs.
 
 **Market impact formula (equities):**
 ```
