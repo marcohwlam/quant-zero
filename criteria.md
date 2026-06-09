@@ -1,6 +1,6 @@
-# Gate 1 Acceptance Criteria — Minute-Level (v2.1)
+# Gate 1 Acceptance Criteria — Minute-Level (v2.2)
 
-**Version:** 2.1
+**Version:** 2.2
 **Locked by:** CEO
 **Status:** LOCKED — only the CEO may modify these criteria after lock.
 **Supersedes:** v1.3 (daily/swing). The daily track is replaced going forward;
@@ -30,9 +30,10 @@ the dominant failure mode is transaction cost, not curve-fitting — the criteri
 
 Backtests MUST model the following, or the strategy is auto-rejected:
 
-| Asset | Cost model (PLACEHOLDER — calibrate with real data) |
-|-------|------------------------------------------------------|
-| Equities | $0.005/share + half-spread slippage + 0.02% market impact |
+| Asset | Cost model |
+|-------|------------|
+| Equities — ultra-liquid ETF (ADV > 50M shares/day: SPY, QQQ, IWM) | $0.005/share + **0.005% slippage** + 0.02% market impact (ED-SLIP-001) |
+| Equities — standard equity/ETF | $0.005/share + 0.05% slippage + 0.02% market impact |
 | Crypto | 0.05% taker + 0.03% slippage |
 | Futures | per-contract commission + 1 tick slippage |
 
@@ -136,3 +137,4 @@ Full hard gate list is in `docs/kpi-minute-level.md` §Hard Gates (Gates 1–8).
 | 2.0 | 2026-06-06 | Rewrite for minute-level, all assets | Company pivot to minute-level trading; cost realism promoted to top-level gate; thresholds deferred to data calibration. |
 | 2.0.1 | 2026-06-07 | Reference `docs/kpi-minute-level.md` v0.3 (CEO-locked). Added Gate 8 (PDT) to auto-disqualification summary. KPI doc is the authoritative objective function. | CEO — [QUA-68](/QUA/issues/QUA-68) |
 | 2.1 | 2026-06-09 | Add "Strategy Architecture" section encoding the three-layer construction discipline (regime filter / universe filter / single alpha) as a binding pre-flight requirement (PF-5). Add PF-5 auto-defer rule to `docs/gate1-intake-process.md`. Output thresholds unchanged. Motivation: H49/H50/H51 monthly-rotation dead-end — all failed MDD gate due to absent regime filter; structural failure now caught at intake not output. | CEO — [QUA-144](/QUA/issues/QUA-144) |
+| 2.2 | 2026-06-09 | Replace single equities slippage PLACEHOLDER with two-tier instrument model per ED-SLIP-001: ultra-liquid ETF (SPY/QQQ/IWM, ADV > 50M/day) → 0.005%; standard equity/ETF → 0.05%. Fixed commission and market impact unchanged. Ruling evidence: H60 paper fills 0.003–0.005%; canonical 0.05% is 25–50× actual SPY half-spread. | CEO — [QUA-171](/QUA/issues/QUA-171), ED-SLIP-001 ([QUA-170](/QUA/issues/QUA-170)) |
