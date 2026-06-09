@@ -1,0 +1,49 @@
+H55 Low Volatility Anomaly — Gate 1 Verdict
+Date: 2026-06-09
+ETF: SPLV (proxy 1990-2011 + ETF 2011-2021)
+IS: 1990-01-01 → 2021-12-31 | OOS: 2022-01-01 → 2025-03-31
+
+SURVIVORSHIP BIAS WARNING: Proxy period (1990-2011) uses survivorship-biased
+constituent universe. IS metrics may be overstated for 1990-2011 sub-period.
+ETF period (2011+) metrics are clean.
+
+IS METRICS:
+  Sharpe:       0.9039
+  MDD:          -20.86%
+  Win Rate:     64.49%
+  Profit Factor:2.0837
+  Trade Count:  383
+  Bear Gate %:  8.9%
+
+OOS METRICS:
+  Sharpe:       0.4868
+  MDD:          -13.91%
+  Win Rate:     55.26%
+  Profit Factor:1.5035
+  Trade Count:  38
+
+STATISTICAL RIGOR:
+  MC p5 Sharpe:       0.0765
+  MC p50 Sharpe:      0.6272
+  MC p95 Sharpe:      1.2215
+  Permutation p:      0.866
+  Bootstrap 95% CI:   [0.0128, 1.292]
+
+WALK-FORWARD: 6/6 windows passing (floor: Sharpe >= 0.3)
+
+USMV ROBUSTNESS:
+  IS Sharpe:  0.944  |  OOS Sharpe: 0.4086
+
+GATE 1 CRITERIA:
+  [FAIL] IS Sharpe > 1.0: 0.9039
+  [FAIL] OOS Sharpe > 0.7: 0.4868
+  [FAIL] IS MDD < 20%: -0.208642
+  [PASS] IS Trades >= 100: 383
+  [PASS] WF consistency >= 3/4: 6
+  [FAIL] Permutation p <= 0.05: 0.866
+  [PASS] MC p5 Sharpe > 0: 0.0765
+  [PASS] Bootstrap CI lower > 0: 0.0128
+
+FINAL VERDICT: FAIL
+
+NOTE: See QUA-126 for Engineering Director commentary on conditional factors.

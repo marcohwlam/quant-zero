@@ -1,0 +1,291 @@
+{
+  "strategy": "H55_LowVolatilityAnomaly",
+  "date": "2026-06-09",
+  "etf": "SPLV",
+  "is_start": "1990-01-01",
+  "is_end": "2021-12-31",
+  "oos_start": "2022-01-01",
+  "oos_end": "2025-03-31",
+  "data_quality": {
+    "survivorship_bias": "FLAGGED \u2014 proxy universe uses curated subset of S&P 500 large-caps known to have traded continuously 1990\u20132011. Stocks delisted during this period are excluded from the proxy, introducing upward bias in pre-2011 returns. ETF period (2011+) uses SPLV/USMV directly \u2014 no survivorship bias.",
+    "price_adjustments": "auto_adjust=True via yfinance for all assets",
+    "earnings_exclusion": "not_applicable \u2014 monthly rebalanced ETF/proxy rotation. No individual stock earnings exposure at strategy level.",
+    "delisted_tickers": "Proxy period: survivorship-biased (flagged). ETF period: SPLV (2011), USMV (2011), SPY (1993), SHY (2002) all active.",
+    "is_window": "1990-01-01 to 2021-12-31",
+    "oos_window": "2022-01-01 to 2025-12-31"
+  },
+  "survivorship_bias_flag": true,
+  "is_metrics": {
+    "label": "IS",
+    "n_months": 383,
+    "trade_count": 383,
+    "n_transitions": 40,
+    "annualized_return": 0.098411,
+    "annualized_vol": 0.108872,
+    "sharpe": 0.9039,
+    "max_drawdown": -0.208642,
+    "win_rate": 0.6449,
+    "profit_factor": 2.0837,
+    "avg_cost_bps": 0.2916,
+    "bear_gate_pct": 0.0888,
+    "liquidity_constrained_count": 0
+  },
+  "oos_metrics": {
+    "label": "OOS",
+    "n_months": 38,
+    "trade_count": 38,
+    "n_transitions": 6,
+    "annualized_return": 0.057264,
+    "annualized_vol": 0.117623,
+    "sharpe": 0.4868,
+    "max_drawdown": -0.139095,
+    "win_rate": 0.5526,
+    "profit_factor": 1.5035,
+    "avg_cost_bps": 0.8818,
+    "bear_gate_pct": 0.2632,
+    "liquidity_constrained_count": 0
+  },
+  "etf_only_is_metrics": {
+    "label": "IS",
+    "n_months": 119,
+    "trade_count": 119,
+    "n_transitions": 17,
+    "annualized_return": 0.10113,
+    "annualized_vol": 0.112009,
+    "sharpe": 0.9029,
+    "max_drawdown": -0.208643,
+    "win_rate": 0.6303,
+    "profit_factor": 2.1129,
+    "avg_cost_bps": 0.7978,
+    "bear_gate_pct": 0.0924,
+    "liquidity_constrained_count": 0
+  },
+  "etf_only_oos_metrics": {
+    "label": "OOS",
+    "n_months": 38,
+    "trade_count": 38,
+    "n_transitions": 6,
+    "annualized_return": 0.057264,
+    "annualized_vol": 0.117623,
+    "sharpe": 0.4868,
+    "max_drawdown": -0.139096,
+    "win_rate": 0.5526,
+    "profit_factor": 1.5035,
+    "avg_cost_bps": 0.8818,
+    "bear_gate_pct": 0.2632,
+    "liquidity_constrained_count": 0
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "label": "WF 1990-01\u21921997-12",
+        "n_months": 95,
+        "trade_count": 95,
+        "n_transitions": 4,
+        "annualized_return": 0.152963,
+        "annualized_vol": 0.093931,
+        "sharpe": 1.6285,
+        "max_drawdown": -0.094054,
+        "win_rate": 0.7053,
+        "profit_factor": 3.1082,
+        "avg_cost_bps": 0.0,
+        "bear_gate_pct": 0.0,
+        "liquidity_constrained_count": 0
+      },
+      {
+        "label": "WF 1998-01\u21922002-12",
+        "n_months": 59,
+        "trade_count": 59,
+        "n_transitions": 9,
+        "annualized_return": 0.081925,
+        "annualized_vol": 0.148634,
+        "sharpe": 0.5512,
+        "max_drawdown": -0.168389,
+        "win_rate": 0.5593,
+        "profit_factor": 1.5526,
+        "avg_cost_bps": 0.0,
+        "bear_gate_pct": 0.0,
+        "liquidity_constrained_count": 0
+      },
+      {
+        "label": "WF 2003-01\u21922007-12",
+        "n_months": 59,
+        "trade_count": 59,
+        "n_transitions": 2,
+        "annualized_return": 0.111125,
+        "annualized_vol": 0.065863,
+        "sharpe": 1.6872,
+        "max_drawdown": -0.07254,
+        "win_rate": 0.661,
+        "profit_factor": 3.3829,
+        "avg_cost_bps": 0.0,
+        "bear_gate_pct": 0.0,
+        "liquidity_constrained_count": 0
+      },
+      {
+        "label": "WF 2008-01\u21922011-12",
+        "n_months": 47,
+        "trade_count": 47,
+        "n_transitions": 4,
+        "annualized_return": 0.02541,
+        "annualized_vol": 0.078223,
+        "sharpe": 0.3248,
+        "max_drawdown": -0.157288,
+        "win_rate": 0.6596,
+        "profit_factor": 1.3849,
+        "avg_cost_bps": 0.3565,
+        "bear_gate_pct": 0.4681,
+        "liquidity_constrained_count": 0
+      },
+      {
+        "label": "WF 2012-01\u21922016-12",
+        "n_months": 59,
+        "trade_count": 59,
+        "n_transitions": 7,
+        "annualized_return": 0.094185,
+        "annualized_vol": 0.087539,
+        "sharpe": 1.0759,
+        "max_drawdown": -0.064151,
+        "win_rate": 0.6102,
+        "profit_factor": 2.2185,
+        "avg_cost_bps": 0.6626,
+        "bear_gate_pct": 0.0847,
+        "liquidity_constrained_count": 0
+      },
+      {
+        "label": "WF 2017-01\u21922021-12",
+        "n_months": 59,
+        "trade_count": 59,
+        "n_transitions": 10,
+        "annualized_return": 0.108224,
+        "annualized_vol": 0.133595,
+        "sharpe": 0.8101,
+        "max_drawdown": -0.208642,
+        "win_rate": 0.6441,
+        "profit_factor": 2.0242,
+        "avg_cost_bps": 0.9466,
+        "bear_gate_pct": 0.1017,
+        "liquidity_constrained_count": 0
+      }
+    ],
+    "sharpe_floor": 0.3,
+    "passes": 6,
+    "total": 6,
+    "consistency": "6/6"
+  },
+  "monte_carlo": {
+    "p5": 0.0765,
+    "p50": 0.6272,
+    "p95": 1.2215,
+    "n_sims": 1000
+  },
+  "permutation_p_value": 0.866,
+  "bootstrap_ci_95": {
+    "lower": 0.0128,
+    "upper": 1.292,
+    "ci": 0.95
+  },
+  "usmv_robustness": {
+    "is_metrics": {
+      "label": "IS",
+      "n_months": 119,
+      "trade_count": 119,
+      "n_transitions": 17,
+      "annualized_return": 0.101272,
+      "annualized_vol": 0.107285,
+      "sharpe": 0.944,
+      "max_drawdown": -0.201893,
+      "win_rate": 0.6723,
+      "profit_factor": 2.1294,
+      "avg_cost_bps": 0.7978,
+      "bear_gate_pct": 0.0924,
+      "liquidity_constrained_count": 0
+    },
+    "oos_metrics": {
+      "label": "OOS",
+      "n_months": 38,
+      "trade_count": 38,
+      "n_transitions": 7,
+      "annualized_return": 0.047786,
+      "annualized_vol": 0.116939,
+      "sharpe": 0.4086,
+      "max_drawdown": -0.151949,
+      "win_rate": 0.6053,
+      "profit_factor": 1.4122,
+      "avg_cost_bps": 1.0288,
+      "bear_gate_pct": 0.2632,
+      "liquidity_constrained_count": 0
+    }
+  },
+  "gate1_criteria": [
+    {
+      "criterion": "IS Sharpe > 1.0",
+      "value": 0.9039,
+      "threshold": 1.0,
+      "pass": false
+    },
+    {
+      "criterion": "OOS Sharpe > 0.7",
+      "value": 0.4868,
+      "threshold": 0.7,
+      "pass": false
+    },
+    {
+      "criterion": "IS MDD < 20%",
+      "value": -0.208642,
+      "threshold": -0.2,
+      "pass": false
+    },
+    {
+      "criterion": "IS Trades >= 100",
+      "value": 383,
+      "threshold": 100,
+      "pass": true
+    },
+    {
+      "criterion": "WF consistency >= 3/4",
+      "value": 6,
+      "threshold": 3,
+      "pass": true
+    },
+    {
+      "criterion": "Permutation p <= 0.05",
+      "value": 0.866,
+      "threshold": 0.05,
+      "pass": false
+    },
+    {
+      "criterion": "MC p5 Sharpe > 0",
+      "value": 0.0765,
+      "threshold": 0.0,
+      "pass": true
+    },
+    {
+      "criterion": "Bootstrap CI lower > 0",
+      "value": 0.0128,
+      "threshold": 0.0,
+      "pass": true
+    }
+  ],
+  "gate1_verdict": "FAIL",
+  "parameters": {
+    "low_vol_etf": "SPLV",
+    "signal_lookback_months": 12,
+    "bear_gate_lookback_months": 12,
+    "safe_harbor": "SHY",
+    "bull_rotation": "SPY",
+    "fixed_cost_per_share": 0.005,
+    "slippage_pct": 0.0005,
+    "market_impact_k": 0.1,
+    "sigma_window": 20,
+    "adv_window": 20,
+    "order_qty": 100,
+    "liquidity_threshold": 0.01,
+    "init_cash": 25000.0,
+    "proxy_vol_lookback_months": 12,
+    "proxy_quintile_frac": 0.2,
+    "usmv_inception": "2011-10-01",
+    "splv_inception": "2011-05-05",
+    "etf_warmup_months": 3
+  }
+}
