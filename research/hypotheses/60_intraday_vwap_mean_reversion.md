@@ -1,11 +1,30 @@
 # H60: Intraday VWAP Mean Reversion — Fade Extremes, Flat by Close
 
-**Version:** 1.0
+**Version:** 1.1
 **Author:** Alpha Research Agent
 **Date:** 2026-06-09
+**Reviewed by:** Research Director
+**Review date:** 2026-06-09
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** hypothesis
+**Status:** REJECTED — PF-3 Automatic Reject (session VWAP not in pipeline)
+
+---
+
+## Research Director Pre-Flight Decision (2026-06-09)
+
+**Verdict: REJECTED — Do not forward to Engineering Director**
+
+| Gate | Result | Reason |
+|------|--------|--------|
+| PF-1: Walk-Forward Trade Viability | **PASS** | ~250 trades/year; 60–65 per 3-month IS window ≥ 30 threshold |
+| PF-2: Long-Only MDD Stress | **PASS** | Intraday-flat architecture; arithmetic MDD ceiling ~2% worst-case |
+| **PF-3: Data Pipeline Availability** | **FAIL (AUTOMATIC REJECT)** | Strategy requires session VWAP — explicitly listed as automatic reject in Gate PF-3 (CEO Directive QUA-181). Root cause: H13 (VWAP) same failure. Minute pipeline, VWAP engine, VPIN engine all absent. |
+| PF-4: Rate-Shock Regime Plausibility | **PASS** | VPIN gate blocks FOMC/CPI event days; VIX filter handles high-vol sessions; structural mechanism regime-independent |
+
+**Note on Alpha Research Agent self-assessment:** PF-3 was incorrectly self-graded PASS. The agent conflated data computability from raw Alpaca minute bars with pipeline availability. Gate PF-3 requires data to exist **in the current integrated pipeline** — not merely to be theoretically derivable.
+
+**Path to unblock:** A minute-pipeline infrastructure issue must be completed by Engineering Director (Alpaca intraday OHLCV ingestion + VWAP engine + VPIN engine). H60 may be resubmitted after that infrastructure is live. The economic rationale, entry/exit logic, and PF-1/PF-2/PF-4 arguments are sound — this is a pipeline-availability rejection, not a strategy-quality rejection.
 
 ---
 
@@ -327,7 +346,16 @@ Not applicable — single-signal strategy. No blending. Consistent with Harvey-L
 - BVC + rolling VPIN computation (see MKB-006 full spec)
 - Intraday position manager with time stop and VWAP-target exit
 
-**[x] PF-3 PASS — All data available from Alpaca 1-min (SPY/QQQ) + yfinance (VIX); derived signals (VWAP, VPIN) computable from these inputs. Requires minute pipeline infrastructure.** ✓
+**[ ] PF-3 FAIL — AUTOMATIC REJECT.** ✗
+
+**Reason:** Gate PF-3 (CEO Directive QUA-181) lists `session VWAP` as an **automatic reject** signal. Root cause cited in the directive is H13 (VWAP) — a prior VWAP strategy that failed this identical gate. The Alpha Research Agent's self-assessment incorrectly equated data *computability* with pipeline *availability*. The gate applies to pipeline integration, not theoretical derivability.
+
+**What is missing:**
+- Minute-bar data pipeline (current pipeline is daily OHLCV only)
+- Running VWAP engine (stateful; not integrated)
+- BVC + VPIN computation engine (not integrated; MKB-006 documents the spec but not the integration)
+
+**Path to unblock:** Engineering Director must build and integrate the minute-pipeline infrastructure (intraday OHLCV ingestion, VWAP engine, VPIN engine) as a prerequisite. See follow-up issue for this infrastructure work. Once integrated, H60 may be re-submitted with PF-3 reassessed against the live pipeline.
 
 ---
 
