@@ -48,6 +48,21 @@ FIXED_COST_PER_SHARE = 0.005
 SLIPPAGE_PCT = 0.0005       # 0.05% half-spread (one-way); embedded in fill price
 MI_K = 0.1                  # Almgren-Chriss square-root model coefficient
 
+# Instrument-class slippage overrides (one-way half-spread estimate)
+# Replaces scalar SLIPPAGE_PCT for named instruments.
+SLIPPAGE_OVERRIDES = {
+    # Highly liquid intraday ETFs — $0.01 spread + 0.5 bps execution overhead
+    "SPY": 0.00015,    # 0.015% = 1.5 bps one-way
+    "QQQ": 0.00020,    # 0.020% = 2.0 bps one-way
+    "IWM": 0.00025,    # 0.025% = 2.5 bps one-way
+    # Leveraged ETFs — wider spread, higher impact
+    "SPXL": 0.00060,   # 0.060% = 6 bps one-way
+    "TQQQ": 0.00060,
+    "UPRO": 0.00060,
+    # Default for daily-bar / mid-cap (unchanged)
+    "default": 0.00050,
+}
+
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -67,12 +82,14 @@ def round_trip_cost_bps(price: float, shares: float, adv: float, sigma: float) -
 
 
 def run_rsi_strategy(close: pd.Series, volume: pd.Series,
-                     start: str, end: str) -> tuple:
+                     start: str, end: str, ticker: str = "default") -> tuple:
     """
     RSI(2) mean-reversion strategy on daily bars.
     Long-only, next-bar fill with slippage embedded in fill prices.
     Returns (daily_net_returns: pd.Series, trades: list[dict]).
     """
+    slippage = SLIPPAGE_OVERRIDES.get(ticker, SLIPPAGE_OVERRIDES["default"])
+
     mask = (close.index >= start) & (close.index <= end)
     p = close[mask].copy()
     v = volume[mask].copy()
@@ -99,13 +116,13 @@ def run_rsi_strategy(close: pd.Series, volume: pd.Series,
 
         if not in_trade and r < RSI_BUY_THRESHOLD:
             # Fill next bar with slippage premium
-            entry_price = p.iloc[i + 1] * (1 + SLIPPAGE_PCT)
+            entry_price = p.iloc[i + 1] * (1 + slippage)
             entry_bar = i + 1
             in_trade = True
 
         elif in_trade and (r > RSI_EXIT_THRESHOLD or i == n - 2):
             # Fill next bar with slippage discount
-            exit_price = p.iloc[i + 1] * (1 - SLIPPAGE_PCT)
+            exit_price = p.iloc[i + 1] * (1 - slippage)
             shares = POSITION_VALUE / entry_price
 
             sig = float(sigma_s.iloc[i]) if not np.isnan(sigma_s.iloc[i]) else 0.02
@@ -143,8 +160,8 @@ def compute_window_metrics(window_id: int, is_start: str, is_end: str,
     is_ret_frames, oos_ret_frames = [], []
 
     for ticker, df in all_data.items():
-        ir, it = run_rsi_strategy(df["Close"], df["Volume"], is_start, is_end)
-        or_, ot = run_rsi_strategy(df["Close"], df["Volume"], oos_start, oos_end)
+        ir, it = run_rsi_strategy(df["Close"], df["Volume"], is_start, is_end, ticker)
+        or_, ot = run_rsi_strategy(df["Close"], df["Volume"], oos_start, oos_end, ticker)
         is_trades.extend(it)
         oos_trades.extend(ot)
         if len(ir) > 0:
@@ -285,7 +302,7 @@ def main():
         "strategy": "RSI(2) mean-reversion, long-only, next-bar fill",
         "cost_model": {
             "fixed_per_share": FIXED_COST_PER_SHARE,
-            "slippage_pct_one_way": SLIPPAGE_PCT,
+            "slippage_overrides": SLIPPAGE_OVERRIDES,
             "market_impact": "0.1 * sigma * sqrt(Q/ADV)",
         },
         "window_results": results,
