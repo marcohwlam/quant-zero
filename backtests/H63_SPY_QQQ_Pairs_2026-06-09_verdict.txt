@@ -1,0 +1,77 @@
+======================================================================
+GATE 1 v2.2 VERDICT — H63 SPY/QQQ Intraday Pairs Mean Reversion
+Report Date: 2026-06-09  |  Backtest: 2018-01-01 to 2026-06-08
+======================================================================
+
+OVERALL VERDICT: FAIL
+
+── GATE 1 CRITERIA ──────────────────────────────────────────────────
+  [FAIL] IS_Sharpe:       -0.2395   (threshold: > 1.0)
+  [FAIL] OOS_Sharpe:       0.6815   (threshold: > 0.7)
+  [FAIL] IS_MaxDrawdown: -1981%     (threshold: < 20%)
+  [FAIL] OOS_Degradation: N/A (IS Sharpe < 0; treated as fail)
+  [PASS] IS_TradeCount:  19,153     (threshold: >= 100)
+
+── IS METRICS (2018-01-01 to 2023-12-31, Default Params) ───────────
+  Sharpe:         -0.2395
+  Max Drawdown:   -1,981%  (equity destroyed to deeply negative)
+  Trade Count:    19,153   (3,194/yr = 12.7/day)
+  Win Rate:        0.7%
+  Net PpT (bps):  -10.24 bps (cost-only result; gross PpT ≈ 0 bps)
+  Exit reasons:   MEAN_REVERT=85%, STOP_ZSCORE=10%, EOD_EXIT=5%
+
+── OOS METRICS (2024-01-01 to 2026-06-08, Default Params) ──────────
+  Sharpe:         0.6815   (FAIL — requires > 0.7)
+  Max Drawdown:   -831%    (equity destroyed)
+  Trade Count:    8,310    (3,415/yr = 13.6/day)
+  Net PpT (bps):  -10.20 bps
+
+── PARAMETER SWEEP (50/324 combos sampled) ──────────────────────────
+  Best IS Sharpe:     0.636   (combo: ENTRY=2.0, EXIT=0.25, WIN=15, HEDGE=20, VIX=25)
+  Median IS Sharpe:  ~0.30    (estimated from sample)
+  Worst IS Sharpe:   -0.403
+  NOTE: No combination reached IS Sharpe > 1.0. Sweep terminated early
+        as FAIL verdict was clear. Net PpT was -10.17 to -10.32 bps
+        across ALL combinations — confirming near-zero gross edge.
+
+── ROOT CAUSE ANALYSIS ──────────────────────────────────────────────
+FAILURE MODE 1 — Signal Artifact (primary):
+  The 30-min rolling z-score SELF-REVERTS through window mechanics.
+  When spread hits +1.5sigma, the EXIT condition at 0.25sigma is hit
+  within 1-2 bars because the rolling mean shifts toward the current
+  spread level. Gross PpT ≈ 0 bps across ALL parameter combinations.
+  Evidence: 0.7% win rate, consistent -10.2 bps net = pure cost loss.
+
+FAILURE MODE 2 — Cost Model Mismatch:
+  Canonical 0.05% slippage x $12,500/leg = $6.25/leg/side = $25.52/RT
+  SPY/QQQ actual half-spread: ~0.20 bps (250x cheaper in practice)
+  Annual cost at 3,194 trades/yr: ~$81,500 vs. $25,000 starting capital.
+  Even with realistic 1 bps slippage: IS Sharpe = -0.035 (still FAIL)
+
+── RECOMMENDATIONS ──────────────────────────────────────────────────
+1. Return to Research Director. Redesign signal:
+   - Use DAILY spread z-score baseline (multi-day OLS spread)
+   - Intraday deviations measured vs. daily baseline, not 30-min window
+   - Reference: Chan (2013) Table 6.3 uses daily OLS spread normalization
+   - The 30-min rolling z-score is NOT the methodology in the source paper
+
+2. Engineering Director: initiate cost model calibration for SPY/QQQ:
+   - Realistic slippage: 0.001-0.002% (half-spread ~0.20 bps)
+   - Create calibration ticket per QUA-150/QUA-161 process
+
+3. PDT (secondary): Strategy requires PDT designation (>3 DTs per 5 days).
+   Not primary failure. Min recommended capital: $30K.
+
+── COST MODEL (Engineering Director Canonical) ──────────────────────
+  Fixed:         $0.005/share
+  Slippage:      0.05% of notional (too conservative for SPY/QQQ)
+  Market impact: Almgren-Chriss k=0.1 (negligible at $12,500/leg)
+  Round-trip cost per trade: ~$25.52 (4 legs x $6.25 slippage)
+
+── DATA QUALITY ─────────────────────────────────────────────────────
+  Source:           Alpaca SIP 1-min split-adjusted (2018-2026)
+  Bars downloaded:  SPY 874K RTH + QQQ 873K RTH (2017-07 to 2026-06-08)
+  Lookahead:        None — session-reset z-score, 1-bar latency, prior-day beta
+  Survivorship:     N/A (SPY/QQQ both active)
+
+======================================================================
