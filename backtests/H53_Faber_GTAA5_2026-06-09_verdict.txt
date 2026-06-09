@@ -1,0 +1,8 @@
+Gate 1 Verdict: FAIL
+IS Sharpe: 0.5475
+OOS Sharpe: 1.1533
+IS MDD: -0.1506
+IS Trades: 89
+WF Windows Passed: 2/4
+Permutation p: 0.592
+Failing: is_sharpe_pass, trade_count_pass, wf_windows_pass, dsr_pass, permutation_pass, mc_p5_pass

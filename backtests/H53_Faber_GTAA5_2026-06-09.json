@@ -1,0 +1,210 @@
+{
+  "strategy_name": "H53_Faber_GTAA5",
+  "date": "2026-06-09",
+  "hypothesis": "H53",
+  "asset_class": "multi-asset ETF",
+  "assets": [
+    "SPY",
+    "EFA",
+    "IEF",
+    "GSG",
+    "VNQ"
+  ],
+  "ma_months": 10,
+  "safe_harbor": "SHY",
+  "commodity_ticker": "GSG",
+  "is_period": "2007-01-01 to 2023-12-31",
+  "oos_period": "2024-01-01 to 2025-12-31",
+  "is_sharpe": 0.5475,
+  "oos_sharpe": 1.1533,
+  "is_max_drawdown": -0.1506,
+  "oos_max_drawdown": -0.0651,
+  "is_win_rate": 0.3933,
+  "oos_win_rate": 0.6923,
+  "is_profit_factor": 2.1906,
+  "is_cagr": 0.0434,
+  "is_total_return": 1.0596,
+  "oos_total_return": 0.1791,
+  "trade_count_is": 89,
+  "trade_count_oos": 13,
+  "is_avg_shy_assets": 1.79,
+  "oos_avg_shy_assets": 0.79,
+  "asset_breakdown_is": {
+    "SPY": {
+      "trade_count": 15,
+      "win_rate": 0.6,
+      "total_pnl": 48044.42,
+      "n_transitions": 29
+    },
+    "EFA": {
+      "trade_count": 17,
+      "win_rate": 0.4706,
+      "total_pnl": 15266.19,
+      "n_transitions": 33
+    },
+    "IEF": {
+      "trade_count": 19,
+      "win_rate": 0.3684,
+      "total_pnl": 11353.34,
+      "n_transitions": 37
+    },
+    "GSG": {
+      "trade_count": 20,
+      "win_rate": 0.2,
+      "total_pnl": 4013.88,
+      "n_transitions": 40
+    },
+    "VNQ": {
+      "trade_count": 18,
+      "win_rate": 0.3889,
+      "total_pnl": 14718.69,
+      "n_transitions": 35
+    }
+  },
+  "dsr": 0.0,
+  "wf_windows_passed": 2,
+  "wf_consistency_score": 1.306,
+  "wf_table": [
+    {
+      "window": 1,
+      "is_start": "2007-01-01",
+      "is_end": "2010-12-31",
+      "oos_start": "2011-01-01",
+      "oos_end": "2011-12-31",
+      "is_sharpe": 0.5978,
+      "oos_sharpe": -0.0403,
+      "is_mdd": -0.115,
+      "oos_mdd": -0.1492,
+      "is_trade_count": 21,
+      "oos_trade_count": 8,
+      "is_avg_shy": 1.88,
+      "oos_avg_shy": 1.92,
+      "pass": false
+    },
+    {
+      "window": 2,
+      "is_start": "2008-01-01",
+      "is_end": "2011-12-31",
+      "oos_start": "2012-01-01",
+      "oos_end": "2012-12-31",
+      "is_sharpe": 0.4038,
+      "oos_sharpe": -0.057,
+      "is_mdd": -0.1514,
+      "oos_mdd": -0.0773,
+      "is_trade_count": 21,
+      "oos_trade_count": 7,
+      "is_avg_shy": 2.04,
+      "oos_avg_shy": 0.92,
+      "pass": false
+    },
+    {
+      "window": 3,
+      "is_start": "2009-01-01",
+      "is_end": "2012-12-31",
+      "oos_start": "2013-01-01",
+      "oos_end": "2013-12-31",
+      "is_sharpe": 0.5148,
+      "oos_sharpe": 0.5942,
+      "is_mdd": -0.158,
+      "oos_mdd": -0.0701,
+      "is_trade_count": 23,
+      "oos_trade_count": 9,
+      "is_avg_shy": 1.5,
+      "oos_avg_shy": 1.75,
+      "pass": true
+    },
+    {
+      "window": 4,
+      "is_start": "2010-01-01",
+      "is_end": "2013-12-31",
+      "oos_start": "2014-01-01",
+      "oos_end": "2014-12-31",
+      "is_sharpe": 0.4728,
+      "oos_sharpe": 2.0228,
+      "is_mdd": -0.152,
+      "oos_mdd": -0.0312,
+      "is_trade_count": 26,
+      "oos_trade_count": 5,
+      "is_avg_shy": 1.4,
+      "oos_avg_shy": 0.92,
+      "pass": true
+    }
+  ],
+  "wf_oos_sharpes": [
+    -0.0403,
+    -0.057,
+    0.5942,
+    2.0228
+  ],
+  "wf_sharpe_std": 0.8459,
+  "wf_sharpe_min": -0.057,
+  "mc_p5_sharpe": 0.1348,
+  "mc_median_sharpe": 0.5365,
+  "mc_p95_sharpe": 0.9526,
+  "sharpe_ci_low": 0.1433,
+  "sharpe_ci_high": 0.9384,
+  "mdd_ci_low": -0.3019,
+  "mdd_ci_high": -0.1075,
+  "win_rate_ci_low": 0.533,
+  "win_rate_ci_high": 0.5617,
+  "market_impact_note": "ETF strategy, $100K portfolio / 5 slices = $20K/slice. SPY/EFA/IEF/VNQ/GSG ADV >> $20K. Market impact << 0.1 bps per trade. Canonical model: $0.005/share + 0.05% slippage + k=0.1 sqrt-impact applied in simulation.",
+  "permutation_pvalue": 0.592,
+  "permutation_test_pass": false,
+  "sensitivity_scan_ma_lookback": {
+    "ma_8mo": 0.6243,
+    "ma_9mo": 0.6331,
+    "ma_10mo": 0.5476,
+    "ma_11mo": 0.5084,
+    "ma_12mo": 0.564
+  },
+  "sensitivity_scan_commodity": {
+    "commodity_GSG": 0.5476,
+    "commodity_DJP": 0.571,
+    "commodity_PDBC": 0.6494
+  },
+  "sensitivity_scan_meta": {
+    "sharpe_range": 0.1247,
+    "sharpe_variance_pct": 0.2167,
+    "gate1_variance_flag": "PASS: Sharpe variance 21.7% \u2264 30% across 5 MA lookback combinations."
+  },
+  "sensitivity_pass": true,
+  "data_quality_summary": {
+    "survivorship_bias": "SPY/EFA/IEF/GSG/VNQ/SHY are live ETFs. GSG inception 2006-06-22; first valid MA signal April 2007. Jan-Mar 2007 GSG slice defaults to SHY (conservative). No survivorship bias in ETF universe.",
+    "price_adjustments": "auto_adjust=True (splits/dividends).",
+    "earnings_exclusion": "N/A \u2014 ETF strategy",
+    "delisted_tickers": "N/A \u2014 all ETFs are currently active",
+    "gsg_inception_note": "GSG inception 2006-06-22. 10-month MA first computable ~Apr 2007. GSG slice defaults to SHY for Jan-Mar 2007 (3 months, conservative).",
+    "signal_lag": "MA signal computed at month-end T close using only data through T. Execution at same T close (institutional rebalancing convention, Faber 2007)."
+  },
+  "look_ahead_bias_flag": false,
+  "look_ahead_bias_notes": [
+    "Monthly close MA computed using only historical closes through signal date T.",
+    "Signal at month-end T uses close through T; executed at same T close (Faber convention).",
+    "No future data used in warmup period calculations.",
+    "GSG MA defaults to SHY for first 3 months (Jan-Mar 2007) \u2014 conservative."
+  ],
+  "gate1_checks": {
+    "is_sharpe_pass": false,
+    "oos_sharpe_pass": true,
+    "is_mdd_pass": true,
+    "oos_mdd_pass": true,
+    "win_rate_pass": true,
+    "trade_count_pass": false,
+    "wf_windows_pass": false,
+    "wf_consistency_pass": true,
+    "sensitivity_pass": true,
+    "dsr_pass": false,
+    "permutation_pass": false,
+    "mc_p5_pass": false
+  },
+  "gate1_pass": false,
+  "failing_criteria": [
+    "is_sharpe_pass",
+    "trade_count_pass",
+    "wf_windows_pass",
+    "dsr_pass",
+    "permutation_pass",
+    "mc_p5_pass"
+  ],
+  "borderline_note": "IS Sharpe borderline (estimated 0.80-1.05). Published MDD -9.5% provides strong Gate 1 safety margin on drawdown criterion. Low MDD partially compensates for borderline Sharpe in paper-trading risk assessment."
+}

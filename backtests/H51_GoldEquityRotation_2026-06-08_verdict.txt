@@ -1,0 +1,152 @@
+Gate 1 v2.0 Verdict: H51 Gold/Equity Relative Momentum Risk Timer
+
+Run date : 2026-06-08
+Task     : QUA-113
+Strategy : strategies/h51_gold_equity_risk_rotation.py
+Verdict  : FAIL (4/7 criteria)
+
+=================================================================
+GATE 1 v2.0 CRITERIA SUMMARY
+=================================================================
+
+  [FAIL] IS Sharpe (2005-01-01–2021-12-31): 0.6457 (threshold: > 1.0)
+  [FAIL] OOS Sharpe (2022-01-01–2024-12-31): -0.0625 (threshold: > 0.7)
+  [FAIL] IS Max Drawdown: -29.84% (threshold: > -20%)
+  [PASS] IS Win Rate: 51.96% (threshold: > 50%)
+  [PASS] IS Trade Count: 204 (threshold: >= 120)
+  [PASS] Walk-Forward Stability: 5/6 windows (threshold: >= 4/6 windows)
+  [PASS] Parameter Sensitivity: max reduction 28.8% (threshold: < 50% Sharpe reduction)
+
+=================================================================
+COMPOSITE SCORE (KPI Spec v0.3)
+=================================================================
+
+  NetSharpe norm    (40%) : 0.3229
+  ProfitPerTrade norm(30%): 1.0000
+  Stability norm    (20%) : 0.0000
+  TradeAdequacy norm(10%) : 1.0000
+  Composite Score         : 0.5291  (pass bar >= 0.60 → FAIL)
+
+=================================================================
+IN-SAMPLE PERFORMANCE (2005-01-01 to 2021-12-31)
+=================================================================
+
+  Sharpe ratio      : 0.6457
+  Max drawdown      : -29.84%
+  Total return      : 232.04%
+  Annualized vol    : implied from Sharpe + return
+  Win rate          : 51.96%  (monthly period: held asset > alt)
+  Profit factor     : 2.16
+  Trade count       : 204 (12.0/yr)  [1 trade = 1 calendar month]
+  Avg PnL/trade     : 62.4 bps/month
+  Regime (SPY)      : 53.5% of days
+  Risk-on months    : 109
+  Risk-off months   : 95 (in SHY)
+  Transitions       : 102 total (6.0/yr)
+  Total cost drag   : 13.8001%
+
+=================================================================
+OUT-OF-SAMPLE PERFORMANCE (2022-01-01 to 2024-12-31)
+=================================================================
+
+  Sharpe ratio      : -0.0625
+  Max drawdown      : -30.05%
+  Total return      : -4.52%
+  Win rate          : 44.44%
+  Profit factor     : 0.95
+  Trade count       : 36 (12.0/yr)
+  Avg PnL/trade     : -6.9 bps/month
+  Risk-off months   : 15
+  Transitions       : 21
+
+=================================================================
+WALK-FORWARD ANALYSIS (6 sub-windows)
+=================================================================
+
+  Sharpe floor: 0.3  |  Result: 5/6 pass → STABLE
+
+  [PASS] 2005-01-01 to 2007-12-31: Sharpe=0.746  MDD=-6.43%  WinRate=44.44%  trades=36  risk_off=21mo
+  [PASS] 2008-01-01 to 2010-12-31: Sharpe=0.430  MDD=-29.84%  WinRate=61.11%  trades=36  risk_off=20mo
+  [PASS] 2011-01-01 to 2013-12-31: Sharpe=1.504  MDD=-9.55%  WinRate=63.89%  trades=36  risk_off=15mo
+  [FAIL] 2014-01-01 to 2016-12-31: Sharpe=0.270  MDD=-17.81%  WinRate=38.89%  trades=36  risk_off=14mo
+  [PASS] 2017-01-01 to 2019-12-31: Sharpe=0.311  MDD=-20.76%  WinRate=50.00%  trades=36  risk_off=14mo
+  [PASS] 2020-01-01 to 2021-12-31: Sharpe=0.844  MDD=-11.38%  WinRate=50.00%  trades=24  risk_off=11mo
+
+=================================================================
+PARAMETER SENSITIVITY (IS 2005-01-01–2021-12-31)
+=================================================================
+
+  Baseline Sharpe: 0.6457
+  Max reduction  : 28.8% → STABLE
+
+  lookback=10d              Sharpe=0.639  risk_off=103mo  Δ=+1.1%
+  lookback=15d              Sharpe=0.531  risk_off=95mo  Δ=+17.8%
+  lookback=25d              Sharpe=0.661  risk_off=86mo  Δ=-2.4%
+  lookback=30d              Sharpe=0.730  risk_off=96mo  Δ=-13.0%
+  lookback=40d              Sharpe=0.460  risk_off=87mo  Δ=+28.8%
+  threshold=+1pct           Sharpe=0.765  risk_off=77mo  Δ=-18.5%
+  threshold=-1pct           Sharpe=0.647  risk_off=108mo  Δ=-0.3%
+  ma_filter=True_200d       Sharpe=0.644  risk_off=109mo  Δ=+0.3%
+
+=================================================================
+DATA QUALITY CHECKLIST
+=================================================================
+
+  [x] Survivorship bias : not_applicable — SPY, GLD, SHY are all current active ETFs with no delisting risk. GLD inception Nov 2004 constrains IS start to Jan 2005.
+  [x] Price adjustment  : auto_adjust=True (splits + dividends applied)
+  [x] Data gaps SPY     : ok: max_consecutive_missing=2 (<=5)
+  [x] Data gaps GLD     : ok: max_consecutive_missing=2 (<=5)
+  [x] Data gaps SHY     : ok: max_consecutive_missing=2 (<=5)
+  [x] Earnings exposure : not_applicable — ETF rotation strategy. Monthly hold periods make individual earnings events irrelevant.
+  [x] Delisted tickers  : not_applicable — SPY (inception 1993), GLD (Nov 2004), SHY (2002) all currently active.
+
+=================================================================
+HARD GATE CHECKS
+=================================================================
+
+  HG-1 Net OOS Sharpe floor (>0.7)  : FAIL  [-0.0625]
+  HG-2 Same-bar fill                 : PASS — signal at month-end close T; position effective T+1 (shift(1) in equity curve)
+  HG-3 Look-ahead bias               : PASS — 20d return uses data through T close; no future data leakage
+  HG-4 Net-positive (gross PF > 1.0) : PASS  [2.16]
+  HG-5 IS trade count >= 120         : PASS  [204]
+  HG-6 MDD < 40%                     : PASS  [-29.84%]
+  HG-7 PDT compliance                : PASS — 1 transition/month (not a day trade); monthly hold, PDT-safe
+
+=================================================================
+PARAMETERS USED
+=================================================================
+
+  lookback_days      : 20
+  safe_harbor_asset  : SHY
+  signal_threshold   : 0.0
+  ma_filter          : False
+  order_qty          : 100 shares
+  fixed_cost/share   : $0.005
+  slippage_pct       : 0.0500%
+  market_impact_k    : 0.1  (Almgren-Chriss sqrt model)
+  init_cash          : $25,000.0
+
+=================================================================
+NARRATIVE
+=================================================================
+
+H51 Gold/Equity Risk Timer FAILS Gate 1 v2.0 (4/7 criteria).
+
+Failing criteria (3): IS Sharpe (2005-01-01–2021-12-31), OOS Sharpe (2022-01-01–2024-12-31), IS Max Drawdown
+
+IS Sharpe 0.6457 is below the 1.0 threshold.
+OOS Sharpe -0.0625 is below the 0.7 threshold.
+IS trade count 204 is above the 120-trade floor.
+
+Root cause assessment:
+  - IS Sharpe 0.6457 below 1.0. The GLD/SPY signal may have too many false positives (gold spikes during equity bull markets). Consider (1) higher signal threshold (+1% band), (2) regime persistence filter (2 consecutive months), (3) dual signal with VIX term structure (H50).
+  - OOS Sharpe -0.0625 below 0.7. The 2022 rate-shock environment where both GLD and SPY fell simultaneously may have degraded the cross-asset safe-haven signal. Review 2022 signal accuracy.
+  - IS MDD -29.84% exceeds 20% limit. GFC period (2008-2009 acute Lehman crash) when both GLD and SPY fell simultaneously likely contributed. Consider VIX overlay or 200-day MA re-entry filter.
+
+Recommendation: Return to Research Director.
+Consider: (1) 2-month persistence filter, (2) dual-signal H50+H51 combination,
+(3) +1% signal threshold to reduce false positives.
+
+=================================================================
+
+Generated by Engineering Director | QUA-113 | 2026-06-08
