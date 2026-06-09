@@ -31,6 +31,31 @@ Most retail quant traders focus on one asset class. Running systematic strategie
 
 ---
 
+## Portfolio Construction Thesis
+
+**The edge is in the portfolio, not any single strategy.**
+
+Consistency — the goal of generating reliable monthly income — is a property of a
+*portfolio plus risk management*, not of a single algorithm. Chasing one perfect
+strategy misallocates research effort and exposes the firm to single-point-of-failure risk.
+
+The company's research and deployment pipeline is built around this:
+
+1. **Sleeve of edges**: admit strategies with even modest standalone net Sharpe (~0.3–0.5)
+   if they pass Gate 1 **and** are low-correlation (< 0.4) to existing sleeve members.
+   Correlation to the current sleeve is an explicit admission dimension, not a nice-to-have.
+
+2. **Overlay sizing**: each sleeve member is vol-targeted to 10% annualized volatility.
+   The portfolio-level circuit breaker halts all live trading if drawdown exceeds 8%.
+
+3. **Retirement discipline**: sleeve members are retired when they show correlation drift,
+   performance decay, or drawdown breach. The sleeve evolves — no strategy has tenure.
+
+The workflow governing sleeve admission, sizing, and retirement is in
+`workflow-contracts/portfolio-construction.md`.
+
+---
+
 ## Strategic Reality Check
 
 ### What $25K means

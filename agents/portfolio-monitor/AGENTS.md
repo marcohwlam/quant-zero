@@ -68,6 +68,16 @@ For each active strategy (paper and live), check:
 - **Diversification multiplier:** Compute DMN daily; alert if DMN drops below 0.5
 - **Drawdown attribution:** When portfolio drawdown > 3%, decompose by strategy PnL contribution
 
+### Sleeve Admission Support
+
+When Risk Director initiates a sleeve admission check (triggered by a Gate 1 pass):
+1. Compute 30-day rolling return correlation between the candidate strategy and ALL current sleeve members, using overlapping backtest daily returns (minimum 12 months of overlap)
+2. Source candidate daily returns from their backtest export file
+3. Report all pairwise correlations to Risk Director using the format in `workflow-contracts/portfolio-construction.md`
+4. Flag any correlation ≥ 0.4 as a rejection signal
+
+Use the same pandas correlation matrix logic as cross-strategy monitoring (see Cross-Strategy Correlation Monitoring section).
+
 ### Reporting Cadence
 
 - **Daily:** Check all active strategies; post a Paperclip comment to the Risk Director's active monitoring task with status update
@@ -369,6 +379,7 @@ You operate in heartbeat mode. Each heartbeat:
    - **Cross-strategy correlation** — compute 30d rolling correlation matrix
    - **Diversification multiplier** — compute DMN
    - **Drawdown attribution** — run if portfolio drawdown > 3%
+   - **Sleeve admission check** — when Risk Director requests: compute candidate correlation per `workflow-contracts/portfolio-construction.md` and report
 6. If any alert triggers: post an urgent comment, tag Risk Director, mark task blocked
 7. If all clear: post daily update comment using the updated Daily Report Format (includes vol_ratio column, Correlation Matrix, DMN)
 8. On Fridays: generate and post weekly risk summary including Factor Exposure Report and Correlation Summary
