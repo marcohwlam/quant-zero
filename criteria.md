@@ -1,18 +1,41 @@
-# Gate 1 Acceptance Criteria — Minute-Level (v2.2)
+# Gate 1 Acceptance Criteria (v2.3)
 
-**Version:** 2.2
-**Locked by:** CEO (v2.1 base locked; v2.2 threshold calibration PENDING CEO LOCK — QUA-150)
-**Status:** LOCKED (base) / PROPOSED (quantitative thresholds + cost model) — CEO locks thresholds on PR merge.
-**Supersedes:** v1.3 (daily/swing). The daily track is replaced going forward;
-prior daily-track backtests are not retroactively re-run.
+**Version:** 2.3
+**Locked by:** CEO
+**Status:** CEO-LOCKED
+**Supersedes:** v1.3 (daily/swing) for quantitative thresholds. Daily/weekly horizon
+re-admitted as eligible candidates (v2.3); prior daily-track backtests not retroactively re-run.
+
+---
+
+## Horizon Selection Policy
+
+Horizon (minute-level, daily, weekly) is **evidence-gated, not fixed by decree.**
+
+- All horizons are eligible candidates for the strategy pipeline.
+- A strategy's horizon is accepted if it meets the charter objective (CAGR ≥ 10%,
+  MaxDD < −15%, net Sharpe > 0.8) after realistic costs at Gate 1.
+- Minute-level held primary status by decree since v2.0. That exclusivity is removed.
+  Minute-level loses exclusive primary status if realized live-vs-backtest slippage
+  (measured by QUA-151) prevents minute-level strategies from meeting the charter
+  constraints — in that case, daily/weekly strategies compete on equal footing.
+- No horizon is auto-excluded. All compete on the same charter objective function
+  and the same calibrated Gate 1 thresholds (QUA-150, 2026-06-09).
+- Decision authority: CEO, informed by QUA-151 slippage findings. See
+  `docs/horizon-evidence-gate-decision-2026-06-09.md` for the rationale.
+
+**Constraint:** this policy widens the eligible horizon set. It does not relax any
+existing Gate 1 threshold, cost model, or architectural pre-flight requirement.
 
 ---
 
 ## Purpose
 
-Gate 1 is the first quality checkpoint in the minute-level strategy promotion pipeline.
-A strategy must pass Gate 1 before it is eligible for paper trading. At minute resolution,
-the dominant failure mode is transaction cost, not curve-fitting — the criteria reflect that.
+Gate 1 is the first quality checkpoint in the strategy promotion pipeline.
+A strategy must pass Gate 1 before it is eligible for paper trading. For minute-level
+submissions, the dominant failure mode is transaction cost, not curve-fitting — the
+criteria reflect that. Daily/weekly submissions face the same output thresholds on a
+bar-appropriate basis.
 
 ---
 
@@ -22,7 +45,7 @@ the dominant failure mode is transaction cost, not curve-fitting — the criteri
 |-----------|-------------|-----------|
 | Backtest window | 2 years: 2022-01 to 2024-12 | Covers rate-shock (2022) and normalization (2023-2024). |
 | Walk-forward windows | 6 non-overlapping | 3-month in-sample / 1-month out-of-sample each. |
-| Bar definition | Per asset class | 1-min equities RTH; 1-min crypto 24/7; 1-min futures session. |
+| Bar definition | Per asset class and horizon | Minute-level: 1-min equities RTH; 1-min crypto 24/7; 1-min futures session. Daily: EOD bars. Weekly: weekly close bars. |
 
 ---
 
@@ -148,4 +171,5 @@ Full hard gate list is in `docs/kpi-minute-level.md` §Hard Gates (Gates 1–8).
 | 2.0 | 2026-06-06 | Rewrite for minute-level, all assets | Company pivot to minute-level trading; cost realism promoted to top-level gate; thresholds deferred to data calibration. |
 | 2.0.1 | 2026-06-07 | Reference `docs/kpi-minute-level.md` v0.3 (CEO-locked). Added Gate 8 (PDT) to auto-disqualification summary. KPI doc is the authoritative objective function. | CEO — [QUA-68](/QUA/issues/QUA-68) |
 | 2.1 | 2026-06-09 | Add "Strategy Architecture" section encoding the three-layer construction discipline (regime filter / universe filter / single alpha) as a binding pre-flight requirement (PF-5). Add PF-5 auto-defer rule to `docs/gate1-intake-process.md`. Output thresholds unchanged. Motivation: H49/H50/H51 monthly-rotation dead-end — all failed MDD gate due to absent regime filter; structural failure now caught at intake not output. | CEO — [QUA-144](/QUA/issues/QUA-144) |
-| 2.2 | 2026-06-09 | Replace all TBD/PLACEHOLDER thresholds with data-backed calibrated values for all three asset classes (equities intraday, crypto, futures). Replace PLACEHOLDER cost model with AGENTS.md canonical (exchange fee schedules + Almgren-Chriss impact). Full derivation in `docs/gate1-threshold-calibration-2026-06-09.md`. | Engineering Director — [QUA-150](/QUA/issues/QUA-150) — PENDING CEO LOCK |
+| 2.2 | 2026-06-09 | Replace all TBD/PLACEHOLDER thresholds with data-backed calibrated values for all three asset classes (equities intraday, crypto, futures). Replace PLACEHOLDER cost model with AGENTS.md canonical (exchange fee schedules + Almgren-Chriss impact). Full derivation in `docs/gate1-threshold-calibration-2026-06-09.md`. | Engineering Director — [QUA-150](/QUA/issues/QUA-150) — CEO-locked in v2.3 |
+| 2.3 | 2026-06-09 | Horizon is evidence-gated, not fixed by decree. Remove minute-level exclusivity. Re-admit daily/weekly as eligible candidates on equal footing. Add Horizon Selection Policy section. Bar definition made horizon-adaptive. v2.2 threshold calibration CEO-locked in this commit. Decision rationale: `docs/horizon-evidence-gate-decision-2026-06-09.md`. | CEO — [QUA-156](/QUA/issues/QUA-156) |
