@@ -1,0 +1,68 @@
+H60 Gate 1 Verdict: FAIL
+Date: 2026-06-09
+Issue: QUA-166
+Hypothesis: research/hypotheses/60_intraday_vwap_mean_reversion.md (v1.2)
+Strategy: Intraday VWAP Mean Reversion (SPY, 1-min bars, 2022-2023 WF)
+
+=== GATE 1 FAILURES ===
+
+1. IS Sharpe -15.044 < 1.0 (canonical 0.05% slippage)
+   Even at SPY-calibrated 0.005% slippage: IS Sharpe -0.877 < 1.0
+
+2. OOS Sharpe -7.969 < 0.7 (canonical)
+   Even at SPY-calibrated: OOS Sharpe -1.280 < 0.7
+
+3. WF Stability 0/6 (canonical), 2/6 (SPY-calibrated) < 3/6 gate
+
+4. Cost model: canonical 0.05% slippage = 1.95x expected gross profit at $25K/$450 SPY
+
+=== FAILURE MODE ANALYSIS ===
+
+Failure Mode A — Cost Model (Primary under canonical model)
+  Round-trip cost for 3 SPY shares: $1.38 (canonical)
+  Expected gross profit per trade: $0.71 (z=2.0->0.25, std=0.03%)
+  Cost/gross ratio: 1.95x — strategy cannot survive canonical cost model at $25K scale
+  SPY-specific reality: bid-ask ~1-2 bps; 0.05% slippage overestimates by 2-5x
+  Action needed: Engineering Director cost model ruling on SPY-specific slippage
+
+Failure Mode B — Signal Quality (Primary; survives cost correction)
+  Win rate (at SPY-calibrated costs): 40.3% — below 50% floor for positive edge
+  Stop-loss rate (OOS): 74% (260/352 trades) — VWAP deviations persist rather than revert
+  VPIN gate failure: VPIN ~0.35-0.40 on trending 2022 sessions (filter threshold 0.55 not triggered)
+  Confirmed hypothesis risk: Kissell (2014) IC compression post-2015 HFT proliferation
+
+=== SUPPLEMENTARY ANALYSIS ===
+
+SPY-Calibrated Cost Sensitivity (0.005% slippage = ~2 bps SPY half-spread):
+  IS Sharpe: -0.877 | OOS Sharpe: -1.280 | WF: 2/6 | Win Rate: 40%
+  Still fails all Gate 1 thresholds — signal quality is the binding constraint
+
+Walk-Forward Windows (SPY-calibrated slippage):
+  W1 IS Q1 2022, OOS Apr 2022:     IS=-0.603, OOS=-2.880 FAIL
+  W2 IS Q2-Q3 2022, OOS Aug 2022:  IS=-1.221, OOS=-7.556 FAIL
+  W3 IS Q3-Q4 2022, OOS Dec 2022:  IS=+1.393, OOS=-1.152 IS-pass, OOS-fail
+  W4 IS Q1 2023, OOS Apr 2023:     IS=-1.972, OOS=+0.191 marginal
+  W5 IS Q2-Q3 2023, OOS Aug 2023:  IS=-3.377, OOS=+1.579 OOS-pass
+  W6 IS Q3-Q4 2023, OOS Dec 2023:  IS=-0.323, OOS=-6.535 FAIL
+
+=== RECOMMENDATION TO RESEARCH DIRECTOR ===
+
+Two required revisions before resubmission:
+
+1. Regime filter upgrade: VPIN alone insufficient for 2022 trending environment.
+   Candidates: opening range filter (skip if first 30-min range > 1.5%), stricter VPIN
+   threshold (0.45), or VWAP-slope trend filter.
+
+2. IC re-estimation: Kissell (2014) VWAP IC (0.12-0.15) confirmed stale for 2022-2024.
+   Win rate at near-zero cost is 40% vs 50%+ needed. Research Director to re-estimate
+   IC from 2022-2024 data before next iteration.
+
+3. Engineering Director cost model ruling: SPY-specific slippage (0.003-0.005%) vs
+   canonical 0.05% requires sign-off before any SPY-only backtest can use reduced model.
+
+=== FILES ===
+Metrics JSON:    backtests/h60_intraday_vwap_mean_reversion_2026-06-09.json
+OOS Trades:      backtests/h60_intraday_vwap_mean_reversion_2026-06-09_oos_trades.json
+Report (md):     backtests/h60_intraday_vwap_mean_reversion_2026-06-09_report.md
+Strategy code:   strategies/h60_intraday_vwap_mean_reversion.py
+Backtest runner: backtests/run_h60_gate1.py

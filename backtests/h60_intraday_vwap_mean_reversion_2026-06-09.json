@@ -1,0 +1,408 @@
+{
+  "strategy": "H60_IntraVWAPMeanReversion",
+  "date": "2026-06-09",
+  "issue": "QUA-166",
+  "verdict": "FAIL",
+  "gate1_failures": [
+    "IS Sharpe -0.877 (canonical: -15.044) < 1.0 threshold \u2014 even at SPY-calibrated costs",
+    "OOS Sharpe -1.280 (canonical: -7.969) < 0.7 threshold \u2014 signal quality insufficient",
+    "WF stability 2/6 (canonical: 0/6) < 3/6 minimum \u2014 regime-inconsistent",
+    "Cost model: canonical 0.05% slippage = 1.95x expected gross profit at $25K scale (auto-destructive)"
+  ],
+  "parameters": {
+    "ENTRY_Z": 1.5,
+    "EXIT_Z": 0.25,
+    "STOP_Z": 3.0,
+    "LOOKBACK_BARS": 30,
+    "VPIN_INFORMED": 0.55,
+    "VPIN_CRISIS": 0.7,
+    "VPIN_WINDOW": 50,
+    "time_stop_bars": 60,
+    "TRADE_START_ET": "10:30",
+    "TRADE_END_ET": "14:30",
+    "EOD_EXIT_ET": "15:00",
+    "VIX_NORMAL": 25.0,
+    "VIX_ELEVATED": 35.0,
+    "POSITION_SIZE_FULL": 0.07,
+    "POSITION_SIZE_REDUCED": 0.04,
+    "INIT_CASH": 25000,
+    "PRIMARY": "SPY",
+    "ROBUSTNESS": "QQQ"
+  },
+  "primary": {
+    "symbol": "SPY",
+    "is_summary": {
+      "period": "IS_AGGREGATE",
+      "sharpe": -15.044,
+      "max_drawdown": -0.0519,
+      "win_rate": 0.1704,
+      "trade_count": 1068,
+      "long_count": 522,
+      "short_count": 546,
+      "total_return_pct": -5.199,
+      "profit_factor": 0.1341,
+      "avg_profit_per_trade_bps": -9.5089,
+      "avg_bars_held": 10.24,
+      "exit_reasons": {
+        "stop_loss": 736,
+        "reversion": 332
+      }
+    },
+    "oos_summary": {
+      "period": "OOS_AGGREGATE",
+      "sharpe": -7.9694,
+      "max_drawdown": -0.0201,
+      "win_rate": 0.1534,
+      "trade_count": 352,
+      "long_count": 187,
+      "short_count": 165,
+      "total_return_pct": -2.0152,
+      "profit_factor": 0.11,
+      "avg_profit_per_trade_bps": -9.819,
+      "avg_bars_held": 9.9,
+      "exit_reasons": {
+        "reversion": 91,
+        "stop_loss": 260,
+        "time_stop": 1
+      }
+    },
+    "wf_stability": {
+      "windows_profitable": 0,
+      "total_windows": 6,
+      "stability_fraction": 0.0,
+      "stability_pass": false
+    },
+    "wf_windows": [
+      {
+        "window": 1,
+        "is_start": "2022-01-01",
+        "is_end": "2022-03-31",
+        "oos_start": "2022-04-01",
+        "oos_end": "2022-04-30",
+        "is": {
+          "period": "IS_W1",
+          "sharpe": -19.7673,
+          "max_drawdown": -0.0073,
+          "win_rate": 0.233,
+          "trade_count": 176,
+          "long_count": 88,
+          "short_count": 88,
+          "total_return_pct": -0.7428,
+          "profit_factor": 0.1713,
+          "avg_profit_per_trade_bps": -9.333,
+          "avg_bars_held": 10.29,
+          "exit_reasons": {
+            "stop_loss": 122,
+            "reversion": 54
+          }
+        },
+        "oos": {
+          "period": "OOS_W1",
+          "sharpe": -20.4224,
+          "max_drawdown": -0.0029,
+          "win_rate": 0.2414,
+          "trade_count": 58,
+          "long_count": 38,
+          "short_count": 20,
+          "total_return_pct": -0.2927,
+          "profit_factor": 0.1285,
+          "avg_profit_per_trade_bps": -9.9749,
+          "avg_bars_held": 9.43,
+          "exit_reasons": {
+            "reversion": 15,
+            "stop_loss": 43
+          }
+        },
+        "oos_profitable": false
+      },
+      {
+        "window": 2,
+        "is_start": "2022-05-01",
+        "is_end": "2022-07-31",
+        "oos_start": "2022-08-01",
+        "oos_end": "2022-08-31",
+        "is": {
+          "period": "IS_W2",
+          "sharpe": -13.4959,
+          "max_drawdown": -0.0067,
+          "win_rate": 0.2176,
+          "trade_count": 170,
+          "long_count": 83,
+          "short_count": 87,
+          "total_return_pct": -0.6576,
+          "profit_factor": 0.2133,
+          "avg_profit_per_trade_bps": -10.3704,
+          "avg_bars_held": 10.71,
+          "exit_reasons": {
+            "reversion": 49,
+            "stop_loss": 121
+          }
+        },
+        "oos": {
+          "period": "OOS_W2",
+          "sharpe": -30.0607,
+          "max_drawdown": -0.0042,
+          "win_rate": 0.1452,
+          "trade_count": 62,
+          "long_count": 35,
+          "short_count": 27,
+          "total_return_pct": -0.4554,
+          "profit_factor": 0.0632,
+          "avg_profit_per_trade_bps": -11.7755,
+          "avg_bars_held": 11.05,
+          "exit_reasons": {
+            "stop_loss": 45,
+            "reversion": 17
+          }
+        },
+        "oos_profitable": false
+      },
+      {
+        "window": 3,
+        "is_start": "2022-09-01",
+        "is_end": "2022-11-30",
+        "oos_start": "2022-12-01",
+        "oos_end": "2022-12-31",
+        "is": {
+          "period": "IS_W3",
+          "sharpe": -14.5029,
+          "max_drawdown": -0.0061,
+          "win_rate": 0.2486,
+          "trade_count": 181,
+          "long_count": 90,
+          "short_count": 91,
+          "total_return_pct": -0.6041,
+          "profit_factor": 0.2422,
+          "avg_profit_per_trade_bps": -8.3688,
+          "avg_bars_held": 9.96,
+          "exit_reasons": {
+            "stop_loss": 121,
+            "reversion": 60
+          }
+        },
+        "oos": {
+          "period": "OOS_W3",
+          "sharpe": -22.8915,
+          "max_drawdown": -0.0031,
+          "win_rate": 0.1695,
+          "trade_count": 59,
+          "long_count": 26,
+          "short_count": 33,
+          "total_return_pct": -0.3393,
+          "profit_factor": 0.1713,
+          "avg_profit_per_trade_bps": -9.5133,
+          "avg_bars_held": 7.95,
+          "exit_reasons": {
+            "stop_loss": 44,
+            "reversion": 14,
+            "time_stop": 1
+          }
+        },
+        "oos_profitable": false
+      },
+      {
+        "window": 4,
+        "is_start": "2023-01-01",
+        "is_end": "2023-03-31",
+        "oos_start": "2023-04-01",
+        "oos_end": "2023-04-30",
+        "is": {
+          "period": "IS_W4",
+          "sharpe": -21.6496,
+          "max_drawdown": -0.0107,
+          "win_rate": 0.1445,
+          "trade_count": 173,
+          "long_count": 80,
+          "short_count": 93,
+          "total_return_pct": -1.0686,
+          "profit_factor": 0.1296,
+          "avg_profit_per_trade_bps": -9.9994,
+          "avg_bars_held": 9.76,
+          "exit_reasons": {
+            "stop_loss": 127,
+            "reversion": 46
+          }
+        },
+        "oos": {
+          "period": "OOS_W4",
+          "sharpe": -26.9753,
+          "max_drawdown": -0.0031,
+          "win_rate": 0.125,
+          "trade_count": 56,
+          "long_count": 29,
+          "short_count": 27,
+          "total_return_pct": -0.3287,
+          "profit_factor": 0.1025,
+          "avg_profit_per_trade_bps": -8.9452,
+          "avg_bars_held": 10.36,
+          "exit_reasons": {
+            "reversion": 16,
+            "stop_loss": 40
+          }
+        },
+        "oos_profitable": false
+      },
+      {
+        "window": 5,
+        "is_start": "2023-05-01",
+        "is_end": "2023-07-31",
+        "oos_start": "2023-08-01",
+        "oos_end": "2023-08-31",
+        "is": {
+          "period": "IS_W5",
+          "sharpe": -31.0864,
+          "max_drawdown": -0.0109,
+          "win_rate": 0.0973,
+          "trade_count": 185,
+          "long_count": 79,
+          "short_count": 106,
+          "total_return_pct": -1.1178,
+          "profit_factor": 0.0348,
+          "avg_profit_per_trade_bps": -9.9196,
+          "avg_bars_held": 10.06,
+          "exit_reasons": {
+            "stop_loss": 123,
+            "reversion": 62
+          }
+        },
+        "oos": {
+          "period": "OOS_W5",
+          "sharpe": -22.99,
+          "max_drawdown": -0.0028,
+          "win_rate": 0.1846,
+          "trade_count": 65,
+          "long_count": 40,
+          "short_count": 25,
+          "total_return_pct": -0.2967,
+          "profit_factor": 0.1651,
+          "avg_profit_per_trade_bps": -8.396,
+          "avg_bars_held": 10.77,
+          "exit_reasons": {
+            "reversion": 16,
+            "stop_loss": 49
+          }
+        },
+        "oos_profitable": false
+      },
+      {
+        "window": 6,
+        "is_start": "2023-09-01",
+        "is_end": "2023-11-30",
+        "oos_start": "2023-12-01",
+        "oos_end": "2023-12-31",
+        "is": {
+          "period": "IS_W6",
+          "sharpe": -26.6363,
+          "max_drawdown": -0.0099,
+          "win_rate": 0.0874,
+          "trade_count": 183,
+          "long_count": 102,
+          "short_count": 81,
+          "total_return_pct": -1.0081,
+          "profit_factor": 0.0744,
+          "avg_profit_per_trade_bps": -9.1265,
+          "avg_bars_held": 10.64,
+          "exit_reasons": {
+            "stop_loss": 122,
+            "reversion": 61
+          }
+        },
+        "oos": {
+          "period": "OOS_W6",
+          "sharpe": -30.4865,
+          "max_drawdown": -0.0028,
+          "win_rate": 0.0385,
+          "trade_count": 52,
+          "long_count": 19,
+          "short_count": 33,
+          "total_return_pct": -0.3023,
+          "profit_factor": 0.0285,
+          "avg_profit_per_trade_bps": -10.3786,
+          "avg_bars_held": 9.67,
+          "exit_reasons": {
+            "reversion": 13,
+            "stop_loss": 39
+          }
+        },
+        "oos_profitable": false
+      }
+    ],
+    "cost_to_gross_ratio": 8.3837,
+    "gate1_eval": {
+      "is_sharpe_pass": false,
+      "oos_sharpe_pass": false,
+      "mdd_pass": true,
+      "min_trades_pass": true,
+      "wf_stability_pass": false
+    }
+  },
+  "robustness": {
+    "symbol": "QQQ",
+    "is_summary": {
+      "period": "IS_AGGREGATE",
+      "sharpe": -10.0435,
+      "max_drawdown": -0.046,
+      "win_rate": 0.262,
+      "trade_count": 1004,
+      "long_count": 501,
+      "short_count": 503,
+      "total_return_pct": -4.6112,
+      "profit_factor": 0.2758,
+      "avg_profit_per_trade_bps": -8.8026,
+      "avg_bars_held": 10.14,
+      "exit_reasons": {
+        "stop_loss": 684,
+        "reversion": 319,
+        "time_stop": 1
+      }
+    },
+    "oos_summary": {
+      "period": "OOS_AGGREGATE",
+      "sharpe": -6.6361,
+      "max_drawdown": -0.0207,
+      "win_rate": 0.1988,
+      "trade_count": 347,
+      "long_count": 187,
+      "short_count": 160,
+      "total_return_pct": -2.0696,
+      "profit_factor": 0.2134,
+      "avg_profit_per_trade_bps": -9.6644,
+      "avg_bars_held": 9.46,
+      "exit_reasons": {
+        "reversion": 91,
+        "stop_loss": 256
+      }
+    },
+    "wf_stability": {
+      "windows_profitable": 0,
+      "total_windows": 6,
+      "stability_fraction": 0.0,
+      "stability_pass": false
+    }
+  },
+  "supplementary_analysis": {
+    "spy_calibrated_slippage": {
+      "slippage_pct": 5e-05,
+      "note": "SPY half-spread ~2 bps; 10x lower than canonical 0.05%",
+      "is_sharpe": -0.8767,
+      "oos_sharpe": -1.2797,
+      "wf_stability_windows": 2,
+      "verdict": "FAIL \u2014 negative Sharpe even at SPY-calibrated costs; signal quality insufficient"
+    },
+    "cost_model_analysis": {
+      "canonical_slippage_pct": 0.0005,
+      "spy_typical_slippage_pct": 5e-05,
+      "rt_cost_canonical_3sh_usd": 1.38,
+      "rt_cost_spy_calib_3sh_usd": 0.11,
+      "expected_gross_profit_3sh_usd": 0.71,
+      "canonical_cost_to_gross_ratio": 1.95,
+      "spy_calib_cost_to_gross_ratio": 0.15,
+      "conclusion": "Canonical 0.05% slippage model, while appropriate for average equities, is 10-17x overestimated for SPY (world's most liquid ETF, bid-ask ~1-2 bps). However, even at SPY-calibrated costs the strategy fails Gate 1 \u2014 signal quality is insufficient in 2022-2023."
+    },
+    "regime_analysis": {
+      "vpin_gate_failure": "VPIN values ~0.35-0.40 in trending 2022 sessions (below 0.55 threshold), failing to exclude persistent-trend sessions where VWAP deviation widens rather than reverts",
+      "2022_environment": "Rate shock \u2192 persistent directional VWAP deviations \u2192 z-score stays elevated \u2192 stop_loss rate 74% (260/352 OOS trades)",
+      "kissell_ic_compression": "Hypothesis estimated IC 0.12-0.15 (Kissell 2014). Observed win rate 40% (at zero cost) vs 50%+ needed for positive edge, consistent with significant IC compression post-2015 HFT proliferation"
+    }
+  }
+}
