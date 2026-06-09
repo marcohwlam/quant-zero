@@ -9,7 +9,7 @@
 **Re-evaluation date:** 2026-06-09
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** APPROVED — Forwarded to Engineering Director for backtesting (QUA-165)
+**Status:** GATE 1 FAIL — Redesigned as H60b (`60b_intraday_vwap_mean_reversion_orb_filter.md`) per QUA-168
 
 ---
 
