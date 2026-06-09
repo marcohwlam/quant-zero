@@ -12,6 +12,45 @@ Defines the formal handoff protocol between Engineering Director and Risk Direct
 
 ---
 
+## 0. Pre-Flight Architecture Check (PF-5) — required before backtest
+
+Every Gate 1 submission must declare the following **before the backtest is run**.
+A submission missing item (a) without documented justification is **auto-deferred** — the Risk Director
+will not schedule the backtest, and the Engineering Director must resolve the gap first.
+
+### PF-5 Required Declarations
+
+Include these three items in the Gate 1 task description under a `### Architecture Declaration` header:
+
+**(a) Regime / risk filter**
+State the explicit rule for when the strategy stands aside (e.g., "long only when VIX < 25 and VPIN < 0.7
+per QUA-127 spec"), OR provide a written justification for trading unconditionally (e.g., "strategy is
+market-neutral; net exposure is zero by construction").
+Reference implementation: `research/filters/vpin_vix_regime_filter_spec.md` ([QUA-127](/QUA/issues/QUA-127)).
+
+**(b) Universe / liquidity filter**
+State the eligibility rules that gate which instruments are tradeable: minimum spread, ADV (average daily
+volume), and market-cap / notional thresholds.
+Reference spec: ([QUA-128](/QUA/issues/QUA-128)).
+
+**(c) Single alpha signal**
+Confirm the strategy relies on one directional alpha signal, not a stack.
+Apply Harvey-Liu-Zhu discipline: the signal's deflated t-statistic must exceed 3.0 before backtest.
+Multiple stacked signals require separate Gate 1 tracks.
+
+### Auto-Defer Rule
+
+| Missing | Action |
+|---------|--------|
+| (a) absent with no justification | **Auto-defer** — Risk Director returns submission without backtest |
+| (b) absent | Risk Director may request within 4-hour SLA before full deferral |
+| (c) multiple signals undeclared | Risk Director returns for decomposition |
+
+This check is the structural guard that prevents the monthly-rotation failure mode (H49/H50/H51):
+full bear-market participation → MDD breach → wasted compute. Catch it at intake, not at output.
+
+---
+
 ## 1. Submission Requirements
 
 Engineering Director submits a Gate 1 review request via a **Paperclip task** with the following required fields:
@@ -48,6 +87,11 @@ Project: Quant Zero
 - OOS Max Drawdown: XX.X%
 - Win Rate: XX.X%
 - Walk-forward windows: X/4
+
+### Architecture Declaration (PF-5 — required; see §0)
+**Regime / risk filter:** [state rule or justify unconditional trading]
+**Universe / liquidity filter:** [state spread/ADV/cap eligibility rules]
+**Single alpha signal:** [name signal; confirm t > 3.0 deflated or state decomposition plan]
 
 ### Look-Ahead Bias Certification
 [ ] I certify that no future data was used during the backtest period.
