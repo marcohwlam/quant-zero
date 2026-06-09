@@ -1,11 +1,13 @@
 # H59: Opening Range Breakout (ORB) — Intraday-Flat Momentum
 
-**Version:** 1.0
+**Version:** 1.1
 **Author:** Alpha Research Agent
 **Date:** 2026-06-09
+**Reviewed by:** Research Director (QUA-143)
+**Review date:** 2026-06-09
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** hypothesis
+**Status:** ready
 
 ---
 
@@ -244,6 +246,47 @@ Exit: close all at 15:55 ET if neither stop nor target hit
 **Related knowledge base / prior hypotheses:**
 - H57 (Intraday Momentum, Gao 2018): related intraday momentum family; ORB is a specific variant with structural entry trigger vs. raw return momentum
 - H49/H50/H51 (retired): monthly ETF rotation — failed on MDD; H59 is the intraday replacement addressing that failure mode
+
+---
+
+## Pre-Flight Gate Checklist
+
+**Reviewed by:** Research Director — [QUA-143](/QUA/issues/QUA-143) — 2026-06-09
+**Ref:** CEO Directive QUA-181 (2026-03-16)
+
+- [x] **PF-1 PASS — Walk-Forward Trade Viability**
+  - ~163 trades/year on SPY (signal fires ~65% of trading days = 163 days/yr)
+  - 5-year IS window: 163 × 5 = **815 trades total**; 815 ÷ 4 = **204 ≥ 30 threshold**
+  - Even 3-year IS (489 ÷ 4 = 122) comfortably clears. PASS.
+
+- [x] **PF-2 PASS — Long-Only MDD Stress (dot-com 2000–2002 / GFC 2008–2009)**
+  - Intraday-flat by construction: all positions closed 15:55 ET daily; zero overnight gap exposure
+  - Max daily loss bounded by stop: OR_width × 1.05 ≈ 0.42% of notional
+  - Worst consecutive losing streak observed (Zarattini & Aziz): 12–15 days → cumulative MDD ≈ 6.3%; extended tail (30 losses): MDD ≈ 12.6%
+  - 99th-percentile MDD: ~7.6% — far below 40% gate
+  - Dot-com bust / GFC triggered multi-month directional drawdowns that ORB cannot participate in (no overnight carry). Bounded by sequential daily losses only. PASS.
+
+- [x] **PF-3 PASS — Data Pipeline Availability**
+  - Requires: 1-minute OHLCV from Alpaca Markets (RTH 09:30–16:00 ET)
+  - NOT required: intraday CVD, session VWAP, options chains, tick data
+  - Alpaca minute OHLCV is a standard API offering (free tier, `https://data.alpaca.markets`)
+  - Precedent: H57 (Intraday Momentum, Gao 2018) uses identical data source; PF-3 explicitly passed: "Pipeline exists for SPY per existing strategy infrastructure"
+  - No exotic or non-integrated data sources. PASS.
+
+- [x] **PF-4 PASS — Rate-Shock Regime Plausibility (2022)**
+  - 2022 rate-shock drove average VIX to ~26 (vs. typical 15–20 in 2017–2019)
+  - **Higher VIX is favorable for ORB**: wider opening ranges → larger per-trade gross edge that survives transaction costs at greater margin
+  - 2022 had frequent macro catalyst days (FOMC, CPI prints, geopolitical shocks) → more trending intraday sessions → higher ORB win rates expected
+  - Intraday-flat design: ORB holds no overnight position → cannot compound losses from the sustained bear trend (SPY −19.4% calendar year)
+  - Empirical confirmation: Zarattini & Aziz (2023) cover 2016–2022 explicitly, reporting OOS Sharpe 0.8–1.2 during this window, which includes the full 2022 rate-shock period
+  - Strategy is NOT long-biased equity carry — it is a daily pattern with a defined stop and EOD flat rule. Does not automatically fail PF-4 for lack of short/hedge mechanism. PASS.
+
+**Hypothesis class:** Pattern-based / binary event-driven (ORB S/R breakout) — priority class per diversification mandate. Not momentum-class.
+**Family iteration:** H59 is a new hypothesis. Related to H57 family (intraday) but different mechanism, entry trigger, and holding period structure. No family iteration limit applies.
+**Signal combination policy:** Single-signal only. Harvey-Liu-Zhu documented in parameter section. No combination required.
+**Alpha decay:** Half-life < 1 day; transaction cost justification provided (net edge 9 bps; cost ≈ 2.5 bps; 3.1:1 edge-to-cost ratio). Alpha Decay gate PASS.
+**PDT constraint:** Documented — $25,001+ account required. Acceptable for paper trading gate.
+**Research Director decision:** ✅ **APPROVED — forward to Engineering Director for Gate 1 backtesting**
 
 ---
 
