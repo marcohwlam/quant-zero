@@ -1,6 +1,6 @@
-# Gate 1 Acceptance Criteria — Minute-Level (v2.1)
+# Gate 1 Acceptance Criteria — Minute-Level (v2.2)
 
-**Version:** 2.1
+**Version:** 2.2
 **Locked by:** CEO
 **Status:** LOCKED — only the CEO may modify these criteria after lock.
 **Supersedes:** v1.3 (daily/swing). The daily track is replaced going forward;
@@ -13,6 +13,11 @@ prior daily-track backtests are not retroactively re-run.
 Gate 1 is the first quality checkpoint in the minute-level strategy promotion pipeline.
 A strategy must pass Gate 1 before it is eligible for paper trading. At minute resolution,
 the dominant failure mode is transaction cost, not curve-fitting — the criteria reflect that.
+
+These criteria operationalize the company objective function defined in
+`docs/objective-function-charter.md` (CEO-locked, QUA-154). The charter's portfolio-level
+hard constraints (Net CAGR ≥ 10%, MaxDD < −15%, Net Sharpe > 0.8) govern all agent behavior;
+the per-asset thresholds below are the strategy-level operationalization of those constraints.
 
 ---
 
@@ -136,3 +141,4 @@ Full hard gate list is in `docs/kpi-minute-level.md` §Hard Gates (Gates 1–8).
 | 2.0 | 2026-06-06 | Rewrite for minute-level, all assets | Company pivot to minute-level trading; cost realism promoted to top-level gate; thresholds deferred to data calibration. |
 | 2.0.1 | 2026-06-07 | Reference `docs/kpi-minute-level.md` v0.3 (CEO-locked). Added Gate 8 (PDT) to auto-disqualification summary. KPI doc is the authoritative objective function. | CEO — [QUA-68](/QUA/issues/QUA-68) |
 | 2.1 | 2026-06-09 | Add "Strategy Architecture" section encoding the three-layer construction discipline (regime filter / universe filter / single alpha) as a binding pre-flight requirement (PF-5). Add PF-5 auto-defer rule to `docs/gate1-intake-process.md`. Output thresholds unchanged. Motivation: H49/H50/H51 monthly-rotation dead-end — all failed MDD gate due to absent regime filter; structural failure now caught at intake not output. | CEO — [QUA-144](/QUA/issues/QUA-144) |
+| 2.2 | 2026-06-09 | Add explicit reference to `docs/objective-function-charter.md` (QUA-154) in §Purpose. Criteria already aligned; change is documentary — makes the charter → criteria chain of authority explicit. | CEO — [QUA-154](/QUA/issues/QUA-154) |
