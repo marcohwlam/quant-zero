@@ -1,6 +1,6 @@
 # MKB-007: Intraday ETF Cointegration Pairs Trading (SPY/QQQ)
 
-**Status:** KNOWLEDGE_BASE
+**Status:** KNOWLEDGE_BASE — H63 family RETIRED (QUA-182, 2026-06-10). Do not initiate new intraday SPY/QQQ pairs hypotheses. Empirical finding: intraday spread trends, not mean-reverts. See `research/findings/63_spy_qqq_intraday_pairs_retirement_2026-06.md`.
 **Author:** Research Director (QUA-163)
 **Date:** 2026-06-09
 **Asset class:** US equity ETFs
@@ -28,6 +28,8 @@ SPY and QQQ are structurally cointegrated: both ETFs track the US large-cap equi
 **Intraday behavior:** While the spread is cointegrated over daily and weekly horizons, it also exhibits strong intraday mean reversion. Institutional relative-value traders (index arbitrageurs, ETF market makers, basis traders) continuously enforce the long-run cointegration relationship within each trading day. When the spread deviates beyond 1.5σ from its intraday rolling mean (estimated over a 30-minute lookback), arbitrage pressure restores it — typically within 10–30 minutes.
 
 **Why minute bars:** The mean-reversion speed at intraday resolution is fast enough to be captured with 1-minute execution (entry at signal bar + 1). Using daily bars would lose most of the edge as intraday spread deviations resolve within hours. Chan (2013) Table 6.3 shows that optimal entry/exit windows for SPY/QQQ spread are 5–30 minutes.
+
+**Signal design note (H63v2 redesign, QUA-175):** The z-score anchor must be a fixed daily baseline (prior-day close stats), NOT a rolling intraday window. A rolling intraday window self-reverts through window mechanics — see Deprecated section under Signal Construction for full explanation.
 
 ---
 
@@ -77,17 +79,33 @@ def compute_hedge_ratio(spy_log_price: pd.Series, qqq_log_price: pd.Series) -> p
 
 ### Spread Construction and Z-Score
 
-```python
-ZSCORE_LOOKBACK_MINUTES = 30  # Intraday rolling window for z-score normalization
+**Current implementation (H63v2 — daily baseline, QUA-175):**
 
-def compute_spread_zscore(spy_log: pd.Series, qqq_log: pd.Series, beta: pd.Series) -> pd.Series:
-    """Spread = log(SPY) - beta * log(QQQ). Z-score normalized over rolling 30-min window."""
-    spread = spy_log - beta * qqq_log
-    rolling_mean = spread.rolling(ZSCORE_LOOKBACK_MINUTES).mean()
-    rolling_std = spread.rolling(ZSCORE_LOOKBACK_MINUTES).std()
-    zscore = (spread - rolling_mean) / rolling_std
-    return zscore
+```python
+BASELINE_LOOKBACK_DAYS = 20  # Rolling daily window for z-score anchor
+
+def compute_daily_baseline(daily_spy: pd.Series, daily_qqq: pd.Series,
+                           beta: float) -> dict:
+    """
+    Compute daily spread mean/std from prior N daily closes.
+    Called ONCE at session open — returns SESSION CONSTANTS (mu_daily, sigma_daily).
+    These values do NOT update intraday, eliminating window self-reversion.
+    """
+    log_spread = np.log(daily_spy) - beta * np.log(daily_qqq)
+    mu = log_spread.rolling(BASELINE_LOOKBACK_DAYS).mean().iloc[-1]
+    sigma = log_spread.rolling(BASELINE_LOOKBACK_DAYS).std().iloc[-1]
+    return {"mu_daily": mu, "sigma_daily": sigma}
+
+def compute_intraday_zscore(spy_bar: float, qqq_bar: float,
+                            beta: float, mu_daily: float, sigma_daily: float) -> float:
+    """Z-score of intraday spread vs fixed daily baseline. mu_daily/sigma_daily are constants."""
+    spread = np.log(spy_bar) - beta * np.log(qqq_bar)
+    return (spread - mu_daily) / sigma_daily if sigma_daily > 0 else 0.0
 ```
+
+**Deprecated (H63v1 — rolling 30-min window, DO NOT USE):**
+
+The original 30-minute rolling z-score approach caused a self-reversion artifact: the rolling mean shifted toward the current spread within 1–2 bars after entry, triggering spurious exits with gross PpT ≈ 0 bps. This design produced 12–15 false trades/day (vs. expected 3–8) and a 0.7% win rate. See [QUA-172](/QUA/issues/QUA-172) for full failure report.
 
 ### Entry/Exit Logic
 
@@ -139,4 +157,5 @@ Note: Chan's sample predates 2018-2022 IS window used in Gate 1. Apply 30–40% 
 
 ## Hypothesis Derived
 
-→ H63: `research/hypotheses/63_spy_qqq_intraday_pairs_mean_reversion.md`
+→ H63v1 (failed): `research/hypotheses/63_spy_qqq_intraday_pairs_mean_reversion.md` — Gate 1 fail; rolling z-score artifact
+→ H63v2 (active): `research/hypotheses/63v2_spy_qqq_pairs_daily_baseline.md` — daily baseline redesign, READY for Gate 1 v2.2

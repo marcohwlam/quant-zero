@@ -6,7 +6,7 @@
 **Asset class:** US equity ETFs (SPY, QQQ)
 **Strategy type:** single-signal, intraday-flat, relative value pairs
 **Hypothesis class:** Cross-asset relative value (CEO Directive QUA-181 Priority Class 3)
-**Status:** READY — forward to Engineering Director for Gate 1 v2.2 backtest
+**Status:** RETIRED — Gate 1 FAIL (QUA-167, 2026-06-09). Root cause: 30-min rolling z-score self-reversion artifact (window mechanics). Superseded by H63v2; family subsequently retired after H63v2 also failed Gate 1 (QUA-177). See retirement record: QUA-182.
 **MKB Source:** MKB-007 (`knowledge_base/mkb007_intraday_etf_pairs_cointegration.md`)
 
 ---
