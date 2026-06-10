@@ -1,24 +1,14 @@
-# H63 NAMING CONFLICT — SUPERSEDED
+# H64: Leveraged-ETF ORB with VIX ≥ 20 Day Filter
 
-**⚠️ This file is superseded. See `64_leveraged_etf_orb_vix_filter.md` (H64).**
-
-Renaming conflict: H63 is reserved for the retired SPY/QQQ Intraday Pairs family ([QUA-181](/QUA/issues/QUA-181)).
-This stub was incorrectly numbered H63 in the feasibility memo (QUA-152, 2026-06-09).
-Renumbered H64 on 2026-06-10 per Research Director QUA-181 retirement review.
-
-**Status:** SUPERSEDED — do not use
-
----
-
-# (Original stub below — preserved for reference only)
-
-**Version:** 0.1 (stub — superseded by H64)
+**Version:** 1.0
 **Author:** Research Director
-**Date:** 2026-06-09
-**Issue:** QUA-152
+**Date:** 2026-06-10
+**Issue:** QUA-152 (feasibility), QUA-181 (successor commissioning)
 **Asset class:** equities (leveraged ETFs)
 **Strategy type:** single-signal, regime-filtered
-**Status:** SUPERSEDED
+**Status:** READY
+
+**Renaming note:** Originally labeled H63 in feasibility memo (QUA-152, 2026-06-09). Renumbered H64 on 2026-06-10 to avoid conflict with the retired H63 SPY/QQQ Intraday Pairs family (QUA-181). No change to hypothesis design or pre-flight assessments.
 
 ---
 
@@ -31,8 +21,6 @@ This is **not an H59 family iteration**. Mechanism changes:
 2. Regime filter (VIX ≥ 20 gate — conditional execution vs. always-on)
 3. Materially different OR economics (3× wider OR → fundamentally different edge/cost structure)
 
-**Naming note:** The issue description (QUA-152) proposed classifying this as H60. H60 is already occupied by the VWAP mean reversion hypothesis (REJECTED 2026-06-09, PF-3 automatic reject). This hypothesis is therefore numbered H63 (next available sequential slot).
-
 ---
 
 ## Economic Rationale
@@ -41,7 +29,7 @@ H59 failure autopsy (Engineering Director, QUA-145) identified two root causes:
 1. Gross edge on SPY was only 3.13 bps — insufficient vs. any cost model
 2. Gross edge was regime-dependent: positive only during extreme-vol windows (COVID, 2022 rate-shock); near-zero or negative in low-vol periods
 
-H63 addresses both causes directly:
+H64 addresses both causes directly:
 
 **Wider OR → higher gross edge**: Zarattini & Aziz (2023) report their strongest ORB results on leveraged ETFs (SPXL, TQQQ, UPRO), not on SPY/QQQ. SPXL carries 3× the daily vol of SPY. A typical SPY 15-min OR_width ≈ 0.4%; the equivalent SPXL OR_width ≈ 1.2–1.5%. Gross edge per trade scales approximately linearly with OR_width (win rate and R_mult roughly invariant across instruments). If SPY gross = 3.13 bps, SPXL gross at 3× is expected ~9–15 bps.
 
@@ -134,7 +122,7 @@ Same as H59: intraday signal, half-life < 1 trading day by design. Signal consum
 
 ## Pre-Flight Gate Checklist
 
-**Reviewed by:** Research Director — QUA-152 — 2026-06-09
+**Reviewed by:** Research Director — QUA-152 — 2026-06-09 | Renumbering noted QUA-181 — 2026-06-10
 
 - [x] **PF-1 CONDITIONAL PASS — Walk-Forward Trade Viability**
   - Trade count: SPXL+TQQQ combined, VIX ≥ 20 filter → ~78 trades/year
@@ -163,19 +151,19 @@ Same as H59: intraday signal, half-life < 1 trading day by design. Signal consum
 
 - [x] **PF-4 STRONG PASS — Rate-Shock Regime Plausibility (2022)**
   - VIX ≥ 20 filter **specifically selects** rate-shock-regime days
-  - 2022: average VIX ~26; majority of trading days qualify for H63 execution
+  - 2022: average VIX ~26; majority of trading days qualify for H64 execution
   - H59 WF data confirmed positive gross edge on SPY in 2022 rate-shock windows (10–15 bps)
-  - H63 at 3× leverage should generate 30–45 bps gross on SPXL equivalents in the same windows
+  - H64 at 3× leverage should generate 30–45 bps gross on SPXL equivalents in the same windows
   - Intraday-flat → cannot compound from sustained bear trend direction
   - Strategy is explicitly DESIGNED to be active in high-VIX, rate-shock environments
   - STRONG PASS.
 
 **Hypothesis class:** Pattern-based / binary event-driven (ORB S/R breakout) — priority class 1 per diversification mandate.
-**Family:** H63 is a new hypothesis, not H59 iteration 2. Different mechanism, different universe, regime-conditional. No family iteration limit applies.
+**Family:** H64 is a new hypothesis, not H59 iteration 2. Different mechanism, different universe, regime-conditional. No family iteration limit applies.
 **Signal combination:** Single-signal with regime filter. No multi-signal combination policy triggered.
 **Alpha decay:** Intraday; transaction cost justification provided (estimated ~7–15 bps net; cost ~8–10 bps). Requires backtest confirmation.
 
-**Research Director decision:** DRAFT — pending backtest confirmation of gross edge on SPXL/TQQQ. PF-1–4 satisfied with 24m IS WF window requirement. **APPROVED for Gate 1 backtesting with explicit 24m IS / 6m OOS WF constraint.**
+**Research Director decision:** READY — All PF gates satisfied with 24m IS WF window requirement. **APPROVED for Gate 1 backtesting with explicit 24m IS / 6m OOS WF constraint.**
 
 ---
 
@@ -184,5 +172,6 @@ Same as H59: intraday signal, half-life < 1 trading day by design. Signal consum
 - Zarattini, C. & Aziz, A. (2023). Can Day Trading Really Be Profitable? SSRN 4416198.
 - `research/findings/h59_orb_gate1_failure_retirement_2026-06-09.md` — H59 WF diagnostics (regime-dependent gross edge data)
 - `research/hypotheses/59_opening_range_breakout_orb.md` — H59 parent (retired)
+- `research/findings/h63_leveraged_etf_orb_feasibility_memo_2026-06-09.md` — feasibility memo (originally labeled H63, renumbered H64)
 - Osler, C.L. (2003). Currency Orders and Exchange Rate Dynamics. *Journal of Finance*, 58(5). (stop-loss cascade mechanism)
 - Alpaca Markets minute OHLCV — SPXL/TQQQ RTH data (2016–2024)
