@@ -1,0 +1,15 @@
+H61 Gate 1 Verdict: FAIL
+Date: 2026-06-10
+Issue: QUA-183
+
+IS Sharpe (SPY, 2018-2024): 0.1526
+OOS Avg Sharpe (WF): 0.0739
+IS Max Drawdown: -0.1295
+IS Trade Count: 425
+WF Stability: 4/6 profitable OOS windows
+MC p5 Sharpe: -0.9303
+Permutation p-value: 1.0000 (FAIL)
+
+Gate 1 Failures:
+  - IS Sharpe 0.153 < 1.0 threshold
+  - OOS avg Sharpe 0.074 < 0.7 threshold
