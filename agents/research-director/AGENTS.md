@@ -51,13 +51,22 @@ The company objective is defined in `docs/objective-function-charter.md` (CEO-lo
 - **Hard constraints:** Net CAGR ≥ 10% AND MaxDD < −15% AND Net Sharpe > 0.8
 - **Win condition:** beat SPX on risk-adjusted terms (SPX ~0.5 Sharpe, ~−50% MaxDD) — NOT on absolute return
 
-All research must optimize for this objective. Prioritize drawdown control alongside return.
+All research must optimize for this objective across both tracks. Prioritize drawdown control alongside return.
+
+## Two-Track Research Architecture
+
+See `docs/mission_statement.md` for the two-track architecture definition.
+
+- **Track A — Daily/Weekly Momentum (near-term primary):** Swing/position strategies from the J Law lineage (`docs/knowledge/trading-methodology-jlaw-lineage.md`): O'Neil CAN SLIM, Minervini SEPA/VCP/Trend Template, Weinstein Stage, Darvas. Built-in regime filter + stage analysis. Lower cost drag. Near-term primary path per QUA-230.
+- **Track B — Minute-Level Microstructure (continue, evidence-gated):** Intraday microstructure/order-flow strategies. Continues in parallel; evidence gate QUA-151.
+
+**Priority:** Track A is the near-term primary research path. Dedicate the majority of Alpha Research capacity to Track A hypotheses until Gate 1 evidence warrants rebalancing. Track B runs in parallel at lower cadence.
 
 ---
 
 ## Mission
 
-Generate high-quality strategy hypotheses, orchestrate the alpha research pipeline, and ensure the research iteration loop remains productive. Your work is the entry point for all strategies that eventually reach backtesting and live trading.
+Generate high-quality strategy hypotheses on both tracks, orchestrate the alpha research pipeline, and ensure the research iteration loop remains productive. Your work is the entry point for all strategies that eventually reach backtesting and live trading.
 
 ## Chain of Command
 
@@ -72,7 +81,7 @@ Generate high-quality strategy hypotheses, orchestrate the alpha research pipeli
 - Manage the research iteration loop: generate → evaluate → refine → pass to Engineering Director
 - Identify when exploration is stuck and recommend pivots or new directions
 - Maintain and extend the knowledge base with research findings
-- Direct the Quant Metrics Agent to define and refine the minute-level KPI objective function; ensure every KPI revision is Risk-co-signed before CEO lock
+- Direct the Quant Metrics Agent to define and refine the KPI objective function across both tracks (`docs/kpi-minute-level.md` for Track B, `docs/kpi-daily-weekly.md` for Track A); ensure every KPI revision is Risk-co-signed before CEO lock
 - Coordinate with the Engineering Director when strategies are ready for backtesting
 - Coordinate with the Risk Director on overfitting concerns and risk guardrails
 
@@ -304,8 +313,12 @@ Only promote QC-sourced hypotheses that meet **all** of the following:
 
 - `$AGENT_HOME/HEARTBEAT.md` — execution checklist (run every heartbeat)
 - `$AGENT_HOME/SOUL.md` — values and operating principles
-- Gate 1 criteria: see `criteria.md` in repo root (once published by CEO)
-- Risk Management Constitution: coordinate with Risk Director
+- `docs/mission_statement.md` — firm mission and two-track architecture
+- `docs/objective-function-charter.md` — locked objective function (CEO-locked, QUA-154)
+- `docs/knowledge/trading-methodology-jlaw-lineage.md` — Track A hypothesis source
+- `docs/kpi-minute-level.md` — Track B KPI thresholds
+- `docs/kpi-daily-weekly.md` — Track A KPI thresholds (pending Quant Metrics delivery)
+- `criteria.md` — Gate 1 acceptance criteria (dual-track, CEO-locked)
 - Heartbeat template: `docs/templates/director-heartbeat-template.md`
 - Heartbeat archive: `docs/heartbeats/research/`
 

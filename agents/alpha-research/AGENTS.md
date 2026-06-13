@@ -78,13 +78,29 @@ Generate a continuous pipeline of testable, well-reasoned strategy hypotheses fo
 
 ## Strategy Universe
 
+See `docs/mission_statement.md` for the firm's full strategy universe and two-track architecture. See `docs/objective-function-charter.md` for the locked objective function (maximize net Sharpe, hard constraints).
+
 Prioritize strategies that:
-- Have published academic or practitioner backing (microstructure, order-flow, intraday anomaly, SSRN/arXiv q-fin)
-- Can be backtested with minute-bar data over 2022–2024 (see Data Sources below)
+- Have published academic or practitioner backing
 - Have a clear entry/exit mechanic translatable to vectorbt bar-level signals
 - Are not overly parameter-sensitive by design
 
-### Data Sources (minute-level, 2022–2024)
+The firm operates on two parallel research tracks:
+
+**Track A — Daily/Weekly Momentum (near-term primary):** Swing/position strategies sourced from the J Law lineage (`docs/knowledge/trading-methodology-jlaw-lineage.md`): O'Neil CAN SLIM, Minervini SEPA/Trend Template/VCP, Weinstein Stage analysis, Darvas Box. Can be backtested with daily OHLCV. Lower cost drag than Track B.
+
+**Track B — Minute-Level Microstructure:** Intraday strategies sourced from microstructure/order-flow literature (see Focus Areas below). Requires minute-bar data. Continue in parallel; evidence gate QUA-151.
+
+### Data Sources
+
+**Track A (daily/weekly):**
+
+| Asset class | Primary data source | Backtest window |
+|---|---|---|
+| US equities | yfinance daily OHLCV / Alpaca daily | 1995–2024 |
+| ETFs / Sector / Macro | yfinance daily | 2000–2024 |
+
+**Track B (minute-level):**
 
 | Asset class | Primary data source | Backtest window |
 |---|---|---|
@@ -92,10 +108,19 @@ Prioritize strategies that:
 | Crypto (BTC, ETH, major pairs) | Binance/Coinbase 1m OHLCV via CCXT | 2020–2024 |
 | Cross-asset / multi-instrument | QuantConnect Research (Lean engine, minute resolution) | 2010–2024 |
 
-**yfinance is retired for strategy backtesting.** It serves only ~7–30 days of intraday history and cannot support 2022–2024 minute backtests. Do not propose yfinance-dependent minute strategies.
+**yfinance is retired for minute-bar backtesting.** It serves only ~7–30 days of intraday history and cannot support 2022–2024 minute backtests. Do not propose yfinance-dependent minute strategies. For daily-bar Track A strategies, yfinance is the primary source.
 
-### Focus Areas (minute-level)
+### Focus Areas
 
+**Track A (J Law lineage — primary near-term channel):**
+Source from `docs/knowledge/trading-methodology-jlaw-lineage.md`. Key strategy archetypes:
+- **Stage 2 breakouts (Weinstein):** 30-week MA stage classification; enter on confirmed Stage 2, exit Stage 3/4
+- **VCP / Volatility Contraction Pattern (Minervini):** tight base + volume contraction before breakout
+- **Trend Template (Minervini):** 8 criteria for institutional-quality setups
+- **CAN SLIM (O'Neil):** fundamental + technical catalyst screens
+- **Darvas Box:** box breakout with volume confirmation
+
+**Track B (microstructure — continue in parallel):**
 - **Market microstructure:** Order Flow Imbalance (OFI), VPIN, micro-price, queue position, bid-ask dynamics
 - **Volume-bar strategies:** Momentum and OU mean reversion on volume/dollar bars (Lopez de Prado framework)
 - **Intraday event-driven:** FOMC drift (intraday), CPI release microstructure, open/close anomalies, post-earnings intraday patterns
@@ -256,11 +281,25 @@ You operate in heartbeat mode. Each heartbeat:
    - Honest Gate 1 outlook (likely pass/fail areas)
 9. Mark task done or request Research Director review
 
-## Microstructure Literature Discovery Task Type
+## Literature Discovery Task Types
+
+### Track A: J Law Lineage Discovery
+
+When a task tagged `track-a-discovery` or `[TRACK-A-DISCOVERY]` is assigned:
+
+Source strategy hypotheses from `docs/knowledge/trading-methodology-jlaw-lineage.md` (O'Neil, Minervini, Weinstein, Darvas). Each candidate must include:
+- The specific pattern/trigger from the lineage doc
+- Daily OHLCV data availability confirmation (yfinance/Alpaca)
+- Pre-Flight Gate assessment (especially PF-2 MDD stress, PF-4 rate-shock)
+- Gate 1 outlook vs `criteria.md` Track A thresholds (see `docs/kpi-daily-weekly.md` when available)
+
+Write hypothesis to `research/hypotheses/0N_ta_<strategy_slug>.md`.
+
+### Track B: Microstructure Literature Discovery
 
 When a task tagged `lit-discovery` or with `[LIT-DISCOVERY]` in the title is assigned to you:
 
-**Primary hypothesis source.** Microstructure and intraday anomaly literature replaces TradingView community scripts (which were crowded daily/4h retail content with poor signal-to-noise). This is now the default discovery channel for minute-level strategies.
+**Track B hypothesis source.** Microstructure and intraday anomaly literature is the discovery channel for Track B (minute-level) strategies. TradingView community scripts are retired as an idea source — crowded daily/4h retail content with poor signal-to-noise for minute-level alpha. Signal-to-noise for minute-level strategies is also the reason Track B requires stricter evidence gating (QUA-151).
 
 ### Canonical Literature Sources
 
@@ -323,7 +362,7 @@ When a task tagged `lit-discovery` or with `[LIT-DISCOVERY]` in the title is ass
 The `qc_strategy_discovery.py` script (public strategy listing scraper) is retired. Do not run it for idea discovery. Reasons:
 - QC public listing is crowded daily-bar retail content
 - Strategies are overfit to QC's default feed and backtest window
-- Signal-to-noise is poor for minute-level alpha discovery
+- Signal-to-noise is poor for Track B (minute-level) alpha discovery
 
 ### When to Use QuantConnect
 
@@ -359,13 +398,17 @@ When a backtest fails Gate 1:
 
 - `$AGENT_HOME/HEARTBEAT.md` — execution checklist (run every heartbeat)
 - `$AGENT_HOME/SOUL.md` — values and operating principles
+- `docs/mission_statement.md` — firm mission, strategy universe, two-track architecture
+- `docs/objective-function-charter.md` — locked objective function (CEO-locked, QUA-154)
+- `docs/knowledge/trading-methodology-jlaw-lineage.md` — Track A hypothesis source (O'Neil, Minervini, Weinstein, Darvas)
+- `docs/kpi-minute-level.md` — Track B KPI thresholds (Quant Metrics deliverable)
+- `docs/kpi-daily-weekly.md` — Track A KPI thresholds (Quant Metrics deliverable, pending)
+- `criteria.md` — Gate 1 acceptance criteria (dual-track, CEO-locked)
 - `/knowledge_base/` — firm's accumulated strategy knowledge
 - `research/hypotheses/` — output directory for hypothesis files
 - `research/regimes/` — current market regime classifications (from Market Regime Agent)
-- `criteria.md` — Gate 1 acceptance criteria to target
-- `docs/mission_statement.md` — firm mission and strategy universe
 
-### Microstructure Literature (primary hypothesis sources)
+### Microstructure Literature (Track B hypothesis sources)
 
 - Hasbrouck, J. — *Empirical Market Microstructure* (2007, Oxford) — order flow, price impact, information asymmetry
 - Harris, L. — *Trading and Exchanges* (2003, Oxford) — market structure, adverse selection, spread decomposition
