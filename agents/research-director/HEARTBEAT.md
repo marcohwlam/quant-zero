@@ -83,14 +83,24 @@ When assigning work to Alpha Research Agent or Market Regime Agent:
 - Monitor progress via daily micro heartbeats.
 - If an agent gets blocked, escalate to CEO or unblock directly.
 
-## 8. QuantConnect Discovery Gate (Weekly)
+## 8. Two-Track Hypothesis Sourcing Gate (Weekly)
 
-Add this check to your weekly heartbeat:
+Add these checks to your weekly heartbeat:
 
-1. Count new hypotheses submitted by Alpha Research this week: [N]
-2. Assess: If N < 2 OR pipeline idle > 3 days → assign QC discovery task to Alpha Research Agent
-3. Assess: If >14 days since last QC discovery run → assign QC discovery task (scheduled refresh)
-4. Create task with title `[QC-DISCOVERY] QuantConnect strategy search YYYY-MM-DD` and assign to Alpha Research Agent
+### Track A (Daily/Weekly Momentum — primary near-term)
+
+1. Count Track A hypotheses submitted this week (tagged `track-a` or prefix `ta_` in filename): [N]
+2. If N < 1 → assign Track A discovery task to Alpha Research Agent
+3. Task title: `[TRACK-A-DISCOVERY] J Law lineage hypothesis search YYYY-MM-DD`
+4. Source: `docs/knowledge/trading-methodology-jlaw-lineage.md` — Stage-2 breakout / VCP / Trend Template / CAN SLIM / Darvas candidates
+5. Track A is the near-term primary path. It should produce ≥ 1 hypothesis per week until Gate 1 evidence says otherwise.
+
+### Track B (Minute-Level — continue in parallel)
+
+1. Count Track B hypotheses submitted this week (tagged `lit-discovery` or prefix `0N_lit_`): [N]
+2. If N < 1 OR pipeline idle > 3 days → assign Track B discovery task to Alpha Research Agent
+3. Assess: If >14 days since last Track B discovery run → assign regardless (scheduled refresh)
+4. Create task with title `[LIT-DISCOVERY] Microstructure hypothesis search YYYY-MM-DD` and assign to Alpha Research Agent
 
 ## 9. Weekly Macro Heartbeat Output (Every Monday)
 
