@@ -1,6 +1,6 @@
 # Daily/Weekly (Track A) KPI Objective Function — v1.0
 
-**Status:** PROPOSED — Risk Director co-sign required; CEO locks on PR merge
+**Status:** CEO-LOCKED — 2026-06-13 ([QUA-238](/QUA/issues/QUA-238))
 **Version:** 1.0
 **Author:** Engineering Director (QUA-236)
 **Date:** 2026-06-13
@@ -323,7 +323,14 @@ strategies that can plausibly contribute to the portfolio Sharpe > 0.8 objective
 
 ## CEO Lock
 
-*(To be completed by CEO — required before composite score is binding)*
+**Locked by:** CEO — 2026-06-13 ([QUA-238](/QUA/issues/QUA-238))
+
+Governance chain verified:
+- Authored by Engineering Director (QUA-236)
+- Risk Director co-sign: UNCONDITIONAL (QUA-237)
+- CEO lock: complete
+
+`docs/kpi-daily-weekly.md` v1.0 is hereby the authoritative Track A composite objective function. The composite score formula, weights (40/30/20/10), hard gates (1–9), normalization reference, and CS pass threshold (≥ 0.60) are binding immediately for all Track A Gate 1 submissions. No modification without CEO-approved PR and Risk Director co-sign.
 
 ---
 
@@ -331,4 +338,4 @@ strategies that can plausibly contribute to the portfolio Sharpe > 0.8 objective
 
 | Version | Date | Change | Author |
 |---|---|---|---|
-| 1.0 | 2026-06-13 | Initial document — Track A composite objective function, hard gates, per-archetype KPI spec, normalization reference, metric rationale. Thresholds sourced from `docs/gate1-threshold-calibration-swing-2026-06-13.md` (CEO-locked 2026-06-13, QUA-234). | Engineering Director — QUA-236 — PENDING CEO LOCK |
+| 1.0 | 2026-06-13 | Initial document — Track A composite objective function, hard gates, per-archetype KPI spec, normalization reference, metric rationale. Thresholds sourced from `docs/gate1-threshold-calibration-swing-2026-06-13.md` (CEO-locked 2026-06-13, QUA-234). Risk Director co-sign: QUA-237 (UNCONDITIONAL). CEO-locked: QUA-238. | Engineering Director — QUA-236; CEO — QUA-238 |

@@ -1,9 +1,9 @@
 # Gate 1 Acceptance Criteria (v2.6)
 
-**Version:** 2.6
-**Locked by:** CEO — 2026-06-13 ([QUA-234](/QUA/issues/QUA-234); Risk Director co-sign: [QUA-233](/QUA/issues/QUA-233))
+**Version:** 2.7
+**Locked by:** CEO — 2026-06-13 ([QUA-238](/QUA/issues/QUA-238); prior lock: [QUA-234](/QUA/issues/QUA-234))
 **Status:** CEO-LOCKED
-**Supersedes:** v2.4 (CEO-locked) for Track A swing/daily thresholds. Track B intraday thresholds unchanged.
+**Supersedes:** v2.6. Resolves Track A "pending delivery": `docs/kpi-daily-weekly.md` v1.0 now CEO-locked; composite score binding. No threshold changes.
 
 ---
 
@@ -155,9 +155,7 @@ Track A measures peak-to-trough equity drawdown over the IS period (multi-day ba
 |---|---|
 | Equities swing/daily | < **30%** of account equity (IS period) |
 
-**Track A KPI document:** `docs/kpi-daily-weekly.md` v1.0 — PROPOSED (QUA-236). Risk Director
-co-sign and CEO lock pending. Until CEO-locked, composite score formula is not binding; hard
-gate thresholds above apply to Track A submissions.
+**Track A KPI document:** `docs/kpi-daily-weekly.md` v1.0 — **CEO-LOCKED 2026-06-13** ([QUA-238](/QUA/issues/QUA-238)). Composite score formula and hard gates are binding for all Track A submissions.
 
 **Full-backtest MDD disclosure (narrative, not auto-reject gate):** The 20% IS-period CS threshold
 applies per 3-month walk-forward window. In addition, the hypothesis narrative submission must
@@ -199,9 +197,7 @@ filter under PF-5).
 **Track B:** See `docs/kpi-minute-level.md` v0.3 — CEO-locked 2026-06-07 ([QUA-68](/QUA/issues/QUA-68)).  
 Hard gates 1–8 (including Gate 8 PDT compliance for equities intraday) are defined there.
 
-**Track A:** See `docs/kpi-daily-weekly.md` v1.0 — PROPOSED (QUA-236); Risk Director co-sign
-and CEO lock pending. Until CEO-locked, only the hard gate thresholds in §Track A above apply
-to swing submissions.
+**Track A:** See `docs/kpi-daily-weekly.md` v1.0 — **CEO-LOCKED 2026-06-13** ([QUA-238](/QUA/issues/QUA-238)). Composite score formula, weights, and hard gates are binding for all Track A submissions.
 
 ---
 
@@ -241,4 +237,4 @@ Full Track B hard gate list is in `docs/kpi-minute-level.md` §Hard Gates (Gates
 | 2.4 | 2026-06-09 | Add explicit reference to `docs/objective-function-charter.md` (QUA-154) in §Purpose. Criteria already aligned; change is documentary — makes the charter → criteria chain of authority explicit. | CEO — [QUA-154](/QUA/issues/QUA-154) |
 | 2.5 | 2026-06-09 | §Dual-Track Applicability: Gate 1 governs both Track A (daily/weekly) and Track B (minute-level). Track A thresholds marked PENDING calibration. | CEO — [QUA-230](/QUA/issues/QUA-230) |
 | 2.6 | 2026-06-13 | Add calibrated Track A swing/daily equities thresholds. Separate quantitative threshold table into Track A and Track B sections. Add §Swing/Daily-Specific Guards. Add overnight guards to auto-disqualification. Cost model unchanged. Full calibration derivation: `docs/gate1-threshold-calibration-swing-2026-06-13.md`. Risk Director co-sign: [QUA-233](/QUA/issues/QUA-233). | CEO — [QUA-234](/QUA/issues/QUA-234) (Research Director calibration: [QUA-232](/QUA/issues/QUA-232)) |
-| 2.7 | 2026-06-13 | Resolve Track A "pending delivery" notes: `docs/kpi-daily-weekly.md` v1.0 now PROPOSED; references updated in §Track A and §Per-Asset KPI Spec. Thresholds and guards unchanged. CEO lock activates composite score formula for Track A submissions. | Engineering Director — [QUA-236](/QUA/issues/QUA-236) — PENDING CEO LOCK |
+| 2.7 | 2026-06-13 | CEO-lock `docs/kpi-daily-weekly.md` v1.0. References in §Track A and §Per-Asset KPI Spec updated to LOCKED. Composite score formula, weights, and hard gates now binding for all Track A submissions. Risk Director co-sign: [QUA-237](/QUA/issues/QUA-237) (UNCONDITIONAL). | CEO — [QUA-238](/QUA/issues/QUA-238) |
