@@ -248,7 +248,76 @@ PpT (> 40 bps) to clear CS ≥ 0.60. This reflects the deliberate elevation of M
 
 ## Risk Director Co-Sign (v1.0 review)
 
-*(To be completed by Risk Director — required before CEO lock)*
+**Verdict: UNCONDITIONAL CO-SIGN**
+**Risk Director:** Risk Director Agent (QUA-237)
+**Date:** 2026-06-13
+
+### Five Key Decisions — Sign-Off
+
+**1. Composite score weights (40/30/20/10)**
+APPROVED. Weight inversion vs Track B (40/20/30/10 → 40/30/20/10) is empirically justified.
+H49/H50/H51 confirmed bear-market drawdown as the dominant Track A failure mode, not cost drag.
+CPR < 0.25 hard gate pre-screens cost efficiency; elevating PpT to 30% at swing scale would
+over-reward a dimension already binary-screened. MDD at 30% directly closes the failure mode.
+
+**2. MDD CS threshold 20% / Gate 7 ceiling 30%**
+APPROVED. Consistent with CEO-locked `criteria.md` v2.6 (QUA-234). Charter constraint
+(MaxDD < −15%) is portfolio-level; per-strategy 20% gate provides adequate margin:
+Risk Constitution Rule 2 caps each strategy at 25% capital → max portfolio MDD contribution
+from a single strategy at peak = 0.20 × 0.25 = 5.0% of portfolio equity. Multi-strategy
+correlation effects are handled by Portfolio Monitor. Gate 7 ceiling at 30% (2× CS threshold)
+correctly prevents CS gaming via offsetting NetSharpe/PpT when MDD is structurally unsafe.
+
+**3. Same-close fill prohibition (Hard Gate 3)**
+APPROVED. Structurally identical to Track B's same-bar fill prohibition. Swing signals
+(CAN SLIM breakout, VCP pivot, Stage 2 breakout) are generated using the day's closing price;
+same-close fill requires knowing the close before it completes — classic look-ahead. Next-day
+open or pre-set stop-buy limit is the correct Track A latency gate. Auto-disqualification is
+the right severity (mirrors criteria.md §Automatic Disqualification).
+
+**4. Survivorship bias auto-defer (Hard Gate 9)**
+APPROVED as auto-defer (not hard reject). Bias is fixable via (a) point-in-time universe
+or (b) documented sensitivity estimate with quantitative bias direction assessment. Hard reject
+would be disproportionate for a correctable data quality issue with a known bias direction
+(suppresses drawdown, inflates Sharpe). Reviewer note: "sensitivity estimate" in option (b)
+must be quantitative — a qualitative directional statement alone is insufficient to satisfy
+this gate.
+
+**5. CS pass threshold = 0.60**
+APPROVED. Consistent with Track B calibration protocol (admit 60th percentile of viable
+strategies). Normalization examples verified: all five worked examples compute correctly.
+Threshold is correctly tight — "Good Weinstein" at CS 0.53 and "Strong Weinstein" at CS 0.59
+both fail, reflecting the deliberate MDD weight elevation. Raising to 0.70 would reject
+strategies with acceptable (10%–15%) MDD profiles that compensate with strong NetSharpe.
+
+### Normalization Verification
+
+All five worked examples in §Composite Score Normalization Reference verified independently:
+- Excellent VCP: 0.304 + 0.180 + 0.120 + 0.100 = **0.704** ✓
+- Borderline CAN SLIM: 0.200 + 0.030 + 0.036 + 0.100 = **0.366** ✓
+- Good Weinstein: 0.240 + 0.120 + 0.070 + 0.100 = **0.530** ✓
+- Strong Weinstein: 0.256 + 0.150 + 0.080 + 0.100 = **0.586** ✓
+- Solid Minervini: 0.272 + 0.150 + 0.100 + 0.100 = **0.622** ✓
+
+### Minor Clarifications (non-blocking)
+
+1. TradeAdequacy normalization table lists Max = 200 trades, but the operative formula
+   `min(1.0, TradeCount_IS / 30)` scores 1.0 at any count ≥ 30. The table max is
+   informational; the formula is correct and the document's "statistical adequacy is binary"
+   framing accurately describes the intent.
+
+2. Gate 9 auto-defer option (b) requires a *quantitative* sensitivity estimate
+   (e.g., "survivorship bias inflates IS Sharpe by +0.1 to +0.3 based on X% delisting
+   rate"). Qualitative directional statements do not satisfy this gate.
+
+### Charter Alignment Assessment
+
+Track A KPI objective function is consistent with `docs/objective-function-charter.md`
+(QUA-154). MDD weight elevation and Gate 7 ceiling directly operationalize the MaxDD < −15%
+portfolio constraint at strategy level. CS pass threshold and normalization calibration target
+strategies that can plausibly contribute to the portfolio Sharpe > 0.8 objective.
+
+**Escalation to CEO for final lock is authorized.**
 
 ---
 
