@@ -1,6 +1,6 @@
-# Gate 1 Acceptance Criteria (v2.4)
+# Gate 1 Acceptance Criteria (v2.5)
 
-**Version:** 2.4
+**Version:** 2.5
 **Locked by:** CEO
 **Status:** CEO-LOCKED
 **Supersedes:** v1.3 (daily/swing) for quantitative thresholds. Daily/weekly horizon
@@ -26,6 +26,37 @@ Horizon (minute-level, daily, weekly) is **evidence-gated, not fixed by decree.*
 
 **Constraint:** this policy widens the eligible horizon set. It does not relax any
 existing Gate 1 threshold, cost model, or architectural pre-flight requirement.
+
+---
+
+## Dual-Track Applicability
+
+Gate 1 applies to **both** strategy tracks defined in `docs/mission_statement.md`:
+
+| Track | Description | Gate 1 threshold set |
+|---|---|---|
+| **Track A** — Daily/Weekly Momentum | J Law lineage playbook; daily/weekly bars; holding period days-to-months | **Pending.** Swing threshold set not yet calibrated. The minute-level thresholds in §Quantitative Thresholds are inapplicable — an intraday MDD gate of 1.5% of account equity per session is nonsensical for a multi-week hold. Calibration commissioned as a follow-up (see §Follow-Up: Swing Threshold Set below). |
+| **Track B** — Minute-Level Intraday | Three-layer architecture QUA-127/128/129; intraday bars; flat by close | **Current.** The calibrated thresholds in §Quantitative Thresholds (QUA-150, 2026-06-09) apply. Cost Realism is the dominant gate. |
+
+Both tracks are judged by the same charter objective function (QUA-154): Net CAGR ≥ 10%,
+MaxDD < −15%, Net Sharpe > 0.8. Gate 1 is the strategy-level operationalization of that charter.
+
+### Follow-Up: Swing Threshold Set
+
+A daily/weekly-specific Gate 1 threshold set must be calibrated before Track A strategies can
+receive a formal Gate 1 verdict. The swing set requires distinct values for:
+
+- MDD ceiling: intraday 1.5% acct equity is inapplicable; swing strategies hold through
+  intraday moves. Ceiling must reflect multi-day peak-to-trough.
+- Trade-count floor: lower turnover means fewer trades per window; the 300-trade floor for
+  equities intraday (per 3-month IS window) does not apply.
+- Holding-period guards: no flat-by-close requirement; overnight/weekend risk must be modeled.
+- Cost model: $0.005/share equity cost model is correct; spread + market impact at daily bar
+  scale is lower than intraday.
+
+**Owner:** Research Director (calibration via real 2022-2024 daily data), co-signed by
+Risk Director before CEO lock. This ticket does not block on the swing threshold set; Track A
+backtests may proceed and be labeled "pending threshold calibration" in their verdict files.
 
 ---
 
@@ -179,3 +210,4 @@ Full hard gate list is in `docs/kpi-minute-level.md` §Hard Gates (Gates 1–8).
 | 2.2 | 2026-06-09 | Replace all TBD/PLACEHOLDER thresholds with data-backed calibrated values for all three asset classes (equities intraday, crypto, futures). Replace PLACEHOLDER cost model with AGENTS.md canonical (exchange fee schedules + Almgren-Chriss impact). Full derivation in `docs/gate1-threshold-calibration-2026-06-09.md`. | Engineering Director — [QUA-150](/QUA/issues/QUA-150) |
 | 2.3 | 2026-06-09 | Horizon is evidence-gated, not fixed by decree. Remove minute-level exclusivity. Re-admit daily/weekly as eligible candidates on equal footing. Add Horizon Selection Policy section. Bar definition made horizon-adaptive. All thresholds unchanged. Decision rationale: `docs/horizon-evidence-gate-decision-2026-06-09.md`. Triggered by QUA-151 slippage findings. | CEO — [QUA-156](/QUA/issues/QUA-156) |
 | 2.4 | 2026-06-09 | Add explicit reference to `docs/objective-function-charter.md` (QUA-154) in §Purpose. Criteria already aligned; change is documentary — makes the charter → criteria chain of authority explicit. | CEO — [QUA-154](/QUA/issues/QUA-154) |
+| 2.5 | 2026-06-13 | Add §Dual-Track Applicability: Gate 1 governs both Track A (daily/weekly) and Track B (minute-level); existing calibrated thresholds apply to Track B only; swing threshold set for Track A commissioned as a follow-up. Mission re-aligned at horizon-agnostic altitude per QUA-230. | CEO — [QUA-230](/QUA/issues/QUA-230) |
