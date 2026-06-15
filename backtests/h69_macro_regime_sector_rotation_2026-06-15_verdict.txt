@@ -1,0 +1,94 @@
+========================================================================
+GATE 1 VERDICT — H69 Macro-Regime Sector Rotation (QUA-278)
+Report Date: 2026-06-15  |  Track A (Monthly Rebalancing)
+========================================================================
+
+OVERALL VERDICT: FAIL
+Composite Score: 0.4336  (threshold >= 0.6)
+
+── GATE 1 CRITERIA (Track A, CEO-locked 2026-06-13) ─────────────────────
+  [FAIL] IS_Sharpe: 0.3878 (threshold: > 1.0)
+  [FAIL] OOS_Sharpe: 0.6503 (threshold: > 0.7)
+  [FAIL] IS_MaxDD: -75.37 (threshold: > -20%)  [CS threshold; Gate7 ceiling = -30%]
+  [FAIL] Gate7_MDD: -75.37 (threshold: > -30% (hard))
+  [FAIL] IS_CAGR: 7.65 (threshold: >= 10%)
+  [PASS] IS_TradeCount: 380 (threshold: >= 120)
+  [PASS] WF_Consistency: 3/4 (threshold: >= 3/4)
+  [FAIL] Permutation_p: 0.921 (threshold: < 0.05)  [Block-shuffle monthly regime sequence]
+  [PASS] CPR: 0.068 (threshold: < 0.25)
+  [PASS] Net_PpT_bps: 74.76 (threshold: > 15.0 bps)
+  [FAIL] Composite_Score: 0.4336 (threshold: >= 0.6)
+
+── IS METRICS (2004-01-01 to 2018-12-31) ─────────────────────────────────
+  Net Sharpe:         0.3878
+  CAGR:               7.65%
+  Max Drawdown:       -75.37%
+  Total Return:       201.80%
+  Win Rate:           60.00%
+  Profit Factor:      1.466
+  Round-trip Trades:  380
+  Net PpT (bps):      74.76
+  CPR:                0.0680
+  Regime Transitions: 145
+  Transitions/yr:     9.1
+  Avg Hold Days:      39.6
+  Regime Counts:      {'A': 55, 'B': 44, 'C': 25, 'D': 67}
+
+── OOS METRICS (2019-01-01 to 2024-12-31) ────────────────────────────────
+  Net Sharpe:         0.6503
+  CAGR:               12.37%
+  Max Drawdown:       -40.94%
+  Total Return:       101.19%
+  Win Rate:           54.37%
+  Round-trip Trades:  160
+  Regime Counts:      {'A': 28, 'B': 9, 'C': 18, 'D': 28}
+  OOS Degradation:    -67.7% vs IS Sharpe
+
+── STATISTICAL RIGOR ────────────────────────────────────────────────────
+  MC p5 Sharpe:     0.1975  [WEAK]
+  MC median Sharpe: 0.4899
+  Sharpe 95% CI:    [-0.0181, 0.7862]
+  MDD 95% CI:       [-81.20%, -32.14%]
+  Permutation p:    0.9210  (FAIL)
+  Perm n_blocks:    146
+  DSR:              0.9998
+
+── WALK-FORWARD (4 expanding windows) ───────────────────────────────
+  Window 1: IS 2004-01-01→2009-12-31 OOS 2010-01-01→2012-12-31 | IS=0.030 OOS=0.823 [PASS]
+  Window 2: IS 2004-01-01→2011-12-31 OOS 2012-01-01→2014-12-31 | IS=0.106 OOS=1.544 [PASS]
+  Window 3: IS 2004-01-01→2013-12-31 OOS 2014-01-01→2016-12-31 | IS=0.300 OOS=0.799 [PASS]
+  Window 4: IS 2004-01-01→2015-12-31 OOS 2016-01-01→2018-12-31 | IS=0.325 OOS=0.641 [FAIL]
+  Windows Passed:  3/4
+  WF Sharpe Std:   0.3492
+
+── SUB-PERIOD DIAGNOSTICS ───────────────────────────────────────────
+  dot_com_recovery: Sharpe=1.021 CAGR=11.6% MDD=-8.6% Trades=94 Regimes={'A': 11, 'B': 12, 'C': 5, 'D': 19}
+  gfc_only: Sharpe=-0.239 CAGR=-17.2% MDD=-74.3% Trades=88 Regimes={'A': 12, 'B': 11, 'C': 8, 'D': 16}
+  post_gfc_bull: Sharpe=0.795 CAGR=14.9% MDD=-29.1% Trades=107 Regimes={'A': 25, 'B': 15, 'C': 7, 'D': 24}
+  rate_hike_cycle: Sharpe=0.615 CAGR=17.6% MDD=-18.7% Trades=115 Regimes={'A': 13, 'B': 11, 'C': 9, 'D': 26}
+  rate_shock_2022: Sharpe=-0.617 CAGR=-14.9% MDD=-25.8% Trades=39 Regimes={'A': 6, 'B': 1, 'C': 9, 'D': 7}
+  oos_full: Sharpe=0.711 CAGR=14.6% MDD=-42.7% Trades=142 Regimes={'A': 28, 'B': 9, 'C': 18, 'D': 28}
+
+── PARAMETER SWEEP (36 combinations, IS only) ────────────────────────
+  Best IS Sharpe:   0.7146
+  Median IS Sharpe: 0.5552
+  Worst IS Sharpe:  0.3878
+  MDD<20% combos:   0/36
+  Sharpe>1.0 combos:0/36
+
+── TRACK A OVERNIGHT/WEEKEND GUARDS (Hard Gate 8) ──────────────────────
+  Overnight gaps: N/A — monthly rebalancing; gaps averaged into monthly return.
+  Weekend risk:   Sector ETF positions held over weekends (max 33-50% per ETF).
+  Earnings policy: N/A — ETF strategy, no single-stock earnings exposure.
+  Gap MDD attr:   N/A at monthly bar resolution.
+
+── SURVIVORSHIP BIAS (Hard Gate 9) ──────────────────────────────────────
+  Universe: SPDR sector ETFs + SPY/TLT/SHY — all active, no delisted tickers.
+  XLRE pre-2015: weight redistributed to XLI+XLF (documented).
+  No survivorship bias concern for this ETF-only universe.
+
+── COST MODEL ───────────────────────────────────────────────────────────
+  Fixed:    $0.005/share | Slip: 0.05% notional | Impact: k=0.1×σ×√(Q/ADV)
+  SPY/TLT signal only — not traded; no execution costs on signal assets.
+
+========================================================================

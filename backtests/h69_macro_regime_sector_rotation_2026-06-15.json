@@ -1,0 +1,278 @@
+{
+  "strategy": "H69_Macro_Regime_Sector_Rotation",
+  "version": "1.0",
+  "gate": "Gate 1",
+  "track": "A",
+  "report_date": "2026-06-15",
+  "is_window": {
+    "start": "2004-01-01",
+    "end": "2018-12-31"
+  },
+  "oos_window": {
+    "start": "2019-01-01",
+    "end": "2024-12-31"
+  },
+  "default_params": {
+    "lookback_days": 20,
+    "dma_gate": true,
+    "regime_c_cash_pct": 0.5,
+    "rebal_day": "first",
+    "init_cash": 100000.0
+  },
+  "is_metrics": {
+    "sharpe": 0.3878085369646743,
+    "cagr": 0.07652465413232967,
+    "max_drawdown": -0.7536752685935751,
+    "total_return": 2.018035251949327,
+    "win_rate": 0.6,
+    "profit_factor": 1.4657550899725036,
+    "trade_count": 380.0,
+    "n_transitions": 145.0,
+    "transitions_per_year": 9.051275699777063,
+    "avg_hold_days": 39.56578947368421,
+    "cpr": 0.06796890194992199,
+    "net_ppt_bps": 74.75882351895507,
+    "regime_counts": null,
+    "regime_monthly": null,
+    "n_months": 192.0
+  },
+  "oos_metrics": {
+    "sharpe": 0.6503307767639199,
+    "cagr": 0.12374350341098461,
+    "max_drawdown": -0.40937040640505434,
+    "total_return": 1.0118752288811672,
+    "win_rate": 0.54375,
+    "profit_factor": 1.7621049743635995,
+    "trade_count": 160.0,
+    "n_transitions": 56.0,
+    "transitions_per_year": 7.972881355932204,
+    "avg_hold_days": 43.3625,
+    "cpr": 0.03386920975855503,
+    "net_ppt_bps": 160.6709580846144,
+    "regime_counts": null,
+    "regime_monthly": null,
+    "n_months": 84.0
+  },
+  "gate1_verdict": {
+    "criteria": {
+      "IS_Sharpe": {
+        "value": 0.3878,
+        "threshold": "> 1.0",
+        "pass": false
+      },
+      "OOS_Sharpe": {
+        "value": 0.6503,
+        "threshold": "> 0.7",
+        "pass": false
+      },
+      "IS_MaxDD": {
+        "value": -75.37,
+        "threshold": "> -20%",
+        "pass": false,
+        "note": "CS threshold; Gate7 ceiling = -30%"
+      },
+      "Gate7_MDD": {
+        "value": -75.37,
+        "threshold": "> -30% (hard)",
+        "pass": false
+      },
+      "IS_CAGR": {
+        "value": 7.65,
+        "threshold": ">= 10%",
+        "pass": false
+      },
+      "IS_TradeCount": {
+        "value": 380,
+        "threshold": ">= 120",
+        "pass": true
+      },
+      "WF_Consistency": {
+        "value": "3/4",
+        "threshold": ">= 3/4",
+        "pass": true
+      },
+      "Permutation_p": {
+        "value": 0.921,
+        "threshold": "< 0.05",
+        "pass": false,
+        "note": "Block-shuffle monthly regime sequence"
+      },
+      "CPR": {
+        "value": 0.068,
+        "threshold": "< 0.25",
+        "pass": true
+      },
+      "Net_PpT_bps": {
+        "value": 74.76,
+        "threshold": "> 15.0 bps",
+        "pass": true
+      },
+      "Composite_Score": {
+        "value": 0.4336,
+        "threshold": ">= 0.6",
+        "pass": false
+      }
+    },
+    "verdict": "FAIL",
+    "composite_score": 0.4336,
+    "oos_degradation": -0.6769
+  },
+  "statistical_rigor": {
+    "mc_p5_sharpe": 0.19753343294901732,
+    "mc_median_sharpe": 0.4899195639869359,
+    "mc_p95_sharpe": 0.8055635220686355,
+    "sharpe_ci_low": -0.018098212503825588,
+    "sharpe_ci_high": 0.7862438498314067,
+    "mdd_ci_low": -0.8120496353142115,
+    "mdd_ci_high": -0.3214040620069078,
+    "permutation_pvalue": 0.921,
+    "permutation_test_pass": 0.0,
+    "permutation_n": 1000.0,
+    "permutation_n_blocks": 146.0,
+    "permutation_note": null,
+    "dsr": 0.999837,
+    "wf_sharpe_std": 0.34922926208626237,
+    "wf_sharpe_min": 0.6408079669768181
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "window": 1,
+        "is_start": "2004-01-01",
+        "is_end": "2009-12-31",
+        "oos_start": "2010-01-01",
+        "oos_end": "2012-12-31",
+        "is_sharpe": 0.029594745595126922,
+        "oos_sharpe": 0.8230965255790702,
+        "oos_pass": true
+      },
+      {
+        "window": 2,
+        "is_start": "2004-01-01",
+        "is_end": "2011-12-31",
+        "oos_start": "2012-01-01",
+        "oos_end": "2014-12-31",
+        "is_sharpe": 0.10600530377460968,
+        "oos_sharpe": 1.5443917070099367,
+        "oos_pass": true
+      },
+      {
+        "window": 3,
+        "is_start": "2004-01-01",
+        "is_end": "2013-12-31",
+        "oos_start": "2014-01-01",
+        "oos_end": "2016-12-31",
+        "is_sharpe": 0.29954767811538313,
+        "oos_sharpe": 0.798833496882333,
+        "oos_pass": true
+      },
+      {
+        "window": 4,
+        "is_start": "2004-01-01",
+        "is_end": "2015-12-31",
+        "oos_start": "2016-01-01",
+        "oos_end": "2018-12-31",
+        "is_sharpe": 0.3250812448946232,
+        "oos_sharpe": 0.6408079669768181,
+        "oos_pass": false
+      }
+    ],
+    "windows_passed": 3,
+    "wf_sharpe_std": 0.34922926208626237,
+    "wf_sharpe_min": 0.6408079669768181
+  },
+  "sub_period_diagnostics": {
+    "dot_com_recovery": {
+      "start": "2004-01-01",
+      "end": "2006-12-31",
+      "sharpe": 1.0211893449498985,
+      "cagr": 0.11587307049098805,
+      "max_drawdown": -0.08649512347467832,
+      "trade_count": 94,
+      "regime_counts": {
+        "A": 11,
+        "B": 12,
+        "C": 5,
+        "D": 19
+      }
+    },
+    "gfc_only": {
+      "start": "2007-01-01",
+      "end": "2009-12-31",
+      "sharpe": -0.2390283744392248,
+      "cagr": -0.17213852676299024,
+      "max_drawdown": -0.7433708345764112,
+      "trade_count": 88,
+      "regime_counts": {
+        "A": 12,
+        "B": 11,
+        "C": 8,
+        "D": 16
+      }
+    },
+    "post_gfc_bull": {
+      "start": "2010-01-01",
+      "end": "2014-12-31",
+      "sharpe": 0.7950976759375546,
+      "cagr": 0.14882201346055113,
+      "max_drawdown": -0.2914339819799449,
+      "trade_count": 107,
+      "regime_counts": {
+        "A": 25,
+        "B": 15,
+        "C": 7,
+        "D": 24
+      }
+    },
+    "rate_hike_cycle": {
+      "start": "2015-01-01",
+      "end": "2018-12-31",
+      "sharpe": 0.6147472626687349,
+      "cagr": 0.1764835529196267,
+      "max_drawdown": -0.1866678029136631,
+      "trade_count": 115,
+      "regime_counts": {
+        "A": 13,
+        "B": 11,
+        "C": 9,
+        "D": 26
+      }
+    },
+    "rate_shock_2022": {
+      "start": "2022-01-01",
+      "end": "2022-12-31",
+      "sharpe": -0.6166537446766196,
+      "cagr": -0.14933123780521196,
+      "max_drawdown": -0.25811595962605594,
+      "trade_count": 39,
+      "regime_counts": {
+        "A": 6,
+        "B": 1,
+        "C": 9,
+        "D": 7
+      }
+    },
+    "oos_full": {
+      "start": "2019-01-01",
+      "end": "2024-12-31",
+      "sharpe": 0.7106146896506136,
+      "cagr": 0.1461606471657506,
+      "max_drawdown": -0.4266085499470916,
+      "trade_count": 142,
+      "regime_counts": {
+        "A": 28,
+        "B": 9,
+        "C": 18,
+        "D": 28
+      }
+    }
+  },
+  "parameter_sweep": {
+    "total_combinations": 36,
+    "best_is_sharpe": 0.714597337927976,
+    "median_is_sharpe": 0.5551799203019132
+  },
+  "paperclip_issue": "QUA-278",
+  "hypothesis_ref": "research/hypotheses/69_macro_regime_sector_rotation.md",
+  "cost_model": "ED canonical: $0.005/share + 0.05% slip + Almgren-Chriss k=0.1"
+}

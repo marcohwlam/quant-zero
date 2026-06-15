@@ -1,0 +1,133 @@
+<!DOCTYPE html><html>
+<head><title>H69 Gate 1 — Macro-Regime Sector Rotation</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:1150px;margin:40px auto;color:#333}
+h1{color:#1a1a2e}h2{color:#16213e;border-bottom:2px solid #eee;padding-bottom:4px}
+table{border-collapse:collapse;width:100%;margin:10px 0}
+th,td{padding:8px 12px;border:1px solid #ddd;text-align:left;font-size:.9em}
+th{background:#f4f4f4;font-weight:bold}
+.verdict{font-size:2em;font-weight:bold;color:#dc3545;margin:20px 0}
+.cs{font-size:1.3em;font-weight:bold;color:#dc3545}
+.mg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0}
+.mb{background:#f9f9f9;border:1px solid #ddd;border-radius:6px;padding:12px}
+.mv{font-size:1.2em;font-weight:bold;color:#1a1a2e}
+.pb{color:#dc3545;font-weight:bold;font-size:1.1em}
+.ok{color:#155724;background:#d4edda;padding:10px;border-radius:4px;margin:10px 0}
+.critical{color:#721c24;background:#f8d7da;padding:10px;border-radius:4px;margin:10px 0}
+</style></head><body>
+<h1>Gate 1 Report — H69 Macro-Regime Sector Rotation (QUA-278)</h1>
+<p><strong>Report Date:</strong> 2026-06-15 | <strong>Track A</strong> | IS: 2004-01-01→2018-12-31 | OOS: 2019-01-01→2024-12-31</p>
+<p>SPY+TLT 20-day momentum → 4-regime SPDR sector ETF rotation. Monthly rebalancing.
+Signal at last day of month → execution at first day of next month.
+Regime C: 200-DMA SPY cash gate (50% → SHY when SPY &lt; 200-DMA).</p>
+
+<div class="verdict">Gate 1 Verdict: FAIL</div>
+<p>Composite Score (Track A KPI v1.0): <span class="cs">0.4336</span> (threshold ≥ 0.6)</p>
+
+<div class="critical">
+<strong>PERMUTATION TEST:</strong> <span class="pb">p = 0.9210</span>
+(FAIL — regime ordering not statistically significant)
+Block-shuffle of monthly regime sequence (1000 shuffles, 146 blocks).
+</div>
+
+<h2>Gate 1 Criteria</h2>
+<table><thead><tr><th>Criterion</th><th>Value</th><th>Threshold</th><th>Status</th><th>Note</th></tr></thead>
+<tbody><tr><td><strong>IS_Sharpe</strong></td><td>0.3878</td><td>> 1.0</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>OOS_Sharpe</strong></td><td>0.6503</td><td>> 0.7</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>IS_MaxDD</strong></td><td>-75.37</td><td>> -20%</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'>CS threshold; Gate7 ceiling = -30%</td></tr>
+<tr><td><strong>Gate7_MDD</strong></td><td>-75.37</td><td>> -30% (hard)</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>IS_CAGR</strong></td><td>7.65</td><td>>= 10%</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>IS_TradeCount</strong></td><td>380</td><td>>= 120</td><td style='color:#28a745;font-weight:bold'>PASS</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>WF_Consistency</strong></td><td>3/4</td><td>>= 3/4</td><td style='color:#28a745;font-weight:bold'>PASS</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>Permutation_p</strong></td><td>0.921</td><td>< 0.05</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'>Block-shuffle monthly regime sequence</td></tr>
+<tr><td><strong>CPR</strong></td><td>0.068</td><td>< 0.25</td><td style='color:#28a745;font-weight:bold'>PASS</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>Net_PpT_bps</strong></td><td>74.76</td><td>> 15.0 bps</td><td style='color:#28a745;font-weight:bold'>PASS</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>Composite_Score</strong></td><td>0.4336</td><td>>= 0.6</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+</tbody></table>
+
+<h2>IS Performance (2004-01-01 to 2018-12-31)</h2>
+<div class="mg">
+<div class="mb"><div>Net Sharpe</div><div class="mv">0.3878</div></div>
+<div class="mb"><div>CAGR</div><div class="mv">7.65%</div></div>
+<div class="mb"><div>Max Drawdown</div><div class="mv">-75.37%</div></div>
+<div class="mb"><div>Total Return</div><div class="mv">201.80%</div></div>
+<div class="mb"><div>Win Rate</div><div class="mv">60.00%</div></div>
+<div class="mb"><div>Profit Factor</div><div class="mv">1.4658</div></div>
+<div class="mb"><div>Round-trip Trades</div><div class="mv">380</div></div>
+<div class="mb"><div>Net PpT (bps)</div><div class="mv">74.7588</div></div>
+<div class="mb"><div>CPR</div><div class="mv">0.0680</div></div>
+</div>
+
+<h2>Regime Distribution</h2>
+<table><thead><tr><th>Regime</th><th>Description</th><th>IS Months</th><th>OOS Months</th><th>Sectors</th></tr></thead><tbody>
+<tr><td>A</td><td>Growth (EM+ BM-)</td><td>55</td><td>28</td><td>XLK, XLY, XLF</td></tr>
+<tr><td>B</td><td>Defensive (EM- BM+)</td><td>44</td><td>9</td><td>XLU, XLP, XLV</td></tr>
+<tr><td>C</td><td>Stagflation (EM- BM-)</td><td>25</td><td>18</td><td>XLE, XLB (+200-DMA cash gate)</td></tr>
+<tr><td>D</td><td>Recovery (EM+ BM+)</td><td>67</td><td>28</td><td>XLI, XLRE, XLF</td></tr>
+</tbody></table>
+
+<h2>OOS Performance (2019-01-01 to 2024-12-31)</h2>
+<div class="mg">
+<div class="mb"><div>Net Sharpe</div><div class="mv">0.6503</div></div>
+<div class="mb"><div>CAGR</div><div class="mv">12.37%</div></div>
+<div class="mb"><div>Max Drawdown</div><div class="mv">-40.94%</div></div>
+<div class="mb"><div>Total Return</div><div class="mv">101.19%</div></div>
+<div class="mb"><div>Win Rate</div><div class="mv">54.37%</div></div>
+<div class="mb"><div>Round-trip Trades</div><div class="mv">160</div></div>
+<div class="mb"><div>OOS Degradation</div><div class="mv">-67.7%</div></div>
+</div>
+
+<h2>Statistical Rigor</h2>
+<table><thead><tr><th>Metric</th><th>Value</th><th>Threshold</th><th>Status</th></tr></thead><tbody>
+<tr><td>MC p5 Sharpe (1000)</td><td>0.1975</td><td>≥ 0.5</td><td>WARN</td></tr>
+<tr><td>Bootstrap Sharpe 95% CI</td><td>[-0.0181, 0.7862]</td><td>—</td><td>—</td></tr>
+<tr><td>Bootstrap MDD 95% CI</td><td>[-81.20%, -32.14%]</td><td>—</td><td>—</td></tr>
+<tr><td><strong>Permutation p (block-shuffle)</strong></td>
+<td><strong>0.9210</strong></td><td>≤ 0.05</td>
+<td style='color:#dc3545;font-weight:bold'>FAIL</td></tr>
+<tr><td>DSR (36 trials)</td><td>0.9998</td><td>&gt; 0</td>
+<td>PASS</td></tr>
+</tbody></table>
+
+<h2>Walk-Forward (4 expanding windows)</h2>
+<table><thead><tr><th>#</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>Status</th></tr></thead>
+<tbody><tr><td>1</td><td>2004-01-01→2009-12-31</td><td>2010-01-01→2012-12-31</td><td>0.0296</td><td>0.8231</td><td style='color:#28a745;font-weight:bold'>PASS</td></tr>
+<tr><td>2</td><td>2004-01-01→2011-12-31</td><td>2012-01-01→2014-12-31</td><td>0.1060</td><td>1.5444</td><td style='color:#28a745;font-weight:bold'>PASS</td></tr>
+<tr><td>3</td><td>2004-01-01→2013-12-31</td><td>2014-01-01→2016-12-31</td><td>0.2995</td><td>0.7988</td><td style='color:#28a745;font-weight:bold'>PASS</td></tr>
+<tr><td>4</td><td>2004-01-01→2015-12-31</td><td>2016-01-01→2018-12-31</td><td>0.3251</td><td>0.6408</td><td style='color:#dc3545;font-weight:bold'>FAIL</td></tr>
+</tbody></table>
+<p>Windows passed: <strong>3/4</strong> | WF Sharpe std: 0.3492</p>
+
+<h2>Sub-Period Diagnostics</h2>
+<table><thead><tr><th>Period</th><th>Window</th><th>Sharpe</th><th>CAGR</th><th>MDD</th><th>Trades</th><th>Regime Counts</th></tr></thead>
+<tbody><tr><td>dot_com_recovery</td><td>2004-01-01→2006-12-31</td><td>1.0212</td><td>11.59%</td><td>-8.65%</td><td>94</td><td>{'A': 11, 'B': 12, 'C': 5, 'D': 19}</td></tr>
+<tr><td>gfc_only</td><td>2007-01-01→2009-12-31</td><td>-0.2390</td><td>-17.21%</td><td>-74.34%</td><td>88</td><td>{'A': 12, 'B': 11, 'C': 8, 'D': 16}</td></tr>
+<tr><td>post_gfc_bull</td><td>2010-01-01→2014-12-31</td><td>0.7951</td><td>14.88%</td><td>-29.14%</td><td>107</td><td>{'A': 25, 'B': 15, 'C': 7, 'D': 24}</td></tr>
+<tr><td>rate_hike_cycle</td><td>2015-01-01→2018-12-31</td><td>0.6147</td><td>17.65%</td><td>-18.67%</td><td>115</td><td>{'A': 13, 'B': 11, 'C': 9, 'D': 26}</td></tr>
+<tr><td>rate_shock_2022</td><td>2022-01-01→2022-12-31</td><td>-0.6167</td><td>-14.93%</td><td>-25.81%</td><td>39</td><td>{'A': 6, 'B': 1, 'C': 9, 'D': 7}</td></tr>
+<tr><td>oos_full</td><td>2019-01-01→2024-12-31</td><td>0.7106</td><td>14.62%</td><td>-42.66%</td><td>142</td><td>{'A': 28, 'B': 9, 'C': 18, 'D': 28}</td></tr>
+</tbody></table>
+
+<h2>Parameter Sweep Top 10 (36 combos, IS only)</h2>
+<table><thead><tr><th>Lookback</th><th>200-DMA Gate</th><th>C Cash%</th><th>Rebal</th><th>IS Sharpe</th><th>IS CAGR</th><th>IS MDD</th><th>Trades</th></tr></thead>
+<tbody><tr><td>60</td><td>ON</td><td>100%</td><td>last</td><td>0.7146</td><td>9.06%</td><td>-40.00%</td><td>180</td></tr>
+<tr><td>60</td><td>ON</td><td>50%</td><td>last</td><td>0.7146</td><td>9.06%</td><td>-40.03%</td><td>188</td></tr>
+<tr><td>20</td><td>ON</td><td>0%</td><td>last</td><td>0.7145</td><td>9.07%</td><td>-40.06%</td><td>360</td></tr>
+<tr><td>20</td><td>OFF</td><td>0%</td><td>last</td><td>0.7145</td><td>9.07%</td><td>-40.06%</td><td>360</td></tr>
+<tr><td>20</td><td>OFF</td><td>50%</td><td>last</td><td>0.7145</td><td>9.07%</td><td>-40.06%</td><td>360</td></tr>
+<tr><td>20</td><td>OFF</td><td>100%</td><td>last</td><td>0.7145</td><td>9.07%</td><td>-40.06%</td><td>360</td></tr>
+<tr><td>20</td><td>ON</td><td>50%</td><td>last</td><td>0.7145</td><td>9.07%</td><td>-40.06%</td><td>360</td></tr>
+<tr><td>20</td><td>ON</td><td>100%</td><td>last</td><td>0.7145</td><td>9.07%</td><td>-40.06%</td><td>354</td></tr>
+<tr><td>10</td><td>ON</td><td>0%</td><td>last</td><td>0.7145</td><td>9.07%</td><td>-40.06%</td><td>399</td></tr>
+<tr><td>10</td><td>OFF</td><td>0%</td><td>last</td><td>0.7145</td><td>9.07%</td><td>-40.06%</td><td>399</td></tr>
+</tbody></table>
+
+<h2>Track A Guards & Data Quality</h2>
+<ul>
+<li>Overnight/weekend guards (Hard Gate 8): N/A at monthly bar resolution — documented per criteria.md §Swing/Daily-Specific Guards.</li>
+<li>Earnings policy: N/A — ETF-only strategy.</li>
+<li>Survivorship bias (Hard Gate 9): None — all SPDR ETFs active. XLRE pre-2015: weight redistributed to XLI+XLF.</li>
+<li>Look-ahead: signal at last-day-of-month close; execution at next-month first-day close (proxy for open).</li>
+<li>Cost model: $0.005/share + 0.05% slip + Almgren-Chriss k=0.1×σ×√(Q/ADV).</li>
+</ul>
+</body></html>
