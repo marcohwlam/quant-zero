@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/repos/quant-zero/.venv/bin/python3
 """
 Gate 1 Backtest Runner: H55 Low Volatility Anomaly — SPLV/USMV Factor Rotation
 QUA-126 | Engineering Director | 2026-06-09

@@ -4,7 +4,7 @@ Minimal AI-driven strategy iteration loop.
 
 Usage:
     export ANTHROPIC_API_KEY="sk-ant-..."
-    python quant_orchestrator.py
+    .venv/bin/python3 quant_orchestrator.py
 
 The orchestrator:
   1. Loads the knowledge base (prior patterns and learnings)

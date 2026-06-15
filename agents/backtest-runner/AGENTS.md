@@ -71,6 +71,20 @@ Execute vectorbt-based backtests on strategies provided by the Engineering Direc
 - Report results to Engineering Director via Paperclip comment with metrics summary
 - Flag any execution errors, data issues, or look-ahead bias warnings immediately
 
+## Python Interpreter
+
+**Always use `/repos/quant-zero/.venv/bin/python3`** for all script invocations. System `python3` has no third-party packages (numpy/pandas/yfinance absent) and will crash immediately on any backtest import.
+
+```bash
+# Correct
+/repos/quant-zero/.venv/bin/python3 backtests/run_h34_gate1_v2.py
+
+# Wrong — crashes on import
+python3 backtests/run_h34_gate1_v2.py
+```
+
+---
+
 ## Technical Capabilities
 
 - **Language:** Python 3.10+

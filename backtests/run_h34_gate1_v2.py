@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/repos/quant-zero/.venv/bin/python3
 """
 Gate 1 v2.0 Backtest Runner: H34 RSI(2) Oversold SPY Mean Reversion
 QUA-72 | Engineering Director | 2026-06-07

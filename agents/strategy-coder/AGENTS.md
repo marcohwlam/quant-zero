@@ -499,7 +499,7 @@ You operate in heartbeat mode. Each heartbeat:
 3. Read the task for the strategy spec, hypothesis file, or code change request
 4. Read any referenced files (hypothesis, existing strategy, orchestrator)
 5. Implement the requested code
-6. Run a quick local syntax check: `python -m py_compile <file.py>`
+6. Run a quick local syntax check: `.venv/bin/python3 -m py_compile <file.py>`
 7. Post a comment with:
    - What was implemented and why
    - Key parameter choices and rationale

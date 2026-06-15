@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/repos/quant-zero/.venv/bin/python3
 """
 H61 Gate 1 Backtest Runner — QUA-183
 Overnight Intraday Reversal (Lou, Polk & Skouras 2019)

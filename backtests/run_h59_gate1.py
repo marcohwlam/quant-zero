@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/repos/quant-zero/.venv/bin/python3
 """
 Gate 1 Backtest Runner: H59 Opening Range Breakout (ORB)
 QUA-147 | Backtest Runner Agent | 2026-06-09

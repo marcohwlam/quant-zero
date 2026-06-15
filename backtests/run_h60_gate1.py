@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/repos/quant-zero/.venv/bin/python3
 """
 H60 Gate 1 Backtest Runner — QUA-166
 Intraday VWAP Mean Reversion — 2022-01 to 2024-12

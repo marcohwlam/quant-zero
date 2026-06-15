@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/repos/quant-zero/.venv/bin/python3
 """
 Gate 1 v2.0 Backtest Runner: H51 Gold/Equity Relative Momentum Risk Timer
 QUA-113 | Engineering Director | 2026-06-08
