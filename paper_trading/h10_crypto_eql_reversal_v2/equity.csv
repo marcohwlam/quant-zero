@@ -1,2 +1,1 @@
-date,portfolio_value
-2026-06-08,100187.6
+date,portfolio_value,cash,invested,daily_pnl,cumulative_pnl,cumulative_return_pct,drawdown_pct,peak_value,trade_count_today,signal_count_today
