@@ -31,6 +31,7 @@ Risk constraints (per Risk Constitution + CEO approval):
     - No manual stop-loss overrides — signal-driven exits only
 """
 
+import csv
 import os
 import sys
 import json
@@ -72,9 +73,19 @@ CANONICAL_DIR    = os.path.join(
 )
 INITIAL_CAPITAL  = 5000.0
 PAPER_START_DATE = "2026-03-16"
-RUNNER_VERSION   = "1.1.0"
+RUNNER_VERSION   = "1.2.0"
 DEMOTION_THRESHOLD_PCT = 16.05   # 1.5 × 10.7%
 WARNING_THRESHOLD_PCT  = 10.70
+
+# Alpaca paper accounts default to ~$100k; strategy capital is $5k.
+# Values above this ceiling in equity.csv indicate raw Alpaca balance contamination.
+_STRAT_VALUE_CEILING = INITIAL_CAPITAL * 20  # 20× = $100k upper bound
+
+
+def _is_strat_level_value(v: float) -> bool:
+    """True if v is in strategy-capital range, not raw Alpaca account equity (~$100k)."""
+    return 0 < v < _STRAT_VALUE_CEILING
+
 
 # IS tracking: implementation shortfall
 IS_THRESHOLD_BPS = 10.0   # flag trades where IS > 10 bps
@@ -369,9 +380,15 @@ def write_canonical_equity(account_value: float, signal_count: int, trade_count:
     except FileNotFoundError:
         pass
 
-    # Compute running state
-    if rows:
-        prev = rows[-1]
+    # Compute running state from last CLEAN (strat-level) row only.
+    # Rows with raw Alpaca account equity (~$100k) are skipped to prevent
+    # artificial daily_pnl spikes when contaminated rows precede clean ones.
+    clean_rows = [
+        r for r in rows
+        if _is_strat_level_value(float(r.get("portfolio_value", 0) or 0))
+    ]
+    if clean_rows:
+        prev = clean_rows[-1]
         prev_value = float(prev.get("portfolio_value", INITIAL_CAPITAL) or INITIAL_CAPITAL)
         prev_cum_pnl = float(prev.get("cumulative_pnl", 0) or 0)
         prev_peak = float(prev.get("peak_value", INITIAL_CAPITAL) or INITIAL_CAPITAL)
@@ -559,6 +576,77 @@ def write_canonical_meta(
     logger.info(f"Canonical meta.json updated: {meta_path}")
 
 
+# ── Historical Data Repair ────────────────────────────────────────────────────
+
+def repair_equity_csv(account_baseline: float) -> int:
+    """
+    One-time repair of equity.csv rows where portfolio_value holds raw Alpaca account
+    equity (~$100k) instead of strat-level capital (~$5k).
+
+    Corrects: strat_value = INITIAL_CAPITAL + (raw_alpaca_value - account_baseline)
+    Then recomputes all derived columns (daily_pnl, cumulative_pnl, peak, drawdown)
+    sequentially from start so the series is internally consistent.
+
+    Assumption: account_baseline was stable across the corrupted rows.  If the Alpaca
+    paper account received external capital changes, the correction will be imperfect —
+    review output against known P&L before committing.
+
+    Returns count of portfolio_value rows corrected.
+    """
+    eq_path = _canonical_equity_path()
+    if not os.path.exists(eq_path):
+        logger.warning("equity.csv not found — nothing to repair.")
+        return 0
+
+    if account_baseline <= 0:
+        raise ValueError(f"account_baseline must be positive, got {account_baseline}")
+
+    with open(eq_path, newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    fixed = 0
+    for row in rows:
+        raw_val = float(row.get("portfolio_value", 0) or 0)
+        if not _is_strat_level_value(raw_val):
+            corrected = INITIAL_CAPITAL + (raw_val - account_baseline)
+            row["portfolio_value"] = round(max(corrected, 0.0), 2)
+            fixed += 1
+
+    # Recompute all derived columns from start using corrected portfolio_value series
+    prev_value = INITIAL_CAPITAL
+    prev_cum_pnl = 0.0
+    prev_peak = INITIAL_CAPITAL
+    for row in rows:
+        pv = float(row.get("portfolio_value") or INITIAL_CAPITAL)
+        daily_pnl = pv - prev_value
+        cum_pnl = prev_cum_pnl + daily_pnl
+        cum_ret = (pv / INITIAL_CAPITAL - 1) * 100
+        peak = max(prev_peak, pv)
+        dd = max(0.0, (1 - pv / peak) * 100) if peak > 0 else 0.0
+
+        row["cash"] = round(pv, 2)  # conservative: all uninvested
+        row["invested"] = row.get("invested") or "0.0"
+        row["daily_pnl"] = round(daily_pnl, 2)
+        row["cumulative_pnl"] = round(cum_pnl, 2)
+        row["cumulative_return_pct"] = round(cum_ret, 4)
+        row["drawdown_pct"] = round(dd, 4)
+        row["peak_value"] = round(peak, 2)
+        row["trade_count_today"] = row.get("trade_count_today") or "0"
+        row["signal_count_today"] = row.get("signal_count_today") or "0"
+
+        prev_value = pv
+        prev_cum_pnl = cum_pnl
+        prev_peak = peak
+
+    with open(eq_path, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=EQUITY_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+
+    logger.info(f"equity.csv repaired: {fixed} row(s) corrected → {eq_path}")
+    return fixed
+
+
 # ── IS Shortfall Report ────────────────────────────────────────────────────────
 
 def compute_shortfall_report(trade_log: list) -> dict:
@@ -613,12 +701,30 @@ def compute_shortfall_report(trade_log: list) -> dict:
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
-def main(dry_run: bool = False, shortfall_report_only: bool = False):
+def main(dry_run: bool = False, shortfall_report_only: bool = False, repair_equity: bool = False):
     logger.info("=" * 60)
     logger.info(f"H10 Paper Trading Runner — {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     logger.info(f"Strategy: {STRATEGY_NAME}")
     logger.info(f"Mode: {'DRY RUN' if dry_run else 'LIVE PAPER'}")
     logger.info("=" * 60)
+
+    if repair_equity:
+        # Load account_baseline from meta.json for historical correction
+        _meta_for_repair: dict = {}
+        try:
+            with open(_canonical_meta_path()) as _f:
+                _meta_for_repair = json.load(_f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass
+        _baseline = float(_meta_for_repair.get("account_baseline", 0) or 0)
+        if _baseline <= 0:
+            print("ERROR: account_baseline not found in meta.json — cannot repair equity.csv.")
+            print("Run the normal runner first to establish the baseline, then retry.")
+            return None
+        n = repair_equity_csv(_baseline)
+        print(f"\nRepair complete: {n} row(s) corrected using baseline={_baseline:.2f}")
+        print(f"Review {_canonical_equity_path()} before committing.")
+        return {"repaired_rows": n, "account_baseline": _baseline}
 
     if shortfall_report_only:
         log = load_trade_log()
@@ -682,7 +788,31 @@ def main(dry_run: bool = False, shortfall_report_only: bool = False):
 
     account_baseline = float(_existing_meta.get("account_baseline", 0) or 0)
     if account_baseline <= 0 and raw_account_value > 0:
-        account_baseline = raw_account_value  # first run: snapshot Alpaca starting balance
+        # If meta.json was lost, recover baseline from last clean equity row to preserve
+        # cumulative P&L continuity. Avoids silently resetting the strategy baseline
+        # to the current raw Alpaca balance (which would make P&L appear to restart at 0).
+        try:
+            with open(_canonical_equity_path(), newline="") as _eq_f:
+                _eq_rows = list(csv.DictReader(_eq_f))
+            _clean_vals = [
+                float(r["portfolio_value"]) for r in _eq_rows
+                if r.get("portfolio_value")
+                and _is_strat_level_value(float(r.get("portfolio_value", 0) or 0))
+            ]
+            if _clean_vals:
+                _last_strat = _clean_vals[-1]
+                # Invert: baseline = raw - (strat - initial)
+                account_baseline = raw_account_value - (_last_strat - INITIAL_CAPITAL)
+                logger.warning(
+                    f"account_baseline missing from meta.json — recovered from equity history: "
+                    f"baseline={account_baseline:.2f} (last_strat_val={_last_strat:.2f})"
+                )
+            else:
+                account_baseline = raw_account_value
+                logger.info(f"First run: captured account_baseline={account_baseline:.2f}")
+        except FileNotFoundError:
+            account_baseline = raw_account_value
+            logger.info(f"First run: captured account_baseline={account_baseline:.2f}")
 
     if raw_account_value > 0 and account_baseline > 0:
         account_value = INITIAL_CAPITAL + (raw_account_value - account_baseline)
@@ -727,10 +857,21 @@ if __name__ == "__main__":
         "--shortfall-report", action="store_true",
         help="Print implementation shortfall report from trade log and exit"
     )
+    parser.add_argument(
+        "--repair-equity", action="store_true",
+        help=(
+            "One-time repair of equity.csv: correct rows where raw Alpaca account equity "
+            "was written instead of strat-level value. Reads account_baseline from meta.json."
+        )
+    )
     args = parser.parse_args()
 
-    result = main(dry_run=args.dry_run, shortfall_report_only=args.shortfall_report)
-    if result and not args.shortfall_report:
+    result = main(
+        dry_run=args.dry_run,
+        shortfall_report_only=args.shortfall_report,
+        repair_equity=args.repair_equity,
+    )
+    if result and not args.shortfall_report and not args.repair_equity:
         print("\nSummary:")
         print(f"  Account value: ${result.get('account_value', 0):.2f}")
         print(f"  IS report:     {result.get('is_report', {})}")
