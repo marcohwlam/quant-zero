@@ -245,6 +245,7 @@ def simulate_trades_single_asset(
     params: dict,
     init_cash: float,
     is_btc: bool = False,
+    warmup_bars: int = 0,
 ) -> tuple[list[dict], pd.Series]:
     """
     Simulate H10 EQL/EQH reversal on a single crypto asset.
@@ -266,6 +267,11 @@ def simulate_trades_single_asset(
 
     Transaction costs: taker fee + slippage applied at entry and exit.
 
+    Args:
+        warmup_bars: leading bars reserved for indicator warm-up; no entries
+            are fired before this index. Use when the caller prepends extra
+            history so ATR/swing-point series are seeded before the live window.
+
     Returns:
         trade_log: list of trade dicts
         portfolio_value: daily equity curve
@@ -284,6 +290,8 @@ def simulate_trades_single_asset(
     stop_atr_mult = params["stop_atr_mult"]
     max_hold = params["max_hold_bars"]
     pos_size_pct = params["position_size_pct"]
+    # Whichever is later: indicator burn-in or caller-supplied warmup prefix
+    entry_start_bar = max(params["atr_period"] + params["lookback_n_bars"], warmup_bars)
 
     trade_log: list[dict] = []
     portfolio_value = pd.Series(index=closes.index, dtype=float)
@@ -373,7 +381,7 @@ def simulate_trades_single_asset(
                 hold_days += 1
 
         # ── Entry logic if flat ───────────────────────────────────────────────
-        if position == 0 and i >= params["atr_period"] + params["lookback_n_bars"]:
+        if position == 0 and i >= entry_start_bar:
 
             regime_ok = bool(regime_aligned.iloc[i])
             eql_zones, eqh_zones = find_eql_eqh_zones(
@@ -438,7 +446,7 @@ def simulate_trades_single_asset(
             # ── Short entry: EQH recovery (counter-trend short) ───────────────
             # Only enter short if regime is weak or neutral (don't short in strong bull)
             if position == 0 and eqh_zones:
-                nearest_eqh = max(eqh_zones, key=lambda z: abs(bar_close - z))
+                nearest_eqh = min(eqh_zones, key=lambda z: abs(bar_close - z))
                 band = params["tolerance_mult"] * bar_atr
 
                 if pending_entry and pending_entry.get("direction") == "short":
@@ -640,18 +648,22 @@ def run_strategy(
             warnings.warn(f"No data for {ticker} — skipping.")
             continue
 
-        # Trim to backtest window (after warmup)
         bt_start = pd.Timestamp(start)
-        ohlcv_bt = ohlcv.loc[ohlcv.index >= bt_start].copy()
-        if ohlcv_bt.empty:
+        if ohlcv.loc[ohlcv.index >= bt_start].empty:
             continue
 
+        # Pass full ohlcv (warmup + backtest) so ATR/swing indicators are pre-warmed.
+        warmup_count = int((ohlcv.index < bt_start).sum())
         is_btc = "BTC" in ticker.upper()
         asset_cash = capital_map.get(ticker, init_cash / len(universe))
 
         trades, pv = simulate_trades_single_asset(
-            ohlcv_bt, btc_regime, params, asset_cash, is_btc=is_btc
+            ohlcv, btc_regime, params, asset_cash, is_btc=is_btc, warmup_bars=warmup_count
         )
+
+        # Trim to backtest window
+        pv = pv.loc[ohlcv.index >= bt_start]
+        trades = [t for t in trades if t.get("entry_date", "") >= start]
 
         for t in trades:
             t["ticker"] = ticker

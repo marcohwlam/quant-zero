@@ -83,7 +83,7 @@ IS_WARN_BPS      = 5.0    # weekly mean IS > 5 bps triggers cost model review
 
 # ── Signal Evaluation ──────────────────────────────────────────────────────────
 
-def get_current_signal(lookback_days: int = 60) -> dict:
+def get_current_signal(lookback_days: int = 90) -> dict:
     """
     Evaluate H10 signal on the most recent data.
 

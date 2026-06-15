@@ -134,15 +134,18 @@ class H10LiveStrategy(LiveStrategy):
                 continue
 
             bt_start = pd.Timestamp(start_date)
-            ohlcv_bt = ohlcv.loc[ohlcv.index >= bt_start].copy()
-            if ohlcv_bt.empty:
+            if ohlcv.loc[ohlcv.index >= bt_start].empty:
                 targets[symbol] = 0.0
                 continue
 
+            # Pass full ohlcv (warmup + backtest) so ATR/swing indicators are pre-warmed.
+            warmup_count = int((ohlcv.index < bt_start).sum())
             asset_cash = capital_map.get(symbol, self._capital_allocated / len(universe))
             trades, _ = simulate_trades_single_asset(
-                ohlcv_bt, btc_regime, params, asset_cash, is_btc=("BTC" in symbol)
+                ohlcv, btc_regime, params, asset_cash, is_btc=("BTC" in symbol),
+                warmup_bars=warmup_count,
             )
+            trades = [t for t in trades if t.get("entry_date", "") >= start_date]
 
             # Determine current position intent from the last trade
             target_notional = 0.0
