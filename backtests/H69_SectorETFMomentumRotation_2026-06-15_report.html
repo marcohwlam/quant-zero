@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<title>H69 Gate 1 — 2026-06-15</title>
+<style>
+  body{font-family:Arial,sans-serif;margin:30px;}
+  h1{color:#333;}h2{color:#555;border-bottom:1px solid #ddd;padding-bottom:4px;}
+  table{border-collapse:collapse;width:100%;margin-bottom:18px;}
+  th,td{border:1px solid #ddd;padding:7px;text-align:left;}
+  th{background:#f2f2f2;}
+  .verdict{font-size:1.5em;font-weight:bold;padding:12px 20px;border-radius:6px;
+            background:#f8d7da;display:inline-block;margin:10px 0;}
+</style></head><body>
+<h1>H69 Sector ETF Momentum Rotation — Gate 1</h1>
+<p><b>Date:</b> 2026-06-15 &nbsp;|&nbsp; <b>Track:</b> A (Daily/Weekly) &nbsp;|&nbsp;
+   <b>Criteria:</b> criteria.md v2.7 / kpi-daily-weekly.md v1.0 (CEO-locked 2026-06-13)</p>
+<p><b>Universe:</b> 11 SPDR Sector ETFs &nbsp;|&nbsp;
+   <b>Signal:</b> 63-day RS vs SPY + Minervini TT &nbsp;|&nbsp;
+   <b>Regime:</b> SPY 200-DMA &nbsp;|&nbsp; <b>Rebalance:</b> Weekly (Monday open)</p>
+<p><b>IS:</b> 2006-01-01 to 2018-12-31 &nbsp;|&nbsp; <b>OOS:</b> 2019-01-01 to 2024-12-31</p>
+<div class="verdict">Gate 1: FAIL</div>
+<p style="color:red"><b>Failing: oos_sharpe_gt_0.7, is_mdd_cs_lt_20pct, ppt_gt_15bps, cpr_lt_0.25, wf_3_of_4_pass, permutation_pval_lt_0.05, composite_score_gte_0.60, mc_p5_sharpe_gte_0.3, sensitivity_variance_pass</b></p>
+
+<h2>Composite Score (Track A — kpi-daily-weekly.md v1.0)</h2>
+<table>
+<tr><th>Component</th><th>Weight</th><th>Raw</th><th>Norm</th><th>Contribution</th></tr>
+<tr><td>NetSharpe (OOS)</td><td>40%</td><td>0.2062</td><td>0.2825</td><td>0.1130</td></tr>
+<tr><td>Stability (IS MDD)</td><td>30%</td><td>-28.2%</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>PpT (IS bps)</td><td>20%</td><td>13.5 bps</td><td>0.1347</td><td>0.0269</td></tr>
+<tr><td>TradeAdequacy (IS)</td><td>10%</td><td>190</td><td>1.0000</td><td>0.1000</td></tr>
+<tr><th>CS</th><th></th><th></th><th></th><th>0.2399 (FAIL &lt;0.60)</th></tr>
+</table>
+
+<h2>Core Metrics</h2>
+<table>
+<tr><th>Metric</th><th>IS (2006-2018)</th><th>OOS (2019-2024)</th><th>Threshold</th><th>Status</th></tr>
+<tr style='background:#f8d7da'><td>Net Sharpe</td><td>0.0918</td><td>0.2062</td><td>OOS &gt; 0.7</td><td>FAIL</td></tr>
+<tr style='background:#f8d7da'><td>Max Drawdown</td><td>-28.2%</td><td>-26.2%</td><td>IS &lt;20% (CS) / &lt;30% (G7)</td><td>FAIL</td></tr>
+<tr><td>CAGR</td><td>0.4%</td><td>1.9%</td><td>&ge;10% charter</td><td>NOTE</td></tr>
+<tr style='background:#f8d7da'><td>Net PpT (bps)</td><td>13.5</td><td>27.8</td><td>IS &gt;15 bps</td><td>FAIL</td></tr>
+<tr style='background:#f8d7da'><td>CPR</td><td>0.7081</td><td>—</td><td>&lt;0.25</td><td>FAIL</td></tr>
+<tr><td>Win Rate</td><td>46.8%</td><td>48.4%</td><td>&gt;50%</td><td>NOTE</td></tr>
+<tr style='background:#d4edda'><td>IS Trade Count</td><td>190</td><td>157</td><td>IS &gt;30</td><td>PASS</td></tr>
+</table>
+
+<h2>2022 Rate-Shock Stress Test (PF-4)</h2>
+<table><tr><th>Metric</th><th>Value</th><th>Note</th></tr>
+<tr><td>2022 Sharpe</td><td>-0.2929</td>
+    <td>Negative: regime gate exited to cash</td></tr>
+<tr><td>2022 MDD</td><td>-9.4%</td><td>SPY -19% in 2022</td></tr>
+<tr><td>2022 CAGR</td><td>-3.8%</td><td>XLE +65% Q1 2022 structural driver</td></tr>
+</table>
+
+<h2>Walk-Forward (4 windows, 3yr IS / 1yr OOS)</h2>
+<table>
+<tr><th>W</th><th>IS Period</th><th>IS Sharpe</th><th>OOS Period</th><th>OOS Sharpe</th><th>IS MDD</th><th>IS Trades</th><th>Status</th></tr>
+<tr style='background:#f8d7da'><td>W1</td><td>2006-01-01–2008-12-31</td><td>-0.458</td><td>2009-01-01–2009-12-31</td><td>0.352</td><td>-26.4%</td><td>33</td><td><b>FAIL</b></td></tr>
+<tr style='background:#f8d7da'><td>W2</td><td>2009-01-01–2011-12-31</td><td>0.008</td><td>2012-01-01–2012-12-31</td><td>0.018</td><td>-21.2%</td><td>51</td><td><b>FAIL</b></td></tr>
+<tr style='background:#f8d7da'><td>W3</td><td>2012-01-01–2014-12-31</td><td>0.959</td><td>2015-01-01–2015-12-31</td><td>-0.370</td><td>-8.7%</td><td>67</td><td><b>FAIL</b></td></tr>
+<tr style='background:#f8d7da'><td>W4</td><td>2015-01-01–2017-12-31</td><td>-0.018</td><td>2018-01-01–2018-12-31</td><td>0.047</td><td>-25.8%</td><td>27</td><td><b>FAIL</b></td></tr>
+
+</table>
+<p><b>Passed:</b> 0/4 &nbsp;|&nbsp; <b>Consistency:</b> -1.2413 &nbsp;|&nbsp; <b>Sharpe std:</b> 0.2563</p>
+
+<h2>Statistical Rigor</h2>
+<table>
+<tr><th>Test</th><th>Value</th><th>Status</th></tr>
+<tr><td>DSR (n=6)</td><td>0.000000</td><td>FAIL (&gt;0)</td></tr>
+<tr><td>MC p5 Sharpe</td><td>-0.382</td><td>NOTE (&ge;0.3)</td></tr>
+<tr><td>MC Median Sharpe</td><td>0.085</td><td>—</td></tr>
+<tr><td>Bootstrap Sharpe CI [95%]</td><td>[-0.426, 0.568]</td><td>—</td></tr>
+<tr style='background:#f8d7da'>
+  <td>Permutation p (63d hold)</td><td>0.964</td>
+  <td>FAIL (&le;0.05)</td></tr>
+</table>
+
+<h2>Sensitivity Sweep (RS lookback &times; top-N, * = default)</h2>
+<p>FAIL: Sharpe variance 186.6% > 30%</p>
+<table>
+<tr><th>Config</th><th>RS Lookback</th><th>Top-N</th><th>IS Sharpe</th><th>IS MDD</th><th>IS PpT (bps)</th></tr>
+<tr><td>lb42_N2</td><td>42</td><td>2</td><td>0.0489</td><td>-36.9%</td><td>16.0</td></tr>
+<tr><td>lb42_N3</td><td>42</td><td>3</td><td>0.1891</td><td>-28.5%</td><td>28.6</td></tr>
+<tr><td>lb63_N2</td><td>63</td><td>2</td><td>0.1543</td><td>-26.2%</td><td>20.7</td></tr>
+<tr><td>lb63_N3*</td><td>63</td><td>3</td><td>0.0918</td><td>-28.2%</td><td>13.5</td></tr>
+<tr><td>lb91_N2</td><td>91</td><td>2</td><td>0.0178</td><td>-29.8%</td><td>6.6</td></tr>
+<tr><td>lb91_N3</td><td>91</td><td>3</td><td>0.0659</td><td>-30.2%</td><td>6.9</td></tr>
+
+</table>
+
+<h2>Track A Gap Disclosures (Hard Gate 8)</h2>
+<table>
+<tr><th>Item</th><th>Value / Note</th></tr>
+<tr><td>Overnight PnL fraction</td><td>27.4%</td></tr>
+<tr><td>Weekend PnL fraction</td><td>72.6%</td></tr>
+<tr><td>Weekend MDD fraction</td><td>71.5%</td></tr>
+<tr><td>Earnings hold policy</td><td>N/A — sector ETFs hold diversified baskets (50-100 stocks each). No single-stock earnings exposure. No per-position earnings guard required.</td></tr>
+<tr><td>Weekend gap exposure</td><td>Sector ETF positions held over weekend. Estimated weekend gap risk: ~0.3-0.8% of position notional based on historical sector ETF weekend gap distribution. Regime gate (SPY 200-DMA) exits all positions before sustained bear markets.</td></tr>
+</table>
+
+<h2>Sector Holding Breakdown (IS)</h2>
+<table><tr><th>Sector</th><th>Fraction of weeks in portfolio</th></tr>
+<tr><td>_cash</td><td>37.5%</td></tr><tr><td>XLK</td><td>21.9%</td></tr><tr><td>XLY</td><td>20.5%</td></tr><tr><td>XLV</td><td>19.5%</td></tr><tr><td>XLE</td><td>18.9%</td></tr><tr><td>XLI</td><td>18.6%</td></tr><tr><td>XLB</td><td>16.2%</td></tr><tr><td>XLF</td><td>14.9%</td></tr><tr><td>XLU</td><td>7.8%</td></tr><tr><td>XLP</td><td>4.3%</td></tr>
+</table>
+
+<h2>Gate 1 Checks</h2>
+<table><tr><th>Check</th><th>Result</th></tr>
+<tr style='background:#f8d7da'><td>oos_sharpe_gt_0.7</td><td>FAIL</td></tr>
+<tr style='background:#f8d7da'><td>is_mdd_cs_lt_20pct</td><td>FAIL</td></tr>
+<tr style='background:#d4edda'><td>is_mdd_gate7_lt_30pct</td><td>PASS</td></tr>
+<tr style='background:#f8d7da'><td>ppt_gt_15bps</td><td>FAIL</td></tr>
+<tr style='background:#f8d7da'><td>cpr_lt_0.25</td><td>FAIL</td></tr>
+<tr style='background:#d4edda'><td>trade_count_gt_30</td><td>PASS</td></tr>
+<tr style='background:#f8d7da'><td>wf_3_of_4_pass</td><td>FAIL</td></tr>
+<tr style='background:#f8d7da'><td>permutation_pval_lt_0.05</td><td>FAIL</td></tr>
+<tr style='background:#f8d7da'><td>composite_score_gte_0.60</td><td>FAIL</td></tr>
+<tr style='background:#f8d7da'><td>mc_p5_sharpe_gte_0.3</td><td>FAIL</td></tr>
+<tr style='background:#d4edda'><td>no_lookahead_bias</td><td>PASS</td></tr>
+<tr style='background:#d4edda'><td>overnight_guards_documented</td><td>PASS</td></tr>
+<tr style='background:#d4edda'><td>survivorship_bias_ok</td><td>PASS</td></tr>
+<tr style='background:#f8d7da'><td>sensitivity_variance_pass</td><td>FAIL</td></tr>
+
+</table>
+
+<h2>Verdict</h2>
+<div class="verdict">Gate 1: FAIL</div>
+<p style='color:red'>Failing: oos_sharpe_gt_0.7, is_mdd_cs_lt_20pct, ppt_gt_15bps, cpr_lt_0.25, wf_3_of_4_pass, permutation_pval_lt_0.05, composite_score_gte_0.60, mc_p5_sharpe_gte_0.3, sensitivity_variance_pass</p>
+<p><i>Track A IS period note: XLRE inception Oct 2015 and XLC inception Jun 2018 —
+both treated as NaN-eligible pre-inception (not selectable). Zero survivorship bias:
+ETFs do not delist due to poor performance.</i></p>
+</body></html>

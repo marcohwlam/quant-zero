@@ -1,0 +1,26 @@
+Gate 1 Verdict: FAIL
+Hypothesis: H69 Sector ETF Momentum Rotation via Trend Template
+Date: 2026-06-15
+
+IS  (2006-01-01 to 2018-12-31):
+  Sharpe:  0.0918
+  MDD:     -28.23%
+  CAGR:    0.38%
+  PpT:     13.47 bps
+  CPR:     0.7081
+  Trades:  190
+
+OOS (2019-01-01 to 2024-12-31):
+  Sharpe:  0.2062
+  MDD:     -26.23%
+  CAGR:    1.85%
+  Trades:  157
+
+2022 stress: Sharpe=-0.2929  MDD=-9.40%
+
+Walk-forward: 0/4 passed
+Permutation p: 0.964
+
+CS: 0.2399 (FAIL)
+
+Failing gates: oos_sharpe_gt_0.7, is_mdd_cs_lt_20pct, ppt_gt_15bps, cpr_lt_0.25, wf_3_of_4_pass, permutation_pval_lt_0.05, composite_score_gte_0.60, mc_p5_sharpe_gte_0.3, sensitivity_variance_pass
