@@ -10,8 +10,10 @@ agents/<name>/      agent definitions and personal memory
 backtests/          gate1 verdicts and reports, one dir or file per hypothesis
 broker/             broker / paper trading connectors
 docs/               company-wide specs and KPI documents
+execution_engine/   always-on live trading service (Alpaca, order management, vol targeting)
 knowledge_base/     sourced strategy material (books, papers, references)
 orchestrator/       pipeline glue
+pipelines/          intraday data ingestion and computation (minute bars, VWAP, VPIN)
 research/           research notebooks and hypotheses
 strategies/         strategy implementations
 tests/              test suite
