@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>H70 Gate 1 Report — 2026-06-15</title>
+<style>
+body { font-family: monospace; max-width: 1200px; margin: 0 auto; padding: 20px; }
+h1 { background: #343a40; color: white; padding: 15px; border-radius: 4px; }
+h2 { border-bottom: 2px solid #343a40; padding-bottom: 5px; }
+.verdict { font-size: 2em; font-weight: bold; padding: 15px; border-radius: 4px; background: #f8d7da; text-align: center; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th { background: #343a40; color: white; padding: 8px; text-align: left; }
+td { padding: 6px 8px; border: 1px solid #dee2e6; }
+.pass { color: #155724; font-weight: bold; }
+.fail { color: #721c24; font-weight: bold; }
+.metric-box { display: inline-block; padding: 10px 20px; margin: 5px; border-radius: 4px; border: 1px solid #dee2e6; min-width: 150px; text-align: center; }
+.section { margin: 20px 0; padding: 15px; border: 1px solid #dee2e6; border-radius: 4px; }
+</style>
+</head>
+<body>
+<h1>H70 IWM RSI-4 Mean Reversion — Gate 1 Report</h1>
+<p><strong>Date:</strong> 2026-06-15 | <strong>Strategy:</strong> h70_iwm_rsi4_mean_reversion | <strong>Asset:</strong> IWM (equities)</p>
+
+<div class="verdict">GATE 1: FAIL — Composite Score: 0.67</div>
+
+<h2>Gate 1 Checklist</h2>
+<table>
+<tr><th>Gate</th><th>Value</th><th>Threshold</th><th>Result</th></tr>
+<tr style='background:#f8d7da'><td>OOS Sharpe</td><td>0.6075</td><td>> 0.7</td><td>✗ FAIL</td></tr><tr style='background:#d4edda'><td>OOS PpT</td><td>105.96 bps</td><td>> 15 bps</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>IS MDD (CS)</td><td>2.25%</td><td>< 20%</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>IS MDD (Gate7)</td><td>2.25%</td><td>< 30%</td><td>✓ PASS</td></tr><tr style='background:#f8d7da'><td>WF trades/fold > 30</td><td>False</td><td>all folds</td><td>✗ FAIL</td></tr><tr style='background:#d4edda'><td>CPR</td><td>0.0146</td><td>< 0.25</td><td>✓ PASS</td></tr><tr style='background:#f8d7da'><td>Permutation test</td><td>p=0.3160</td><td>< 0.05</td><td>✗ FAIL</td></tr><tr style='background:#d4edda'><td>Gate7 auto-reject</td><td>True</td><td>no fold MDD>30%</td><td>✓ PASS</td></tr><tr style='background:#f8d7da'><td>Sensitivity</td><td>Δ69.5%</td><td>< 30%</td><td>✗ FAIL</td></tr>
+</table>
+
+<h2>IS/OOS Summary</h2>
+<div class="section">
+<table>
+<tr><th>Metric</th><th>IS (2005–2018)</th><th>OOS (2019–2024)</th></tr>
+<tr><td>Sharpe Ratio</td><td>0.7217</td><td>0.6075</td></tr>
+<tr><td>Max Drawdown</td><td>2.25%</td><td>3.46%</td></tr>
+<tr><td>Win Rate</td><td>71.88%</td><td>73.08%</td></tr>
+<tr><td>Profit Factor</td><td>2.78</td><td>2.10</td></tr>
+<tr><td>Trade Count</td><td>64</td><td>26</td></tr>
+<tr><td>Trades/Year</td><td>4.6</td><td>4.3</td></tr>
+<tr><td>PpT (bps)</td><td>98.65</td><td>105.96</td></tr>
+<tr><td>CPR</td><td>0.0146</td><td>0.0077</td></tr>
+<tr><td>Regime Active %</td><td>73.5%</td><td>61.0%</td></tr>
+</table>
+</div>
+
+<h2>Walk-Forward Analysis (4 IS Folds)</h2>
+<table>
+<tr><th>Fold</th><th>Period</th><th>Sharpe</th><th>MDD</th><th>Win Rate</th><th>Trades</th></tr>
+<tr><td>1</td><td>2005-01-01–2008-06-30</td><td>0.5289</td><td>-1.99%</td><td>53.33%</td><td>15</td></tr><tr><td>2</td><td>2008-07-01–2011-12-31</td><td>0.7498</td><td>-2.24%</td><td>75.00%</td><td>16</td></tr><tr><td>3</td><td>2012-01-01–2015-06-30</td><td>1.3169</td><td>-1.21%</td><td>84.21%</td><td>19</td></tr><tr><td>4</td><td>2015-07-01–2018-12-31</td><td>0.3805</td><td>-2.23%</td><td>71.43%</td><td>14</td></tr>
+</table>
+<p>WF Passed: 4/4 | Sharpe Std: 0.3559 | Min: 0.3805</p>
+
+<h2>Statistical Tests</h2>
+<div class="section">
+<p><strong>Monte Carlo (1000 resamples):</strong> p5=2.8088, median=6.7529, p95=11.8024
+— <span class='pass'>MC p5 OK</span></p>
+<p><strong>Bootstrap CI (95%):</strong> Sharpe [0.2750, 1.1968]</p>
+<p><strong>Permutation test (1000 perms):</strong> p=0.3160 — <span class='fail'>FAIL</span></p>
+<p><strong>DSR:</strong> 0.6859</p>
+</div>
+
+<h2>2022 Regime Split</h2>
+<div class="section">
+<p>Trades in 2022: 0 | Regime active: 6.0%</p>
+<p>Near-zero exposure expected when IWM < 200-SMA after Jan 2022</p>
+</div>
+
+<h2>Market Impact (IWM Ultra-Liquid)</h2>
+<div class="section">
+<p>Impact: 0.0145 bps | ADV (20d): 34,458,120 shares |
+Order/ADV: 0.000001 | Liq. constrained: False</p>
+<p>Slippage model: ultra_liquid_etf (ED-SLIP-001) | IWM ADV well above 1M shares/day threshold.</p>
+</div>
+
+<h2>Gap Attribution (Track A Hard Gate 8)</h2>
+<div class="section">
+<table>
+<tr><th>Period</th><th>Overnight Gap Trades</th><th>%</th><th>Weekend Gap Trades</th><th>%</th></tr>
+<tr><td>IS</td><td>64</td><td>100.0%</td>
+<td>59</td><td>92.2%</td></tr>
+<tr><td>OOS</td><td>26</td><td>100.0%</td>
+<td>21</td><td>80.8%</td></tr>
+</table>
+</div>
+
+<h2>Parameter Sweep (27 Combinations)</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>rsi_entry</th>
+      <th>rsi_exit</th>
+      <th>stop_loss_pct</th>
+      <th>sharpe</th>
+      <th>max_drawdown</th>
+      <th>win_rate</th>
+      <th>trade_count</th>
+      <th>total_return</th>
+      <th>profit_factor</th>
+      <th>sharpe_delta_pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>15</td>
+      <td>60</td>
+      <td>0.0500</td>
+      <td>0.3120</td>
+      <td>-0.0410</td>
+      <td>0.7000</td>
+      <td>30</td>
+      <td>0.0832</td>
+      <td>1.7731</td>
+      <td>-56.7700</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>60</td>
+      <td>0.0750</td>
+      <td>0.2584</td>
+      <td>-0.0235</td>
+      <td>0.7241</td>
+      <td>29</td>
+      <td>0.0479</td>
+      <td>1.6288</td>
+      <td>-64.2000</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>60</td>
+      <td>0.1000</td>
+      <td>0.2200</td>
+      <td>-0.0206</td>
+      <td>0.7241</td>
+      <td>29</td>
+      <td>0.0315</td>
+      <td>1.5164</td>
+      <td>-69.5200</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>65</td>
+      <td>0.0500</td>
+      <td>0.3120</td>
+      <td>-0.0410</td>
+      <td>0.7000</td>
+      <td>30</td>
+      <td>0.0832</td>
+      <td>1.7731</td>
+      <td>-56.7700</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>65</td>
+      <td>0.0750</td>
+      <td>0.2584</td>
+      <td>-0.0235</td>
+      <td>0.7241</td>
+      <td>29</td>
+      <td>0.0479</td>
+      <td>1.6288</td>
+      <td>-64.2000</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>65</td>
+      <td>0.1000</td>
+      <td>0.2200</td>
+      <td>-0.0206</td>
+      <td>0.7241</td>
+      <td>29</td>
+      <td>0.0315</td>
+      <td>1.5164</td>
+      <td>-69.5200</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>70</td>
+      <td>0.0500</td>
+      <td>0.3120</td>
+      <td>-0.0410</td>
+      <td>0.7000</td>
+      <td>30</td>
+      <td>0.0832</td>
+      <td>1.7731</td>
+      <td>-56.7700</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>70</td>
+      <td>0.0750</td>
+      <td>0.2584</td>
+      <td>-0.0235</td>
+      <td>0.7241</td>
+      <td>29</td>
+      <td>0.0479</td>
+      <td>1.6288</td>
+      <td>-64.2000</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>70</td>
+      <td>0.1000</td>
+      <td>0.2200</td>
+      <td>-0.0206</td>
+      <td>0.7241</td>
+      <td>29</td>
+      <td>0.0315</td>
+      <td>1.5164</td>
+      <td>-69.5200</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>60</td>
+      <td>0.0500</td>
+      <td>0.7289</td>
+      <td>-0.0432</td>
+      <td>0.7077</td>
+      <td>65</td>
+      <td>0.3174</td>
+      <td>2.6909</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>60</td>
+      <td>0.0750</td>
+      <td>0.7076</td>
+      <td>-0.0226</td>
+      <td>0.7188</td>
+      <td>64</td>
+      <td>0.2018</td>
+      <td>2.7359</td>
+      <td>-1.9500</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>60</td>
+      <td>0.1000</td>
+      <td>0.6767</td>
+      <td>-0.0209</td>
+      <td>0.7188</td>
+      <td>64</td>
+      <td>0.1458</td>
+      <td>2.6696</td>
+      <td>-6.2400</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>65</td>
+      <td>0.0500</td>
+      <td>0.7411</td>
+      <td>-0.0434</td>
+      <td>0.7077</td>
+      <td>65</td>
+      <td>0.3258</td>
+      <td>2.7269</td>
+      <td>2.6900</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>65</td>
+      <td>0.0750</td>
+      <td>0.7217</td>
+      <td>-0.0225</td>
+      <td>0.7188</td>
+      <td>64</td>
+      <td>0.2073</td>
+      <td>2.7823</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>65</td>
+      <td>0.1000</td>
+      <td>0.6911</td>
+      <td>-0.0209</td>
+      <td>0.7188</td>
+      <td>64</td>
+      <td>0.1499</td>
+      <td>2.7165</td>
+      <td>-4.2400</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>70</td>
+      <td>0.0500</td>
+      <td>0.7411</td>
+      <td>-0.0434</td>
+      <td>0.7077</td>
+      <td>65</td>
+      <td>0.3258</td>
+      <td>2.7269</td>
+      <td>2.6900</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>70</td>
+      <td>0.0750</td>
+      <td>0.7217</td>
+      <td>-0.0225</td>
+      <td>0.7188</td>
+      <td>64</td>
+      <td>0.2073</td>
+      <td>2.7823</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>70</td>
+      <td>0.1000</td>
+      <td>0.6911</td>
+      <td>-0.0209</td>
+      <td>0.7188</td>
+      <td>64</td>
+      <td>0.1499</td>
+      <td>2.7165</td>
+      <td>-4.2400</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>60</td>
+      <td>0.0500</td>
+      <td>0.8409</td>
+      <td>-0.0395</td>
+      <td>0.7400</td>
+      <td>100</td>
+      <td>0.4808</td>
+      <td>2.3120</td>
+      <td>16.5200</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>60</td>
+      <td>0.0750</td>
+      <td>0.8306</td>
+      <td>-0.0323</td>
+      <td>0.7419</td>
+      <td>93</td>
+      <td>0.2940</td>
+      <td>2.5688</td>
+      <td>15.0900</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>60</td>
+      <td>0.1000</td>
+      <td>0.7758</td>
+      <td>-0.0293</td>
+      <td>0.7419</td>
+      <td>93</td>
+      <td>0.2050</td>
+      <td>2.4397</td>
+      <td>7.5000</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>65</td>
+      <td>0.0500</td>
+      <td>0.8628</td>
+      <td>-0.0396</td>
+      <td>0.7400</td>
+      <td>100</td>
+      <td>0.5046</td>
+      <td>2.3634</td>
+      <td>19.5500</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>65</td>
+      <td>0.0750</td>
+      <td>0.8531</td>
+      <td>-0.0324</td>
+      <td>0.7419</td>
+      <td>93</td>
+      <td>0.3079</td>
+      <td>2.6480</td>
+      <td>18.2100</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>65</td>
+      <td>0.1000</td>
+      <td>0.8002</td>
+      <td>-0.0291</td>
+      <td>0.7419</td>
+      <td>93</td>
+      <td>0.2152</td>
+      <td>2.5184</td>
+      <td>10.8800</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>70</td>
+      <td>0.0500</td>
+      <td>0.8817</td>
+      <td>-0.0396</td>
+      <td>0.7400</td>
+      <td>100</td>
+      <td>0.5186</td>
+      <td>2.3906</td>
+      <td>22.1700</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>70</td>
+      <td>0.0750</td>
+      <td>0.8708</td>
+      <td>-0.0324</td>
+      <td>0.7419</td>
+      <td>93</td>
+      <td>0.3157</td>
+      <td>2.6777</td>
+      <td>20.6600</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>70</td>
+      <td>0.1000</td>
+      <td>0.8159</td>
+      <td>-0.0292</td>
+      <td>0.7419</td>
+      <td>93</td>
+      <td>0.2198</td>
+      <td>2.5405</td>
+      <td>13.0500</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>OOS Data Quality</h2>
+<div class="section">
+<p>Recommendation: <strong>PASS</strong> | Coverage: 100.0% | Total NaNs: 0</p>
+</div>
+
+<hr>
+<p><em>Generated by Backtest Runner Agent | QUA-302</em></p>
+</body>
+</html>
