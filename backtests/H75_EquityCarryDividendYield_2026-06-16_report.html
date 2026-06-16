@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>H75 Equity Carry (Dividend Yield Sector Rotation) — Gate 1 Report</title>
+<style>
+body { font-family: monospace; max-width: 1200px; margin: 0 auto; padding: 20px; }
+h1 { background: #343a40; color: white; padding: 15px; border-radius: 4px; }
+h2 { border-bottom: 2px solid #343a40; padding-bottom: 5px; margin-top: 30px; }
+.verdict { font-size: 2em; font-weight: bold; padding: 15px; border-radius: 4px;
+           background: #f8d7da; text-align: center; margin: 20px 0; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th { background: #343a40; color: white; padding: 8px; text-align: left; }
+td { padding: 6px 8px; border: 1px solid #dee2e6; }
+.section { margin: 20px 0; padding: 15px; border: 1px solid #dee2e6; border-radius: 4px; }
+.note { background: #fff3cd; padding: 10px; border-radius: 4px; margin: 10px 0; }
+</style>
+</head>
+<body>
+<h1>H75 Equity Carry — Dividend Yield Sector Rotation — Gate 1 Report</h1>
+<p><strong>Date:</strong> 2026-06-16 | <strong>Universe:</strong> XLK, XLY, XLF, XLI, XLV, XLB, XLP, XLE, XLU, XLRE</p>
+<p><strong>Signal:</strong> Trailing 12M dividend yield rank → top-3 sectors equal weight | <strong>Filter:</strong> SPY 200-DMA → SHY</p>
+<p><strong>Academic source:</strong> Koijen, Moskowitz, Pedersen &amp; Vrugt (2018) — "Carry", <em>Journal of Financial Economics</em> 127(2)</p>
+<p><strong>Slippage:</strong> 0.05% standard ETF tier (sector ETFs ADV &lt;&lt; 50M shares/day, ED-SLIP-001 ultra-liquid tier NOT applied)</p>
+<p><strong>Regime-SHY months (IS):</strong> 40 / 228 months | <strong>IS position switches:</strong> 47</p>
+
+<div class="verdict">GATE 1: FAIL</div>
+
+<div class="note">
+<strong>Research Director Note (H75):</strong> IS Sharpe &gt; 1.0 may be difficult for this strategy.
+Expected range from Koijen et al. (2018) is 0.4–0.8 Sharpe. If IS Sharpe is 0.6–0.9, results are
+documented for carry premium evidence even if Gate 1 strict threshold is not met.
+</div>
+
+<h2>Gate 1 Checklist</h2>
+<table><tr><th>Gate</th><th>Value</th><th>Threshold</th><th>Result</th></tr><tr style='background:#f8d7da'><td>IS Sharpe</td><td>0.8840</td><td>> 1.0</td><td>&#10007; FAIL</td></tr><tr style='background:#f8d7da'><td>OOS Sharpe</td><td>-0.4605</td><td>> 0.70</td><td>&#10007; FAIL</td></tr><tr style='background:#d4edda'><td>IS CAGR</td><td>10.51%</td><td>>= 10%</td><td>&#10003; PASS</td></tr><tr style='background:#f8d7da'><td>IS MDD</td><td>-20.67%</td><td>> -15%</td><td>&#10007; FAIL</td></tr><tr style='background:#f8d7da'><td>OOS MDD</td><td>-21.19%</td><td>> -15%</td><td>&#10007; FAIL</td></tr><tr style='background:#d4edda'><td>Walk-Forward</td><td>4/4</td><td>>= 3/4</td><td>&#10003; PASS</td></tr><tr style='background:#f8d7da'><td>Permutation p</td><td>0.2370</td><td>< 0.05</td><td>&#10007; FAIL</td></tr><tr style='background:#f8d7da'><td>IS Trade Count</td><td>64</td><td>>= 100</td><td>&#10007; FAIL</td></tr><tr style='background:#d4edda'><td>DSR</td><td>0.8553</td><td>> 0</td><td>&#10003; PASS</td></tr><tr style='background:#f8d7da'><td>IS Switches</td><td>47</td><td>>= 60</td><td>&#10007; FAIL</td></tr></table>
+
+<h2>IS / OOS Summary</h2>
+<div class="section">
+<table>
+<tr><th>Metric</th><th>IS (2003–2021, ~18yr)</th><th>OOS (2022–2023, ~2yr)</th></tr>
+<tr><td>Sharpe</td><td>0.8840</td><td>-0.4605</td></tr>
+<tr><td>CAGR</td><td>10.51%</td><td>-6.05%</td></tr>
+<tr><td>Max Drawdown</td><td>-20.67%</td><td>-21.19%</td></tr>
+<tr><td>Win Rate</td><td>75.00%</td><td>18.75%</td></tr>
+<tr><td>Profit Factor</td><td>3.0436</td><td>0.4321</td></tr>
+<tr><td>Trade Count</td><td>64</td><td>16</td></tr>
+<tr><td>Avg PpT (bps)</td><td>563.17</td><td>-87.88</td></tr>
+</table>
+</div>
+
+<h2>Walk-Forward Analysis (4 IS Windows)</h2>
+<table>
+<tr><th>Window</th><th>Period</th><th>Sharpe</th><th>MDD</th><th>Win Rate</th><th>Trades</th><th>CAGR</th></tr>
+<tr><td>1</td><td>2003-01-01–2007-12-31</td><td>1.3031</td><td>-9.81%</td><td>77.78%</td><td>9</td><td>16.04%</td></tr><tr><td>2</td><td>2008-01-01–2012-12-31</td><td>0.8344</td><td>-14.25%</td><td>87.50%</td><td>16</td><td>9.34%</td></tr><tr><td>3</td><td>2013-01-01–2017-12-31</td><td>0.7766</td><td>-16.62%</td><td>56.25%</td><td>16</td><td>7.99%</td></tr><tr><td>4</td><td>2018-01-01–2021-12-31</td><td>0.5981</td><td>-20.68%</td><td>68.42%</td><td>19</td><td>7.94%</td></tr>
+</table>
+
+<h2>Statistical Tests</h2>
+<div class="section">
+<p><strong>Monte Carlo (1000 resamples on IS trade PnLs):</strong>
+   p5=2.1058, median=5.5735, p95=9.1096</p>
+<p><strong>Block Bootstrap CI (95%):</strong>
+   Sharpe [0.4956, 1.2490]
+   MDD [-0.3153, -0.1425]</p>
+<p><strong>Permutation test (yield ranking shuffle, 1000 perms):</strong>
+   p=0.2370 — FAIL</p>
+<p><strong>DSR (Deflated Sharpe Ratio):</strong> 0.8553</p>
+</div>
+
+<h2>Parameter Sweep (18 Combinations: lookback × top_k × spy_filter)</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>yield_lookback_months</th>
+      <th>top_k</th>
+      <th>spy_filter</th>
+      <th>sharpe</th>
+      <th>cagr</th>
+      <th>max_drawdown</th>
+      <th>win_rate</th>
+      <th>trade_count</th>
+      <th>total_return</th>
+      <th>position_switches</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3</td>
+      <td>2</td>
+      <td>True</td>
+      <td>0.8135</td>
+      <td>0.0981</td>
+      <td>-0.2907</td>
+      <td>0.6818</td>
+      <td>66</td>
+      <td>4.9131</td>
+      <td>56</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>2</td>
+      <td>False</td>
+      <td>0.5887</td>
+      <td>0.0998</td>
+      <td>-0.5683</td>
+      <td>0.6800</td>
+      <td>50</td>
+      <td>5.0889</td>
+      <td>49</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>3</td>
+      <td>True</td>
+      <td>0.8958</td>
+      <td>0.1043</td>
+      <td>-0.2118</td>
+      <td>0.6813</td>
+      <td>91</td>
+      <td>5.5838</td>
+      <td>70</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>3</td>
+      <td>False</td>
+      <td>0.5799</td>
+      <td>0.0951</td>
+      <td>-0.5742</td>
+      <td>0.6667</td>
+      <td>78</td>
+      <td>4.6199</td>
+      <td>73</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>4</td>
+      <td>True</td>
+      <td>0.8581</td>
+      <td>0.0974</td>
+      <td>-0.2068</td>
+      <td>0.7059</td>
+      <td>102</td>
+      <td>4.8435</td>
+      <td>68</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>4</td>
+      <td>False</td>
+      <td>0.5826</td>
+      <td>0.0903</td>
+      <td>-0.5807</td>
+      <td>0.6711</td>
+      <td>76</td>
+      <td>4.1690</td>
+      <td>63</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>2</td>
+      <td>True</td>
+      <td>0.8802</td>
+      <td>0.1096</td>
+      <td>-0.2445</td>
+      <td>0.7241</td>
+      <td>58</td>
+      <td>6.2109</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>2</td>
+      <td>False</td>
+      <td>0.6013</td>
+      <td>0.1031</td>
+      <td>-0.6047</td>
+      <td>0.7838</td>
+      <td>37</td>
+      <td>5.4513</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>3</td>
+      <td>True</td>
+      <td>0.9308</td>
+      <td>0.1090</td>
+      <td>-0.1938</td>
+      <td>0.7500</td>
+      <td>72</td>
+      <td>6.1429</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>3</td>
+      <td>False</td>
+      <td>0.5799</td>
+      <td>0.0977</td>
+      <td>-0.5567</td>
+      <td>0.7500</td>
+      <td>48</td>
+      <td>4.8736</td>
+      <td>48</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>4</td>
+      <td>True</td>
+      <td>0.8779</td>
+      <td>0.0996</td>
+      <td>-0.2002</td>
+      <td>0.7229</td>
+      <td>83</td>
+      <td>5.0766</td>
+      <td>57</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>4</td>
+      <td>False</td>
+      <td>0.6157</td>
+      <td>0.0971</td>
+      <td>-0.5406</td>
+      <td>0.7391</td>
+      <td>46</td>
+      <td>4.8178</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>2</td>
+      <td>True</td>
+      <td>0.8263</td>
+      <td>0.1048</td>
+      <td>-0.2499</td>
+      <td>0.7414</td>
+      <td>58</td>
+      <td>5.6456</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>2</td>
+      <td>False</td>
+      <td>0.5081</td>
+      <td>0.0880</td>
+      <td>-0.6119</td>
+      <td>0.8108</td>
+      <td>37</td>
+      <td>3.9673</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>3</td>
+      <td>True</td>
+      <td>0.8840</td>
+      <td>0.1051</td>
+      <td>-0.2067</td>
+      <td>0.7500</td>
+      <td>64</td>
+      <td>5.6751</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>3</td>
+      <td>False</td>
+      <td>0.5990</td>
+      <td>0.0971</td>
+      <td>-0.5958</td>
+      <td>0.7143</td>
+      <td>35</td>
+      <td>4.8144</td>
+      <td>36</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>4</td>
+      <td>True</td>
+      <td>0.8325</td>
+      <td>0.0953</td>
+      <td>-0.1824</td>
+      <td>0.6875</td>
+      <td>64</td>
+      <td>4.6346</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>4</td>
+      <td>False</td>
+      <td>0.5913</td>
+      <td>0.0930</td>
+      <td>-0.5766</td>
+      <td>0.6522</td>
+      <td>23</td>
+      <td>4.4120</td>
+      <td>24</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Market Impact by Ticker (at ~$33K/position)</h2>
+<table>
+<tr><th>Ticker</th><th>Impact (bps)</th><th>ADV 20d</th><th>Q/ADV</th><th>Liq. Constrained</th></tr>
+<tr><td>XLK</td><td>0.0527</td><td>23,020,630</td><td>0.000017</td><td>False</td></tr><tr><td>XLY</td><td>0.0622</td><td>14,570,150</td><td>0.000024</td><td>False</td></tr><tr><td>XLF</td><td>0.0464</td><td>57,136,095</td><td>0.000016</td><td>False</td></tr><tr><td>XLI</td><td>0.0551</td><td>10,942,005</td><td>0.000031</td><td>False</td></tr><tr><td>XLV</td><td>0.0342</td><td>11,950,735</td><td>0.000022</td><td>False</td></tr><tr><td>XLB</td><td>0.0849</td><td>10,065,770</td><td>0.000082</td><td>False</td></tr><tr><td>XLP</td><td>0.0456</td><td>13,152,345</td><td>0.000038</td><td>False</td></tr><tr><td>XLE</td><td>0.0827</td><td>50,685,470</td><td>0.000028</td><td>False</td></tr><tr><td>XLU</td><td>0.0567</td><td>27,274,740</td><td>0.000040</td><td>False</td></tr><tr><td>XLRE</td><td>0.1096</td><td>6,445,160</td><td>0.000120</td><td>False</td></tr>
+</table>
+
+<hr>
+<p><em>Generated by Engineering Director (QUA-316) | H75 Gate 1 | 2026-06-16</em></p>
+</body>
+</html>
