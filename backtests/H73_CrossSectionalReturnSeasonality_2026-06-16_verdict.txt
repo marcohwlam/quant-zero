@@ -1,0 +1,85 @@
+H73 Cross-Sectional Return Seasonality (Sector Calendar Rotation) — Gate 1 Verdict
+======================================================================
+Date:     2026-06-16
+Strategy: H73_CrossSectionalReturnSeasonality
+Overall:  FAIL (6/10 checks passed)
+======================================================================
+
+=== Universe ===
+Sectors:  XLK, XLV, XLE, XLF, XLY, XLP, XLU, XLI, XLB, VNQ
+Regime:   SPY 200-DMA → exit to SHY
+Signal:   10-year trailing same-calendar-month return average
+Top-K:    2 sectors, equal weight
+Academic: Keloharju, Linnainmaa & Nyberg (2016) JF 71(4)
+
+=== IS Performance (2003-01-01 to 2023-12-31, 21 years) ===
+Sharpe:           0.5942    [FAIL: > 1.0]
+CAGR:             7.86%     [FAIL: >= 10%]
+Max Drawdown:     -31.06%    [FAIL: > -15%]
+Win Rate:         62.35%
+Profit Factor:    1.4852
+Trade Count:      324     [PASS: >= 100]
+Position Switches:324   [PASS: >= 120]
+Avg PpT:          123.72 bps
+Regime-SHY months:50/252 IS months
+
+=== OOS Performance (2024-01-01 to 2026-06-16, ~2.5 years) ===
+Sharpe:           0.9581  [PASS: > 0.70]
+CAGR:             13.89%
+Max Drawdown:     -11.71%  [PASS: > -15%]
+Win Rate:         68.29%
+Profit Factor:    2.0945
+Trade Count:      41
+Position Switches:41
+
+=== Statistical Rigor ===
+MC p5 Sharpe:        0.7551
+MC Median Sharpe:    2.2704
+Sharpe 95% CI:       [0.2537, 0.9595]  (block bootstrap)
+MDD 95% CI:          [-0.4848, -0.2024]
+Permutation p-value: 0.4500    [FAIL: < 0.05]
+DSR:                 0.5669    [PASS: > 0]
+Max Market Impact:   0.1581 bps
+
+=== Walk-Forward Analysis (4 IS Windows) ===
+  Window 1: 2003-01-01–2007-12-31: Sharpe=0.8513 ✓, MDD=-13.71%, trades=93, switches=93
+  Window 2: 2008-01-01–2012-12-31: Sharpe=0.6806 ✓, MDD=-20.91%, trades=51, switches=51
+  Window 3: 2013-01-01–2017-12-31: Sharpe=0.8363 ✓, MDD=-14.59%, trades=85, switches=85
+  Window 4: 2018-01-01–2023-12-31: Sharpe=0.1244 ✓, MDD=-31.04%, trades=89, switches=89
+  WF Passed: 4/4   [PASS: >= 3/4]
+  WF Sharpe std: 0.2956
+  WF Sharpe min: 0.1244
+
+=== Sensitivity Sweep (18 combinations: lookback × top_k × regime_filter) ===
+  Sharpe range: 0.3164 – 0.5942
+  Variance vs primary: 46.8% (FAIL < 30%)
+  See: H73_CrossSectionalReturnSeasonality_2026-06-16_sweep.csv
+
+=== Gate 1 Checks ===
+  [FAIL] IS Sharpe              0.5942  (threshold: > 1.0)
+  [PASS] OOS Sharpe             0.9581  (threshold: > 0.70)
+  [FAIL] IS CAGR                7.86%  (threshold: >= 10%)
+  [FAIL] IS MDD                 -31.06%  (threshold: > -15%)
+  [PASS] OOS MDD                -11.71%  (threshold: > -15%)
+  [PASS] Walk-Forward           4/4  (threshold: >= 3/4)
+  [FAIL] Permutation p          0.4500  (threshold: < 0.05)
+  [PASS] IS Trade Count         324  (threshold: >= 100)
+  [PASS] DSR                    0.5669  (threshold: > 0)
+  [PASS] PF-1 Switches          324  (threshold: >= 120)
+
+=== Root Cause Analysis ===
+Primary failures (4 of 10 gates):
+  - IS Sharpe: got 0.5942, need > 1.0
+  - IS CAGR: got 7.86%, need >= 10%
+  - IS MDD: got -31.06%, need > -15%
+  - Permutation p: got 0.4500, need < 0.05
+
+=== Recommendation ===
+REJECT — do not advance to paper trading. Return to Research Director with metrics.
+
+=== Files ===
+Metrics: backtests/H73_CrossSectionalReturnSeasonality_2026-06-16.json
+Trades:  backtests/H73_CrossSectionalReturnSeasonality_2026-06-16_trades.csv
+Sweep:   backtests/H73_CrossSectionalReturnSeasonality_2026-06-16_sweep.csv
+Report:  backtests/H73_CrossSectionalReturnSeasonality_2026-06-16_report.html
+Verdict: backtests/H73_CrossSectionalReturnSeasonality_2026-06-16_verdict.txt

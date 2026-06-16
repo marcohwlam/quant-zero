@@ -1,0 +1,323 @@
+{
+  "strategy_name": "H73_CrossSectionalReturnSeasonality",
+  "date": "2026-06-16",
+  "hypothesis": "H73",
+  "asset_class": "equities",
+  "parent_task": "QUA-313",
+  "universe": [
+    "XLK",
+    "XLV",
+    "XLE",
+    "XLF",
+    "XLY",
+    "XLP",
+    "XLU",
+    "XLI",
+    "XLB",
+    "VNQ"
+  ],
+  "regime_etf": "SPY",
+  "safe_haven": "SHY",
+  "parameters": {
+    "seasonal_lookback_years": 10,
+    "top_k_sectors": 2,
+    "use_regime_filter": true,
+    "regime_ma_days": 200
+  },
+  "cost_model": {
+    "slippage": "0.05% (standard ETF tier \u2014 sector ETFs ADV << 50M/day)",
+    "commission": "$0.005/share",
+    "market_impact": "0.1 \u00d7 \u03c3 \u00d7 sqrt(Q/ADV) \u2014 Almgren-Chriss",
+    "ruling": "ED-SLIP-001 ultra-liquid tier NOT applied (sector ETFs ADV << 50M/day)"
+  },
+  "is_sharpe": 0.5942,
+  "is_cagr": 0.0786,
+  "is_max_drawdown": -0.3106,
+  "is_total_return": 3.9008,
+  "is_win_rate": 0.6235,
+  "is_profit_factor": 1.4852,
+  "is_trade_count": 324,
+  "is_position_switches": 324,
+  "is_avg_ppt_bps": 123.72,
+  "oos_sharpe": 0.9581,
+  "oos_cagr": 0.1389,
+  "oos_max_drawdown": -0.1171,
+  "oos_total_return": 0.3764,
+  "oos_win_rate": 0.6829,
+  "oos_profit_factor": 2.0945,
+  "oos_trade_count": 41,
+  "oos_position_switches": 41,
+  "oos_avg_ppt_bps": 96.86,
+  "post_cost_sharpe": 0.5942,
+  "dsr": 0.5669,
+  "n_trials": 22,
+  "mc_p5_sharpe": 0.7551022972806876,
+  "mc_median_sharpe": 2.270384552046411,
+  "mc_p95_sharpe": 3.795695874235427,
+  "mc_flag": "MC on 324 IS trade PnLs",
+  "sharpe_ci_low": 0.25369313725095005,
+  "sharpe_ci_high": 0.9594840167477178,
+  "mdd_ci_low": -0.48484929145149785,
+  "mdd_ci_high": -0.20239057864285165,
+  "win_rate_ci_low": 0.5260606925418568,
+  "win_rate_ci_high": 0.5507990867579908,
+  "permutation_pvalue": 0.45,
+  "permutation_test_pass": false,
+  "permutation_perm_mean": 0.5843553335557324,
+  "permutation_perm_p95": 0.7017159075141662,
+  "market_impact_by_ticker": {
+    "XLK": {
+      "market_impact_bps": 0.0561,
+      "adv_20d": 14726720.0,
+      "avg_price": 93.26,
+      "qty_at_50k": 536.0,
+      "q_over_adv": 3.6e-05,
+      "liquidity_constrained": false
+    },
+    "XLV": {
+      "market_impact_bps": 0.0564,
+      "adv_20d": 6793110.0,
+      "avg_price": 128.69,
+      "qty_at_50k": 389.0,
+      "q_over_adv": 5.7e-05,
+      "liquidity_constrained": false
+    },
+    "XLE": {
+      "market_impact_bps": 0.0731,
+      "adv_20d": 37523080.0,
+      "avg_price": 38.78,
+      "qty_at_50k": 1289.0,
+      "q_over_adv": 3.4e-05,
+      "liquidity_constrained": false
+    },
+    "XLF": {
+      "market_impact_bps": 0.0512,
+      "adv_20d": 39066225.0,
+      "avg_price": 35.55,
+      "qty_at_50k": 1406.0,
+      "q_over_adv": 3.6e-05,
+      "liquidity_constrained": false
+    },
+    "XLY": {
+      "market_impact_bps": 0.087,
+      "adv_20d": 9973830.0,
+      "avg_price": 86.53,
+      "qty_at_50k": 578.0,
+      "q_over_adv": 5.8e-05,
+      "liquidity_constrained": false
+    },
+    "XLP": {
+      "market_impact_bps": 0.0656,
+      "adv_20d": 11178665.0,
+      "avg_price": 66.69,
+      "qty_at_50k": 750.0,
+      "q_over_adv": 6.7e-05,
+      "liquidity_constrained": false
+    },
+    "XLU": {
+      "market_impact_bps": 0.0896,
+      "adv_20d": 29574000.0,
+      "avg_price": 29.55,
+      "qty_at_50k": 1692.0,
+      "q_over_adv": 5.7e-05,
+      "liquidity_constrained": false
+    },
+    "XLI": {
+      "market_impact_bps": 0.0631,
+      "adv_20d": 8835905.0,
+      "avg_price": 107.71,
+      "qty_at_50k": 464.0,
+      "q_over_adv": 5.3e-05,
+      "liquidity_constrained": false
+    },
+    "XLB": {
+      "market_impact_bps": 0.1065,
+      "adv_20d": 11210300.0,
+      "avg_price": 40.12,
+      "qty_at_50k": 1246.0,
+      "q_over_adv": 0.000111,
+      "liquidity_constrained": false
+    },
+    "VNQ": {
+      "market_impact_bps": 0.1581,
+      "adv_20d": 5386855.0,
+      "avg_price": 78.53,
+      "qty_at_50k": 637.0,
+      "q_over_adv": 0.000118,
+      "liquidity_constrained": false
+    }
+  },
+  "wf_windows": [
+    {
+      "window": 1,
+      "is_start": "2003-01-01",
+      "is_end": "2007-12-31",
+      "sharpe": 0.8513,
+      "max_drawdown": -0.1371,
+      "win_rate": 0.6559,
+      "trade_count": 93,
+      "position_switches": 93,
+      "cagr": 0.1255
+    },
+    {
+      "window": 2,
+      "is_start": "2008-01-01",
+      "is_end": "2012-12-31",
+      "sharpe": 0.6806,
+      "max_drawdown": -0.2091,
+      "win_rate": 0.6471,
+      "trade_count": 51,
+      "position_switches": 51,
+      "cagr": 0.1023
+    },
+    {
+      "window": 3,
+      "is_start": "2013-01-01",
+      "is_end": "2017-12-31",
+      "sharpe": 0.8363,
+      "max_drawdown": -0.1459,
+      "win_rate": 0.6235,
+      "trade_count": 85,
+      "position_switches": 85,
+      "cagr": 0.0956
+    },
+    {
+      "window": 4,
+      "is_start": "2018-01-01",
+      "is_end": "2023-12-31",
+      "sharpe": 0.1244,
+      "max_drawdown": -0.3104,
+      "win_rate": 0.573,
+      "trade_count": 89,
+      "position_switches": 89,
+      "cagr": 0.0075
+    }
+  ],
+  "wf_windows_passed": 4,
+  "wf_consistency_score": 1.0,
+  "wf_sharpe_std": 0.2956,
+  "wf_sharpe_min": 0.1244,
+  "sensitivity_pass": false,
+  "sensitivity_max_delta_pct": 46.75,
+  "sweep_sharpe_min": 0.3164,
+  "sweep_sharpe_max": 0.5942,
+  "gate_is_sharpe": false,
+  "gate_oos_sharpe": true,
+  "gate_is_cagr": false,
+  "gate_is_mdd": false,
+  "gate_oos_mdd": true,
+  "gate_wf": true,
+  "gate_perm": false,
+  "gate_trades": true,
+  "gate_dsr": true,
+  "gate_pf1_switches": true,
+  "gate1_pass": false,
+  "n_checks_passed": 6,
+  "regime_bearish_is_months": 50,
+  "data_quality": {
+    "universe": [
+      "XLK",
+      "XLV",
+      "XLE",
+      "XLF",
+      "XLY",
+      "XLP",
+      "XLU",
+      "XLI",
+      "XLB",
+      "VNQ"
+    ],
+    "regime_etf": "SPY",
+    "safe_haven": "SHY",
+    "survivorship_bias": "Fixed 10-sector universe: 9 SPDR ETFs (inception Dec 1998) + VNQ (inception Sep 2004). All active ETFs. No delisting risk. No survivorship bias.",
+    "price_adjustment": "yfinance auto_adjust=True \u2014 splits and dividends adjusted.",
+    "earnings_exclusion": "N/A \u2014 sector ETFs are portfolios; earnings event windows not applicable.",
+    "tickers": {
+      "XLK": {
+        "total_obs": 6911,
+        "start": "1998-12-22",
+        "end": "2026-06-15",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLV": {
+        "total_obs": 6911,
+        "start": "1998-12-22",
+        "end": "2026-06-15",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLE": {
+        "total_obs": 6911,
+        "start": "1998-12-22",
+        "end": "2026-06-15",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLF": {
+        "total_obs": 6911,
+        "start": "1998-12-22",
+        "end": "2026-06-15",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLY": {
+        "total_obs": 6911,
+        "start": "1998-12-22",
+        "end": "2026-06-15",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLP": {
+        "total_obs": 6911,
+        "start": "1998-12-22",
+        "end": "2026-06-15",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLU": {
+        "total_obs": 6911,
+        "start": "1998-12-22",
+        "end": "2026-06-15",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLI": {
+        "total_obs": 6911,
+        "start": "1998-12-22",
+        "end": "2026-06-15",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLB": {
+        "total_obs": 6911,
+        "start": "1998-12-22",
+        "end": "2026-06-15",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "VNQ": {
+        "total_obs": 5462,
+        "start": "2004-09-29",
+        "end": "2026-06-15",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "SPY": {
+        "total_obs": 8401,
+        "start": "1993-01-29",
+        "end": "2026-06-15",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "SHY": {
+        "total_obs": 6008,
+        "start": "2002-07-30",
+        "end": "2026-06-15",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      }
+    },
+    "flagged": []
+  }
+}

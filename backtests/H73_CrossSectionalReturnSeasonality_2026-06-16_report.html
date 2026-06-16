@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>H73 Cross-Sectional Return Seasonality — Gate 1 Report</title>
+<style>
+body { font-family: monospace; max-width: 1200px; margin: 0 auto; padding: 20px; }
+h1 { background: #343a40; color: white; padding: 15px; border-radius: 4px; }
+h2 { border-bottom: 2px solid #343a40; padding-bottom: 5px; margin-top: 30px; }
+.verdict { font-size: 2em; font-weight: bold; padding: 15px; border-radius: 4px;
+           background: #f8d7da; text-align: center; margin: 20px 0; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th { background: #343a40; color: white; padding: 8px; text-align: left; }
+td { padding: 6px 8px; border: 1px solid #dee2e6; }
+.section { margin: 20px 0; padding: 15px; border: 1px solid #dee2e6; border-radius: 4px; }
+</style>
+</head>
+<body>
+<h1>H73 Cross-Sectional Return Seasonality — Gate 1 Report</h1>
+<p><strong>Date:</strong> 2026-06-16 | <strong>Universe:</strong> XLK, XLV, XLE, XLF, XLY, XLP, XLU, XLI, XLB, VNQ</p>
+<p><strong>Signal:</strong> 10-year trailing same-calendar-month average return | <strong>Filter:</strong> SPY 200-DMA → SHY</p>
+<p><strong>Academic source:</strong> Keloharju, Linnainmaa &amp; Nyberg (2016), Journal of Finance 71(4)</p>
+<p><strong>Slippage:</strong> 0.05% standard ETF tier (sector ETFs ADV &lt;&lt; 50M shares/day)</p>
+
+<div class="verdict">GATE 1: FAIL</div>
+
+<h2>Gate 1 Checklist</h2>
+<table><tr><th>Gate</th><th>Value</th><th>Threshold</th><th>Result</th></tr><tr style='background:#f8d7da'><td>IS Sharpe</td><td>0.5942</td><td>> 1.0</td><td>✗ FAIL</td></tr><tr style='background:#d4edda'><td>OOS Sharpe</td><td>0.9581</td><td>> 0.70</td><td>✓ PASS</td></tr><tr style='background:#f8d7da'><td>IS CAGR</td><td>7.86%</td><td>>= 10%</td><td>✗ FAIL</td></tr><tr style='background:#f8d7da'><td>IS MDD</td><td>-31.06%</td><td>> -15%</td><td>✗ FAIL</td></tr><tr style='background:#d4edda'><td>OOS MDD</td><td>-11.71%</td><td>> -15%</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>Walk-Forward</td><td>4/4</td><td>>= 3/4</td><td>✓ PASS</td></tr><tr style='background:#f8d7da'><td>Permutation p</td><td>0.4500</td><td>< 0.05</td><td>✗ FAIL</td></tr><tr style='background:#d4edda'><td>IS Trade Count</td><td>324</td><td>>= 100</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>DSR</td><td>0.5669</td><td>> 0</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>PF-1 Switches</td><td>324</td><td>>= 120</td><td>✓ PASS</td></tr></table>
+
+<h2>IS / OOS Summary</h2>
+<div class="section">
+<table>
+<tr><th>Metric</th><th>IS (2003–2023)</th><th>OOS (2024–2026-06)</th></tr>
+<tr><td>Sharpe</td><td>0.5942</td><td>0.9581</td></tr>
+<tr><td>CAGR</td><td>7.86%</td><td>13.89%</td></tr>
+<tr><td>Max Drawdown</td><td>-31.06%</td><td>-11.71%</td></tr>
+<tr><td>Win Rate</td><td>62.35%</td><td>68.29%</td></tr>
+<tr><td>Profit Factor</td><td>1.4852</td><td>2.0945</td></tr>
+<tr><td>Trade Count</td><td>324</td><td>41</td></tr>
+<tr><td>Position Switches</td><td>324</td><td>41</td></tr>
+<tr><td>Avg PpT (bps)</td><td>123.72</td><td>96.86</td></tr>
+</table>
+</div>
+
+<h2>Walk-Forward Analysis (4 IS Windows)</h2>
+<table>
+<tr><th>Window</th><th>Period</th><th>Sharpe</th><th>MDD</th><th>Win Rate</th><th>Trades</th><th>Switches</th></tr>
+<tr><td>1</td><td>2003-01-01–2007-12-31</td><td>0.8513</td><td>-13.71%</td><td>65.59%</td><td>93</td><td>93</td></tr><tr><td>2</td><td>2008-01-01–2012-12-31</td><td>0.6806</td><td>-20.91%</td><td>64.71%</td><td>51</td><td>51</td></tr><tr><td>3</td><td>2013-01-01–2017-12-31</td><td>0.8363</td><td>-14.59%</td><td>62.35%</td><td>85</td><td>85</td></tr><tr><td>4</td><td>2018-01-01–2023-12-31</td><td>0.1244</td><td>-31.04%</td><td>57.30%</td><td>89</td><td>89</td></tr>
+</table>
+
+<h2>Statistical Tests</h2>
+<div class="section">
+<p><strong>Monte Carlo (1000 resamples on IS trade PnLs):</strong> p5=0.7551, median=2.2704, p95=3.7957</p>
+<p><strong>Block Bootstrap CI (95%):</strong> Sharpe [0.2537, 0.9595]  MDD [-0.4848, -0.2024]</p>
+<p><strong>Permutation test (1000 perms, shuffled calendar months):</strong> p=0.4500 — FAIL</p>
+<p><strong>DSR (Deflated Sharpe Ratio):</strong> 0.5669</p>
+</div>
+
+<h2>Parameter Sweep (18 Combinations)</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>seasonal_lookback_years</th>
+      <th>top_k_sectors</th>
+      <th>use_regime_filter</th>
+      <th>sharpe</th>
+      <th>cagr</th>
+      <th>max_drawdown</th>
+      <th>win_rate</th>
+      <th>trade_count</th>
+      <th>position_switches</th>
+      <th>total_return</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>5</td>
+      <td>1</td>
+      <td>True</td>
+      <td>0.5719</td>
+      <td>0.0865</td>
+      <td>-0.3503</td>
+      <td>0.6364</td>
+      <td>187</td>
+      <td>187</td>
+      <td>4.7063</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>1</td>
+      <td>False</td>
+      <td>0.4855</td>
+      <td>0.0967</td>
+      <td>-0.6770</td>
+      <td>0.6274</td>
+      <td>212</td>
+      <td>212</td>
+      <td>5.9469</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>2</td>
+      <td>True</td>
+      <td>0.5531</td>
+      <td>0.0716</td>
+      <td>-0.3209</td>
+      <td>0.6182</td>
+      <td>330</td>
+      <td>330</td>
+      <td>3.2682</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>2</td>
+      <td>False</td>
+      <td>0.4504</td>
+      <td>0.0778</td>
+      <td>-0.6085</td>
+      <td>0.6132</td>
+      <td>393</td>
+      <td>393</td>
+      <td>3.8248</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>3</td>
+      <td>True</td>
+      <td>0.5744</td>
+      <td>0.0706</td>
+      <td>-0.2926</td>
+      <td>0.6157</td>
+      <td>445</td>
+      <td>445</td>
+      <td>3.1858</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>3</td>
+      <td>False</td>
+      <td>0.4643</td>
+      <td>0.0780</td>
+      <td>-0.6291</td>
+      <td>0.6128</td>
+      <td>532</td>
+      <td>532</td>
+      <td>3.8437</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>1</td>
+      <td>True</td>
+      <td>0.5004</td>
+      <td>0.0728</td>
+      <td>-0.3723</td>
+      <td>0.6298</td>
+      <td>181</td>
+      <td>181</td>
+      <td>3.3741</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>1</td>
+      <td>False</td>
+      <td>0.4428</td>
+      <td>0.0822</td>
+      <td>-0.6093</td>
+      <td>0.6275</td>
+      <td>204</td>
+      <td>204</td>
+      <td>4.2562</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>2</td>
+      <td>True</td>
+      <td>0.5942</td>
+      <td>0.0786</td>
+      <td>-0.3106</td>
+      <td>0.6235</td>
+      <td>324</td>
+      <td>324</td>
+      <td>3.9008</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>2</td>
+      <td>False</td>
+      <td>0.5163</td>
+      <td>0.0928</td>
+      <td>-0.5565</td>
+      <td>0.6162</td>
+      <td>383</td>
+      <td>383</td>
+      <td>5.4485</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>3</td>
+      <td>True</td>
+      <td>0.5908</td>
+      <td>0.0729</td>
+      <td>-0.2835</td>
+      <td>0.6261</td>
+      <td>444</td>
+      <td>444</td>
+      <td>3.3838</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>3</td>
+      <td>False</td>
+      <td>0.4923</td>
+      <td>0.0842</td>
+      <td>-0.5882</td>
+      <td>0.6279</td>
+      <td>516</td>
+      <td>516</td>
+      <td>4.4576</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>1</td>
+      <td>True</td>
+      <td>0.4063</td>
+      <td>0.0558</td>
+      <td>-0.4607</td>
+      <td>0.5967</td>
+      <td>181</td>
+      <td>181</td>
+      <td>2.1259</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>1</td>
+      <td>False</td>
+      <td>0.3164</td>
+      <td>0.0486</td>
+      <td>-0.6093</td>
+      <td>0.5882</td>
+      <td>204</td>
+      <td>204</td>
+      <td>1.7077</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>2</td>
+      <td>True</td>
+      <td>0.5238</td>
+      <td>0.0671</td>
+      <td>-0.3770</td>
+      <td>0.6250</td>
+      <td>336</td>
+      <td>336</td>
+      <td>2.9083</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>2</td>
+      <td>False</td>
+      <td>0.4291</td>
+      <td>0.0724</td>
+      <td>-0.5565</td>
+      <td>0.6086</td>
+      <td>396</td>
+      <td>396</td>
+      <td>3.3370</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>3</td>
+      <td>True</td>
+      <td>0.5273</td>
+      <td>0.0633</td>
+      <td>-0.2687</td>
+      <td>0.6182</td>
+      <td>440</td>
+      <td>440</td>
+      <td>2.6276</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>3</td>
+      <td>False</td>
+      <td>0.4271</td>
+      <td>0.0691</td>
+      <td>-0.5882</td>
+      <td>0.6185</td>
+      <td>519</td>
+      <td>519</td>
+      <td>3.0698</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Market Impact by Ticker</h2>
+<table>
+<tr><th>Ticker</th><th>Impact (bps)</th><th>ADV 20d</th><th>Q/ADV</th><th>Liq. Constrained</th></tr>
+<tr><td>XLK</td><td>0.0561</td><td>14,726,720</td><td>0.000036</td><td>False</td></tr><tr><td>XLV</td><td>0.0564</td><td>6,793,110</td><td>0.000057</td><td>False</td></tr><tr><td>XLE</td><td>0.0731</td><td>37,523,080</td><td>0.000034</td><td>False</td></tr><tr><td>XLF</td><td>0.0512</td><td>39,066,225</td><td>0.000036</td><td>False</td></tr><tr><td>XLY</td><td>0.0870</td><td>9,973,830</td><td>0.000058</td><td>False</td></tr><tr><td>XLP</td><td>0.0656</td><td>11,178,665</td><td>0.000067</td><td>False</td></tr><tr><td>XLU</td><td>0.0896</td><td>29,574,000</td><td>0.000057</td><td>False</td></tr><tr><td>XLI</td><td>0.0631</td><td>8,835,905</td><td>0.000053</td><td>False</td></tr><tr><td>XLB</td><td>0.1065</td><td>11,210,300</td><td>0.000111</td><td>False</td></tr><tr><td>VNQ</td><td>0.1581</td><td>5,386,855</td><td>0.000118</td><td>False</td></tr>
+</table>
+
+<hr>
+<p><em>Generated by Engineering Director (QUA-313) | H73 Gate 1 | 2026-06-16</em></p>
+</body>
+</html>
