@@ -1,0 +1,35 @@
+<!DOCTYPE html><html><head><title>H74_QualitySectorRotation Gate 1</title>
+<style>body{font-family:monospace;margin:2em}table{border-collapse:collapse;width:100%}
+td,th{border:1px solid #ccc;padding:4px 8px}th{background:#eee}</style></head><body>
+<h1>H74_QualitySectorRotation — Gate 1 Report (2026-06-16)</h1>
+<h2>IS Performance (2005-01-01 to 2018-12-31)</h2>
+<table><tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Sharpe</td><td>0.7313</td></tr>
+<tr><td>CAGR</td><td>7.91%</td></tr>
+<tr><td>Max Drawdown</td><td>-15.12%</td></tr>
+<tr><td>Win Rate</td><td>81.1%</td></tr>
+<tr><td>Trade Count</td><td>40</td></tr>
+<tr><td>Position Switches</td><td>37</td></tr>
+</table>
+<h2>OOS Performance (2019-01-01 to 2024-12-31)</h2>
+<table><tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Sharpe</td><td>0.4176</td></tr>
+<tr><td>CAGR</td><td>4.31%</td></tr>
+<tr><td>Max Drawdown</td><td>-24.21%</td></tr>
+<tr><td>Trade Count</td><td>32</td></tr>
+</table>
+<h2>Statistical Tests</h2>
+<table><tr><th>Test</th><th>Value</th></tr>
+<tr><td>DSR</td><td>0.0</td></tr>
+<tr><td>Permutation p-value</td><td>1.0</td></tr>
+<tr><td>Sharpe 95% CI</td><td>[0.3078, 1.2566]</td></tr>
+</table>
+<h2>Walk-Forward Windows</h2>
+<table><tr><th>Window</th><th>Period</th><th>Sharpe</th><th>MDD</th><th>Trades</th></tr>
+<tr><td>1</td><td>2005-01-01–2007-12-31</td><td>0.99</td><td>-0.1191</td><td>10</td></tr><tr><td>2</td><td>2008-01-01–2011-12-31</td><td>0.8589</td><td>-0.1456</td><td>11</td></tr><tr><td>3</td><td>2012-01-01–2015-12-31</td><td>0.8579</td><td>-0.1502</td><td>9</td></tr><tr><td>4</td><td>2016-01-01–2018-12-31</td><td>0.16</td><td>-0.1179</td><td>10</td></tr></table>
+<h2>Sensitivity Sweep</h2>
+<p>Sharpe range: 0.5603 – 0.9969 |
+Variance vs primary: 59.7%</p>
+<h2>Gate 1 Checks</h2>
+<table><tr><th>Pass</th><th>Gate</th><th>Details</th></tr><tr><td>✗</td><td><b>IS Sharpe</b></td><td>0.7313 (threshold: > 1.0)</td></tr><tr><td>✗</td><td><b>OOS Sharpe</b></td><td>0.4176 (threshold: > 0.70)</td></tr><tr><td>✗</td><td><b>IS CAGR</b></td><td>7.91% (threshold: >= 10%)</td></tr><tr><td>✗</td><td><b>IS MDD</b></td><td>-15.12% (threshold: > -15%)</td></tr><tr><td>✗</td><td><b>OOS MDD</b></td><td>-24.21% (threshold: > -15%)</td></tr><tr><td>✓</td><td><b>Walk-Forward</b></td><td>4/4 (threshold: >= 3/4)</td></tr><tr><td>✗</td><td><b>Permutation p</b></td><td>1.0 (threshold: < 0.05)</td></tr><tr><td>✗</td><td><b>IS Trade Count</b></td><td>40 (threshold: >= 100)</td></tr><tr><td>✗</td><td><b>DSR</b></td><td>0.0 (threshold: > 0)</td></tr><tr><td>✗</td><td><b>IS Switches</b></td><td>37 (threshold: >= 120)</td></tr></table>
+</body></html>

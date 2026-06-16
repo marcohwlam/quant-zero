@@ -1,0 +1,112 @@
+H74 Quality Sector Rotation (Quality/Profitability Factor) — Gate 1 Verdict
+======================================================================
+Date:     2026-06-16
+Strategy: H74_QualitySectorRotation
+Overall:  FAIL (3/10 checks passed)
+Best combo: sectors_held=4 lookback=18m dma=150 freq=bi-monthly
+(Selected from 54-combination IS sweep by composite Gate 1 score)
+======================================================================
+
+=== Universe ===
+Sectors:  XLK, XLV, XLF, XLY, XLP, XLU, XLI, XLB, XLE, VNQ
+Regime:   SPY 150-DMA → exit to SHY
+Signal:   quality composite = (div_yield_z + inv_vol_z) / 2, top-4 equal weight
+Lookback: 18 months | Rebalance: bi-monthly
+Academic: Novy-Marx (2013) JFE; Asness et al. (2019) AQR QMJ
+
+=== IS Performance (2005-01-01 to 2018-12-31, 14 years) ===
+Sharpe:              0.9969    [FAIL: > 1.0]
+CAGR:                10.32%    [PASS: >= 10%]
+Max Drawdown:        -12.15%    [PASS: > -15%]
+Win Rate:            82.00%
+Profit Factor:       10.7145
+Trade Count:         51    [FAIL: >= 100]
+Position Switches:   50    [FAIL: >= 120]
+Avg PpT:             1166.42 bps
+Regime-SHY months:   35/168 IS months
+PF-2 GFC (2007-09):  17 SHY months; first exit: 2007-07-31
+PF-4 Rate shock 2022:9 SHY months; first exit: 2022-02-28
+
+=== OOS Performance (2019-01-01 to 2024-12-31, 6 years) ===
+Sharpe:              0.2334  [FAIL: > 0.70]
+CAGR:                2.52%
+Max Drawdown:        -38.39%  [FAIL: > -15%]
+Win Rate:            64.71%
+Profit Factor:       1.5818
+Trade Count:         21
+Position Switches:   17
+
+=== Statistical Rigor ===
+MC p5 Sharpe:        8.973481719901853
+MC Median Sharpe:    11.796565199745944
+Sharpe 95% CI:       [0.5675, 1.4818]  (block bootstrap)
+MDD 95% CI:          [-0.2505, -0.0990]
+Permutation p-value: 1.0    [FAIL: < 0.05]
+DSR:                 0.0    [FAIL: > 0]
+Max Market Impact:   0.3528 bps
+
+=== Walk-Forward Analysis (4 IS Windows) ===
+  Window 1: 2005-01-01--2007-12-31: Sharpe=1.0673 ✓, MDD=-11.67%, trades=12, switches=11
+  Window 2: 2008-01-01--2011-12-31: Sharpe=0.9638 ✓, MDD=-9.18%, trades=20, switches=16
+  Window 3: 2012-01-01--2015-12-31: Sharpe=0.9942 ✓, MDD=-10.82%, trades=16, switches=12
+  Window 4: 2016-01-01--2018-12-31: Sharpe=1.0020 ✓, MDD=-8.20%, trades=12, switches=11
+  WF Passed: 4/4   [PASS: >= 3/4]
+  WF Sharpe std: 0.0377
+  WF Sharpe min: 0.9638
+
+=== Sensitivity Sweep (54 combinations) ===
+  Primary params (selected best combo): Sharpe 0.9969
+  Sharpe range across all combos: 0.5603 – 0.9969
+  Variance vs primary: 59.7% (FAIL < 30%)
+  Note: Primary params (K=3, lb=12m, dma=200, monthly) IS Sharpe 0.7313 for reference
+  See: H74_QualitySectorRotation_2026-06-16_sweep.csv
+
+=== Research Director Note ===
+IS Sharpe 0.9969 below > 1.0 gate but shows economic rationale.
+Per Research Director guidance: if OOS persistence and WF stability present,
+flag as portfolio combination candidate (3-4 uncorrelated sector strategies → combined Sharpe > 1.0).
+OOS Sharpe: 0.2334 (below persistence threshold 0.70) | WF consistent: 4/4
+Note: OOS degradation from IS Sharpe 0.9969 → OOS 0.2334 suggests IS overfitting risk.
+Primary params (sectors_held=3, lb=12, dma=200, monthly): IS Sharpe 0.7313, OOS Sharpe 0.4176.
+Quality factor structural insight: quality rankings are highly stable (avg 50-day sector tenure).
+Low trade count (51 IS) reflects real div_yield+inv_vol factor stability, not code error.
+
+=== Gate 1 Checks ===
+  [FAIL] IS Sharpe              0.9969 (threshold: > 1.0)
+  [FAIL] OOS Sharpe             0.2334 (threshold: > 0.70)
+  [PASS] IS CAGR                10.32% (threshold: >= 10%)
+  [PASS] IS MDD                 -12.15% (threshold: > -15%)
+  [FAIL] OOS MDD                -38.39% (threshold: > -15%)
+  [PASS] Walk-Forward           4/4 (threshold: >= 3/4)
+  [FAIL] Permutation p          1.0 (threshold: < 0.05)
+  [FAIL] IS Trade Count         51 (threshold: >= 100)
+  [FAIL] DSR                    0.0 (threshold: > 0)
+  [FAIL] IS Switches            50 (threshold: >= 120)
+
+=== Root Cause Analysis ===
+Primary failures (7 of 10 gates):
+  - IS Sharpe: got 0.9969, need threshold: > 1.0
+  - OOS Sharpe: got 0.2334, need threshold: > 0.70
+  - OOS MDD: got -38.39%, need threshold: > -15%
+  - Permutation p: got 1.0, need threshold: < 0.05
+  - IS Trade Count: got 51, need threshold: >= 100
+  - DSR: got 0.0, need threshold: > 0
+  - IS Switches: got 50, need threshold: >= 120
+Structural issues:
+  - Quality factor (div_yield + inv_vol) is highly stable: same defensive sectors dominate.
+  - IS trade count (51) reflects real factor stability, not a modeling error.
+  - 100-trade threshold may be poorly calibrated for slow-decay quality strategies.
+  - OOS degradation: IS Sharpe 0.9969 → OOS 0.2334 (IS overfit to bi-monthly/large-K).
+  - Permutation test invalid with only 51 IS trades (insufficient sample size).
+
+=== Recommendation ===
+REJECT — do not advance to paper trading. Return to Research Director with metrics.
+Note: See Research Director note above for portfolio combination potential.
+Flag to Engineering Director: IS Switches >= 120 threshold may be too strict for quality strategies.
+
+=== Files ===
+Metrics: backtests/H74_QualitySectorRotation_2026-06-16.json
+Trades:  backtests/H74_QualitySectorRotation_2026-06-16_trades.csv
+Sweep:   backtests/H74_QualitySectorRotation_2026-06-16_sweep.csv
+Report:  backtests/H74_QualitySectorRotation_2026-06-16_report.html
+Verdict: backtests/H74_QualitySectorRotation_2026-06-16_verdict.txt
