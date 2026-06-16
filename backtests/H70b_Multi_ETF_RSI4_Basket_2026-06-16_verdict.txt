@@ -1,0 +1,71 @@
+H70b Multi-ETF Small-Cap RSI-4 Mean Reversion Basket — Gate 1 Verdict
+Date: 2026-06-16
+Universe: IWM + IJH + VB + IJR
+Family: H70 Small-Cap Mean Reversion — iteration 2/2 (FINAL ALLOWED)
+
+OVERALL VERDICT: FAIL
+Composite Score: 0.4542 (need >= 0.60)
+
+PRIMARY GATE CHECKS:
+  OOS Sharpe     : 0.3658  FAIL (> 0.70)
+  OOS PpT        : 29.45 bps  PASS (> 15 bps)
+  IS MDD (CS)    : 9.55%  PASS (< 20%)
+  IS MDD (Gate 7): 9.55%  PASS (< 30%)
+  WF trades/fold : PASS (all folds > 30)
+  CPR            : 0.0693  PASS (< 0.25)
+
+STATISTICAL TESTS:
+  Permutation p  : 0.1370  FAIL (< 0.05)
+  MC p5 Sharpe   : 3.5853  OK
+  Bootstrap CI   : [0.4959, 1.4232]
+  DSR            : 0.9009
+
+WALK-FORWARD (4 IS folds):
+  Fold 1 (2005-01-01–2008-06-30): Sharpe=1.0177, MDD=-5.78%, trades=83  per-ticker={'IJH': 25, 'VB': 24, 'IWM': 22, 'IJR': 12}
+  Fold 2 (2008-07-01–2011-12-31): Sharpe=0.9832, MDD=-6.93%, trades=64  per-ticker={'IWM': 22, 'VB': 21, 'IJH': 17, 'IJR': 4}
+  Fold 3 (2012-01-01–2015-06-30): Sharpe=1.2987, MDD=-5.30%, trades=94  per-ticker={'VB': 30, 'IJH': 28, 'IWM': 26, 'IJR': 10}
+  Fold 4 (2015-07-01–2018-12-31): Sharpe=0.4905, MDD=-7.20%, trades=70  per-ticker={'IWM': 19, 'IJH': 18, 'VB': 18, 'IJR': 15}
+  WF passed: 4/4
+  WF Sharpe std: 0.2909
+  WF Sharpe min: 0.4905  OK
+  Gate 7 (any fold MDD>30%): PASS
+
+PER-INSTRUMENT DISAGGREGATION (IS):
+  IJH: trades=88, PpT=75.8 bps, WR=75.0%, Sharpe~=1.928
+  IWM: trades=89, PpT=117.3 bps, WR=76.4%, Sharpe~=3.201
+  VB: trades=93, PpT=100.2 bps, WR=78.5%, Sharpe~=2.658
+  IJR: trades=40, PpT=15.4 bps, WR=67.5%, Sharpe~=0.343
+
+IS SUMMARY (2005-01-01 to 2018-12-31):
+  Sharpe: 0.9304
+  MDD: 9.55%
+  Win rate: 75.48%
+  Profit factor: 2.49
+  Trade count: 310 (22.1/yr)
+  PpT: 59.66 bps
+  Exit breakdown: {'RSI_EXIT': 154, 'HIGH_EXIT': 138, 'MAX_HOLD': 9, 'STOP_LOSS': 9}
+  Concurrent: {'pct_time_2plus_positions': 0.1755, 'pct_time_3plus_positions': 0.144, 'avg_n_positions_when_invested': 2.4331, 'max_simultaneous_positions': 3, 'avg_portfolio_notional_pct': 0.144, 'avg_notional_when_cap_active': 0.7967}
+
+OOS SUMMARY (2019-01-01 to 2024-12-31):
+  Sharpe: 0.3658
+  MDD: 12.29%
+  Win rate: 66.37%
+  Profit factor: 1.41
+  Trade count: 113 (18.8/yr)
+  PpT: 29.45 bps
+  2022 regime: {'2022_trade_count': 5, '2022_note': 'All four small/mid-cap ETFs expected below 200-SMA by Feb 2022 (rate-shock gate)', '2022_n_position_mean': 0.1434}
+
+PARAMETER SWEEP (9 combinations):
+  Max Sharpe sensitivity: 28.3% — PASS (<30%)
+  See: H70b_Multi_ETF_RSI4_Basket_2026-06-16_sweep.csv
+
+SLIPPAGE MODEL:
+  IWM: 0.005% one-way (ultra-liquid, ED-SLIP-001)
+  IJH, VB, IJR: 0.05% one-way (canonical standard)
+  Commission: $0.005/share each side (all instruments)
+
+GAP ATTRIBUTION (Hard Gate 8):
+  IS overnight: 310 trades (100.0%)
+  IS weekend:   276 trades (89.0%)
+
+OOS DATA QUALITY: PASS
