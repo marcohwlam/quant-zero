@@ -42,9 +42,9 @@ PARAMETERS = {
     "tt4_lookback": 30,
     "vcp_lookback": 60,
     "min_swing_pct": 0.03,
-    "vcp_contraction_ratio": 0.85,
-    "vcp_volume_dryup_ratio": 0.75,
-    "breakout_volume_ratio": 1.25,
+    "vcp_contraction_ratio": 0.99,
+    "vcp_volume_dryup_ratio": 0.95,
+    "breakout_volume_ratio": 1.05,
     "hard_stop_pct": 0.075,
     "partial_profit_pct": 0.20,
     "full_exit_pct": 0.25,
@@ -54,7 +54,7 @@ PARAMETERS = {
     "risk_per_trade_pct": 0.02,
     "max_position_pct": 0.15,
     "elder_6pct_halt": 0.06,
-    "m_filter_dist_days": 4,
+    "m_filter_dist_days": 6,
     "m_filter_window": 25,
     "m_filter_down_threshold": 0.002,
     "is_start": "2018-01-01",
@@ -323,7 +323,7 @@ def detect_vcp(
 ) -> tuple:
     """
     Detect VCP in a rolling lookback window (no look-ahead).
-    Returns (vcp_found: bool, pivot: float | None).
+    Returns (vcp_found: bool, pivot: float | None, reason: str).
 
     Conditions (Minervini SEPA spec):
       - >= 2 alternating H/L contraction cycles detected by zigzag.
@@ -358,24 +358,24 @@ def detect_vcp(
             i += 1
 
     if len(cycles) < 2:
-        return False, None
+        return False, None, "no_cycles"
 
     # Each cycle must be narrower than the prior
     if not all(
         cycles[j]["depth"] < cycles[j - 1]["depth"] * params["vcp_contraction_ratio"]
         for j in range(1, len(cycles))
     ):
-        return False, None
+        return False, None, "no_contraction"
 
     # Volume dry-up at final contraction low
     if avg_vol_20d <= 0:
-        return False, None
+        return False, None, "no_avg_vol"
     if cycles[-1]["vol_at_low"] >= avg_vol_20d * params["vcp_volume_dryup_ratio"]:
-        return False, None
+        return False, None, "no_dryup"
 
     # Pivot = most recent swing high before final contraction low
     pivot = cycles[-1]["hi_price"]
-    return True, pivot
+    return True, pivot, "pass"
 
 
 def compute_vcp_signals(
@@ -395,6 +395,7 @@ def compute_vcp_signals(
     vol20 = volume.rolling(20).mean()
     vcp_map: dict = {}
     scan_count = 0
+    funnel: dict = {}
 
     tickers = [t for t in tt_pass.columns if t in close.columns and t in volume.columns]
     dates = tt_pass.index
@@ -421,8 +422,9 @@ def compute_vcp_signals(
                 continue
 
             scan_count += 1
-            vcp_found, pivot = detect_vcp(closes_60, volumes_60, float(avg_vol), params)
-            if not vcp_found or pivot is None:
+            vcp_found, pivot, reason = detect_vcp(closes_60, volumes_60, float(avg_vol), params)
+            if not vcp_found:
+                funnel[reason] = funnel.get(reason, 0) + 1
                 continue
 
             # Breakout confirmation: today's close > pivot AND today's volume >= threshold
@@ -435,8 +437,11 @@ def compute_vcp_signals(
                 if date not in vcp_map:
                     vcp_map[date] = {}
                 vcp_map[date][ticker] = float(pivot)
+            else:
+                funnel["no_breakout"] = funnel.get("no_breakout", 0) + 1
 
     print(f"TT pass: {int(tt_pass.values.sum())} ticker-days | VCP scans run: {scan_count}")
+    print(f"VCP funnel — no_cycles: {funnel.get('no_cycles',0)}, no_contraction: {funnel.get('no_contraction',0)}, no_dryup: {funnel.get('no_dryup',0)}, no_breakout: {funnel.get('no_breakout',0)}")
     return vcp_map
 
 
@@ -830,7 +835,10 @@ def run_strategy(params: dict = PARAMETERS) -> dict:
     print("Computing VCP signals (rolling 60-day window) ...")
     vcp_signals = compute_vcp_signals(close_universe, vol_universe, tt_pass, params)
     total_signals = sum(len(v) for v in vcp_signals.values())
+    is_signal_days = sum(1 for d in vcp_signals if is_start <= str(d.date()) <= params["is_end"])
+    is_signals = sum(len(v) for d, v in vcp_signals.items() if is_start <= str(d.date()) <= params["is_end"])
     print(f"VCP signal days: {len(vcp_signals)}, total (day, ticker) signals: {total_signals}")
+    print(f"IS signal days: {is_signal_days}, IS signals: {is_signals}")
 
     print(f"Simulating IS: {is_start} to {params['is_end']} ...")
     is_result = simulate_portfolio(
