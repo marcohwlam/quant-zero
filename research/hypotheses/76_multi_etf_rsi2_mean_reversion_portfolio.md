@@ -1,6 +1,6 @@
 # H76: Multi-ETF RSI-2 Daily Mean Reversion Portfolio
 
-**Status:** READY
+**Status:** RETIRED — Gate 1 FAIL (IS Sharpe 0.5404). Family iteration 1/2. See H76b for revision. Family retired after H76b also failed. See QUA-329.
 **Class:** Pattern-based / Mean Reversion
 **Track:** A — Daily/Swing
 **Author:** Research Director

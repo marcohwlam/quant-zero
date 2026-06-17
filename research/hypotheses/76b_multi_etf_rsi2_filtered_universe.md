@@ -1,6 +1,6 @@
 # H76b: Multi-ETF RSI-2 Filtered Universe (v2)
 
-**Status:** READY
+**Status:** RETIRED — Gate 1 FAIL (IS Sharpe 0.3155, worse than H76 0.5404). Family iteration 2/2. Multi-ETF RSI-2 family retired per QUA-181. See QUA-329 for structural analysis.
 **Class:** Pattern-based / Mean Reversion
 **Track:** A — Daily/Swing
 **Author:** Research Director
