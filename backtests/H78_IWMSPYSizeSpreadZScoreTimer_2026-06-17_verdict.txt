@@ -1,0 +1,66 @@
+H78 IWM/SPY Size Spread Z-Score Timer — Gate 1 Verdict
+============================================================
+Date:     2026-06-17
+Strategy: H78_IWMSPYSizeSpreadZScoreTimer
+Overall:  FAIL (2/10 checks passed)
+============================================================
+
+=== Universe ===
+Instruments:   SPY (large-cap), IWM (small-cap), SHY (cash)
+Signal:        60d rolling Z-score of IWM/SPY price ratio
+States:        IWM-Heavy (60/40) | Neutral (50/50) | SPY-Heavy (40/60) | SHY (100%)
+Regime filter: SPY 200-DMA → 100% SHY in downtrend
+Min hold:      3 trading days per state
+
+=== IS Performance (2005-01-01 to 2020-12-31, 16.0 years) ===
+Sharpe:              0.4556    [FAIL: > 1.0]
+CAGR:                5.38%    [FAIL: >= 10%]
+Max Drawdown:        -28.96%    [FAIL: > -20%]
+Win Rate:            56.0%
+Profit Factor:       1.2908
+Trade Count:         448    [PASS: >= 100]
+Position Switches:   447    [PASS: >= 60]
+Avg PpT:             23.36 bps
+Avg Rebalance Cost:  1.4491 bps
+
+=== OOS Performance (2021-01-01 to 2024-12-31, 4.0 years) ===
+Sharpe:              0.5323  [FAIL: > 0.70]
+CAGR:                6.90%
+Max Drawdown:        -27.81%  [FAIL: > -20%]
+Win Rate:            58.2%
+Trade Count:         98
+
+=== Statistical Rigor ===
+MC p5 Sharpe:        0.2647
+MC Median Sharpe:    1.4109
+Sharpe 95% CI:       [-0.0277, 0.9614]  (block bootstrap)
+MDD 95% CI:          [-59.79%, -19.33%]
+Permutation p-value: 1.0    [FAIL: < 0.05]
+DSR:                 0.0    [FAIL: > 0]
+
+=== Walk-Forward (4 windows, expanding IS / 2yr OOS) ===
+Passed: 2/4    [FAIL: >= 3/4]
+WF OOS Sharpe std: 0.7742
+WF OOS Sharpe min: -0.3780
+Window 1: IS 2005-01-01 to 2009-12-31 | OOS 2010-01-01 to 2011-12-31
+  IS Sharpe: 0.3566, OOS Sharpe: -0.378, FAIL
+Window 2: IS 2005-01-01 to 2012-12-31 | OOS 2013-01-01 to 2014-12-31
+  IS Sharpe: 0.2382, OOS Sharpe: 1.3931, PASS
+Window 3: IS 2005-01-01 to 2015-12-31 | OOS 2016-01-01 to 2017-12-31
+  IS Sharpe: 0.3813, OOS Sharpe: 1.5885, PASS
+Window 4: IS 2005-01-01 to 2018-12-31 | OOS 2019-01-01 to 2020-12-31
+  IS Sharpe: 0.4289, OOS Sharpe: 0.6091, FAIL
+
+=== Tilt Test (Sharpe vs MDD Tradeoff) ===
+primary_60_40             IS Sharpe=0.4556  IS MDD=-28.96%  OOS Sharpe=0.5323  OOS MDD=-27.81%
+aggressive_70_30          IS Sharpe=0.4582  IS MDD=-29.53%  OOS Sharpe=0.5297  OOS MDD=-28.11%
+aggressive_80_20          IS Sharpe=0.4601  IS MDD=-30.1%  OOS Sharpe=0.5252  OOS MDD=-28.42%
+
+=== Sweep Stability (384 combos) ===
+Sharpe range:   0.3982 – 0.6727
+Variance:       60.2%  [FAIL: <= 30%]
+
+=== Market Impact ===
+SPY: 0.0172 bps (Q/ADV: 0.000002)  ADV tier: ultra_liquid
+IWM: 0.0603 bps (Q/ADV: 0.000015)  ADV tier: ultra_liquid
+SHY: 0.0 bps (Q/ADV: 0.000000)  ADV tier: standard
