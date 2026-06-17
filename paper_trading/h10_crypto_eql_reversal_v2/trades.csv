@@ -21,3 +21,13 @@ date,ticker,signal,signal_type,target_notional,has_position,action,order_id,fill
 2026-06-08 21:00:35,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
 2026-06-08 21:01:06,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
 2026-06-08 21:01:06,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-15 21:00:22,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-15 21:00:22,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-15 21:00:40,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-15 21:00:41,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-16 21:00:56,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-16 21:00:56,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-16 21:01:01,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-16 21:01:01,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-17 21:00:19,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-06-17 21:00:19,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
