@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>H76 Gate 1 Report — 2026-06-17</title>
+<style>
+body { font-family: monospace; max-width: 1200px; margin: 0 auto; padding: 20px; }
+h1 { background: #343a40; color: white; padding: 15px; border-radius: 4px; }
+h2 { border-bottom: 2px solid #343a40; padding-bottom: 5px; margin-top: 30px; }
+.verdict { font-size: 2em; font-weight: bold; padding: 15px; border-radius: 4px; background: #f8d7da; text-align: center; margin: 20px 0; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th { background: #343a40; color: white; padding: 8px; text-align: left; }
+td { padding: 6px 8px; border: 1px solid #dee2e6; }
+.section { margin: 20px 0; padding: 15px; border: 1px solid #dee2e6; border-radius: 4px; }
+</style>
+</head>
+<body>
+<h1>H76 Multi-ETF RSI-2 Daily Mean Reversion — Gate 1 Report</h1>
+<p><strong>Date:</strong> 2026-06-17 | <strong>Task:</strong> QUA-323</p>
+<p><strong>Universe:</strong> SPY, QQQ, IWM, XLK, XLV, XLE, XLF, XLY, XLP, XLU, XLI, XLB</p>
+<p><strong>Signal:</strong> RSI(2) &lt; 5 → buy next open | Exit: RSI(2) &gt; 65 OR 5-day max hold | SPY 200-DMA regime</p>
+<p><strong>Sizing:</strong> Equal-weight 25% per position, max 4 concurrent | Stop: 5%</p>
+<p><strong>Slippage:</strong> SPY/QQQ/IWM 0.005% (ED-SLIP-001) | Others 0.05% standard</p>
+
+<div class="verdict">GATE 1: FAIL</div>
+
+<h2>Gate 1 Checklist</h2>
+<table><tr><th>Gate</th><th>Value</th><th>Threshold</th><th>Result</th></tr><tr style='background:#f8d7da'><td>IS Sharpe</td><td>0.5404</td><td>> 1.0</td><td>✗ FAIL</td></tr><tr style='background:#f8d7da'><td>OOS Sharpe</td><td>0.6643</td><td>> 0.70</td><td>✗ FAIL</td></tr><tr style='background:#d4edda'><td>OOS PpT</td><td>15.49 bps</td><td>> 15 bps</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>IS MDD (CS)</td><td>11.02%</td><td>< 20%</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>IS MDD (Gate 7)</td><td>11.02%</td><td>< 30%</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>IS trades</td><td>588</td><td>>= 100</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>WF trades/fold</td><td>True</td><td>all > 30</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>CPR</td><td>0.1339</td><td>< 0.25</td><td>✓ PASS</td></tr><tr style='background:#f8d7da'><td>Perm test</td><td>p=0.4200</td><td>< 0.05</td><td>✗ FAIL</td></tr><tr style='background:#d4edda'><td>Gate7 no-reject</td><td>True</td><td>no fold>30%</td><td>✓ PASS</td></tr><tr style='background:#f8d7da'><td>Sensitivity</td><td>Δ52.1%</td><td>< 30%</td><td>✗ FAIL</td></tr></table>
+
+<h2>IS/OOS Summary</h2>
+<div class="section">
+<table>
+<tr><th>Metric</th><th>IS (2005–2018)</th><th>OOS (2019–2024)</th></tr>
+<tr><td>Sharpe</td><td>0.5404</td><td>0.6643</td></tr>
+<tr><td>Max Drawdown</td><td>11.02%</td><td>6.91%</td></tr>
+<tr><td>Win Rate</td><td>68.37%</td><td>66.20%</td></tr>
+<tr><td>Profit Factor</td><td>1.42</td><td>1.46</td></tr>
+<tr><td>Trade Count</td><td>588</td><td>284</td></tr>
+<tr><td>Trades/Year</td><td>42.0</td><td>47.3</td></tr>
+<tr><td>PpT (bps)</td><td>13.95</td><td>15.49</td></tr>
+<tr><td>CPR</td><td>0.1339</td><td>0.0818</td></tr>
+<tr><td>SPY Regime Active</td><td>79.8%</td><td>79.7%</td></tr>
+</table>
+</div>
+
+<h2>Per-Instrument Disaggregation (IS — sorted by PpT)</h2>
+<table>
+<tr><th>Ticker</th><th>Trades</th><th>PpT (bps)</th><th>Win Rate</th><th>Sharpe~</th><th>Total PnL</th></tr>
+<tr><td>IWM</td><td>45</td><td>57.8</td><td>68.9%</td><td>2.202</td><td>$9,365.61</td></tr><tr><td>QQQ</td><td>63</td><td>47.7</td><td>73.0%</td><td>2.229</td><td>$12,633.78</td></tr><tr><td>XLI</td><td>38</td><td>39.1</td><td>76.3%</td><td>1.827</td><td>$5,631.55</td></tr><tr><td>XLF</td><td>47</td><td>33.2</td><td>74.5%</td><td>1.768</td><td>$5,821.97</td></tr><tr><td>SPY</td><td>57</td><td>30.8</td><td>75.4%</td><td>1.402</td><td>$6,514.60</td></tr><tr><td>XLE</td><td>64</td><td>23.6</td><td>62.5%</td><td>0.852</td><td>$5,489.07</td></tr><tr><td>XLK</td><td>48</td><td>22.1</td><td>68.8%</td><td>1.071</td><td>$4,070.28</td></tr><tr><td>XLP</td><td>47</td><td>16.6</td><td>80.8%</td><td>1.141</td><td>$3,121.65</td></tr><tr><td>XLB</td><td>41</td><td>15.4</td><td>65.8%</td><td>0.677</td><td>$2,201.38</td></tr><tr><td>XLV</td><td>50</td><td>11.5</td><td>68.0%</td><td>0.527</td><td>$2,185.87</td></tr><tr><td>XLU</td><td>53</td><td>-9.7</td><td>49.1%</td><td>-0.512</td><td>$-1,967.42</td></tr><tr><td>XLY</td><td>35</td><td>-15.3</td><td>57.1%</td><td>-0.778</td><td>$-2,126.22</td></tr>
+</table>
+
+<h2>Walk-Forward Analysis (4 IS Folds)</h2>
+<table>
+<tr><th>Fold</th><th>Period</th><th>Sharpe</th><th>MDD</th><th>Win Rate</th><th>Trades</th></tr>
+<tr><td>1</td><td>2005-01-01–2008-06-30</td><td>0.7351</td><td>-5.93%</td><td>69.08%</td><td>152</td></tr><tr><td>2</td><td>2008-07-01–2011-12-31</td><td>0.5675</td><td>-5.11%</td><td>68.13%</td><td>91</td></tr><tr><td>3</td><td>2012-01-01–2015-06-30</td><td>1.2775</td><td>-6.05%</td><td>71.69%</td><td>166</td></tr><tr><td>4</td><td>2015-07-01–2018-12-31</td><td>-0.2420</td><td>-11.02%</td><td>65.91%</td><td>176</td></tr>
+</table>
+<p>WF passed: 3/4 | Sharpe std: 0.5446 | Min: -0.2420 | Gate 7: PASS</p>
+
+<h2>Statistical Tests</h2>
+<div class="section">
+<p><strong>Monte Carlo (1000 resamples):</strong> p5=0.9545, median=2.1133, p95=3.2887</p>
+<p><strong>Block Bootstrap CI (95%):</strong> Sharpe [0.1221, 1.0238]</p>
+<p><strong>Permutation test (1000 perms):</strong> p=0.4200 — FAIL</p>
+<p><strong>DSR:</strong> 0.5109 | <strong>Sensitivity:</strong> Δ52.1%</p>
+</div>
+
+<h2>2022 Rate-Shock Regime Split</h2>
+<div class="section">
+<p>2022 trades: 17 | Regime active: 19.1%</p>
+<p>SPY 200-DMA filter should block entries from Jan 2022 bear leg</p>
+</div>
+
+<h2>Concurrent Position Analysis (IS)</h2>
+<div class="section">
+<p>{'pct_time_2plus_positions': 0.1528, 'pct_time_4plus_positions': 0.0642, 'avg_n_positions_when_invested': 2.11, 'max_simultaneous_positions': 4, 'pct_time_in_market': 0.289}</p>
+</div>
+
+<h2>Parameter Sweep (9 Combinations)</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>rsi_entry_threshold</th>
+      <th>max_positions</th>
+      <th>sharpe</th>
+      <th>max_drawdown</th>
+      <th>win_rate</th>
+      <th>trade_count</th>
+      <th>total_return</th>
+      <th>profit_factor</th>
+      <th>sharpe_delta_pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3</td>
+      <td>3</td>
+      <td>0.2689</td>
+      <td>-0.1083</td>
+      <td>0.6531</td>
+      <td>294</td>
+      <td>0.1507</td>
+      <td>1.2391</td>
+      <td>-50.2400</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>4</td>
+      <td>0.2589</td>
+      <td>-0.1303</td>
+      <td>0.6529</td>
+      <td>340</td>
+      <td>0.1778</td>
+      <td>1.2349</td>
+      <td>-52.0900</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>5</td>
+      <td>0.2820</td>
+      <td>-0.1372</td>
+      <td>0.6649</td>
+      <td>376</td>
+      <td>0.2267</td>
+      <td>1.2685</td>
+      <td>-47.8200</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>3</td>
+      <td>0.5268</td>
+      <td>-0.1024</td>
+      <td>0.6759</td>
+      <td>503</td>
+      <td>0.4082</td>
+      <td>1.3930</td>
+      <td>-2.5200</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>4</td>
+      <td>0.5404</td>
+      <td>-0.1102</td>
+      <td>0.6837</td>
+      <td>588</td>
+      <td>0.5294</td>
+      <td>1.4178</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>5</td>
+      <td>0.4862</td>
+      <td>-0.1295</td>
+      <td>0.6753</td>
+      <td>653</td>
+      <td>0.5598</td>
+      <td>1.3734</td>
+      <td>-10.0300</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>3</td>
+      <td>0.4363</td>
+      <td>-0.0830</td>
+      <td>0.6646</td>
+      <td>644</td>
+      <td>0.3718</td>
+      <td>1.2836</td>
+      <td>-19.2600</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>4</td>
+      <td>0.4979</td>
+      <td>-0.0989</td>
+      <td>0.6782</td>
+      <td>777</td>
+      <td>0.5565</td>
+      <td>1.3290</td>
+      <td>-7.8600</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>5</td>
+      <td>0.5387</td>
+      <td>-0.1292</td>
+      <td>0.6830</td>
+      <td>880</td>
+      <td>0.7477</td>
+      <td>1.3611</td>
+      <td>-0.3100</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Market Impact by Ticker</h2>
+<div class="section">
+<p>SPY: 0.0070 bps | ADV=156,951,585 | liq_constrained=False</p><p>QQQ: 0.0117 bps | ADV=71,206,905 | liq_constrained=False</p><p>IWM: 0.0304 bps | ADV=34,458,120 | liq_constrained=False</p><p>XLK: 0.0193 bps | ADV=44,195,910 | liq_constrained=False</p><p>XLV: 0.0239 bps | ADV=17,328,775 | liq_constrained=False</p><p>XLE: 0.0317 bps | ADV=49,103,500 | liq_constrained=False</p><p>XLF: 0.0442 bps | ADV=90,106,070 | liq_constrained=False</p><p>XLY: 0.0299 bps | ADV=18,913,020 | liq_constrained=False</p><p>XLP: 0.0237 bps | ADV=27,654,855 | liq_constrained=False</p><p>XLU: 0.0221 bps | ADV=48,979,150 | liq_constrained=False</p><p>XLI: 0.0400 bps | ADV=19,158,855 | liq_constrained=False</p><p>XLB: 0.0431 bps | ADV=25,304,890 | liq_constrained=False</p>
+</div>
+
+<hr>
+<p><em>Generated by Engineering Director (QUA-323) | H76 Gate 1 | 2026-06-17</em></p>
+</body>
+</html>

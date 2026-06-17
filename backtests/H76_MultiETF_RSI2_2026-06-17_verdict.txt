@@ -1,0 +1,77 @@
+H76 Multi-ETF RSI-2 Daily Mean Reversion Portfolio — Gate 1 Verdict
+Date: 2026-06-17
+Universe: SPY, QQQ, IWM, XLK, XLV, XLE, XLF, XLY, XLP, XLU, XLI, XLB
+Task: QUA-323
+
+OVERALL VERDICT: FAIL
+
+PRIMARY GATE CHECKS:
+  IS Sharpe      : 0.5404  FAIL (> 1.0)
+  OOS Sharpe     : 0.6643  FAIL (> 0.70)
+  IS MDD (CS)    : 11.02%  PASS (< 20%)
+  IS MDD (Gate 7): 11.02%  PASS (< 30%)
+  OOS MDD        : 6.91%  PASS (< 20%)
+  OOS PpT        : 15.49 bps  PASS (> 15 bps)
+  IS trades      : 588  PASS (>= 100)
+  WF trades/fold : PASS (all folds > 30)
+  CPR            : 0.1339  PASS (< 0.25)
+
+STATISTICAL TESTS:
+  Permutation p  : 0.4200  FAIL (< 0.05)
+  MC p5 Sharpe   : 0.9545  OK
+  Bootstrap CI   : [0.1221, 1.0238]
+  DSR            : 0.5109
+  Sensitivity Δ  : 52.1%  FAIL (< 30%)
+
+WALK-FORWARD (4 IS folds):
+  Fold 1 (2005-01-01–2008-06-30): Sharpe=0.7351, MDD=-5.93%, trades=152
+  Fold 2 (2008-07-01–2011-12-31): Sharpe=0.5675, MDD=-5.11%, trades=91
+  Fold 3 (2012-01-01–2015-06-30): Sharpe=1.2775, MDD=-6.05%, trades=166
+  Fold 4 (2015-07-01–2018-12-31): Sharpe=-0.2420, MDD=-11.02%, trades=176
+  WF passed: 3/4
+  WF Sharpe std: 0.5446
+  WF Sharpe min: -0.2420  FLAG
+  Gate 7 (any fold MDD>30%): PASS
+
+PER-INSTRUMENT (IS — top by PpT):
+  IWM: trades=45, PpT=57.8 bps, WR=68.9%, Sharpe~=2.202
+  QQQ: trades=63, PpT=47.7 bps, WR=73.0%, Sharpe~=2.229
+  XLI: trades=38, PpT=39.1 bps, WR=76.3%, Sharpe~=1.827
+  XLF: trades=47, PpT=33.2 bps, WR=74.5%, Sharpe~=1.768
+  SPY: trades=57, PpT=30.8 bps, WR=75.4%, Sharpe~=1.402
+  XLE: trades=64, PpT=23.6 bps, WR=62.5%, Sharpe~=0.852
+  XLK: trades=48, PpT=22.1 bps, WR=68.8%, Sharpe~=1.071
+  XLP: trades=47, PpT=16.6 bps, WR=80.8%, Sharpe~=1.141
+  XLB: trades=41, PpT=15.4 bps, WR=65.8%, Sharpe~=0.677
+  XLV: trades=50, PpT=11.5 bps, WR=68.0%, Sharpe~=0.527
+  XLU: trades=53, PpT=-9.7 bps, WR=49.1%, Sharpe~=-0.512
+  XLY: trades=35, PpT=-15.3 bps, WR=57.1%, Sharpe~=-0.778
+
+IS SUMMARY (2005-01-01 to 2018-12-31):
+  Sharpe: 0.5404
+  MDD: 11.02%
+  Win rate: 68.37%
+  Profit factor: 1.42
+  Trade count: 588 (42.0/yr)
+  PpT: 13.95 bps
+  SPY regime active: 79.8%
+  Exit breakdown: {'RSI_EXIT': 476, 'MAX_HOLD': 81, 'STOP_LOSS': 31}
+  Concurrent: {'pct_time_2plus_positions': 0.1528, 'pct_time_4plus_positions': 0.0642, 'avg_n_positions_when_invested': 2.11, 'max_simultaneous_positions': 4, 'pct_time_in_market': 0.289}
+
+OOS SUMMARY (2019-01-01 to 2024-12-31):
+  Sharpe: 0.6643
+  MDD: 6.91%
+  Win rate: 66.20%
+  Profit factor: 1.46
+  Trade count: 284 (47.3/yr)
+  PpT: 15.49 bps
+  2022 regime: {'2022_trade_count': 17, '2022_regime_active_pct': 0.1912, '2022_n_positions_mean': 0.2709, '2022_note': 'SPY 200-DMA filter should block entries from Jan 2022 bear leg'}
+
+PARAMETER SWEEP (9 combinations):
+  Max Sharpe sensitivity: 52.1% — FAIL (<30%)
+  See: H76_MultiETF_RSI2_2026-06-17_sweep.csv
+
+SLIPPAGE MODEL:
+  SPY/QQQ/IWM: 0.005% one-way (ultra-liquid, ED-SLIP-001)
+  XLK/XLV/XLE/XLF/XLY/XLP/XLU/XLI/XLB: 0.05% one-way (canonical standard)
+  Commission: $0.005/share each side (all instruments)
