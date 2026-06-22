@@ -1,0 +1,51 @@
+H83 Elder Triple Screen Multi-ETF — Gate 1 Verdict [Post-GFC (IS 2009-2020 / OOS 2021-2025)]
+Date: 2026-06-22
+
+OVERALL: FAIL  |  Composite Score: 0.3223 (threshold: 0.60)
+
+=== Gate 1 Checks (kpi-daily-weekly.md v1.0) ===
+NOTE: No IS Sharpe gate. Only OOS Sharpe > 0.7 hard gate.
+  [FAIL] oos_sharpe_gt_0.7
+  [PASS] is_mdd_lt_30pct
+  [PASS] cpr_lt_0.25
+  [PASS] is_ppt_gt_15bps
+  [FAIL] composite_score_ge_0.60
+  [FAIL] is_tpq_ge_30
+
+=== Composite Score Breakdown ===
+  NetSharpe_norm (OOS):  0.0970 × 0.40 = 0.0388
+  Stability_norm (IS MDD): 0.3980 × 0.30 = 0.1194
+  PpT_norm (IS):         0.3208 × 0.20 = 0.0642
+  TradeAdequacy_norm:    1.0000 × 0.10 = 0.1000
+  CS = 0.3223  (threshold ≥ 0.60)
+
+=== IS Period (2009-01-01 → 2020-12-31) ===
+  Sharpe:              0.3646  [no IS Sharpe gate in v2.7]
+  Max Drawdown:        -12.04%  [gate: <30%]
+  Total Return:        25.39%
+  Trade Count:         304
+  Trades/Quarter:      6.3  [gate: ≥30]
+  PpT (bps net):       32.08  [gate: >15]
+  CPR:                 0.0388  [gate: <0.25]
+  Win Rate:            66.45%
+  Avg Hold Days:       10.6
+  Gap PnL attribution: 10.4% of IS net PnL
+  Flagged Quarters (<30): ['2009Q1', '2009Q2', '2009Q3', '2009Q4', '2010Q2', '2010Q3', '2010Q4', '2011Q1', '2011Q2', '2011Q3', '2011Q4', '2012Q1', '2012Q2', '2012Q3', '2012Q4', '2013Q1', '2013Q2', '2013Q3', '2013Q4', '2014Q1', '2014Q2', '2014Q3', '2014Q4', '2015Q1', '2015Q2', '2015Q3', '2015Q4', '2016Q1', '2016Q2', '2016Q3', '2016Q4', '2017Q1', '2017Q2', '2017Q3', '2017Q4', '2018Q1', '2018Q2', '2018Q3', '2018Q4', '2019Q1', '2019Q2', '2019Q3', '2019Q4', '2020Q1', '2020Q2', '2020Q3', '2020Q4']
+
+=== OOS Period (2021-01-01 → 2025-06-01) ===
+  Sharpe:              -0.2576  [hard gate: >0.70]
+  Max Drawdown:        -14.63%
+  Total Return:        -6.64%
+  Trade Count:         126
+  Trades/Quarter:      7.1
+  PpT (bps net):       -16.76
+  CPR:                 0.0314
+  Win Rate:            56.92%
+
+=== Statistical Rigor ===
+  MC P5/Med/P95 Sharpe:  -2.923 / -0.712 / 1.569
+  Bootstrap 95% CI:      [-3.285, 2.182]
+  Market Impact:         3.871 bps
+  Permutation p-value:   0.8184  (FAIL)
+  WF: 4/6 positive OOS Sharpe  min=-0.573
+  Sensitivity:           pass=True  max_delta=38.4%

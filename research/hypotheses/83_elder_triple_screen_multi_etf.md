@@ -6,7 +6,17 @@
 **Asset class:** US Equities + Bonds + Commodities (ETFs)
 **Strategy type:** Pattern-based / binary event-driven, multi-timeframe
 **Track:** A (Daily/Weekly signals, swing hold 3–20 days)
-**Status:** READY
+**Status:** FAIL — Gate 1 2026-06-22 (QUA-379)
+
+**Gate 1 Verdict:** FAIL (both variants)
+- **Hard gate 1 FAIL:** OOS Sharpe = −0.347 (Standard) / −0.258 (Post-GFC) — both deeply below 0.7 floor; strategy loses money OOS
+- **Hard gate 6 FAIL:** IS TPQ = 5.9 / 6.3 — structural failure; 30/quarter requires ~15 Stoch dips/year per ETF vs actual ~2-3
+- Composite score: 0.31 / 0.32 (threshold 0.60)
+- No statistical significance: permutation p ≈ 0.80 in both variants
+- **Passing gates:** IS MDD < 30%, CPR < 0.25, IS PpT > 15 bps
+
+**Structural defect:** 8-ETF universe cannot generate 30 TPQ. Actual frequency ~6/quarter regardless of parameter choice.
+**Recommendation:** Retire. Cannot be repaired with parameter sweep. Would need 40+ instrument universe to hit TPQ gate.
 
 **Source:** J-Law Lineage — Elder Triple Screen (Section 7.3, `docs/knowledge/trading-methodology-jlaw-lineage.md`)
 **Issue:** QUA-359
@@ -171,13 +181,20 @@ if current_price < entry_price * 0.925:  # 7.5% stop
 
 ## Gate 1 Assessment
 
+**Current criteria (v2.7 / kpi-daily-weekly.md v1.0 — CEO-locked 2026-06-13):**
+- Hard gate: Net OOS Sharpe > 0.7 (no IS Sharpe hard gate)
+- Composite score CS ≥ 0.60 (40% OOS Sharpe + 30% MDD stability + 20% PpT + 10% trade adequacy)
+- MDD Gate 7: < 30% peak-to-trough in any IS window
+
+*Note: Prior Track A failures cited "IS Sharpe < 1.0" as failure reason. This threshold does not exist in v2.7 criteria — that was a criteria-version mismatch (see Risk Director analysis docs/proposals/oos-gt-is-sharpe-analysis-2026-06-22.md). Engineering Director must use current v2.7 criteria / kpi-daily-weekly.md v1.0 composite score, not the old IS Sharpe > 1.0 gate.*
+
 | Metric | Target | Assessment |
 |---|---|---|
-| IS Sharpe | > 1.0 | Multi-ETF diversification + multi-timeframe alignment targets 1.0–1.4. Triple Screen's academic track record (Elder reports Sharpe ~1.0–1.5 for systematic implementations) is consistent with this. The weekly MACD gate provides structural GFC protection. Standard IS Sharpe estimate: 0.85–1.2. Post-GFC variant: 1.0–1.5. |
-| OOS Sharpe | > 0.7 | The mechanism is robust (uses EMAs and Stochastics — high-IC signals with decades of academic support). 2019–2025 OOS includes one complete bear (2022), COVID, and bull market. Estimated OOS Sharpe: 0.8–1.2. |
-| MDD (IS, < 20%) | < 20% | Weekly MACD gate closes most positions before major drawdowns. Estimated IS MDD: 12–18%. Marginal — depends on how quickly the weekly MACD histogram turns negative at bear market onset. |
-| IS trade count | ≥ 30 per 3-month window | 8 ETFs × 10 signals/year = 80 trades/year, or 20 trades/quarter ≥ 30 per 3-month window target (note: this is 20/quarter, borderline — see below). |
-| Cost-to-gross | < 0.25 | Borderline — see alpha decay analysis. 10 bps round-trip / 40 bps expected edge = 0.25. |
+| Net OOS Sharpe | > 0.7 (hard gate) | Multi-ETF diversification + multi-timeframe alignment. Estimated OOS Sharpe: 0.8–1.2. The weekly MACD gate provides structural GFC protection; 2022 XLE exposure provides rate-shock defense. High confidence this clears the 0.7 floor. |
+| MDD (IS period) | < 20% CS threshold, < 30% Gate 7 | Weekly MACD gate closes most positions before major drawdowns. Estimated IS MDD: 12–18%. Gate 7 ceiling (30%) not at risk. |
+| IS trade count | ≥ 30 per 3-month window | 8 ETFs × 10 signals/year = 80 trades/year, or ~20 trades/quarter in average windows. **Borderline** — see PF-1 note. Per-quarter floor may be breached during severe bear periods when all equity MACDs are negative. |
+| Cost-to-gross | < 0.25 | 10 bps round-trip / ~40 bps expected edge per trade = 0.25. Borderline on cost-to-gross. Engineering Director: monitor this gate. If average PpT < 40 bps in backtest, strategy fails Hard Gate 2. |
+| Composite score | ≥ 0.60 | With OOS Sharpe ~0.9, IS MDD ~15%, PpT ~35 bps: CS ≈ 0.40×0.56 + 0.30×0.25 + 0.20×0.35 + 0.10×0.67 = 0.224 + 0.075 + 0.070 + 0.067 = 0.44. **Marginal.** Needs either OOS Sharpe > 1.0 or MDD < 10% to clear 0.60 comfortably. This is the primary risk for H83. |
 
 **PF-1 trade count note:** With 8 ETFs and weekly MACD gating, expected 10 Stochastic oversold dips per ETF per year in uptrend = 80 trades/year. Over 5 years IS = 400 trades. ÷ 4 = 100 ≥ 30. PASS. Per 3-month window: 400 / 20 quarters = 20 trades/quarter. This is below the 30/quarter threshold — Engineering Director should verify during the GFC sub-period (2008-2009) that the 3-month floor is not breached. The standard 5-year IS window target is met (400 total); the per-quarter floor may have periods below 30 when all equity ETFs are gated simultaneously.
 

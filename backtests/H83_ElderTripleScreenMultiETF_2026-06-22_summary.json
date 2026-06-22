@@ -1,0 +1,27 @@
+{
+  "strategy": "H83_ElderTripleScreenMultiETF",
+  "date": "2026-06-22",
+  "variants": {
+    "standard": {
+      "gate1_pass": false,
+      "oos_sharpe": -0.3467,
+      "is_sharpe": 0.4344,
+      "composite_score": 0.3096,
+      "is_mdd": -0.1274,
+      "is_tpq": 5.9,
+      "is_ppt_bps": 38.07,
+      "is_cpr": 0.0397
+    },
+    "post_gfc": {
+      "gate1_pass": false,
+      "oos_sharpe": -0.2576,
+      "is_sharpe": 0.3646,
+      "composite_score": 0.3223,
+      "is_mdd": -0.1204,
+      "is_tpq": 6.33,
+      "is_ppt_bps": 32.08,
+      "is_cpr": 0.0388
+    }
+  },
+  "overall_pass": false
+}
