@@ -1,8 +1,8 @@
 # Mission Statement
 
-**Version:** 2.0  
+**Version:** 2.1  
 **Status:** CEO-LOCKED  
-**Locked by:** CEO (QUA-230, 2026-06-13)  
+**Locked by:** CEO (QUA-366, 2026-06-22; prior lock QUA-230, 2026-06-13)  
 **Supersedes:** v1.x (minute-level-flavored, ad-hoc capital numbers)
 
 ---
@@ -124,6 +124,12 @@ after a formal review.
    a full review before resuming.
 10. No agent can execute a live trade. All live order routing requires explicit CEO approval
     or a pre-approved automated rule that the CEO has reviewed and signed off on.
+11. Each strategy targets fixed 10% annualized volatility. Position size = (10% / realized_vol)
+    × base_allocation. Realized vol is measured over a 63-day trailing window unless the
+    strategy spec states otherwise. Source: Carver — Systematic Trading, Ch. 9.
+12. Two strategies with 30-day rolling pairwise correlation > 0.6 cannot together exceed 25%
+    of total capital. Correlation is computed on daily P&L. When the limit is breached, reduce
+    the smaller-Sharpe strategy first. Source: Carver — Systematic Trading, Ch. 11.
 
 ---
 
@@ -141,3 +147,4 @@ after a formal review.
 |---|---|---|---|
 | 1.x | 2026-03 to 2026-06 | Minute-level-flavored mission; ad-hoc capital targets | Various |
 | 2.0 | 2026-06-13 | Rewrite: horizon-agnostic mission; objective verbatim from QUA-154; two strategy tracks (Track A daily/weekly primary, Track B minute-level evidence-gated on QUA-151); Risk Management Constitution preserved; stale roadmap and ad-hoc numbers removed | CEO — QUA-230 |
+| 2.1 | 2026-06-22 | Add Rules 11 (volatility targeting, 10% ann. vol target) and 12 (correlation-based exposure limit, >0.6 pairs capped at 25% jointly). Source: Carver — Systematic Trading Ch. 9 & 11. Approved after 3rd escalation QUA-366. | CEO — QUA-366 |
