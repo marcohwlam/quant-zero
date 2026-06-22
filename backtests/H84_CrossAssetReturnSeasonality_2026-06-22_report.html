@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>H84 Cross-Asset Return Seasonality — Gate 1 Report</title>
+<style>
+body { font-family: monospace; max-width: 1200px; margin: 0 auto; padding: 20px; }
+h1 { background: #343a40; color: white; padding: 15px; border-radius: 4px; }
+h2 { border-bottom: 2px solid #343a40; padding-bottom: 5px; margin-top: 30px; }
+.verdict { font-size: 2em; font-weight: bold; padding: 15px; border-radius: 4px;
+           background: #f8d7da; text-align: center; margin: 20px 0; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th { background: #343a40; color: white; padding: 8px; text-align: left; }
+td { padding: 6px 8px; border: 1px solid #dee2e6; }
+.section { margin: 20px 0; padding: 15px; border: 1px solid #dee2e6; border-radius: 4px; }
+</style>
+</head>
+<body>
+<h1>H84 Cross-Asset Return Seasonality — Gate 1 Report</h1>
+<p><strong>Date:</strong> 2026-06-22 | <strong>Universe:</strong> SPY, QQQ, IWM, XLE, XLV, XLP, HYG, EEM, TLT, IEF, GLD, SHY</p>
+<p><strong>Signal:</strong> 10-year trailing same-calendar-month avg | <strong>Top-K:</strong> 3 | <strong>Filter:</strong> SPY 200-DMA (equity-only exit, bonds/gold exempt)</p>
+<p><strong>Academic:</strong> Keloharju, Linnainmaa &amp; Nyberg (2016), Journal of Finance 71(4)</p>
+<p><strong>Criteria:</strong> v2.7 / kpi-daily-weekly.md v1.0 — OOS Sharpe &gt; 0.7 (hard gate) | CS ≥ 0.60 | Gate 7 MDD &lt; 30% | NO IS Sharpe gate</p>
+<p><strong>Slippage:</strong> 0.005% ultra-liquid (SPY/QQQ/IWM) | 0.05% standard (all others)</p>
+
+<div class="verdict">GATE 1: FAIL</div>
+
+<h2>Gate 1 Checklist (v2.7)</h2>
+<table><tr><th>Gate</th><th>Value</th><th>Threshold</th><th>Result</th></tr><tr style='background:#d4edda'><td>OOS Sharpe (hard gate)</td><td>1.4433</td><td>> 0.70</td><td>✓ PASS</td></tr><tr style='background:#f8d7da'><td>Composite Score CS</td><td>0.4775</td><td>>= 0.60</td><td>✗ FAIL</td></tr><tr style='background:#f8d7da'><td>Gate 7 MDD (WF windows)</td><td>all >30% FAIL</td><td>< 30%</td><td>✗ FAIL</td></tr><tr style='background:#d4edda'><td>DSR</td><td>0.3984</td><td>> 0</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>Walk-Forward Sharpe>0</td><td>3/4</td><td>>= 3/4</td><td>✓ PASS</td></tr></table>
+
+<h2>Composite Score (v2.7)</h2>
+<div class="section">
+<p><strong>CS = 0.4775</strong> (threshold ≥ 0.60)</p>
+<p>NetSharpe_norm=0.7773 × 0.40 = 0.3109</p>
+<p>Stability_norm=0.0000 × 0.30 = 0.0000</p>
+<p>PpT_norm=0.3327 × 0.20 = 0.0665</p>
+<p>TradeAdequacy_norm=1.0000 × 0.10 = 0.1000</p>
+</div>
+
+<h2>IS / OOS Summary</h2>
+<div class="section">
+<table>
+<tr><th>Metric</th><th>IS (2003–2023)</th><th>OOS (2024–2026-06-22)</th></tr>
+<tr><td>Sharpe</td><td>0.4290</td><td>1.4433</td></tr>
+<tr><td>CAGR</td><td>4.74%</td><td>19.58%</td></tr>
+<tr><td>Max Drawdown</td><td>-30.27%</td><td>-13.10%</td></tr>
+<tr><td>Win Rate</td><td>56.89%</td><td>60.34%</td></tr>
+<tr><td>Profit Factor</td><td>1.2689</td><td>3.1469</td></tr>
+<tr><td>Trade Count</td><td>501</td><td>58</td></tr>
+<tr><td>Position Switches</td><td>501</td><td>58</td></tr>
+<tr><td>Avg PpT (bps)</td><td>33.27</td><td>97.13</td></tr>
+</table>
+</div>
+
+
+<h2>Structural Comparison: WITH vs WITHOUT Bond/Gold 200-DMA Exemption</h2>
+<div class="section">
+<table>
+<tr><th>Metric</th><th>H84 (exempt=True, primary)</th><th>H73-style (exempt=False)</th><th>H73 actual</th></tr>
+<tr><td>IS Sharpe</td><td>0.4290</td><td>0.4246</td><td>0.5942</td></tr>
+<tr><td>IS MDD</td><td>-30.27%</td><td>-27.41%</td><td>-31.06%</td></tr>
+<tr><td>IS CAGR</td><td>4.74%</td><td>4.43%</td><td>7.86%</td></tr>
+<tr><td>IS Trades</td><td>501</td><td>460</td><td>324</td></tr>
+</table>
+<p><em>MDD improvement vs H73 (exempt=True): 0.8pp; vs H73-style (exempt=False): -2.9pp</em></p>
+</div>
+
+<h2>Walk-Forward Analysis (4 IS Windows)</h2>
+<table>
+<tr><th>Window</th><th>Period</th><th>Sharpe</th><th>MDD</th><th>Win Rate</th><th>Trades</th><th>Switches</th><th>Gate 7</th></tr>
+<tr style='background:#d4edda'><td>1</td><td>2003-01-01–2007-12-31</td><td>1.2609</td><td>-11.53%</td><td>69.31%</td><td>101</td><td>101</td><td>✓</td></tr><tr style='background:#d4edda'><td>2</td><td>2008-01-01–2012-12-31</td><td>0.2653</td><td>-13.83%</td><td>57.55%</td><td>106</td><td>106</td><td>✓</td></tr><tr style='background:#d4edda'><td>3</td><td>2013-01-01–2017-12-31</td><td>0.1760</td><td>-20.62%</td><td>54.20%</td><td>131</td><td>131</td><td>✓</td></tr><tr style='background:#f8d7da'><td>4</td><td>2018-01-01–2023-12-31</td><td>-0.0286</td><td>-30.26%</td><td>50.32%</td><td>155</td><td>155</td><td>✗ FAIL</td></tr>
+</table>
+
+<h2>Statistical Tests</h2>
+<div class="section">
+<p><strong>Monte Carlo (1000 resamples):</strong> p5=0.1769, median=1.3009, p95=2.3637</p>
+<p><strong>Block Bootstrap CI (95%):</strong> Sharpe [0.0448, 0.7708] | MDD [-0.5053, -0.1868]</p>
+<p><strong>Permutation test (1000 perms):</strong> p=0.9590 — FAIL</p>
+<p><strong>DSR:</strong> 0.3984</p>
+</div>
+
+<h2>Parameter Sweep (36 Combinations)</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>seasonal_lookback_years</th>
+      <th>top_k_etfs</th>
+      <th>use_regime_filter</th>
+      <th>bond_gold_exempt</th>
+      <th>sharpe</th>
+      <th>cagr</th>
+      <th>max_drawdown</th>
+      <th>win_rate</th>
+      <th>trade_count</th>
+      <th>position_switches</th>
+      <th>total_return</th>
+      <th>avg_ppt_bps</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>5</td>
+      <td>2</td>
+      <td>True</td>
+      <td>True</td>
+      <td>0.3384</td>
+      <td>0.0393</td>
+      <td>-0.4065</td>
+      <td>0.5613</td>
+      <td>367</td>
+      <td>367</td>
+      <td>1.2464</td>
+      <td>38.4000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>2</td>
+      <td>True</td>
+      <td>False</td>
+      <td>0.3408</td>
+      <td>0.0374</td>
+      <td>-0.4646</td>
+      <td>0.5545</td>
+      <td>321</td>
+      <td>321</td>
+      <td>1.1637</td>
+      <td>40.5100</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>2</td>
+      <td>False</td>
+      <td>True</td>
+      <td>0.3724</td>
+      <td>0.0546</td>
+      <td>-0.5737</td>
+      <td>0.5632</td>
+      <td>380</td>
+      <td>380</td>
+      <td>2.0511</td>
+      <td>57.9200</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>2</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.3724</td>
+      <td>0.0546</td>
+      <td>-0.5737</td>
+      <td>0.5632</td>
+      <td>380</td>
+      <td>380</td>
+      <td>2.0511</td>
+      <td>57.9200</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>3</td>
+      <td>True</td>
+      <td>True</td>
+      <td>0.3941</td>
+      <td>0.0433</td>
+      <td>-0.3439</td>
+      <td>0.5624</td>
+      <td>489</td>
+      <td>489</td>
+      <td>1.4343</td>
+      <td>31.4100</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>3</td>
+      <td>True</td>
+      <td>False</td>
+      <td>0.3813</td>
+      <td>0.0394</td>
+      <td>-0.3982</td>
+      <td>0.5407</td>
+      <td>442</td>
+      <td>442</td>
+      <td>1.2532</td>
+      <td>30.3800</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>3</td>
+      <td>False</td>
+      <td>True</td>
+      <td>0.3600</td>
+      <td>0.0501</td>
+      <td>-0.5533</td>
+      <td>0.5543</td>
+      <td>516</td>
+      <td>516</td>
+      <td>1.7889</td>
+      <td>36.1800</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>3</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.3600</td>
+      <td>0.0501</td>
+      <td>-0.5533</td>
+      <td>0.5543</td>
+      <td>516</td>
+      <td>516</td>
+      <td>1.7889</td>
+      <td>36.1800</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>4</td>
+      <td>True</td>
+      <td>True</td>
+      <td>0.5002</td>
+      <td>0.0544</td>
+      <td>-0.2461</td>
+      <td>0.5651</td>
+      <td>545</td>
+      <td>545</td>
+      <td>2.0401</td>
+      <td>38.2700</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>4</td>
+      <td>True</td>
+      <td>False</td>
+      <td>0.4522</td>
+      <td>0.0454</td>
+      <td>-0.2715</td>
+      <td>0.5511</td>
+      <td>519</td>
+      <td>519</td>
+      <td>1.5392</td>
+      <td>30.6500</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>4</td>
+      <td>False</td>
+      <td>True</td>
+      <td>0.4252</td>
+      <td>0.0586</td>
+      <td>-0.5138</td>
+      <td>0.5619</td>
+      <td>614</td>
+      <td>614</td>
+      <td>2.3054</td>
+      <td>38.1800</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>4</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.4252</td>
+      <td>0.0586</td>
+      <td>-0.5138</td>
+      <td>0.5619</td>
+      <td>614</td>
+      <td>614</td>
+      <td>2.3054</td>
+      <td>38.1800</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>2</td>
+      <td>True</td>
+      <td>True</td>
+      <td>0.4610</td>
+      <td>0.0570</td>
+      <td>-0.3269</td>
+      <td>0.5660</td>
+      <td>371</td>
+      <td>371</td>
+      <td>2.1997</td>
+      <td>59.6100</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>2</td>
+      <td>True</td>
+      <td>False</td>
+      <td>0.4792</td>
+      <td>0.0557</td>
+      <td>-0.4033</td>
+      <td>0.5653</td>
+      <td>329</td>
+      <td>329</td>
+      <td>2.1183</td>
+      <td>63.9900</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>2</td>
+      <td>False</td>
+      <td>True</td>
+      <td>0.4386</td>
+      <td>0.0679</td>
+      <td>-0.5322</td>
+      <td>0.5751</td>
+      <td>386</td>
+      <td>386</td>
+      <td>2.9708</td>
+      <td>75.0500</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>2</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.4386</td>
+      <td>0.0679</td>
+      <td>-0.5322</td>
+      <td>0.5751</td>
+      <td>386</td>
+      <td>386</td>
+      <td>2.9708</td>
+      <td>75.0500</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>3</td>
+      <td>True</td>
+      <td>True</td>
+      <td>0.4290</td>
+      <td>0.0474</td>
+      <td>-0.3027</td>
+      <td>0.5689</td>
+      <td>501</td>
+      <td>501</td>
+      <td>1.6431</td>
+      <td>33.2700</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>3</td>
+      <td>True</td>
+      <td>False</td>
+      <td>0.4246</td>
+      <td>0.0443</td>
+      <td>-0.2741</td>
+      <td>0.5587</td>
+      <td>460</td>
+      <td>460</td>
+      <td>1.4849</td>
+      <td>32.7100</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>3</td>
+      <td>False</td>
+      <td>True</td>
+      <td>0.4365</td>
+      <td>0.0616</td>
+      <td>-0.4592</td>
+      <td>0.5764</td>
+      <td>543</td>
+      <td>543</td>
+      <td>2.5075</td>
+      <td>45.9000</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>3</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.4365</td>
+      <td>0.0616</td>
+      <td>-0.4592</td>
+      <td>0.5764</td>
+      <td>543</td>
+      <td>543</td>
+      <td>2.5075</td>
+      <td>45.9000</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>4</td>
+      <td>True</td>
+      <td>True</td>
+      <td>0.5161</td>
+      <td>0.0560</td>
+      <td>-0.2792</td>
+      <td>0.5707</td>
+      <td>552</td>
+      <td>552</td>
+      <td>2.1403</td>
+      <td>38.2400</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>4</td>
+      <td>True</td>
+      <td>False</td>
+      <td>0.4610</td>
+      <td>0.0461</td>
+      <td>-0.2597</td>
+      <td>0.5583</td>
+      <td>532</td>
+      <td>532</td>
+      <td>1.5744</td>
+      <td>29.5300</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>4</td>
+      <td>False</td>
+      <td>True</td>
+      <td>0.4730</td>
+      <td>0.0637</td>
+      <td>-0.4212</td>
+      <td>0.5728</td>
+      <td>618</td>
+      <td>618</td>
+      <td>2.6597</td>
+      <td>39.7600</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>4</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.4730</td>
+      <td>0.0637</td>
+      <td>-0.4212</td>
+      <td>0.5728</td>
+      <td>618</td>
+      <td>618</td>
+      <td>2.6597</td>
+      <td>39.7600</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>2</td>
+      <td>True</td>
+      <td>True</td>
+      <td>0.4643</td>
+      <td>0.0571</td>
+      <td>-0.3584</td>
+      <td>0.5734</td>
+      <td>361</td>
+      <td>361</td>
+      <td>2.2098</td>
+      <td>61.6400</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>2</td>
+      <td>True</td>
+      <td>False</td>
+      <td>0.4532</td>
+      <td>0.0516</td>
+      <td>-0.4349</td>
+      <td>0.5679</td>
+      <td>324</td>
+      <td>324</td>
+      <td>1.8757</td>
+      <td>58.2300</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>2</td>
+      <td>False</td>
+      <td>True</td>
+      <td>0.4608</td>
+      <td>0.0706</td>
+      <td>-0.5324</td>
+      <td>0.5748</td>
+      <td>381</td>
+      <td>381</td>
+      <td>3.1863</td>
+      <td>81.9000</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>2</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.4608</td>
+      <td>0.0706</td>
+      <td>-0.5324</td>
+      <td>0.5748</td>
+      <td>381</td>
+      <td>381</td>
+      <td>3.1863</td>
+      <td>81.9000</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>3</td>
+      <td>True</td>
+      <td>True</td>
+      <td>0.4767</td>
+      <td>0.0525</td>
+      <td>-0.2997</td>
+      <td>0.5781</td>
+      <td>474</td>
+      <td>474</td>
+      <td>1.9298</td>
+      <td>40.8900</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>3</td>
+      <td>True</td>
+      <td>False</td>
+      <td>0.4702</td>
+      <td>0.0486</td>
+      <td>-0.2817</td>
+      <td>0.5668</td>
+      <td>434</td>
+      <td>434</td>
+      <td>1.7108</td>
+      <td>39.6000</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>3</td>
+      <td>False</td>
+      <td>True</td>
+      <td>0.4670</td>
+      <td>0.0639</td>
+      <td>-0.4357</td>
+      <td>0.5843</td>
+      <td>510</td>
+      <td>510</td>
+      <td>2.6740</td>
+      <td>51.9100</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>3</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.4670</td>
+      <td>0.0639</td>
+      <td>-0.4357</td>
+      <td>0.5843</td>
+      <td>510</td>
+      <td>510</td>
+      <td>2.6740</td>
+      <td>51.9100</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>4</td>
+      <td>True</td>
+      <td>True</td>
+      <td>0.5331</td>
+      <td>0.0573</td>
+      <td>-0.2570</td>
+      <td>0.5815</td>
+      <td>509</td>
+      <td>509</td>
+      <td>2.2204</td>
+      <td>43.5500</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>4</td>
+      <td>True</td>
+      <td>False</td>
+      <td>0.4785</td>
+      <td>0.0473</td>
+      <td>-0.2697</td>
+      <td>0.5772</td>
+      <td>492</td>
+      <td>492</td>
+      <td>1.6377</td>
+      <td>33.6300</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>4</td>
+      <td>False</td>
+      <td>True</td>
+      <td>0.4527</td>
+      <td>0.0590</td>
+      <td>-0.4316</td>
+      <td>0.5886</td>
+      <td>581</td>
+      <td>581</td>
+      <td>2.3302</td>
+      <td>39.2100</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>4</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.4527</td>
+      <td>0.0590</td>
+      <td>-0.4316</td>
+      <td>0.5886</td>
+      <td>581</td>
+      <td>581</td>
+      <td>2.3302</td>
+      <td>39.2100</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Market Impact by Ticker</h2>
+<table>
+<tr><th>Ticker</th><th>Impact (bps)</th><th>ADV 20d</th><th>Q/ADV</th><th>Slip Tier</th></tr>
+<tr><td>SPY</td><td>0.0071</td><td>82,181,215</td><td>0.000001</td><td>ultra</td></tr><tr><td>QQQ</td><td>0.0133</td><td>43,384,915</td><td>0.000002</td><td>ultra</td></tr><tr><td>IWM</td><td>0.0292</td><td>45,841,635</td><td>0.000004</td><td>ultra</td></tr><tr><td>XLE</td><td>0.0597</td><td>37,523,080</td><td>0.000023</td><td>standard</td></tr><tr><td>XLV</td><td>0.0460</td><td>6,793,110</td><td>0.000038</td><td>standard</td></tr><tr><td>XLP</td><td>0.0536</td><td>11,178,665</td><td>0.000045</td><td>standard</td></tr><tr><td>HYG</td><td>0.0170</td><td>33,319,870</td><td>0.000015</td><td>standard</td></tr><tr><td>EEM</td><td>0.0508</td><td>30,958,560</td><td>0.000029</td><td>standard</td></tr><tr><td>TLT</td><td>0.0377</td><td>48,639,425</td><td>0.000008</td><td>standard</td></tr><tr><td>IEF</td><td>0.0340</td><td>12,405,725</td><td>0.000031</td><td>standard</td></tr><tr><td>GLD</td><td>0.0434</td><td>7,680,280</td><td>0.000023</td><td>standard</td></tr><tr><td>SHY</td><td>0.0128</td><td>5,692,395</td><td>0.000079</td><td>standard</td></tr>
+</table>
+
+<hr>
+<p><em>Engineering Director | QUA-380 | H84 Gate 1 | 2026-06-22</em></p>
+</body>
+</html>

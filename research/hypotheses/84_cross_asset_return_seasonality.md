@@ -6,7 +6,17 @@
 **Asset class:** Cross-Asset ETFs (US equity, bonds, gold, credit, international)
 **Strategy type:** Calendar/seasonal rotation
 **Track:** A (Monthly rebalance)
-**Status:** READY
+**Status:** REJECTED — Gate 1 FAIL (2026-06-22, QUA-380)
+
+**Gate 1 Result (v2.7 criteria, 2026-06-22):**
+- OOS Sharpe: **1.4433** ✓ (> 0.70 hard gate — PASS)
+- IS Sharpe: 0.4290 (diagnostic, no gate; regression vs H73 0.5942)
+- IS MDD: **-30.27%** → Stability_norm = 0.00 → CS fails
+- Composite Score CS: **0.4775** ✗ (need ≥ 0.60 — FAIL)
+- Gate 7: **WF4 MDD -30.26%** ✗ (breaches 30% ceiling — FAIL)
+- Structural test: bond/gold exemption made MDD *worse* (-30.27% vs -27.41% without exemption) due to 2022 rate shock (TLT -26%)
+- **Family iteration 3 PROHIBITED**: H84 IS Sharpe 0.429 < H73 IS Sharpe 0.594 (regression, not the required +0.1 improvement)
+- Backtest files: `backtests/H84_CrossAssetReturnSeasonality_2026-06-22.*`
 
 **Source:** H73 Family Iteration 2 — Keloharju, Linnainmaa & Nyberg (2016) seasonality, extended to cross-asset ETF universe
 **Issue:** QUA-359
@@ -143,13 +153,20 @@ At each month-end rebalance:
 
 ## Gate 1 Assessment
 
+**Current criteria (v2.7 / kpi-daily-weekly.md v1.0 — CEO-locked 2026-06-13):**
+- Hard gate: Net OOS Sharpe > 0.7 (no IS Sharpe hard gate)
+- Composite score CS ≥ 0.60
+- MDD Gate 7: < 30% in any IS window
+
+*Note: H73 was rejected for "IS Sharpe < 1.0" — that threshold does not exist in v2.7 criteria (criteria-version mismatch documented by Risk Director, QUA-369). Under correct v2.7 criteria, H73 (OOS 0.96) should be re-evaluated. H84 is designed as a structural improvement regardless.*
+
 | Metric | Target | Assessment |
 |---|---|---|
-| IS Sharpe | > 1.0 | H73 (11-sector equity-only) achieved IS 0.59. Adding TLT, IEF, GLD, SHY resolves the 2008 regime problem by allowing the seasonal rotation to hold bonds/gold during equity bear months. Expected IS Sharpe improvement: +0.2 to +0.5 over H73. Estimated range: 0.8–1.2. Key uncertainty: whether 2008 TLT seasonal ranking dominance fully offsets the equity sector losses. Engineering Director: report IS Sharpe with and without GFC sub-period. |
-| OOS Sharpe | > 0.7 | H73 achieved OOS 0.96. H84's extended universe with bonds/gold should maintain similar OOS stability. Estimated OOS Sharpe: 0.8–1.1. |
-| MDD (IS, < 20%) | < 20% | Cross-asset universe with bonds/gold + 200-DMA filter. Estimated IS MDD: 12–20%. The key risk is 2022 (rate shock flipped bond seasonality — TLT fell in 2022). The 200-DMA filter would have exited equity ETFs in March 2022; bonds/gold are not subject to the SPY 200-DMA filter but their own seasonal rankings would need to be evaluated. |
-| IS trade count | ≥ 30 per 3-month window | Monthly rebalance, top-3 from 12 ETFs. Expected monthly changes: 1–2 position switches. 1.5 × 12 months × 5 years = 90 trades. Plus regime filter transitions: ~4 per year × 5 = 20. Total: ~110 trades. Per 3-month window: 110 / 20 quarters = 5.5 trades/quarter. **This is well below the 30/quarter threshold — PF-1 concern.** See PF-1 gate analysis. |
-| Cost-to-gross | < 0.25 | Low turnover (~36 trades/year). Cost-to-gross ratio well below 0.25. PASS. |
+| Net OOS Sharpe | > 0.7 (hard gate) | H73 achieved OOS 0.96 with equity-only universe. H84's cross-asset extension (bonds + gold) should maintain or improve OOS stability. Estimated OOS Sharpe: 0.8–1.1. High confidence this clears the 0.7 floor. |
+| MDD (IS period) | < 20% CS threshold, < 30% Gate 7 | Cross-asset universe + 200-DMA filter. TLT/GLD providing natural bear-market hedges. Estimated IS MDD: 12–20%. Gate 7 ceiling (30%) not at risk. |
+| IS trade count | Per-window: H73 achieved 324 IS trades total, well above floor | Monthly rebalance. Based on H73 precedent (324 trades on sector ETFs), H84 with 12 ETFs should achieve comparable counts. Per 3-month window: H73's pattern suggests 15–20 trades/quarter. Engineering Director: if per-quarter count falls below 30 in a window, flag but do not auto-fail (see PF-1 analysis referencing H73 precedent). |
+| Cost-to-gross | < 0.25 | Very low turnover. Estimated cost-to-gross << 0.25. PASS. |
+| Composite score | ≥ 0.60 | H73 (OOS 0.96, MDD ~20%, PpT ~TBD): estimated CS ≈ 0.52 (marginal). H84 with better MDD control via bonds/gold: if OOS 0.95 and MDD ~15%: CS ≈ 0.40×0.58 + 0.30×0.25 + 0.20×0.25 + 0.10×0.67 = 0.232 + 0.075 + 0.050 + 0.067 = 0.42. The MDD component is the challenge: calendar seasonality's monthly granularity makes it hard to avoid full-month losses in severe downturns. Engineering Director: if composite score fails, the primary lever is PpT improvement (increase from 2 to 3 top ETFs to increase returns per trade or change rebalance frequency). |
 
 ---
 
