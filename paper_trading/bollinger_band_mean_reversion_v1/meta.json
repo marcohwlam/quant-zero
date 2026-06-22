@@ -1,10 +1,15 @@
 {
   "strat_id": "bollinger_band_mean_reversion_v1",
   "strategy_name": "TestMomentum ETF Momentum",
-  "last_updated": "2026-06-19T21:01:05.618690",
+  "strategy_name_note": "MISMATCH: folder named bollinger_band_mean_reversion_v1 but contains TestMomentum ETF Momentum strategy. See QUA-368.",
+  "status": "archived",
+  "archived_date": "2026-06-22",
+  "archived_reason": "Rule 4 violation — no Gate 1 approval. Removed per CEO ruling QUA-365. See QUA-367, QUA-368.",
+  "last_updated": "2026-06-22",
   "run_date": "2026-06-19",
   "dry_run": true,
   "portfolio_value": 100147.64,
+  "portfolio_value_note": "account_baseline_contamination — broker API returned whole account value, not strategy NAV. Actual strategy NAV was $5,000 initial capital.",
   "signals": {
     "date": "2026-06-19",
     "buy": [
