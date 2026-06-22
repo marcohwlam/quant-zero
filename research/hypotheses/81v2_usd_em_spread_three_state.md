@@ -5,7 +5,7 @@
 **Date:** 2026-06-22
 **Asset class:** equities (EM ETFs + Treasuries)
 **Strategy type:** single-signal cross-asset relative value
-**Status:** READY
+**Status:** RETIRED — Gate 1 FAIL 2026-06-22 (IS Sharpe -0.007, perm p=0.303, H81 family 2/2 exhausted)
 **Tier:** CEO Directive QUA-181 Priority Class 3 — Cross-Asset Relative Value
 **Track:** A (daily/weekly swing)
 **Parent hypothesis:** H81 (Gate 1 FAIL 2026-06-22)
