@@ -6,7 +6,7 @@
 **Asset class:** US large-cap equities (individual stocks)
 **Strategy type:** single-signal, event-driven
 **Track:** A (Daily signals, swing hold ~20 trading days)
-**Status:** hypothesis
+**Status:** retired (Gate 1 FAIL 2026-06-24, QUA-398)
 **Issue:** QUA-397
 **Prior iteration:** H86 (Gate 1 FAIL 2026-06-23, QUA-393)
 
