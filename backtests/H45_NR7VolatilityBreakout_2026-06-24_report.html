@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Gate 1: H45_NR7VolatilityBreakout</title>
+<style>
+body{font-family:monospace;max-width:1100px;margin:20px auto;background:#f8f9fa}
+h1,h2{color:#333}
+.verdict{font-size:2em;font-weight:bold;color:#dc3545;border:3px solid #dc3545;
+  display:inline-block;padding:8px 20px;border-radius:6px}
+table{border-collapse:collapse;width:100%;margin:10px 0}
+th,td{border:1px solid #dee2e6;padding:6px 10px;text-align:left}
+th{background:#343a40;color:white} tr:nth-child(even){background:#f2f2f2}
+.section{background:white;padding:15px;margin:15px 0;border-radius:6px;
+  box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.metric{display:inline-block;margin:8px;padding:10px;background:#e9ecef;
+  border-radius:4px;min-width:140px}
+.mv{font-size:1.4em;font-weight:bold;color:#0d6efd}
+.pass{color:#28a745;font-weight:bold} .fail{color:#dc3545;font-weight:bold}
+</style></head>
+<body>
+<h1>Gate 1 Report: H45_NR7VolatilityBreakout</h1>
+<p>Date: 2026-06-24 | IS: 2005-01-01–2018-12-31 | OOS: 2019-01-01–2026-06-24</p>
+<p>Universe: SPY, QQQ, IWM | Track A swing/daily | NR7 lookback=7 (Crabel canonical, fixed)</p>
+<div class="verdict">FAIL</div>
+
+<div class="section"><h2>Core Metrics</h2>
+<div class="metric"><div>IS Sharpe</div><div class="mv">0.2529</div></div>
+<div class="metric"><div>OOS Sharpe</div><div class="mv">-0.2986</div></div>
+<div class="metric"><div>IS MDD</div><div class="mv">-9.17%</div></div>
+<div class="metric"><div>IS CAGR</div><div class="mv">0.79%</div></div>
+<div class="metric"><div>OOS CAGR</div><div class="mv">-1.25%</div></div>
+<div class="metric"><div>IS Trades</div><div class="mv">305</div></div>
+<div class="metric"><div>IS PpT (bps)</div><div class="mv">11.4</div></div>
+<div class="metric"><div>IS CPR</div><div class="mv">0.030</div></div>
+<div class="metric"><div>Win Rate</div><div class="mv">55.08%</div></div>
+<div class="metric"><div>Composite CS</div><div class="mv">0.2356</div></div>
+<div class="metric"><div>MC p5 Sharpe</div><div class="mv">-0.1963</div></div>
+</div>
+
+<div class="section"><h2>Gate 1 Checks (10 required)</h2>
+<table><tr><th>Check</th><th>Result</th><th>Actual</th><th>Threshold</th></tr>
+<tr><td>Net OOS Sharpe > 0.7</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>-0.2986</td><td>> 0.7</td></tr>
+<tr><td>Net profit/trade > 15 bps</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>11.37 bps</td><td>> 15 bps</td></tr>
+<tr><td>IS MDD < 20% (CS threshold)</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>-9.17%</td><td>< 20%</td></tr>
+<tr><td>IS MDD < 30% (Gate 7 ceiling)</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>-9.17%</td><td>< 30%</td></tr>
+<tr><td>IS trades/quarter > 30</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>5.5</td><td>> 30</td></tr>
+<tr><td>CPR < 0.25</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>0.0303</td><td>< 0.25</td></tr>
+<tr><td>WF OOS Sharpe > 0: ≥ 3/4</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>3/4</td><td>≥ 3/4</td></tr>
+<tr><td>Composite Score CS ≥ 0.60</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>0.2356</td><td>≥ 0.60</td></tr>
+<tr><td>Permutation p < 0.05</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>0.0050</td><td>< 0.05</td></tr>
+<tr><td>DSR z-score > 0</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>-1.2019</td><td>> 0</td></tr></table>
+<p>Score: 5/10 passed</p></div>
+
+<div class="section"><h2>Walk-Forward (4 windows — 4-year IS / 6-month OOS)</h2>
+<table><tr><th>#</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th>
+<th>IS Trades</th><th>OOS Sharpe</th><th>Status</th></tr>
+<tr><td>1</td><td>2009-01-01–2012-12-31</td><td>2013-01-01–2013-06-30</td><td>0.3260</td><td>101</td><td>2.2424</td><td style='color:#28a745'>PASS</td></tr>
+<tr><td>2</td><td>2011-01-01–2014-12-31</td><td>2015-01-01–2015-06-30</td><td>0.3939</td><td>116</td><td>-0.7294</td><td style='color:#dc3545'>FAIL</td></tr>
+<tr><td>3</td><td>2013-01-01–2016-12-31</td><td>2017-01-01–2017-06-30</td><td>0.7520</td><td>97</td><td>1.5090</td><td style='color:#28a745'>PASS</td></tr>
+<tr><td>4</td><td>2015-01-01–2018-12-31</td><td>2019-01-01–2019-06-30</td><td>0.5165</td><td>89</td><td>0.8726</td><td style='color:#28a745'>PASS</td></tr></table>
+<p>WF pass rate: 3/4 (gate: ≥ 3/4 OOS Sharpe &gt; 0) |
+WF OOS Sharpe std=1.0962</p></div>
+
+<div class="section"><h2>Statistical Rigor</h2>
+<p>DSR z-score: -1.2019 | Bootstrap Sharpe CI:
+[-0.2409, 0.7501]</p>
+<p>Bootstrap MDD CI: [-0.2043, -0.0534]</p>
+<p>MC p5/median/p95: -0.1963 / 0.2621 /
+0.7428</p>
+<p>Permutation p-value: 0.0050</p></div>
+
+<div class="section"><h2>Parameter Sweep (36 combos)</h2>
+<p>Sharpe range: 0.1916 – 0.4756</p>
+<p>Sensitivity = (max-min)/|baseline| × 100 = <b>112.3%</b>
+(threshold: &lt;50% — FAIL)</p>
+<p>Combos with Sharpe &gt; 0.7: 0/36</p></div>
+
+<div class="section"><h2>Composite Score (kpi-daily-weekly.md v1.0)</h2>
+<p>CS = 0.40 × NetSharpe_norm + 0.30 × Stability_norm + 0.20 × PpT_norm + 0.10 × TradeAdequacy_norm</p>
+<p>NetSharpe_norm = 0.0806 |
+Stability_norm = 0.5415 |
+PpT_norm = 0.1137 |
+TradeAdequacy_norm = 0.1817</p>
+<p>CS = <b>0.2356</b> (threshold: ≥ 0.60 — FAIL)</p></div>
+
+<div class="section"><h2>Track A Hard Gate 8 — Overnight/Weekend Guards</h2>
+<table>
+<tr><th>Guard</th><th>Value</th></tr>
+<tr><td>Overnight gap PnL contribution</td><td>81.1%</td></tr>
+<tr><td>Weekend gap exposure (% avg notional)</td><td>2.8%</td></tr>
+<tr><td>Gap MDD attribution</td><td>41.2%</td></tr>
+<tr><td>Earnings hold policy</td><td>N/A — SPY, QQQ, IWM are broad-market ETFs. No individual earnings risk. ETFs do not report earnings and cannot be halted for earnings. 5% per-earnings-position cap is inapplicable by asset-class definition.</td></tr>
+<tr><td>Survivorship bias</td><td>NONE — SPY (est. 1993), QQQ (est. 1999), IWM (est. 2000) are continuously listed. No delisting risk. No survivorship bias. Ticker identities identical to historical.</td></tr>
+</table></div>
+
+<div class="section"><h2>Data Quality Checklist</h2>
+<ul>
+<li><b>Universe:</b> SPY, QQQ, IWM — current tickers identical to historical; ETFs; no survivorship bias.</li>
+<li><b>Price adjustments:</b> yfinance auto_adjust=True (splits + dividends).</li>
+<li><b>Earnings exclusion:</b> N/A — ETF universe.</li>
+<li><b>Delisted tickers:</b> N/A — SPY/QQQ/IWM continuously listed.</li>
+<li><b>Entry execution:</b> Next-day open with breakout confirmation (open &gt; NR7 high). CLEAN — no same-close fill.</li>
+<li><b>Look-ahead:</b> CLEAN — all indicators use only prior-close data at signal time.</li>
+<li><b>Cost model:</b> ED-SLIP-001 ultra-liquid ETF tier — $0.005/share fixed + 0.005% slippage + Almgren-Chriss impact.</li>
+</ul></div>
+
+</body></html>
