@@ -203,13 +203,20 @@ The Post-GFC variant is recommended as a secondary test to diagnose the IS/OOS a
 
 ## Gate 1 Assessment
 
+**Current criteria (v2.7 / kpi-daily-weekly.md v1.0 — CEO-locked 2026-06-13):**
+- Hard gate: Net OOS Sharpe > 0.7 (no IS Sharpe hard gate)
+- Composite score CS ≥ 0.60
+- MDD Gate 7: < 30% in any IS window
+
+*Note: kpi-daily-weekly.md §Track A KPI Specification lists "Weinstein Stage 2 breakout" archetype expected range as IS Sharpe 0.7–1.3, PpT 20–80 bps. H85 is explicitly a Weinstein-archetype submission.*
+
 | Metric | Target | Assessment |
 |---|---|---|
-| IS Sharpe | > 1.0 | Stage 2 rotation provides structural bear-market protection via gradual de-risking. Standard IS 2003–2018 estimate: 0.8–1.2. Post-GFC IS 2009–2020 estimate: 1.2–1.6. The standard IS estimate includes 2008 GFC shock where Stage 2→Stage 4 transitions may outpace the exit signal. Key uncertainty: how fast Stage 3 warnings appear before Stage 4 in 2008. |
-| OOS Sharpe | > 0.7 | 2019–2025 OOS includes 2022 rate shock where XLE Stage 2 provides natural rate-shock exposure. Estimated OOS Sharpe: 0.8–1.2. |
-| MDD (IS, < 20%) | < 20% | Stage 3 exit + hard stop combination. The 2008 concern: if multiple sectors transition from Stage 2 → Stage 4 without a Stage 3 intermediate period, the hard stop provides the floor. Estimated IS MDD: 15–25%. The hard stop at 7.5% per sector × max 4 positions = potential maximum single-event portfolio loss of ~30% (all 4 sectors hit stops simultaneously). Engineering Director: stress test worst-case simultaneous stop scenario. |
-| IS trade count | ≥ 30 per 3-month window | Weekly evaluation, 11 sectors. Stage transitions: ~2–3 per sector per year × 11 = 22–33 transitions/year. Over 5-year IS: 110–165 trades. ÷ 4 = 27–41 per 3-month window. Borderline. Per 3-month window breakdown: in bull market quarters (2–3 Stage 2 entries per quarter × 4 sectors = 8–12 trades/quarter) — BELOW 30. Trade count supplemented by Stage 3 exits and re-entries: if Stage 3 false signals occur (sector dips briefly below Stage 2 then returns), round-trip whipsaws add trade count. Engineering Director: monitor per-window trade count. If below 30 in multiple windows, Engineering Director may note this as a trade-count-borderline failure. |
-| Cost-to-gross | < 0.25 | Very low — weekly holds reduce turnover. Cost-to-gross well below 0.25. PASS. |
+| Net OOS Sharpe | > 0.7 (hard gate) | 2019–2025 OOS includes 2022 where XLE Stage 2 provides natural rate-shock alpha. Structural Stage 2/3 transitions are fundamental (institutional demand cycles) not market-condition-dependent. Estimated OOS Sharpe: 0.8–1.2. High confidence clearing the 0.7 floor. |
+| MDD (IS period) | < 20% CS threshold, < 30% Gate 7 | Stage 3 exit + hard stop combination. Estimated IS MDD: 15–22%. The 2008 GFC is the stress scenario — if sectors skip Stage 3 directly to Stage 4 (possible in crash conditions), hard stops provide the floor. Per-sector hard stop 7.5% × 4 positions = 30% theoretical max if all 4 hit simultaneously. Gate 7 ceiling requires MDD < 30% — this is a TIGHT constraint for H85. Engineering Director: explicitly test worst-case 2008 scenario; if any 3-month window exceeds 30% MDD, auto-reject per Gate 7. |
+| IS trade count | ≥ 30 per 3-month window | Weekly evaluation, 11 sectors: ~2.5 transitions/sector/year × 11 = ~27 transitions/year. Borderline on per-quarter floor. Bull market quarters produce 8–15 trades; bear-market transitions (Stage 2 → Stage 3) produce 5–10 exits. Total per quarter: ~8–20 trades. **Risk: per-window trade count may fall below 30 in quiet markets.** Engineering Director: flag any quarter below 30 trades. Not an automatic reject if the mechanism is sound; note in verdict. |
+| Cost-to-gross | < 0.25 | Multi-week holds, low turnover. Cost-to-gross well below 0.25. PASS. |
+| Composite score | ≥ 0.60 | With OOS Sharpe 1.0, IS MDD 15%, PpT 40 bps, trades 60/quarter: CS ≈ 0.40×0.60 + 0.30×0.25 + 0.20×0.40 + 0.10×1.0 = 0.240 + 0.075 + 0.080 + 0.100 = 0.495 (FAIL). With OOS Sharpe 1.2, IS MDD 10%, PpT 60 bps: CS ≈ 0.40×0.68 + 0.30×0.50 + 0.20×0.60 + 0.10×1.0 = 0.272 + 0.150 + 0.120 + 0.100 = **0.642 (PASS)**. The Weinstein Stage 2 mechanism needs both strong OOS Sharpe AND low MDD to pass CS ≥ 0.60. The GFC MDD is the primary uncertainty. |
 
 ---
 
