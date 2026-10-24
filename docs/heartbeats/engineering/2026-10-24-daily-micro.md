@@ -143,3 +143,58 @@ schedule matters.
 
 Paperclip tasks for these actions could not be created this run (Blocker 1). They are listed
 here for the board to create or for me to create on the first task-bound heartbeat.
+
+---
+
+## Addendum — 15:20 UTC backlog purge (second ED run, 2026-10-24)
+
+State changed after the body of this report was written. Recorded here so the next task-bound
+run does not act on stale counts.
+
+**Next action 3 was executed by the board.** At `2026-10-24T15:20:26.996Z` a single
+transaction cancelled 361 issues, all with `originKind: routine_execution`, created
+`2026-06-26` through `2026-10-23`:
+
+| Replayed trigger | Count |
+|---|---|
+| H10 Paper Runner — Daily 21:00 UTC | 119 |
+| Engineering Director Daily Micro Heartbeat | 89 |
+| Paper Trading Pipeline — Daily | 85 |
+| CEO / Risk / Research / ED Weekly Heartbeats | 17 each |
+
+137 were ED-assigned. **QUA-786, the ticket this report was filed against, was swept into the
+same purge** — the body above is therefore attached to a cancelled ticket.
+
+**Resulting assignment state:** ED open assignments 137 → **0**. Every ED issue is now `done`
+or `cancelled`. Company-wide there is exactly one open issue: **QUA-369** (`in_review`, CEO,
+OOS > IS Sharpe anomaly), untouched since `2026-06-22`, awaiting board confirmation on three
+directives for 124 days.
+
+**What the purge did not fix.** Blockers 1, 2 and 4 are unchanged and re-verified this run:
+
+- **Blocker 1 (writes rejected) — persists.** Re-probed `POST /api/issues/{id}/comments` both
+  bare and with `X-Paperclip-Run-Id`. Both return `403
+  cross_issue_influence_run_context_required`. This run carries no `PAPERCLIP_TASK_ID` and its
+  scratch dir is named `paperclip-run-unassigned-…`, so the run is not registered as a
+  heartbeat run. `GET /api/runs/{id}` returns 404.
+- **Blocker 4 (push blocked) — persists.** `GH_TOKEN` and `GITHUB_TOKEN` are both unset. The
+  invalid PAT is still inline in the `origin` URL in `.git/config`. Branch
+  `chore/QUA-786-ed-daily-micro-2026-10-24` has no upstream and commit `d0968f1` remains local
+  only.
+- **Blocker 2 (workspace resolution)** could not be re-probed without a task-bound run.
+
+**Routines remain `active`** (Paper Trading Pipeline, H10 Paper Runner, ED daily micro, ED
+weekly macro, and the three director weeklies), so the forward schedule survived the purge and
+will generate new tickets. Those tickets will fail the same way until Blocker 1 and Blocker 2
+are repaired — the purge cleared the symptom, not the cause.
+
+**Revised next actions.** Items 1, 2, 4 and 5 stand unchanged. Item 3 is complete. Add:
+
+6. **Confirm the purge was intentional and bounded to routine replays.** All 361 carried
+   `originKind: routine_execution`, which is consistent with intended cleanup, but it also
+   discarded QUA-786 mid-flight. If routine tickets are going to be purged on a schedule,
+   completed-but-unclosed work needs to be excluded.
+7. **Unblock QUA-369.** It is the only open issue in the company and has been waiting on board
+   confirmation for 124 days. Its Risk Director analysis concluded H73/H77/H82 were failed
+   against obsolete pre-v2.2 criteria (21-year IS window, IS Sharpe > 1.0) that `criteria.md`
+   v2.7 no longer contains. Re-evaluation under v2.7 is cheap and may recover two hypotheses.
