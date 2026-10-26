@@ -142,3 +142,7 @@ What remains of value: the plain top-decile gainers control earns about +13 bps 
 - Data: yfinance daily OHLCV, 734 of 1,005 Jan-2018 universe names, IS 2018-2021 only. Universe file: `data/h82v2_universe_2018_jan.csv` (committed in 6b4c7bd, not present on main).
 - Related: `91_ta_overnight_reversal_gainer_spy_qqq.md`, H46, H61, H82v2.
 - Check script: not committed; logic is the signal definition above.
+
+## Follow-up note (QUA-823)
+
+The plain top-decile gainer control (+13.3 bps) was re-tested in `93_ta_overnight_gainer_pit_universe.md` on a delisting-inclusive universe and could not be reproduced (+1.3 bps full universe, +0.7 bps survivor subset, same baseline of about 8 bps). Survivorship explains about 0.6 bps of the difference at most. Treat the control figures in this file as unverified.
