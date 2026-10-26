@@ -1,0 +1,86 @@
+H86 Post-Earnings Gap Continuation — Gate 1 Verdict
+======================================================================
+Date:       2026-06-23
+Strategy:   H86_PostEarningsGapContinuation
+Issue:      QUA-393
+IS:         2023-07-01 → 2025-03-31
+OOS:        2025-04-01 → 2026-06-23
+Criteria:   v2.7 / kpi-daily-weekly.md
+Overall:    FAIL (7/10 checks passed)
+======================================================================
+
+=== Universe ===
+S&P 500 constituents (current): 45 tickers
+Earnings coverage (yfinance):    100.0%
+Tickers with price data:         45
+Survivorship bias:               MODERATE RISK, LOW MAGNITUDE (large-cap names)
+
+=== IS Performance (2023-07-01 → 2025-03-31) ===
+Sharpe:           1.8235   [GATE: PASS > 1.0]
+Max Drawdown:     -0.80%  [GATE: PASS < 20%]
+Total Return:     4.39%
+Win Rate:         73.08%     [GATE: PASS > 50%]
+Profit Factor:    4.9015    [GATE: PASS > 1.0]
+Trade Count:      26          [GATE: FAIL >= 100]
+
+=== OOS Performance (2025-04-01 → 2026-06-23) ===
+Sharpe:           0.5063   [GATE: FAIL > 0.7]
+Max Drawdown:     -1.41%
+Total Return:     0.99%
+Win Rate:         55.56%
+Trade Count:      18
+
+=== Statistical Rigor ===
+MC p5 Sharpe:       5.2380  ✓
+MC Median Sharpe:   10.6751
+Sharpe 95% CI:      [0.9724, 2.7770]
+MDD 95% CI:         [-0.0123, -0.0053]
+Permutation p:      0.0000  [PASS: < 0.05]
+DSR:                1.6871  [PASS: > 0]
+
+=== Walk-Forward (4 windows) ===
+  WF1 IS 2023-07-01–2023-12-31: Sharpe=1.0891 | OOS 2024-01-01–2024-03-31: Sharpe=2.3975 | IS trades=5 | PASS
+  WF2 IS 2024-01-01–2024-06-30: Sharpe=2.3913 | OOS 2024-07-01–2024-09-30: Sharpe=2.3718 | IS trades=5 | PASS
+  WF3 IS 2024-07-01–2024-12-31: Sharpe=1.9051 | OOS 2025-01-01–2025-03-31: Sharpe=1.3692 | IS trades=8 | PASS
+  WF4 IS 2024-10-01–2025-03-31: Sharpe=1.9535 | OOS 2025-04-01–2025-06-30: Sharpe=0.0000 | IS trades=8 | FAIL
+  WF OOS Sharpe>0: 3/4  [PASS: >= 3/4]
+  WF std=0.9782 | min=0.0000
+  ✓ all WF OOS windows positive
+
+=== Parameter Sweep (243 combos — 3^5 grid) ===
+  Sharpe range: 0.7139 – 2.7261
+  Variance vs primary: 110.3%  [FAIL: < 50%]
+
+=== Gate 1 Checks (v2.7) ===
+  [PASS] IS Sharpe                      1.8235  (threshold: > 1.0)
+  [FAIL] OOS Sharpe                     0.5063  (threshold: > 0.7)
+  [PASS] IS Max Drawdown                -0.80%  (threshold: < 20%)
+  [FAIL] IS Trade Count                 26  (threshold: >= 100)
+  [PASS] IS Win Rate                    73.08%  (threshold: > 50%)
+  [PASS] IS Profit Factor               4.9015  (threshold: > 1.0)
+  [PASS] DSR                            1.6871  (threshold: > 0)
+  [PASS] Walk-Forward OOS Sharpe>0      3/4  (threshold: >= 3/4)
+  [FAIL] Parameter Sensitivity          110.3%  (threshold: < 50% SR change)
+  [PASS] Permutation Test               p=0.0000  (threshold: p < 0.05)
+
+=== Root Cause Analysis ===
+Primary failures (3 of 10 gates):
+  - OOS Sharpe: got 0.5063, need > 0.7
+  - IS Trade Count: got 26, need >= 100
+  - Parameter Sensitivity: got 110.3%, need < 50% SR change
+
+=== Recommendation ===
+REJECT — do not advance to paper trading.
+
+=== Data Quality ===
+Look-ahead:         CLEAN (gap=T0_open/T-1_close+20d_vol; entry T+2 close)
+Earnings source:    yfinance get_earnings_dates(limit=60) ~3yr coverage
+Survivorship:       Current S&P 500 list — MODERATE RISK, LOW MAGNITUDE
+Price adjusted:     True (auto_adjust=True)
+
+=== Files ===
+Report:  backtests/H86_PostEarningsGapContinuation_2026-06-23_report.html
+Metrics: backtests/H86_PostEarningsGapContinuation_2026-06-23.json
+Verdict: backtests/H86_PostEarningsGapContinuation_2026-06-23_verdict.txt
+Trades:  backtests/H86_PostEarningsGapContinuation_2026-06-23_trades.csv
+Sweep:   backtests/H86_PostEarningsGapContinuation_2026-06-23_sweep.csv

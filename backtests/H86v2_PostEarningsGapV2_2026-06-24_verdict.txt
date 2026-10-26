@@ -1,0 +1,92 @@
+H86v2_PostEarningsGapV2 — Gate 1 Verdict
+======================================================================
+Date:     2026-06-24
+IS:       2023-07-01 → 2025-03-31
+OOS:      2025-04-01 → 2026-06-24
+Overall:  FAIL (6/10 checks passed)
+
+=== Universe ===
+S&P 500 tickers (local CSV): 595
+Earnings coverage: 83.4%
+Survivorship bias: MODERATE RISK, LOW MAGNITUDE (large-cap)
+
+=== IS Performance ===
+Sharpe:        1.1516   [GATE: PASS > 1.0]
+Max Drawdown:  -3.92%   [GATE: PASS < 20%]
+CAGR:          5.39%
+Win Rate:      57.25%   [GATE: PASS > 50%]
+Profit Factor: 1.7765   [GATE: PASS > 1.0]
+Trade Count:   138   [GATE: PASS >= 100]
+
+=== OOS Performance ===
+Sharpe:        -1.1430   [GATE: FAIL > 0.7]
+Max Drawdown:  -6.77%
+CAGR:          -4.79%
+Trade Count:   95
+
+=== Statistical Rigor ===
+MC p5 Sharpe:   -0.1224
+MC Median:      1.1455
+MC p95:         2.2519
+Sharpe CI:      [-0.2552, 2.4739]
+MDD CI:         [-0.0761, -0.0200]
+Permutation p:  0.0050   [PASS: < 0.05]
+DSR z-score:    -1.0393   [FAIL: > 0]
+
+=== Walk-Forward (4 windows) ===
+  WF1 IS 2023-07-01–2023-12-31: Sharpe=-0.2202 | OOS 2024-01-01–2024-03-31: Sharpe=4.6027 | IS trades=33 | PASS
+  WF2 IS 2024-01-01–2024-06-30: Sharpe=3.4197 | OOS 2024-07-01–2024-09-30: Sharpe=0.4443 | IS trades=41 | PASS
+  WF3 IS 2024-07-01–2024-12-31: Sharpe=1.0161 | OOS 2025-01-01–2025-03-31: Sharpe=-1.6894 | IS trades=42 | FAIL
+  WF4 IS 2024-10-01–2025-03-31: Sharpe=0.8071 | OOS 2025-04-01–2025-06-30: Sharpe=-0.0790 | IS trades=45 | FAIL
+  WF OOS Sharpe>0: 2/4   [GATE: FAIL: >= 3/4]
+
+=== Parameter Sweep (108 combos) ===
+  Sharpe range: 0.3612 – 1.7021
+  Sensitivity (max-min)/baseline: 116.4%   [GATE: FAIL: < 50%]
+  Combos with IS Sharpe > 1.0: 37/108
+
+=== 150-SMA Stress Test (Fix 2 Validation) ===
+  DOTCOM: 150-SMA breach=2000-02-18 | 200-SMA breach=2000-04-14 | lag=56 days | 150-SMA closes 56 days before 200-SMA
+  GFC: 150-SMA breach=2007-07-27 | 200-SMA breach=2007-08-03 | lag=7 days | 150-SMA closes 7 days before 200-SMA
+  Overall: PASS — 150-SMA gate closes effectively in both GFC and dot-com regimes. Gate blocks new long entries before sustained drawdown materializes.
+
+=== Gate 1 Checks ===
+  [PASS] IS Sharpe > 1.0
+  [FAIL] OOS Sharpe > 0.7
+  [PASS] IS MDD < 20%
+  [PASS] IS Trade Count >= 100
+  [PASS] Win Rate > 50%
+  [PASS] Profit Factor > 1.0
+  [FAIL] DSR z-score > 0
+  [FAIL] WF OOS Sharpe>0: >= 3/4
+  [FAIL] Parameter Sensitivity < 50%
+  [PASS] Permutation p < 0.05
+
+=== H86 vs H86v2 ===
+  IS Sharpe:     H86=1.8235  →  H86v2=1.1516  (↓ Worse)
+  OOS Sharpe:    H86=0.5063  →  H86v2=-1.1430  (↓ Worse)
+  Trade Count:   H86=26  →  H86v2=138  (↑ Improved)
+  Sensitivity:   H86=110.3%  →  H86v2=116.4%  (↓ More sensitive)
+  WF OOS>0:      H86=3/4  →  H86v2=2/4
+
+=== Recommendation ===
+REJECT — do not advance.
+
+=== Data Quality ===
+Look-ahead:     CLEAN (gap=T0_open/T-1_close+20d_vol; entry T+entry_delay close)
+Earnings:       yfinance get_earnings_dates(limit=60) ~3yr coverage
+Universe:       Local static CSV (no runtime scrape)
+Survivorship:   Current S&P 500 — MODERATE RISK, LOW MAGNITUDE
+Price adjusted: True (auto_adjust=True)
+
+=== Family Limit ===
+H86: iteration 1/2 (Gate 1 FAIL 2026-06-23, QUA-393)
+H86v2: iteration 2/2 (this run)
+H86v2 FAIL — H86 family RETIRED. Do not create H86v3.
+
+=== Files ===
+Report:  H86v2_PostEarningsGapV2_2026-06-24_report.html
+Metrics: H86v2_PostEarningsGapV2_2026-06-24.json
+Verdict: H86v2_PostEarningsGapV2_2026-06-24_verdict.txt
+Trades:  H86v2_PostEarningsGapV2_2026-06-24_trades.csv
+Sweep:   H86v2_PostEarningsGapV2_2026-06-24_sweep.csv

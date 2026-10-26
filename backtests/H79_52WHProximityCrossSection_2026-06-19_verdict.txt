@@ -1,0 +1,41 @@
+FAIL
+IS Sharpe: -0.4380
+OOS Sharpe: 0.1749
+IS MDD: -86.06%
+OOS MDD: -27.94%
+IS CAGR: -24.74%
+OOS CAGR: 0.91%
+Trade count (IS): 7200
+Trade count (OOS): 2900
+Win rate (IS): 52.72%
+Profit factor (IS): 0.8346
+Net profit/trade (IS): -99.4 bps (threshold >15 bps)
+Cost-to-gross ratio (IS): 0.036 (threshold <0.25)
+DSR z-score: -14.9321 (FAIL)
+Permutation p-value: 0.0000 (PASS)
+WF windows passed: 0/4
+WF Sharpe std: 1.3606
+WF Sharpe min: -1.8076
+MC p5 Sharpe: -0.9511
+Bootstrap Sharpe CI: [-1.0069, 0.3393]
+Liquidity-constrained IS: 0 | OOS: 0
+Post-cost Sharpe (IS): -0.4380
+Universe size: 768 (raw: 1003)
+Rebalance freq: 21 days
+Long/short decile: 10%
+Max positions: 50L + 50S
+Short borrow: 1%/year
+
+Gate 1 checks (Track A):
+  FAIL: is_sharpe_pass
+  FAIL: oos_sharpe_pass
+  FAIL: is_mdd_pass
+  PASS: oos_mdd_pass
+  PASS: win_rate_pass
+  FAIL: dsr_pass
+  FAIL: wf_pass
+  PASS: trade_count_pass
+  PASS: permutation_pass
+  FAIL: mc_p5_pass
+  FAIL: net_ppt_pass
+  PASS: cost_to_gross_pass

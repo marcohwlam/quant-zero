@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Gate 1: H87_DarvasBoxBreakout</title>
+<style>
+body{font-family:monospace;max-width:1200px;margin:20px auto;background:#f8f9fa}
+h1,h2{color:#333}
+.verdict{font-size:2em;font-weight:bold;color:#dc3545;border:3px solid #dc3545;
+  display:inline-block;padding:8px 20px;border-radius:6px}
+table{border-collapse:collapse;width:100%;margin:10px 0}
+th,td{border:1px solid #dee2e6;padding:6px 10px;text-align:left}
+th{background:#343a40;color:white} tr:nth-child(even){background:#f2f2f2}
+.section{background:white;padding:15px;margin:15px 0;border-radius:6px;
+  box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.metric{display:inline-block;margin:8px;padding:10px;background:#e9ecef;
+  border-radius:4px;min-width:130px}
+.mv{font-size:1.4em;font-weight:bold;color:#0d6efd}
+</style></head>
+<body>
+<h1>Gate 1 Report: H87_DarvasBoxBreakout</h1>
+<p>Date: 2026-06-25 | IS: 2022-01-01–2024-12-31 | Universe: S&P 1500 PIT proxy (~1,047 tickers)</p>
+<p>Best params: box_n=25 box_width_max=0.1 vol_ratio_min=1.4</p>
+<div class="verdict">FAIL (5/9 checks)</div>
+
+<div class="section"><h2>IS Equity Curve</h2>
+<svg width="600" height="120" style="border:1px solid #ccc"><polyline points="0,86 0,85 1,88 2,85 3,83 3,83 4,82 5,82 6,81 7,79 7,82 8,86 9,89 10,93 11,92 11,92 12,92 13,93 14,95 15,95 15,92 16,89 17,91 18,90 19,90 19,87 20,87 21,90 22,89 23,90 23,91 24,91 25,91 26,91 27,91 27,92 28,93 29,91 30,91 31,91 31,89 32,88 33,86 34,86 35,88 35,88 36,87 37,87 38,87 39,88 39,88 40,87 41,87 42,87 43,87 43,88 44,88 45,87 46,88 47,87 47,88 48,90 49,86 50,87 51,88 51,86 52,87 53,86 54,87 55,87 55,86 56,85 57,85 58,83 59,80 59,80 60,85 61,87 62,91 63,92 63,91 64,96 65,97 66,97 67,96 67,97 68,97 69,97 70,97 71,97 71,97 72,97 73,97 74,97 75,97 75,97 76,97 77,97 78,97 78,97 79,97 80,97 81,97 82,97 82,97 83,97 84,97 85,97 86,97 86,97 87,97 88,97 89,97 90,97 90,97 91,97 92,97 93,97 94,97 94,97 95,97 96,97 97,97 98,97 98,97 99,97 100,97 101,97 102,97 102,97 103,97 104,97 105,97 106,97 106,97 107,97 108,97 109,97 110,97 110,97 111,97 112,97 113,97 114,97 114,97 115,97 116,97 117,97 118,97 118,97 119,97 120,97 121,97 122,96 122,96 123,96 124,95 125,95 126,96 126,98 127,98 128,98 129,97 130,100 130,101 131,103 132,103 133,104 134,105 134,106 135,104 136,103 137,103 138,102 138,104 139,105 140,104 141,104 142,104 142,104 143,105 144,105 145,105 146,105 146,105 147,105 148,105 149,105 150,105 150,105 151,105 152,105 153,105 153,105 154,105 155,105 156,105 157,105 157,105 158,105 159,105 160,105 161,105 161,105 162,105 163,105 164,105 165,105 165,105 166,105 167,105 168,105 169,105 169,105 170,105 171,105 172,105 173,105 173,105 174,105 175,105 176,104 177,104 177,104 178,104 179,103 180,104 181,104 181,104 182,103 183,104 184,103 185,106 185,107 186,106 187,105 188,107 189,105 189,106 190,106 191,110 192,111 193,111 193,111 194,108 195,109 196,108 197,107 197,109 198,108 199,109 200,109 201,109 201,110 202,107 203,108 204,106 205,105 205,105 206,105 207,106 208,109 209,111 209,108 210,106 211,106 212,107 213,106 213,106 214,108 215,105 216,102 217,100 217,102 218,104 219,101 220,103 221,106 221,105 222,103 223,105 224,107 225,107 225,107 226,108 227,111 228,112 228,114 229,113 230,114 231,114 232,114 232,112 233,112 234,114 235,114 236,116 236,119 237,120 238,117 239,118 240,116 240,119 241,117 242,117 243,119 244,119 244,116 245,115 246,115 247,115 248,116 248,114 249,113 250,115 251,114 252,114 252,114 253,114 254,115 255,113 256,114 256,114 257,115 258,115 259,114 260,114 260,113 261,115 262,116 263,109 264,108 264,108 265,111 266,110 267,112 268,111 268,112 269,112 270,111 271,113 272,113 272,113 273,114 274,113 275,112 276,111 276,111 277,113 278,114 279,114 280,113 280,112 281,114 282,112 283,107 284,110 284,107 285,104 286,103 287,103 288,100 288,98 289,97 290,94 291,95 292,95 292,95 293,96 294,98 295,97 296,93 296,93 297,91 298,89 299,88 300,89 300,90 301,89 302,88 303,85 303,85 304,83 305,84 306,84 307,82 307,81 308,81 309,82 310,81 311,82 311,80 312,83 313,81 314,80 315,78 315,79 316,78 317,80 318,79 319,81 319,81 320,81 321,80 322,82 323,84 323,85 324,86 325,86 326,86 327,86 327,85 328,87 329,86 330,85 331,84 331,82 332,82 333,79 334,84 335,84 335,88 336,87 337,86 338,87 339,85 339,84 340,87 341,86 342,87 343,87 343,91 344,92 345,91 346,95 347,95 347,94 348,95 349,95 350,98 351,98 351,98 352,96 353,94 354,94 355,92 355,94 356,93 357,91 358,92 359,94 359,97 360,99 361,99 362,97 363,97 363,96 364,99 365,98 366,96 367,95 367,95 368,92 369,91 370,91 371,91 371,90 372,88 373,87 374,84 375,82 375,82 376,82 377,81 378,82 378,81 379,81 380,81 381,83 382,82 382,81 383,79 384,79 385,81 386,81 386,79 387,78 388,77 389,77 390,74 390,73 391,74 392,75 393,74 394,78 394,77 395,76 396,75 397,76 398,76 398,76 399,77 400,79 401,78 402,77 402,75 403,75 404,75 405,75 406,73 406,75 407,76 408,75 409,74 410,73 410,72 411,70 412,69 413,71 414,71 414,71 415,71 416,70 417,67 418,66 418,66 419,65 420,64 421,62 422,60 422,63 423,59 424,56 425,57 426,57 426,57 427,53 428,53 429,53 430,53 430,54 431,52 432,52 433,51 434,52 434,50 435,47 436,48 437,48 438,47 438,47 439,49 440,48 441,48 442,47 442,45 443,45 444,47 445,47 446,48 446,44 447,43 448,46 449,46 450,46 450,46 451,45 452,44 453,46 453,48 454,51 455,53 456,54 457,55 457,55 458,54 459,51 460,50 461,48 461,49 462,53 463,55 464,53 465,55 465,53 466,53 467,52 468,52 469,51 469,50 470,48 471,48 472,48 473,47 473,46 474,46 475,47 476,46 477,46 477,48 478,53 479,52 480,54 481,55 481,53 482,49 483,52 484,53 485,51 485,53 486,54 487,54 488,55 489,54 489,53 490,56 491,52 492,51 493,52 493,52 494,51 495,52 496,53 497,54 497,53 498,54 499,55 500,55 501,54 501,53 502,54 503,51 504,49 505,47 505,45 506,41 507,41 508,43 509,45 509,42 510,42 511,43 512,45 513,41 513,41 514,43 515,40 516,44 517,52 517,61 518,59 519,61 520,57 521,57 521,58 522,55 523,55 524,52 525,51 525,49 526,49 527,47 528,48 528,47 529,46 530,45 531,42 532,43 532,41 533,43 534,43 535,43 536,46 536,45 537,47 538,47 539,45 540,43 540,40 541,41 542,42 543,42 544,42 544,39 545,37 546,39 547,40 548,38 548,35 549,36 550,39 551,41 552,39 552,41 553,41 554,39 555,40 556,37 556,34 557,33 558,29 559,28 560,26 560,28 561,29 562,31 563,33 564,31 564,31 565,31 566,32 567,34 568,34 568,34 569,30 570,19 571,17 572,15 572,10 573,9 574,9 575,11 576,11 576,10 577,11 578,9 579,4 580,2 580,1 581,1 582,0 583,0 584,1 584,3 585,2 586,3 587,4 588,7 588,8 589,10 590,10 591,12 592,14 592,16 593,22 594,21 595,22 596,22 596,21 597,20 598,21 599,23 600,22" fill="none" stroke="#28a745" stroke-width="1.5"/></svg></div>
+
+<div class="section"><h2>Core Metrics</h2>
+<div class="metric"><div>IS Sharpe</div><div class="mv">0.7903</div></div>
+<div class="metric"><div>OOS Sharpe (WF)</div><div class="mv">2.1250</div></div>
+<div class="metric"><div>IS MDD</div><div class="mv">-16.08%</div></div>
+<div class="metric"><div>IS CAGR</div><div class="mv">8.16%</div></div>
+<div class="metric"><div>IS Trades</div><div class="mv">245</div></div>
+<div class="metric"><div>Win Rate</div><div class="mv">56.73%</div></div>
+<div class="metric"><div>Profit Factor</div><div class="mv">1.103</div></div>
+<div class="metric"><div>PpT (bps)</div><div class="mv">114.1</div></div>
+<div class="metric"><div>MC p5 Sharpe</div><div class="mv">-0.1051</div></div>
+<div class="metric"><div>Earnings Exits</div><div class="mv">0</div></div>
+<div class="metric"><div>Liq. Constrained</div><div class="mv">0.00%</div></div>
+</div>
+
+<div class="section"><h2>Gate 1 Checks (9 required)</h2>
+<table><tr><th>Check</th><th>Result</th><th>Actual</th><th>Threshold</th></tr>
+<tr><td>IS Sharpe > 1.0</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>0.7903</td><td>> 1.0</td></tr>
+<tr><td>OOS Sharpe > 0.7</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>2.1250</td><td>> 0.7</td></tr>
+<tr><td>IS MDD < 20%</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>-16.08%</td><td>< 20%</td></tr>
+<tr><td>IS trade count >= 100</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>245</td><td>>= 100</td></tr>
+<tr><td>Win rate > 50%</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>56.73%</td><td>> 50%</td></tr>
+<tr><td>Profit factor > 1.0</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>1.1029</td><td>> 1.0</td></tr>
+<tr><td>WF OOS positive >= 4/6</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>3/6</td><td>>= 4</td></tr>
+<tr><td>Parameter sensitivity < 50%</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>290.9%</td><td>< 50%</td></tr>
+<tr><td>Permutation p < 0.05</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>0.4850</td><td>< 0.05</td></tr></table></div>
+
+<div class="section"><h2>Walk-Forward (6 windows — 3-month IS / 1-month OOS)</h2>
+<table><tr><th>#</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th>
+<th>IS Trades</th><th>OOS Sharpe</th><th>OOS Trades</th><th>Status</th></tr>
+<tr><td>1</td><td>2022-01-01–2022-03-31</td><td>2022-04-01–2022-04-30</td><td>-0.6194</td><td>23</td><td>-5.1337</td><td>1</td><td style='color:#dc3545'>FAIL</td></tr>
+<tr><td>2</td><td>2022-04-01–2022-06-30</td><td>2022-07-01–2022-07-31</td><td>-2.7619</td><td>1</td><td>0.0000</td><td>0</td><td style='color:#dc3545'>FAIL</td></tr>
+<tr><td>3</td><td>2022-07-01–2022-09-30</td><td>2022-10-01–2022-10-31</td><td>-2.7824</td><td>7</td><td>0.0000</td><td>0</td><td style='color:#dc3545'>FAIL</td></tr>
+<tr><td>4</td><td>2022-10-01–2022-12-31</td><td>2023-01-01–2023-01-31</td><td>-0.9144</td><td>10</td><td>1.0652</td><td>10</td><td style='color:#28a745'>PASS</td></tr>
+<tr><td>5</td><td>2023-01-01–2023-09-30</td><td>2023-10-01–2023-12-31</td><td>0.6624</td><td>79</td><td>3.6083</td><td>25</td><td style='color:#28a745'>PASS</td></tr>
+<tr><td>6</td><td>2024-01-01–2024-09-30</td><td>2024-10-01–2024-12-31</td><td>1.7199</td><td>85</td><td>2.4578</td><td>26</td><td style='color:#28a745'>PASS</td></tr></table>
+<p>WF pass rate: 3/6 (gate: >= 4/6 OOS Sharpe > 0)</p>
+<p>Combined OOS Sharpe: 2.1250 | OOS MDD: -5.61%</p></div>
+
+<div class="section"><h2>Statistical Rigor</h2>
+<p>Bootstrap Sharpe CI: [-0.2948, 1.9562]</p>
+<p>Bootstrap MDD CI: [-0.2608, -0.0689]</p>
+<p>MC p5/median/p95: -0.1051 / 0.8672 / 1.9840</p>
+<p>Permutation p-value: 0.4850 (gate: < 0.05)</p></div>
+
+<div class="section"><h2>Parameter Sweep (27 combos)</h2>
+<p>Sharpe range: -0.0632 – 0.7903</p>
+<p>Sensitivity = (max-min)/|baseline| x 100 = <b>290.9%</b>
+(threshold: &lt;50% — FAIL)</p>
+<p>Combos with Sharpe > 1.0: 0/27</p></div>
+
+<div class="section"><h2>Regime and Risk Attribution</h2>
+<p>2022 bear market: 41 trades, PnL $-2163 (expected near-zero; regime filter blocks entries)</p>
+<p>Earnings exits: 0 trades exited pre-earnings</p>
+<p>Gap MDD fraction: 17.31% (fraction of losses from overnight gaps)</p>
+<p>Liquidity-constrained trades: 0.00% (flagged Q/ADV > 1%)</p></div>
+
+<div class="section"><h2>Data Quality Checklist</h2>
+<ul>
+<li><b>Survivorship bias:</b> Universe is h82v2_universe_2018_jan.csv (PIT proxy circa 2018).
+  Stocks delisted after 2018 absent from yfinance — bias directionally INFLATES Sharpe.</li>
+<li><b>Price adjustments:</b> yfinance auto_adjust=True (splits + dividends corrected).</li>
+<li><b>Data gaps:</b> 764 tickers flagged with >5 missing business days in IS.</li>
+<li><b>Earnings exclusion:</b> earnings_exit rule active. 0 trades exited.
+  Fallback: 8% hard stop on tickers where yfinance calendar unavailable.</li>
+<li><b>Delisted tickers:</b> Tickers with &lt;252 total days excluded pre-backtest. yfinance returns
+  partial data through delisting (correct treatment — real returns).</li>
+<li><b>Entry execution:</b> Signal at close T, fill at next-day open T+1 (Hard Gate 3 compliant).</li>
+<li><b>Look-ahead:</b> CLEAN — all indicators use only prior-close data at signal generation time.</li>
+<li><b>Cost model:</b> Equities standard tier — $0.005/share fixed + 0.05% slippage + Almgren-Chriss impact.</li>
+</ul></div>
+
+</body></html>

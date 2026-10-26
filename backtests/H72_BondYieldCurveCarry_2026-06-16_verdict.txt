@@ -1,0 +1,119 @@
+H72 Bond Yield Curve Carry — Gate 1 Verdict
+============================================================
+Date:     2026-06-16
+Strategy: H72_BondYieldCurveCarry
+Overall:  FAIL (0/10 checks passed)
+============================================================
+
+=== IS Performance (2003-01-01 to 2018-12-31, 16 years) ===
+Sharpe:        0.5848    [FAIL: threshold > 1.0]
+CAGR:          5.05%     [FAIL: threshold >= 10%]
+Max Drawdown:  -17.05%   [FAIL: threshold < -15% magnitude]
+Win Rate:      65.38%
+Profit Factor: 5.7795
+Trade Count:   26        [FAIL: threshold >= 100]
+Avg PnL/trade: 341.75 bps
+Total Return:  119.92%
+DSR:           0.0       [FAIL: threshold > 0]
+
+=== OOS Performance (2019-01-01 to 2024-12-31, 6 years) ===
+Sharpe:        -0.185    [FAIL: threshold > 0.70]
+CAGR:          -2.77%    [FAIL: threshold >= 10%]
+Max Drawdown:  -33.32%   [FAIL: threshold < -15% magnitude]
+Win Rate:      66.67%
+Profit Factor: 0.6182
+Trade Count:   12
+Avg PnL/trade: -99.85 bps
+Total Return:  -15.51%
+
+=== Statistical Rigor ===
+MC p5 Sharpe:        3.305    [MC p5 OK — note: MC on trade PnLs, 26 samples]
+MC Median Sharpe:    6.658
+Sharpe 95% CI:       [0.128, 1.032]  (block bootstrap, IS returns)
+MDD 95% CI:          [-0.327, -0.099]
+Win Rate 95% CI:     [0.480, 0.513]
+Permutation p-value: 0.498    [FAIL: threshold < 0.05 — no statistically significant alpha]
+Market Impact (TLT): 0.05 bps  [liquidity_constrained=False]
+OOS DQ:              PASS
+
+=== Walk-Forward Analysis (4 windows, IS 36mo / OOS 6mo) ===
+Passed: 0/4    [FAIL: threshold >= 3/4]
+WF Sharpe std: 0.9018  [high variance]
+WF Sharpe min: -0.9304 [WARNING: negative OOS window]
+
+Window 1: IS 2003-01 to 2006-01 | OOS 2006-01 to 2006-07
+  IS Sharpe: 0.657, OOS Sharpe: 1.579, ratio: 2.41
+  FAIL — OOS/IS ratio 2.41 > 1.30 (overshoot, not stability)
+
+Window 2: IS 2006-07 to 2009-07 | OOS 2009-07 to 2010-01
+  IS Sharpe: 0.886, OOS Sharpe: 0.378, ratio: 0.43
+  FAIL — OOS Sharpe 0.378 < 0.70 threshold
+
+Window 3: IS 2010-01 to 2013-01 | OOS 2013-01 to 2013-07
+  IS Sharpe: 0.802, OOS Sharpe: -0.930, ratio: -1.16
+  FAIL — OOS Sharpe -0.930 < 0.70 (negative OOS window)
+
+Window 4: IS 2013-07 to 2016-07 | OOS 2016-07 to 2017-01
+  IS Sharpe: 0.757, OOS Sharpe: -0.025, ratio: -0.03
+  FAIL — OOS Sharpe -0.025 < 0.70 (near-zero OOS)
+
+=== Sensitivity Sweep (IS, 12 combinations) ===
+PASS: variance 22.5% <= 30%
+Primary Sharpe: 0.5848 (12mo lookback, rolling median threshold)
+(Only 1 of 10 checks passed — sweep stability is the sole bright spot)
+
+=== Secondary Leveraged Test (2x) ===
+Primary CAGR 5.05% < 10% — ran 2x leveraged test per task spec.
+2x IS  Sharpe: 0.5819, CAGR: 9.38%
+2x OOS Sharpe: -0.1599, CAGR: -7.10%
+Sharpe > 0.8 (leveraged): FAIL (0.58 < 0.80)
+Conclusion: leverage does not rescue strategy.
+
+=== Gate 1 Checks ===
+  [FAIL] IS Sharpe > 1.0        (0.5848)
+  [FAIL] OOS Sharpe > 0.70      (-0.185)
+  [FAIL] IS MDD < -15%          (-17.05%)
+  [FAIL] OOS MDD < -15%         (-33.32%)
+  [FAIL] IS CAGR >= 10%         (5.05%)
+  [FAIL] OOS CAGR >= 10%        (-2.77%)
+  [FAIL] IS trades >= 100       (26)
+  [FAIL] Permutation p < 0.05   (0.498)
+  [FAIL] Walk-forward >= 3/4    (0/4)
+  [FAIL] DSR > 0                (0.0)
+
+=== Root Cause Analysis ===
+Primary failure: insufficient trade count (26 IS trades over 15 years).
+Monthly rebalancing between TLT/SHY produces only ~1-2 switches per year because
+the yield curve slope persists in one regime for extended periods. This low-frequency
+design fails Gate 1 minimum trade floor (100) by 4x.
+
+Contributing failures:
+  1. Low IS Sharpe (0.58) — monthly signal with only 26 trades has high per-trade
+     variance. The high win rate (65%) and profit factor (5.8) suggest selectivity,
+     not systematic alpha.
+  2. OOS collapse (-0.185 Sharpe, -33% MDD) — 2019-2024 includes curve inversions
+     (2019, 2022-2023) that contradict the hypothesis: spread goes negative but TLT
+     underperforms despite the "SHORT_DURATION" signal executing correctly.
+  3. Permutation test fails (p=0.498) — monthly resampling with 26 trades cannot
+     reject the null of random alpha at any reasonable significance level.
+  4. Walk-forward 0/4 — extreme OOS variance (std=0.90) across windows indicates
+     regime-dependent performance, not robust structural alpha.
+
+=== Recommendation ===
+REJECT — do not advance to paper trading. Return to Engineering Director.
+Strategy is fundamentally under-traded for Gate 1 statistical requirements.
+Bond carry as a MONTHLY signal on TLT/SHY is too low-frequency to satisfy
+the >=100 trade minimum and <=20% win-rate variance needed for significance.
+
+Potential paths forward (for Engineering Director / Research Director consideration):
+  - Redesign at weekly or daily frequency (50+ signals/year)
+  - Add multi-asset bond universe (TLT, IEF, SHY, TIP) to increase trade frequency
+  - Test yield-curve slope as a REGIME FILTER layered on top of another strategy
+    rather than as a standalone duration-timing signal
+
+=== Files ===
+Metrics:  backtests/H72_BondYieldCurveCarry_2026-06-16.json
+Trades:   backtests/H72_BondYieldCurveCarry_2026-06-16_trades.csv
+Sweep:    backtests/H72_BondYieldCurveCarry_2026-06-16_sweep.csv
+Report:   backtests/H72_BondYieldCurveCarry_2026-06-16_report.html
+Verdict:  backtests/H72_BondYieldCurveCarry_2026-06-16_verdict.txt

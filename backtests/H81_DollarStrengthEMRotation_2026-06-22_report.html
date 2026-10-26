@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<title>H81 DollarStrengthEMRotation Gate 1 Report</title>
+<style>
+body{font-family:monospace;max-width:1000px;margin:auto;padding:20px;background:#f9fafb}
+h1{color:#1e293b}h2{color:#334155;border-bottom:1px solid #e2e8f0}
+.verdict{font-size:2em;font-weight:bold;color:#ef4444;padding:10px;border:2px solid #ef4444;display:inline-block}
+table{border-collapse:collapse;width:100%;margin:10px 0}
+th,td{border:1px solid #e2e8f0;padding:6px 10px;text-align:left}
+th{background:#f1f5f9}
+.pass{color:#16a34a;font-weight:bold}.fail{color:#dc2626;font-weight:bold}
+</style></head>
+<body>
+<h1>H81 Dollar-Strength EM Rotation — Gate 1 Report</h1>
+<p>Date: 2026-06-22 | Asset class: ETF rotation (EEM/VEA/SPY/SHY) | Signal: UUP USD regime</p>
+<p>IS: 2008-01-01–2022-12-31 | OOS: 2023-01-01–2026-06-01</p>
+<div class="verdict">FAIL</div>
+
+<h2>Core Metrics</h2>
+<table>
+<tr><th>Metric</th><th>IS</th><th>OOS</th><th>Gate 1 Threshold</th></tr>
+<tr><td>Sharpe Ratio</td><td>0.5990</td><td>0.9181</td><td>IS>1.0 / OOS>0.7</td></tr>
+<tr><td>CAGR</td><td>6.53%</td><td>8.24%</td><td>—</td></tr>
+<tr><td>Max Drawdown</td><td>-20.09%</td><td>-10.52%</td><td>IS<20% / OOS<25%</td></tr>
+<tr><td>Win Rate</td><td>55.93%</td><td>67.86%</td><td>>50%</td></tr>
+<tr><td>Profit Factor</td><td>1.9112</td><td>2.2359</td><td>>1.0</td></tr>
+<tr><td>Trade Count</td><td>359</td><td>92</td><td>≥100</td></tr>
+<tr><td>IS Regime</td><td colspan="2">weak=273 | neutral=273 | strong=209</td><td>—</td></tr>
+<tr><td>OOS Regime</td><td colspan="2">weak=44 | neutral=72 | strong=57</td><td>—</td></tr>
+</table>
+
+<h2>Statistical Rigor</h2>
+<table>
+<tr><th>Test</th><th>Result</th><th>Pass/Fail</th></tr>
+<tr><td>DSR z-score</td><td>23.3852</td><td class="pass">PASS</td></tr>
+<tr><td>Permutation p-value</td><td>1.0000</td><td class="fail">FAIL</td></tr>
+<tr><td>MC p5 Sharpe</td><td>0.1788</td><td class="fail">WARN</td></tr>
+<tr><td>MC Median Sharpe</td><td>0.5971</td><td>—</td></tr>
+<tr><td>Bootstrap Sharpe CI</td><td>[0.2602, 1.0633]</td><td>—</td></tr>
+<tr><td>Bootstrap MDD CI</td><td>[-0.3449, -0.1278]</td><td>—</td></tr>
+<tr><td>Post-cost IS Sharpe</td><td>0.5990</td><td class="pass">PASS</td></tr>
+<tr><td>Market impact (est)</td><td>2.00 bps</td><td>—</td></tr>
+<tr><td>Sensitivity (±20%)</td><td>—</td><td class="fail">FAIL</td></tr>
+</table>
+
+<h2>Walk-Forward Windows (6 windows, 36mo IS / 6mo OOS)</h2>
+<table>
+<tr><th>#</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>Consistency</th><th>Result</th></tr>
+<tr style="background:#f0fdf4"><td>1</td><td>2008-01-01–2010-12-31</td><td>2011-01-01–2011-06-30</td><td>0.706</td><td>0.761</td><td>1.079</td><td>PASS</td></tr>
+<tr style="background:#fef2f2"><td>2</td><td>2008-07-01–2011-06-30</td><td>2011-07-01–2011-12-31</td><td>1.032</td><td>-1.343</td><td>-1.301</td><td>FAIL</td></tr>
+<tr style="background:#f0fdf4"><td>3</td><td>2009-01-01–2011-12-31</td><td>2012-01-01–2012-06-30</td><td>0.714</td><td>0.846</td><td>1.185</td><td>PASS</td></tr>
+<tr style="background:#f0fdf4"><td>4</td><td>2009-07-01–2012-06-30</td><td>2012-07-01–2012-12-31</td><td>0.706</td><td>2.378</td><td>3.369</td><td>PASS</td></tr>
+<tr style="background:#f0fdf4"><td>5</td><td>2010-01-01–2012-12-31</td><td>2013-01-01–2013-06-30</td><td>0.444</td><td>0.790</td><td>1.778</td><td>PASS</td></tr>
+<tr style="background:#f0fdf4"><td>6</td><td>2010-07-01–2013-06-30</td><td>2013-07-01–2013-12-31</td><td>0.793</td><td>1.154</td><td>1.456</td><td>PASS</td></tr>
+
+</table>
+<p>WF Pass: 5/6 | Consistency score: 1.000 | Std: 1.096 | Min: -1.343</p>
+
+<h2>Parameter Sweep (IS)</h2>
+<table>
+<tr><th>Parameter</th><th>Value</th><th>IS Sharpe</th></tr>
+<tr><td>uup_sma_period</td><td>uup_sma_period=30</td><td>0.5992</td></tr>
+<tr><td>uup_sma_period</td><td>uup_sma_period=50</td><td>0.599</td></tr>
+<tr><td>uup_sma_period</td><td>uup_sma_period=63</td><td>0.5984</td></tr>
+<tr><td>uup_sma_period</td><td>uup_sma_period=100</td><td>0.5122</td></tr>
+<tr><td>uup_mom_period</td><td>uup_mom_period=42</td><td>0.374</td></tr>
+<tr><td>uup_mom_period</td><td>uup_mom_period=63</td><td>0.599</td></tr>
+<tr><td>uup_mom_period</td><td>uup_mom_period=126</td><td>0.5711</td></tr>
+<tr><td>confirmation_weeks</td><td>confirmation_weeks=1</td><td>0.623</td></tr>
+<tr><td>confirmation_weeks</td><td>confirmation_weeks=2</td><td>0.599</td></tr>
+<tr><td>confirmation_weeks</td><td>confirmation_weeks=3</td><td>0.5882</td></tr>
+<tr><td>confirmation_weeks</td><td>confirmation_weeks=4</td><td>0.5508</td></tr>
+
+</table>
+
+<h2>Gate 1 Checks</h2>
+<table>
+<tr><th>Check</th><th>Result</th></tr>
+<tr style="background:#fef2f2"><td>is_sharpe_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#f0fdf4"><td>oos_sharpe_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#fef2f2"><td>is_mdd_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#f0fdf4"><td>oos_mdd_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#f0fdf4"><td>win_rate_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#f0fdf4"><td>dsr_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#f0fdf4"><td>wf_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#f0fdf4"><td>trade_count_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#fef2f2"><td>permutation_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#fef2f2"><td>mc_p5_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#fef2f2"><td>sensitivity_pass</td><td>FAIL ✗</td></tr>
+
+</table>
+
+<h2>OOS Data Quality</h2>
+<p>Recommendation: <strong>PASS</strong> | Coverage: 100.0% | Total NaN cells: 0</p>
+
+<h2>Strategy Info</h2>
+<p>Tickers: EEM, VEA, SPY, SHY | Signal: UUP USD regime (SMA=50d, mom=63d, confirm=2w)</p>
+<p>Execution: Friday close signal → Monday open execution (T+1, no look-ahead)</p>
+<p>Liquidity-constrained events: 0</p>
+
+</body></html>

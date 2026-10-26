@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<title>H79 52WH Proximity Cross-Section Gate 1 Report</title>
+<style>
+body{font-family:monospace;max-width:960px;margin:auto;padding:20px;background:#f9fafb}
+h1{color:#1e293b}h2{color:#334155;border-bottom:1px solid #e2e8f0}
+.verdict{font-size:2em;font-weight:bold;color:#ef4444;padding:10px;border:2px solid #ef4444;display:inline-block}
+table{border-collapse:collapse;width:100%;margin:10px 0}
+th,td{border:1px solid #e2e8f0;padding:6px 10px;text-align:left}
+th{background:#f1f5f9}
+.pass{color:#16a34a;font-weight:bold}.fail{color:#dc2626;font-weight:bold}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.85em;background:#dbeafe;color:#1e40af}
+</style></head>
+<body>
+<h1>H79 — 52-Week High Proximity Cross-Section<br>Gate 1 Report</h1>
+<p>Date: 2026-06-19 | Track: <span class="badge">A — Daily/Weekly Swing</span> | QUA-347</p>
+<p>Universe: 768 tickers (PIT proxy: Russell 1000+2000 circa 2018) |
+IS: 2018–2023 | OOS: 2024–2026-05</p>
+<p>Signal: Price / rolling(252).max() | Rebalance: 21 days | 50L + 50S equal-weight | 200% gross</p>
+<div class="verdict">FAIL</div>
+
+<h2>Core Metrics</h2>
+<table>
+<tr><th>Metric</th><th>IS</th><th>OOS</th><th>Gate 1 Threshold (Track A)</th></tr>
+<tr><td>Sharpe Ratio</td><td>-0.4380</td><td>0.1749</td><td>IS&gt;1.0 (internal) / OOS&gt;0.7</td></tr>
+<tr><td>CAGR</td><td>-24.74%</td><td>0.91%</td><td>≥10% (charter)</td></tr>
+<tr><td>Max Drawdown</td><td>-86.06%</td><td>-27.94%</td><td>IS&lt;20% / OOS&lt;30%</td></tr>
+<tr><td>Win Rate</td><td>52.72%</td><td>52.24%</td><td>&gt;50%</td></tr>
+<tr><td>Profit Factor</td><td>0.8346</td><td>1.0068</td><td>&gt;1.0</td></tr>
+<tr><td>Trade Count</td><td>7200</td><td>2900</td><td>≥100 IS total</td></tr>
+<tr><td>Net Profit/Trade</td><td>-99.4 bps</td><td>—</td><td>&gt;15 bps (Track A)</td></tr>
+<tr><td>Cost-to-Gross Ratio</td><td>0.036</td><td>—</td><td>&lt;0.25 (Track A)</td></tr>
+</table>
+
+<h2>Statistical Rigor</h2>
+<table>
+<tr><th>Test</th><th>Result</th><th>Pass/Fail</th></tr>
+<tr><td>DSR z-score</td><td>-14.9321</td><td class="fail">FAIL</td></tr>
+<tr><td>Permutation p-value</td><td>0.0000</td><td class="pass">PASS</td></tr>
+<tr><td>MC p5 Sharpe</td><td>-0.9511</td><td class="fail">WARN</td></tr>
+<tr><td>MC Median Sharpe</td><td>-0.6932</td><td>—</td></tr>
+<tr><td>Bootstrap Sharpe CI</td><td>[-1.0069, 0.3393]</td><td>—</td></tr>
+<tr><td>Bootstrap MDD CI</td><td>[-0.9794, -0.5536]</td><td>—</td></tr>
+<tr><td>Post-cost IS Sharpe</td><td>-0.4380</td><td class="fail">FAIL</td></tr>
+</table>
+
+<h2>Walk-Forward Windows</h2>
+<table>
+<tr><th>#</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>Consistency</th><th>Result</th></tr>
+<tr style="background:#fef2f2"><td>1</td><td>2018-01-01–2020-12-31</td><td>2021-01-01–2021-06-30</td><td>-0.497</td><td>-1.808</td><td>0.000</td><td>FAIL</td></tr>
+<tr style="background:#fef2f2"><td>2</td><td>2018-07-01–2021-06-30</td><td>2021-07-01–2021-12-31</td><td>-0.769</td><td>1.450</td><td>0.000</td><td>FAIL</td></tr>
+<tr style="background:#fef2f2"><td>3</td><td>2019-01-01–2021-12-31</td><td>2022-01-01–2022-06-30</td><td>-0.685</td><td>1.415</td><td>0.000</td><td>FAIL</td></tr>
+<tr style="background:#fef2f2"><td>4</td><td>2019-07-01–2022-06-30</td><td>2022-07-01–2022-12-31</td><td>-0.450</td><td>-0.384</td><td>0.000</td><td>FAIL</td></tr>
+
+</table>
+<p>WF Pass: 0/4 | Score: 0.000 | Std: 1.361 | Min: -1.808</p>
+
+<h2>Gate 1 Checks (Track A)</h2>
+<table>
+<tr><th>Check</th><th>Result</th></tr>
+<tr style="background:#fef2f2"><td>is_sharpe_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#fef2f2"><td>oos_sharpe_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#fef2f2"><td>is_mdd_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#f0fdf4"><td>oos_mdd_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#f0fdf4"><td>win_rate_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#fef2f2"><td>dsr_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#fef2f2"><td>wf_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#f0fdf4"><td>trade_count_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#f0fdf4"><td>permutation_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#fef2f2"><td>mc_p5_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#fef2f2"><td>net_ppt_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#f0fdf4"><td>cost_to_gross_pass</td><td>PASS ✓</td></tr>
+
+</table>
+
+<h2>OOS Data Quality</h2>
+<p>Recommendation: <strong>PASS</strong> |
+Coverage: 100.0% | NaN cells: 0</p>
+
+<h2>Strategy Info</h2>
+<p>Universe: 768 tickers (PIT proxy) |
+IS flagged: 35 |
+OOS flagged: 11</p>
+<p>Liquidity-constrained IS: 0 | OOS: 0</p>
+
+</body></html>

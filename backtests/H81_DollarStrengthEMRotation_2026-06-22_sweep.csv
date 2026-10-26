@@ -1,0 +1,21 @@
+type,window,train_start,train_end,test_start,test_end,train_sharpe,test_sharpe,consistency_ratio,passed,param,label,sharpe,variance_pct,gate1
+walk_forward,1.0,2008-01-01,2010-12-31,2011-01-01,2011-06-30,0.7057,0.7613,1.0787,True,,,,,
+walk_forward,2.0,2008-07-01,2011-06-30,2011-07-01,2011-12-31,1.032,-1.343,-1.3014,False,,,,,
+walk_forward,3.0,2009-01-01,2011-12-31,2012-01-01,2012-06-30,0.714,0.8461,1.185,True,,,,,
+walk_forward,4.0,2009-07-01,2012-06-30,2012-07-01,2012-12-31,0.7058,2.3778,3.369,True,,,,,
+walk_forward,5.0,2010-01-01,2012-12-31,2013-01-01,2013-06-30,0.4441,0.7897,1.7781,True,,,,,
+walk_forward,6.0,2010-07-01,2013-06-30,2013-07-01,2013-12-31,0.7929,1.154,1.4555,True,,,,,
+param_sweep,,,,,,,,,,uup_sma_period,uup_sma_period=30,0.5992,0.1507,PASS: variance 15.1% <= 30%
+param_sweep,,,,,,,,,,uup_sma_period,uup_sma_period=50,0.599,0.1507,PASS: variance 15.1% <= 30%
+param_sweep,,,,,,,,,,uup_sma_period,uup_sma_period=63,0.5984,0.1507,PASS: variance 15.1% <= 30%
+param_sweep,,,,,,,,,,uup_sma_period,uup_sma_period=100,0.5122,0.1507,PASS: variance 15.1% <= 30%
+param_sweep,,,,,,,,,,uup_mom_period,uup_mom_period=42,0.374,0.4371,FAIL: variance 43.7% > 30%
+param_sweep,,,,,,,,,,uup_mom_period,uup_mom_period=63,0.599,0.4371,FAIL: variance 43.7% > 30%
+param_sweep,,,,,,,,,,uup_mom_period,uup_mom_period=126,0.5711,0.4371,FAIL: variance 43.7% > 30%
+param_sweep,,,,,,,,,,confirmation_weeks,confirmation_weeks=1,0.623,0.1223,PASS: variance 12.2% <= 30%
+param_sweep,,,,,,,,,,confirmation_weeks,confirmation_weeks=2,0.599,0.1223,PASS: variance 12.2% <= 30%
+param_sweep,,,,,,,,,,confirmation_weeks,confirmation_weeks=3,0.5882,0.1223,PASS: variance 12.2% <= 30%
+param_sweep,,,,,,,,,,confirmation_weeks,confirmation_weeks=4,0.5508,0.1223,PASS: variance 12.2% <= 30%
+param_sweep,,,,,,,,,,spy_trend_ma,spy_trend_ma=150,0.5556,0.1225,PASS: variance 12.2% <= 30%
+param_sweep,,,,,,,,,,spy_trend_ma,spy_trend_ma=200,0.599,0.1225,PASS: variance 12.2% <= 30%
+param_sweep,,,,,,,,,,spy_trend_ma,spy_trend_ma=250,0.6284,0.1225,PASS: variance 12.2% <= 30%

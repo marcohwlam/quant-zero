@@ -1,0 +1,37 @@
+FAIL
+IS Sharpe: -0.1185
+OOS Sharpe: 0.8471
+IS MDD: -16.34%
+OOS MDD: -15.94%
+IS CAGR: -1.05%
+OOS CAGR: 8.24%
+Trade count (IS): 101
+Trade count (OOS): 51
+Win rate (IS): 40.59%
+Profit factor (IS): 0.7837
+DSR z-score: -4.8308 (FAIL)
+Permutation p-value: 1.0000 (FAIL)
+WF windows passed: 0/4
+WF Sharpe std: 0.8167
+WF Sharpe min: -0.3242
+MC p5 Sharpe: -4.6088
+Bootstrap Sharpe CI: [-0.9113, 0.4725]
+Market impact (est): 3.00 bps
+Liquidity constrained trades IS: 0
+Sensitivity pass: True (single strategy)
+Post-cost Sharpe (IS): -0.1185
+Universe size: 144
+VCP signal days: 587
+Total VCP signals: 852
+
+Gate 1 checks:
+  FAIL: is_sharpe_pass
+  PASS: oos_sharpe_pass
+  FAIL: is_mdd_pass
+  PASS: oos_mdd_pass
+  FAIL: win_rate_pass
+  FAIL: dsr_pass
+  FAIL: wf_pass
+  PASS: trade_count_pass
+  FAIL: permutation_pass
+  FAIL: mc_p5_pass

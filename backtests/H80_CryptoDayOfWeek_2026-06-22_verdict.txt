@@ -1,0 +1,86 @@
+Strategy: H80_CryptoDayOfWeek
+Date:     2026-06-22
+Asset:    Crypto (BTC/ETH/SOL/BNB/XRP/AVAX/ADA)
+
+OVERALL VERDICT: FAIL
+
+RECOMMENDATION:
+Gate 1 FAIL (both scenarios). Primary failures (TAKER): is_sharpe_pass, oos_sharpe_pass, win_rate_pass, permutation_pass, mc_p5_pass.
+
+==============================================================
+TAKER SCENARIO (0.10% taker fee + 0.05% slippage = 0.30% RT)
+==============================================================
+IS Sharpe:                     0.5625         FAIL  > 1.0
+IS CAGR:                       4.43%          PASS  
+IS MaxDD:                      -18.56%        PASS  < 20%
+IS Trade Count:                2420           PASS  >= 100 (hard); >= 200 pref.
+  IS Long:                     988            PASS  
+  IS Short:                    1432           PASS  
+IS Win Rate:                   41.94%         FAIL  > 50%
+IS Profit Factor:              1.1631         PASS  
+
+OOS Sharpe:                    -0.4371        FAIL  > 0.7
+OOS CAGR:                      -5.42%         PASS  
+OOS MaxDD:                     -14.57%        PASS  < 25%
+OOS Trade Count:               954            PASS  
+
+DSR z-score:                   9.1305         PASS  > 0
+MC p5 Sharpe:                  0.3357         FAIL  >= 0.5
+MC Median:                     0.9024         PASS  
+OOS Sharpe 95% CI:             [-1.7788, 0.8778] PASS  
+Permutation p-val:             1.0000         FAIL  <= 0.05
+WF Windows:                    5/14           PASS  >= 3 of 4
+WF Consistency:                1.0000         PASS  
+WF Sharpe Std:                 1.4482         PASS  
+WF Sharpe Min:                 -2.6572        FAIL  >= 0 (no losing OOS window)
+Cost/Gross Ratio:              0.1598         PASS  < 0.35 (H80 author threshold)
+Sensitivity:                   PASS           PASS  +/-20% -> < 30% Sharpe change
+
+Per-Asset IS Trade Counts:
+  BTC-USD: 557
+  ETH-USD: 407
+  SOL-USD: 0
+  BNB-USD: 407
+  XRP-USD: 407
+  AVAX-USD: 235
+  ADA-USD: 407
+
+TAKER Gate 1: FAIL
+
+==============================================================
+MAKER SCENARIO (0.02% maker fee + 0.05% slippage = 0.14% RT)
+==============================================================
+IS Sharpe:                     0.8014         FAIL  > 1.0
+IS CAGR:                       6.12%          PASS  
+IS MaxDD:                      -12.16%        PASS  < 20%
+IS Trade Count:                2420           PASS  >= 100
+IS Win Rate:                   43.55%         FAIL  > 50%
+IS Profit Factor:              1.2871         PASS  
+
+OOS Sharpe:                    -0.0938        FAIL  > 0.7
+OOS CAGR:                      -1.58%         PASS  
+OOS MaxDD:                     -11.22%        PASS  < 25%
+OOS Trade Count:               954            PASS  
+
+DSR z-score:                   8.0038         PASS  > 0
+MC p5 Sharpe:                  0.9418         PASS  >= 0.5
+Permutation p-val:             1.0000         FAIL  <= 0.05
+WF Windows:                    6/14           PASS  >= 3 of 4
+WF Sharpe Min:                 -2.2716        FAIL  >= 0
+Cost/Gross Ratio:              0.0746         PASS  < 0.35
+Sensitivity:                   PASS           PASS  
+
+MAKER Gate 1: FAIL
+
+==============================================================
+DATA COVERAGE NOTES
+==============================================================
+BTC-USD : from 2014-09-17 (full IS coverage 2016-2023)
+ETH-USD : from 2015-08-07 (near-full IS coverage)
+XRP-USD : from 2014-11-04 (full IS coverage)
+BNB-USD : from 2017-11-09 (partial IS: ~6yr of 8yr)
+ADA-USD : from 2017-10-02 (partial IS: ~6yr of 8yr)
+SOL-USD : from 2020-04-11 (partial IS: ~3.7yr of 8yr)
+AVAX-USD: from 2020-09-23 (partial IS: ~3.3yr of 8yr)
+Pre-listing bars: automatically excluded (NaN guards in simulator)
+No survivorship bias: all 7 assets actively traded as of 2026

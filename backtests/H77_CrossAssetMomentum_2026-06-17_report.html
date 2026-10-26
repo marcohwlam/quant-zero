@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>H77 Gate 1 Report — 2026-06-17</title>
+    <style>
+        body { font-family: monospace; background: #1a1a2e; color: #e0e0e0; padding: 20px; }
+        h1, h2 { color: #00d2ff; }
+        table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+        th, td { border: 1px solid #444; padding: 8px 12px; text-align: left; }
+        th { background: #16213e; color: #00d2ff; }
+        tr:nth-child(even) { background: #0f3460; }
+        .verdict { font-size: 2em; font-weight: bold; color: #e74c3c; padding: 10px; border: 2px solid #e74c3c; display: inline-block; }
+        .pass { color: #27ae60; }
+        .fail { color: #e74c3c; }
+        .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+        .metric-card { background: #16213e; border: 1px solid #444; padding: 15px; border-radius: 5px; }
+        .metric-value { font-size: 1.5em; font-weight: bold; color: #00d2ff; }
+        .metric-label { font-size: 0.8em; color: #aaa; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <h1>H77 Cross-Asset Weekly Momentum Portfolio</h1>
+    <p>Gate 1 Report | 2026-06-17 | QUA-328</p>
+    <div class="verdict">FAIL</div>
+
+    <h2>Primary Metrics</h2>
+    <div class="metric-grid">
+        <div class="metric-card">
+            <div class="metric-value fail">0.4585</div>
+            <div class="metric-label">IS Sharpe (threshold: >1.0)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value pass">0.8133</div>
+            <div class="metric-label">OOS Sharpe (threshold: >0.7)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value fail">-29.92%</div>
+            <div class="metric-label">IS Max Drawdown (threshold: <20%)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value pass">609</div>
+            <div class="metric-label">IS Trade Count (threshold: ≥100)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value pass">21.2788</div>
+            <div class="metric-label">DSR z-score (threshold: >0)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value pass">4/4</div>
+            <div class="metric-label">WF Windows Passed (threshold: ≥3/4)</div>
+        </div>
+    </div>
+
+    <h2>In-Sample Results (2007-06-01 to 2019-12-31)</h2>
+    <table>
+        <tr><th>Metric</th><th>Value</th></tr>
+        <tr><td>Sharpe Ratio</td><td>0.4585</td></tr>
+        <tr><td>Max Drawdown</td><td>-29.92%</td></tr>
+        <tr><td>Total Return</td><td>72.86%</td></tr>
+        <tr><td>Win Rate</td><td>39.41%</td></tr>
+        <tr><td>Profit Factor</td><td>0.3185</td></tr>
+        <tr><td>Trade Count</td><td>609</td></tr>
+    </table>
+
+    <h2>Out-of-Sample Results (2020-01-01 to 2024-12-31)</h2>
+    <table>
+        <tr><th>Metric</th><th>Value</th></tr>
+        <tr><td>Sharpe Ratio</td><td>0.8133</td></tr>
+        <tr><td>Max Drawdown</td><td>-23.51%</td></tr>
+        <tr><td>Total Return</td><td>64.52%</td></tr>
+        <tr><td>Win Rate</td><td>40.08%</td></tr>
+        <tr><td>Trade Count</td><td>252</td></tr>
+    </table>
+
+    <h2>Walk-Forward Analysis</h2>
+    <table>
+        <tr><th>Fold</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>Status</th></tr>
+        
+        <tr>
+            <td>1</td>
+            <td>2007-06-01 → 2009-10-09</td>
+            <td>2009-10-10 → 2010-07-23</td>
+            <td>-0.0299</td>
+            <td>1.3188</td>
+            <td style="color:#27ae60;font-weight:bold">✓ PASS</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>2010-07-24 → 2012-12-01</td>
+            <td>2012-12-02 → 2013-09-14</td>
+            <td>0.4869</td>
+            <td>1.3904</td>
+            <td style="color:#27ae60;font-weight:bold">✓ PASS</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>2013-09-15 → 2016-01-24</td>
+            <td>2016-01-25 → 2016-11-06</td>
+            <td>0.0867</td>
+            <td>0.4543</td>
+            <td style="color:#27ae60;font-weight:bold">✓ PASS</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>2016-11-07 → 2019-03-18</td>
+            <td>2019-03-19 → 2019-12-30</td>
+            <td>1.1291</td>
+            <td>0.3417</td>
+            <td style="color:#27ae60;font-weight:bold">✓ PASS</td>
+        </tr>
+    </table>
+
+    <h2>Statistical Rigor Pipeline</h2>
+    <table>
+        <tr><th>Test</th><th>Result</th><th>Status</th></tr>
+        <tr>
+            <td>Monte Carlo p5 Sharpe (1000 sims)</td>
+            <td>-6.7052</td>
+            <td class="fail">WARN: MC pessimistic bound weak</td>
+        </tr>
+        <tr>
+            <td>MC Median Sharpe</td>
+            <td>-5.6562</td>
+            <td>—</td>
+        </tr>
+        <tr>
+            <td>Bootstrap 95% CI Sharpe</td>
+            <td>[-0.0468, 0.9539]</td>
+            <td>—</td>
+        </tr>
+        <tr>
+            <td>Permutation Test p-value (500 perms)</td>
+            <td>0.9800</td>
+            <td class="fail">FAIL (no statistically significant alpha)</td>
+        </tr>
+        <tr>
+            <td>DSR z-score</td>
+            <td>21.2788</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>WF Sharpe Std (consistency)</td>
+            <td>0.4806</td>
+            <td class="pass">OK</td>
+        </tr>
+        <tr>
+            <td>WF Sharpe Min (worst window)</td>
+            <td>0.3417</td>
+            <td class="pass">OK</td>
+        </tr>
+    </table>
+
+    <h2>2022 Stress Period</h2>
+    <table>
+        <tr><th>Metric</th><th>Value</th></tr>
+        <tr><td>2022 Calendar Year Return</td><td>-11.65%</td></tr>
+        <tr><td>2022 Max Drawdown</td><td>-16.52%</td></tr>
+        <tr><td>2022 Sharpe</td><td>-0.8503</td></tr>
+        <tr><td>Avg Equity Allocation</td><td>30.45%</td></tr>
+        <tr><td>Avg Defensive Allocation</td><td>92.63%</td></tr>
+        <tr><td>Hypothesis Validation</td><td>CONFIRMED: defensive rotation dominated during 2022 selloff</td></tr>
+    </table>
+
+    <p style="color:#666; margin-top:40px">Generated by Backtest Runner Agent (QUA-328) | 2026-06-17</p>
+</body>
+</html>

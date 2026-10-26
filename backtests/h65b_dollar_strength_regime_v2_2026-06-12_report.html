@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>H65b Gate 1 Report — Dollar Strength Regime v2.0 (VIX Dual-Filter)</title>
+<style>
+body { font-family: Arial, sans-serif; max-width: 1100px; margin: 40px auto; color: #333; }
+h1 { color: #1a1a2e; } h2 { color: #16213e; border-bottom: 2px solid #eee; padding-bottom: 4px; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th, td { padding: 8px 12px; border: 1px solid #ddd; text-align: left; font-size: 0.9em; }
+th { background: #f4f4f4; font-weight: bold; }
+.verdict { font-size: 2em; font-weight: bold; color: #dc3545; margin: 20px 0; }
+.metric-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.metric-box { background: #f9f9f9; border: 1px solid #ddd; border-radius: 6px; padding: 12px; }
+.metric-val { font-size: 1.2em; font-weight: bold; color: #1a1a2e; }
+.perm-badge { color: #dc3545; font-weight: bold; font-size: 1.1em; }
+.warn { color: #856404; background: #fff3cd; padding: 10px; border-radius: 4px; margin: 10px 0; }
+.critical { color: #721c24; background: #f8d7da; padding: 10px; border-radius: 4px; margin: 10px 0; }
+.ok { color: #155724; background: #d4edda; padding: 10px; border-radius: 4px; margin: 10px 0; }
+.info { color: #0c5460; background: #d1ecf1; padding: 10px; border-radius: 4px; margin: 10px 0; }
+</style>
+</head>
+<body>
+<h1>Gate 1 Report — H65b Dollar Strength Regime v2.0 (VIX Dual-Filter, Asymmetric Exit)</h1>
+<p><strong>Report Date:</strong> 2026-06-12 | <strong>IS:</strong> 2003-01-01→2023-12-31 | <strong>OOS:</strong> 2024-01-01→2026-06-12</p>
+<p>v2.0 design: Asymmetric state machine — enter risk-off when DXY_mom &gt; threshold AND VIX &gt; vix_threshold;
+exit risk-off ONLY when both clear (sticky). Fixes Q4 2022 whipsaw (v1.0 Sharpe=-1.876) and 2014-2015 false positive.</p>
+<p>Supersedes H65 v1.0 (IS Sharpe=0.676, FAIL, QUA-213). Task: QUA-224.</p>
+
+<div class="verdict">Gate 1 Verdict: FAIL</div>
+<div class="warn"><strong>⚠ Trade Count Flag:</strong> IS trade count 23 < 120. QUA-224 requires flagging to Research Director. VIX filter may have reduced trades below viable threshold.</div>
+
+<div class="critical">
+<strong>CRITICAL FIX CHECK — 2022 Rate-Shock Sub-Period:</strong>
+<span style='color:#dc3545;font-weight:bold'>Sharpe = -1.8762 (STILL NEGATIVE ✗)</span>
+v1.0 was −1.876. v2.0 target: &gt; 0.0.
+VIX filter + asymmetric exit should keep strategy in SHY through Q4 2022 DXY reversal.
+</div>
+
+<div class="info">
+<strong>QUA-224 VARIANT COMPARISON (required):</strong><br>
+Variant-1 (vix_thresh=20): IS Sharpe=0.6692 | MDD=-18.03% | Trades=31<br>
+Variant-2 (vix_thresh=18): IS Sharpe=0.5448 | MDD=-16.37% | Trades=35<br>
+Variant-3 (vix_thresh=25): IS Sharpe=0.6725 | MDD=-22.03% | Trades=23<br>
+<strong>Selected for Gate 1: wide_vix25</strong>
+</div>
+
+
+
+<div class="critical">
+<strong>PERMUTATION TEST (CRITICAL):</strong>
+<span class="perm-badge">p = 0.1640</span>
+(FAIL — no statistical alpha.)
+Block-shuffle permutation (1000 shuffles, 46 regime blocks).
+</div>
+
+<h2>Gate 1 Criteria</h2>
+<table><thead><tr><th>Criterion</th><th>Value</th><th>Threshold</th><th>Status</th><th>Note</th></tr></thead>
+<tbody><tr><td><strong>IS_Sharpe</strong></td><td>0.6725</td><td>> 1.0</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>OOS_Sharpe</strong></td><td>1.0823</td><td>> 0.7</td><td style='color:#28a745;font-weight:bold'>PASS</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>IS_MaxDrawdown</strong></td><td>-22.03</td><td>> -20%</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>IS_CAGR</strong></td><td>7.5</td><td>>= 10%</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>IS_TradeCount</strong></td><td>23</td><td>>= 100</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>WF_Consistency</strong></td><td>3/4</td><td>>= 3/4 windows</td><td style='color:#28a745;font-weight:bold'>PASS</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>Permutation_pvalue</strong></td><td>0.164</td><td>< 0.05</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'>CRITICAL</td></tr>
+<tr><td><strong>Sharpe_2022</strong></td><td>-1.8762</td><td>> 0.0 (v1.0 was -1.876)</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'>QUA-224 critical fix target</td></tr>
+</tbody></table>
+
+<h2>IS Performance (2003-01-01 to 2023-12-31) — Selected Variant: wide_vix25</h2>
+<div class="metric-grid">
+  <div class="metric-box"><div>Sharpe Ratio</div><div class="metric-val">0.6725</div></div>
+  <div class="metric-box"><div>CAGR</div><div class="metric-val">7.50%</div></div>
+  <div class="metric-box"><div>Max Drawdown</div><div class="metric-val">-22.03%</div></div>
+  <div class="metric-box"><div>Total Return</div><div class="metric-val">356.41%</div></div>
+  <div class="metric-box"><div>Win Rate</div><div class="metric-val">47.83%</div></div>
+  <div class="metric-box"><div>Profit Factor</div><div class="metric-val">3.6520</div></div>
+  <div class="metric-box"><div>Trade Count</div><div class="metric-val">23</div></div>
+  <div class="metric-box"><div>Transitions/yr</div><div class="metric-val">2.1</div></div>
+  <div class="metric-box"><div>% Time in SPY</div><div class="metric-val">76.4%</div></div>
+</div>
+
+<h2>OOS Performance (2024-01-01 to 2026-06-12)</h2>
+<div class="metric-grid">
+  <div class="metric-box"><div>Sharpe Ratio</div><div class="metric-val">1.0823</div></div>
+  <div class="metric-box"><div>CAGR</div><div class="metric-val">16.10%</div></div>
+  <div class="metric-box"><div>Max Drawdown</div><div class="metric-val">-19.72%</div></div>
+  <div class="metric-box"><div>Win Rate</div><div class="metric-val">60.00%</div></div>
+  <div class="metric-box"><div>Trade Count</div><div class="metric-val">5</div></div>
+  <div class="metric-box"><div>OOS Degradation</div><div class="metric-val">-60.9%</div></div>
+</div>
+
+<h2>Statistical Rigor Pipeline</h2>
+<table><thead><tr><th>Metric</th><th>Value</th><th>Threshold</th><th>Status</th></tr></thead><tbody>
+<tr><td>MC p5 Sharpe (1000 bootstrap)</td><td>2.3267</td><td>&ge; 0.5</td><td>PASS</td></tr>
+<tr><td>MC Median Sharpe</td><td>7.3196</td><td>-</td><td>-</td></tr>
+<tr><td>Block Bootstrap Sharpe 95% CI</td><td>[0.2899, 1.0758]</td><td>-</td><td>-</td></tr>
+<tr><td>Block Bootstrap MDD 95% CI</td><td>[-38.76%, -15.41%]</td><td>-</td><td>-</td></tr>
+<tr><td><strong>Permutation test p-value</strong></td>
+    <td><strong>0.1640</strong></td>
+    <td>&le; 0.05</td>
+    <td style='color:#dc3545;font-weight:bold'>FAIL — CRITICAL</td></tr>
+<tr><td>Market Impact (SPY, $25K notional)</td><td>0.0080 bps</td><td>-</td>
+    <td>OK</td></tr>
+<tr><td>Deflated Sharpe Ratio</td><td>1.0000</td><td>&gt; 0</td>
+    <td>PASS</td></tr>
+</tbody></table>
+
+<h2>Walk-Forward Analysis (4 expanding windows)</h2>
+<table><thead><tr><th>#</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>OOS Pass</th></tr></thead>
+<tbody><tr><td>1</td><td>2003-01-01→2010-12-31</td><td>2011-01-01→2015-12-31</td><td>0.7550</td><td>0.4987</td><td style='color:#dc3545;font-weight:bold'>FAIL</td></tr>
+<tr><td>2</td><td>2003-01-01→2013-12-31</td><td>2014-01-01→2017-12-31</td><td>0.7534</td><td>0.7105</td><td style='color:#28a745;font-weight:bold'>PASS</td></tr>
+<tr><td>3</td><td>2003-01-01→2016-12-31</td><td>2017-01-01→2020-12-31</td><td>0.6549</td><td>0.9066</td><td style='color:#28a745;font-weight:bold'>PASS</td></tr>
+<tr><td>4</td><td>2003-01-01→2018-12-31</td><td>2019-01-01→2023-12-31</td><td>0.6573</td><td>0.7264</td><td style='color:#28a745;font-weight:bold'>PASS</td></tr>
+</tbody></table>
+<p>Windows passed: <strong>3/4</strong> | WF Sharpe std: 0.1445</p>
+
+<h2>Sub-Period Diagnostics (QUA-224 required)</h2>
+<p><em>2022 rate-shock row highlighted — critical fix target for v2.0.</em></p>
+<table><thead><tr><th>Period</th><th>Window</th><th>Sharpe</th><th>CAGR</th><th>MDD</th><th>Trades</th><th>% SPY</th><th>Note</th></tr></thead>
+<tbody><tr><td>pre_gfc_only</td><td>2003-01-01→2007-12-31</td><td>0.9412</td><td>12.0%</td><td>-13.7%</td><td>1</td><td>99.8%</td><td style='font-size:0.8em'></td></tr>
+<tr><td>gfc_only</td><td>2007-01-01→2009-12-31</td><td>0.2665</td><td>2.9%</td><td>-22.0%</td><td>4</td><td>68.3%</td><td style='font-size:0.8em'></td></tr>
+<tr><td>dollar_bull_2014_15</td><td>2014-01-01→2015-12-31</td><td>0.1940</td><td>1.6%</td><td>-17.4%</td><td>3</td><td>69.6%</td><td style='font-size:0.8em'></td></tr>
+<tr style='background:#fff3cd'><td>rate_shock_2022</td><td>2022-01-01→2022-12-31</td><td>-1.8762</td><td>-13.8%</td><td>-15.1%</td><td>2</td><td>14.7%</td><td style='font-size:0.8em'></td></tr>
+<tr><td>ai_bull_2023</td><td>2023-01-01→2023-12-31</td><td>1.7209</td><td>23.6%</td><td>-10.0%</td><td>2</td><td>99.6%</td><td style='font-size:0.8em'></td></tr>
+<tr><td>post_gfc_2010_2019</td><td>2010-01-01→2019-12-31</td><td>0.7511</td><td>8.0%</td><td>-17.4%</td><td>12</td><td>77.3%</td><td style='font-size:0.8em'></td></tr>
+<tr><td>dotcom_2000_2002</td><td>2000-01-01→2002-12-31</td><td>-1.1163</td><td>-17.4%</td><td>-47.8%</td><td>6</td><td>43.1%</td><td style='font-size:0.8em'>Pre-IS period. SHY started 2002-07-30; BIL used as risk-off substitute. QUA-224 requires explicit MD...</td></tr>
+</tbody></table>
+
+<h2>Parameter Sweep — Top 10 IS Configurations</h2>
+<table><thead><tr><th>Lookback</th><th>Threshold</th><th>VIX Thresh</th><th>Risk-off</th><th>IS Sharpe</th><th>IS CAGR</th><th>IS MDD</th><th>IS Trades</th></tr></thead>
+<tbody><tr><td>80</td><td>0.0000</td><td>25</td><td>SHY</td><td>0.8169</td><td>9.2%</td><td>-21.9%</td><td>16</td></tr>
+<tr><td>80</td><td>0.0000</td><td>25</td><td>BIL</td><td>0.8063</td><td>9.1%</td><td>-21.8%</td><td>16</td></tr>
+<tr><td>80</td><td>-0.0050</td><td>25</td><td>SHY</td><td>0.7770</td><td>8.6%</td><td>-27.4%</td><td>17</td></tr>
+<tr><td>80</td><td>-0.0050</td><td>25</td><td>BIL</td><td>0.7665</td><td>8.5%</td><td>-27.6%</td><td>17</td></tr>
+<tr><td>80</td><td>0.0050</td><td>25</td><td>SHY</td><td>0.7527</td><td>8.8%</td><td>-24.2%</td><td>17</td></tr>
+<tr><td>80</td><td>0.0050</td><td>25</td><td>BIL</td><td>0.7498</td><td>8.7%</td><td>-24.4%</td><td>17</td></tr>
+<tr><td>60</td><td>-0.0050</td><td>25</td><td>SHY</td><td>0.7437</td><td>8.3%</td><td>-20.2%</td><td>22</td></tr>
+<tr><td>60</td><td>-0.0050</td><td>25</td><td>BIL</td><td>0.7396</td><td>8.2%</td><td>-20.3%</td><td>22</td></tr>
+<tr><td>60</td><td>0.0050</td><td>25</td><td>SHY</td><td>0.7324</td><td>8.4%</td><td>-23.5%</td><td>22</td></tr>
+<tr><td>60</td><td>0.0050</td><td>25</td><td>BIL</td><td>0.7299</td><td>8.4%</td><td>-23.4%</td><td>22</td></tr>
+</tbody></table>
+
+<h2>v2.0 Design Notes</h2>
+<ul>
+  <li><strong>Asymmetric exit:</strong> Both DXY_mom &lt; threshold AND VIX &lt; vix_threshold required to exit risk-off. Prevents Q4 2022 premature re-entry.</li>
+  <li><strong>2014-2015 fix:</strong> VIX filter prevents risk-off entry when DXY strong but VIX calm (VIX was mostly 10-15 in 2014-2015).</li>
+  <li><strong>asymmetric_exit=True is NOT a free parameter</strong> — it is required design. Do not test symmetric version.</li>
+  <li><strong>Sticky-state benefit:</strong> Fewer transitions vs symmetric version; lower transaction cost drag.</li>
+</ul>
+
+<h2>Transaction Cost Model (ED-SLIP-001)</h2>
+<ul>
+  <li>Fixed: $0.005/share | Slippage: 0.005% of notional (ultra-liquid: SPY ADV &gt; 50M shares/day)</li>
+  <li>Market impact: Almgren-Chriss k=0.1 × σ × √(Q/ADV) × notional</li>
+  <li>Signal assets DX-Y.NYB and ^VIX: not traded. No FX or vol transaction costs.</li>
+</ul>
+
+</body></html>

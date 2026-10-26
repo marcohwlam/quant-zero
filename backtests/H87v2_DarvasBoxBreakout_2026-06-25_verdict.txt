@@ -1,0 +1,81 @@
+H87v2 Darvas Box Breakout — Regime-Adjusted Gate 1 Verdict
+======================================================================
+Date:         2026-06-25
+Strategy:     H87v2_DarvasBoxBreakout_RegimeAdjusted
+Issue:        QUA-423
+Parent:       QUA-422
+IS composite: 2023-01-01 to 2025-09-30
+Walk-forward: 4 × (6mo IS / 3mo OOS)
+Overall:      FAIL (8/10 checks passed)
+======================================================================
+
+=== H87v2 Changes from H87 ===
+IS period:    2022-01-01–2024-12-31 → 2023-01-01–2025-12-31 (remove 2022 bear)
+Walk-forward: 6×(3mo IS/1mo OOS) → 4×(6mo IS/3mo OOS)
+box_n sweep:  [15,20,25] → [20,25,30] (box_n=15 produced neg IS Sharpe in H87)
+
+=== IS Performance (2023-01-01 to 2025-09-30) ===
+Sharpe:           1.0716   [PASS > 1.0]
+Max Drawdown:     -14.93%  [PASS < 20%]
+Total Return:     37.27%
+Win Rate:         58.30%     [PASS > 50%]
+Profit Factor:    1.5300    [PASS > 1.0]
+Trade Count:      259          [PASS >= 100]
+
+=== Walk-Forward OOS Performance ===
+Composite OOS Sharpe (trade-weighted): 0.2038  [FAIL > 0.7]
+  WF1 IS 2023-01-01–2023-06-30: Sharpe=1.2476 trades=43 | OOS 2023-07-01–2023-09-30: Sharpe=0.0972 trades=21 | PASS
+  WF2 IS 2023-10-01–2024-03-31: Sharpe=4.5084 trades=44 | OOS 2024-04-01–2024-06-30: Sharpe=0.6328 trades=20 | PASS
+  WF3 IS 2024-07-01–2024-12-31: Sharpe=1.0183 trades=49 | OOS 2025-01-01–2025-03-31: Sharpe=0.8392 trades=20 | PASS
+  WF4 IS 2025-04-01–2025-09-30: Sharpe=-0.7469 trades=36 | OOS 2025-10-01–2025-12-31: Sharpe=-0.6621 trades=22 | FAIL
+  WF OOS Sharpe>0: 3/4  [PASS: >= 3/4]
+  WF std=0.5803 | min=-0.6621
+
+=== Statistical Rigor ===
+MC p5 Sharpe:       1.0434  ✓
+MC Median Sharpe:   2.7086
+Sharpe 95% CI:      [-0.2602, 2.3718]
+MDD 95% CI:         [-0.2693, -0.0790]
+Permutation p:      1.0000  [FAIL: < 0.05]
+DSR:                0.9907  [PASS: > 0]
+
+=== Parameter Sweep (27 combos — 3×3×3) ===
+  box_n [20,25,30] × box_width_max [0.08,0.10,0.12] × vol_ratio_min [1.20,1.30,1.40]
+  Sharpe range: 0.6272 – 1.2186
+  Sensitivity: 55.2%  [PASS: < 100%]
+  (H87 had 290% sensitivity from box_n=15; H87v2 removes that combo)
+
+=== Gate 1 Checks ===
+  [PASS] IS Sharpe                           1.0716  (threshold: > 1.0)
+  [FAIL] Composite OOS Sharpe (WF)           0.2038  (threshold: > 0.7)
+  [PASS] IS Max Drawdown                     -14.93%  (threshold: < 20%)
+  [PASS] IS Trade Count                      259  (threshold: >= 100)
+  [PASS] IS Win Rate                         58.30%  (threshold: > 50%)
+  [PASS] IS Profit Factor                    1.5300  (threshold: > 1.0)
+  [PASS] DSR                                 0.9907  (threshold: > 0)
+  [PASS] WF OOS Sharpe>0 windows             3/4  (threshold: >= 3/4)
+  [PASS] Parameter Sensitivity               55.2%  (threshold: < 100% SR range)
+  [FAIL] Permutation Test                    p=1.0000  (threshold: p < 0.05)
+
+=== Root Cause Analysis ===
+Primary failures (2 of 10 gates):
+  - Composite OOS Sharpe (WF): got 0.2038, need > 0.7
+  - Permutation Test: got p=1.0000, need p < 0.05
+
+=== Recommendation ===
+REJECT — do not advance to paper trading.
+NOTE: H87v2 is iteration 2/2. If FAIL, RETIRE Darvas Box family. Do not run H87v3.
+
+=== Data Quality ===
+Universe:     h82v2_universe_2018_jan.csv (S&P 500 + S&P 400 PIT proxy ~2018)
+Tickers:      766 loaded | 766 flagged (>5 missing days)
+Survivorship: PIT proxy - survivorship bias direction: inflates Sharpe
+Price adj:    yfinance auto_adjust=True
+Look-ahead:   CLEAN (box ceiling from prior N days shifted; entry T+1 open)
+
+=== Files ===
+Report:  backtests/H87v2_DarvasBoxBreakout_2026-06-25_report.html
+Metrics: backtests/H87v2_DarvasBoxBreakout_2026-06-25.json
+Verdict: backtests/H87v2_DarvasBoxBreakout_2026-06-25_verdict.txt
+Trades:  backtests/H87v2_DarvasBoxBreakout_2026-06-25_trades.csv
+Sweep:   backtests/H87v2_DarvasBoxBreakout_2026-06-25_sweep.csv

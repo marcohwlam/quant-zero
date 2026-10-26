@@ -1,0 +1,82 @@
+FAIL
+Strategy: H81v2_USDEMSpreadThreeState
+Date: 2026-06-22
+IS period: 2008-01-01 to 2022-12-31
+OOS period: 2023-01-01 to 2026-06-01
+
+── Core Metrics ──
+IS Sharpe: -0.0074 (threshold >1.0)
+OOS Sharpe: 0.1799 (threshold >0.7)
+IS MDD: -12.96% (threshold <20%)
+OOS MDD: -9.97%
+IS CAGR: -0.16%
+OOS CAGR: 0.92%
+Trade count (IS): 295 (threshold >=100 total; >=30 per WF window)
+Win rate (IS): 46.48%
+
+── Regime Breakdown (IS, weekly) ──
+  EM_DOMINANT: 267 weeks (35.4%)
+  NEUTRAL: 181 weeks (24.0%)
+  USD_DOMINANT: 279 weeks (37.0%)
+  VIX_OVERRIDE: 28 weeks (3.7%)
+
+── Statistical Rigor ──
+DSR z-score: 0.0000 (FAIL)
+Permutation p-value: 0.3035 (FAIL (>=0.05))
+MC p5 Sharpe: -0.3298
+MC Median Sharpe: 0.0252
+Bootstrap Sharpe CI: [-0.5039, 0.5114]
+Bootstrap MDD CI: [-0.3807, -0.1008]
+WF windows passed: 2/6
+WF Sharpe std: 0.9844
+UURR threshold sensitivity variance: 458.4%
+Sensitivity pass (<=30%): FAIL
+
+── Walk-Forward Windows ──
+  Window 1: IS [2008-01-01–2010-12-31] Sharpe=0.0477 | OOS [2011-01-01–2011-06-30] Sharpe=0.1435 | CR=3.0084 | IS trades=38 | FAIL
+  Window 2: IS [2008-07-01–2011-06-30] Sharpe=0.4340 | OOS [2011-07-01–2011-12-31] Sharpe=-0.4639 | CR=-1.0689 | IS trades=44 | FAIL
+  Window 3: IS [2009-01-01–2011-12-31] Sharpe=0.4401 | OOS [2012-01-01–2012-06-30] Sharpe=0.8636 | CR=1.9623 | IS trades=51 | PASS
+  Window 4: IS [2009-07-01–2012-06-30] Sharpe=0.8483 | OOS [2012-07-01–2012-12-31] Sharpe=1.3353 | CR=1.5741 | IS trades=63 | PASS
+  Window 5: IS [2010-01-01–2012-12-31] Sharpe=0.3556 | OOS [2013-01-01–2013-06-30] Sharpe=-1.7421 | CR=-4.8990 | IS trades=65 | FAIL
+  Window 6: IS [2010-07-01–2013-06-30] Sharpe=0.6163 | OOS [2013-07-01–2013-12-31] Sharpe=-0.1199 | CR=-0.1945 | IS trades=63 | FAIL
+
+── Parameter Sweep (IS sensitivity) ──
+  uurr_lookback: {}
+    Gate1: FAIL: variance 1764.0% > 30%
+  uurr_threshold: {}
+    Gate1: FAIL: variance 458.4% > 30%
+  neutral_eem_weight: {}
+    Gate1: FAIL: variance 816.3% > 30%
+  vix_threshold: {}
+    Gate1: FAIL: variance 369.9% > 30%
+
+── 2022 Standalone (Jan–Dec 2022 — Rate Shock) ──
+  Sharpe: -1.5311
+  CAGR: -5.00%
+  MDD: -6.49%
+  Regime: {'USD_DOMINANT': 38, 'NEUTRAL': 10, 'EM_DOMINANT': 3}
+  Trade count: 21
+
+── H81 vs H81v2 Direct Comparison ──
+  IS Sharpe:      H81=0.5990  →  H81v2=-0.0074  (↓ Worse)
+  OOS Sharpe:     H81=0.9181  →  H81v2=0.1799  (↓ Worse)
+  IS MDD:         H81=-20.09%  →  H81v2=-12.96%  (↑ Less DD)
+  Perm p-value:   H81=1.0000  →  H81v2=0.3035  (↑ Improved (lower is better))
+  Sensitivity:    H81=43.7% (threshold sweep)  →  H81v2=458.4%  (↓ More sensitive)
+
+── Gate 1 Checks ──
+  FAIL: is_sharpe_pass
+  FAIL: oos_sharpe_pass
+  PASS: is_mdd_pass
+  PASS: oos_mdd_pass
+  FAIL: win_rate_pass
+  FAIL: dsr_pass
+  FAIL: wf_pass
+  PASS: trade_count_pass
+  FAIL: permutation_pass
+  FAIL: mc_p5_pass
+  FAIL: sensitivity_pass
+
+OOS Data Quality: PASS | Coverage: 100.0%
+
+Family status: H81 iteration 2/2. RETIRED — both H81 and H81v2 failed Gate 1.

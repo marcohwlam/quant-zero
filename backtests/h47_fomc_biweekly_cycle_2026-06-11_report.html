@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<title>H47 FOMC Bi-Weekly Cycle — Gate 1 Report</title>
+<style>
+body { font-family: monospace; margin: 40px; background: #111; color: #eee; }
+h1 { color: #f44336; }
+h2 { color: #90caf9; border-bottom: 1px solid #333; padding-bottom: 6px; }
+table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+th { background: #1e3a5f; color: #fff; padding: 8px; text-align: left; }
+td { padding: 6px 10px; border: 1px solid #333; }
+tr:nth-child(even) { background: #1a1a1a; }
+.pass { color: #4caf50; font-weight: bold; }
+.fail { color: #f44336; font-weight: bold; }
+.metric-value { text-align: right; font-weight: bold; }
+</style></head><body>
+<h1>H47 FOMC Bi-Weekly Cycle — Gate 1: FAIL</h1>
+<p>Date: 2026-06-11 | IS: 2003-01-01 → 2023-12-31 | OOS: 2024-01-01 → 2026-06-10</p>
+
+<h2>Core Gate 1 Metrics</h2>
+<table>
+<tr><th>Metric</th><th>Value</th><th>Threshold</th><th>Result</th></tr>
+<tr><td>IS Sharpe</td><td class="metric-value">0.5425</td><td>&gt; 1.0</td><td class="fail">FAIL</td></tr>
+<tr><td>OOS Sharpe</td><td class="metric-value">0.5933</td><td>&gt; 0.7</td><td class="fail">FAIL</td></tr>
+<tr><td>IS Max Drawdown</td><td class="metric-value">-27.87%</td><td>&lt; 20%</td><td class="fail">FAIL</td></tr>
+<tr><td>IS CAGR</td><td class="metric-value">4.78%</td><td>&ge; 10%</td><td class="fail">FAIL</td></tr>
+<tr><td>Win Rate</td><td class="metric-value">59.12%</td><td>&gt; 50%</td><td class="pass">PASS</td></tr>
+<tr><td>Trade Count (IS)</td><td class="metric-value">1001</td><td>&ge; 100</td><td class="pass">PASS</td></tr>
+<tr><td>WF Windows Passed</td><td class="metric-value">3/4</td><td>&ge; 3</td><td class="pass">PASS</td></tr>
+<tr><td>Permutation p-value</td><td class="metric-value">1.0000</td><td>&lt; 0.05</td><td class="fail">FAIL</td></tr>
+<tr><td>MC p5 Sharpe</td><td class="metric-value">0.1707</td><td>&ge; 0.5</td><td class="fail">FAIL</td></tr>
+<tr><td>DSR</td><td class="metric-value">0.000004</td><td>&gt; 0</td><td class="pass">PASS</td></tr>
+<tr><td>Sensitivity (max dev)</td><td class="metric-value">61.88%</td><td>&lt; 30%</td><td class="fail">FAIL</td></tr>
+</table>
+
+<h2>Statistical Rigor</h2>
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Bootstrap Sharpe CI (95%)</td><td>[0.1066, 0.9786]</td></tr>
+<tr><td>Bootstrap MDD CI (95%)</td><td>[-42.58%, -14.80%]</td></tr>
+<tr><td>MC p5 / median / p95</td><td>0.1707 / 1.2717 / 2.5626</td></tr>
+<tr><td>Market Impact (bps)</td><td>0.0199</td></tr>
+<tr><td>Q/ADV ratio</td><td>2.63e-06</td></tr>
+<tr><td>WF Sharpe std</td><td>1.1538</td></tr>
+<tr><td>WF Sharpe min</td><td>-1.3308</td></tr>
+</table>
+
+<h2>Special Diagnostics</h2>
+<h3>Even vs Odd Week</h3>
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Avg even-week return</td><td>0.1938%</td></tr>
+<tr><td>Avg odd-week return</td><td>0.2132%</td></tr>
+<tr><td>Even-week win rate</td><td>58.05%</td></tr>
+<tr><td>t-statistic (even vs odd)</td><td>-0.144</td></tr>
+<tr><td>t-test p-value</td><td>0.8856</td></tr>
+</table>
+
+<h3>Post-Publication Decay</h3>
+<table>
+<tr><th>Period</th><th>Even-Week Mean Return</th><th>Even-Week Sharpe</th><th>N Weeks</th></tr>
+<tr><td>Pre-2019 (IS)</td><td>0.0803%</td><td>0.2554</td><td>383</td></tr>
+<tr><td>Post-2019 (OOS)</td><td>0.4590%</td><td>1.5030</td><td>180</td></tr>
+</table>
+<p><b>Retirement signal: No retirement signal</b></p>
+
+<h3>200-DMA Overlay Impact</h3>
+<table>
+<tr><th>Config</th><th>Sharpe</th><th>MDD</th></tr>
+<tr><td>Baseline (MA=200, size=0.5)</td><td>0.5425</td><td>-27.87%</td></tr>
+<tr><td>No MA filter (size=1.0)</td><td>0.3995</td><td>-45.48%</td></tr>
+</table>
+
+<h2>Walk-Forward Windows</h2>
+<table>
+<tr><th>IS Window</th><th>OOS Window</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>OOS Profitable</th></tr>
+<tr><td>2003-01-01_2007-12-31</td><td>2008-01-01_2008-12-31</td><td>0.6224</td><td>-1.3308</td><td class="fail">NO</td></tr><tr><td>2009-01-01_2013-12-31</td><td>2014-01-01_2014-06-30</td><td>0.7461</td><td>0.5333</td><td class="pass">YES</td></tr><tr><td>2014-01-01_2018-12-31</td><td>2019-01-01_2019-12-31</td><td>0.4725</td><td>1.8395</td><td class="pass">YES</td></tr><tr><td>2019-01-01_2023-12-31</td><td>2024-01-01_2024-12-31</td><td>0.8758</td><td>0.9225</td><td class="pass">YES</td></tr>
+</table>
+
+<h2>Sub-Period Performance</h2>
+<table>
+<tr><th>Period</th><th>Sharpe</th><th>MDD</th></tr>
+<tr><td>Full IS (2003–2023)</td><td>0.5425</td><td>-27.87%</td></tr>
+<tr><td>Pre-pub IS (2003–2018)</td><td>0.4075</td><td>-27.87%</td></tr>
+<tr><td>Post-pub (2019–2026)</td><td>0.8826</td><td>-15.09%</td></tr>
+<tr><td>OOS (2024–2026-06-10)</td><td>0.5933</td><td>-13.44%</td></tr>
+</table>
+
+</body></html>

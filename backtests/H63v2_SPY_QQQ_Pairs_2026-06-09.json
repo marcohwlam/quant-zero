@@ -1,0 +1,451 @@
+{
+  "strategy": "H63v2_SPY_QQQ_Pairs_Daily_Baseline_Mean_Reversion",
+  "version": "2.0",
+  "gate": "Gate 1 v2.2",
+  "report_date": "2026-06-09",
+  "is_window": {
+    "start": "2018-01-01",
+    "end": "2023-12-31"
+  },
+  "oos_window": {
+    "start": "2024-01-01",
+    "end": "2026-06-06"
+  },
+  "default_params": {
+    "BASELINE_LOOKBACK_DAYS": 20,
+    "HEDGE_LOOKBACK_DAYS": 20,
+    "ENTRY_ZSCORE": 1.5,
+    "EXIT_ZSCORE": 0.25,
+    "STOP_ZSCORE": 3.0,
+    "VIX_FILTER_THRESHOLD": 30.0,
+    "OPEN_SKIP_MINUTES": 15,
+    "EOD_EXIT_TIME": "15:45",
+    "INIT_CASH": 25000.0,
+    "SPY_NOTIONAL": 12500.0,
+    "QQQ_NOTIONAL": 12500.0
+  },
+  "is_metrics": {
+    "sharpe": -1.5396,
+    "max_drawdown": -0.3713,
+    "total_return": -0.3612,
+    "win_rate": 0.121,
+    "profit_factor": 0.427,
+    "trade_count": 2751,
+    "trades_per_year": 458.8,
+    "avg_trades_per_day": 1.82,
+    "trades_per_wf_fold": 687.8,
+    "avg_pnl_per_trade": -3.2827,
+    "avg_cost_per_trade": 3.4681,
+    "total_cost": 9540.76,
+    "ppt_bps": -1.31,
+    "cost_to_gross_ratio": 18.7059,
+    "liquidity_constrained_pct": 0.0,
+    "years": 6.0,
+    "exit_reason_summary": {
+      "STOP_ZSCORE": 2375,
+      "EOD_EXIT": 376
+    },
+    "params": {
+      "BASELINE_LOOKBACK_DAYS": 20,
+      "HEDGE_LOOKBACK_DAYS": 20,
+      "ENTRY_ZSCORE": 1.5,
+      "EXIT_ZSCORE": 0.25,
+      "STOP_ZSCORE": 3.0,
+      "VIX_FILTER_THRESHOLD": 30.0,
+      "OPEN_SKIP_MINUTES": 15,
+      "EOD_EXIT_TIME": "15:45",
+      "INIT_CASH": 25000.0,
+      "SPY_NOTIONAL": 12500.0,
+      "QQQ_NOTIONAL": 12500.0
+    }
+  },
+  "oos_metrics": {
+    "sharpe": -1.3189,
+    "max_drawdown": -0.1026,
+    "total_return": -0.0925,
+    "win_rate": 0.1279,
+    "profit_factor": 0.5032,
+    "trade_count": 907,
+    "trades_per_year": 373.5,
+    "avg_trades_per_day": 1.49,
+    "trades_per_wf_fold": 226.8,
+    "avg_pnl_per_trade": -2.5501,
+    "avg_cost_per_trade": 2.9079,
+    "total_cost": 2637.46,
+    "ppt_bps": -1.02,
+    "cost_to_gross_ratio": 8.1285,
+    "liquidity_constrained_pct": 0.0,
+    "years": 2.43,
+    "exit_reason_summary": {
+      "STOP_ZSCORE": 720,
+      "EOD_EXIT": 187
+    },
+    "params": {
+      "BASELINE_LOOKBACK_DAYS": 20,
+      "HEDGE_LOOKBACK_DAYS": 20,
+      "ENTRY_ZSCORE": 1.5,
+      "EXIT_ZSCORE": 0.25,
+      "STOP_ZSCORE": 3.0,
+      "VIX_FILTER_THRESHOLD": 30.0,
+      "OPEN_SKIP_MINUTES": 15,
+      "EOD_EXIT_TIME": "15:45",
+      "INIT_CASH": 25000.0,
+      "SPY_NOTIONAL": 12500.0,
+      "QQQ_NOTIONAL": 12500.0
+    },
+    "oos_data_quality": {
+      "strategy_name": "H63v2_SPY_QQQ_Pairs",
+      "oos_total_rows": 609,
+      "oos_clean_rows": 609,
+      "oos_data_coverage_pct": 100.0,
+      "oos_nan_per_column": {
+        "Open": 0,
+        "High": 0,
+        "Low": 0,
+        "Close": 0,
+        "Volume": 0
+      },
+      "oos_total_nans": 0,
+      "metrics_nan_fields": [],
+      "advisory_nan_fields": [],
+      "returns_nan_count": 0,
+      "returns_nan_pct": 0.0,
+      "has_critical_nan": false,
+      "recommendation": "PASS",
+      "block_reasons": []
+    }
+  },
+  "gate1_verdict": {
+    "criteria": {
+      "IS_Sharpe": {
+        "value": -1.5396,
+        "threshold": "> 1.0",
+        "pass": false
+      },
+      "OOS_Sharpe": {
+        "value": -1.3189,
+        "threshold": "> 0.7",
+        "pass": false
+      },
+      "IS_MaxDrawdown": {
+        "value": -37.13,
+        "threshold": "> -20%",
+        "pass": false
+      },
+      "OOS_Degradation": {
+        "value": 100.0,
+        "threshold": "< 40%",
+        "pass": false
+      },
+      "IS_TradeCount": {
+        "value": 2751,
+        "threshold": ">= 100",
+        "pass": true
+      },
+      "TradeFrequency": {
+        "value": 1.82,
+        "threshold": "3-8/day",
+        "pass": false,
+        "note": "LOW (1.82/day)"
+      }
+    },
+    "verdict": "FAIL",
+    "oos_degradation": 1.0,
+    "freq_flag": "LOW (1.82/day)"
+  },
+  "statistical_rigor": {
+    "mc_p5_sharpe": -3.5009511138841085,
+    "mc_median_sharpe": -2.8739881488202648,
+    "mc_p95_sharpe": -2.2832137956814944,
+    "sharpe_ci_low": -2.1805597800442857,
+    "sharpe_ci_high": -0.7935225133843267,
+    "mdd_ci_low": -0.567412128644382,
+    "mdd_ci_high": -0.17079470798315174,
+    "win_rate_ci_low": 0.09851551956815115,
+    "win_rate_ci_high": 0.13699392712550604,
+    "market_impact_bps": 0.007293687940192527,
+    "liquidity_constrained": false,
+    "order_to_adv_ratio": 3.8234437468723595e-07,
+    "permutation_pvalue": 1.0,
+    "permutation_test_pass": false,
+    "wf_sharpe_std": 1.3538856254776472,
+    "wf_sharpe_min": -2.6602,
+    "dsr": 0.001517
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "window": 1,
+        "is_start": "2018-01-01",
+        "is_end": "2020-12-31",
+        "oos_start": "2021-01-01",
+        "oos_end": "2021-06-30",
+        "is_sharpe": -1.7637,
+        "oos_sharpe": -2.6602,
+        "oos_is_ratio": NaN,
+        "oos_pass": false
+      },
+      {
+        "window": 2,
+        "is_start": "2018-07-01",
+        "is_end": "2021-06-30",
+        "oos_start": "2021-07-01",
+        "oos_end": "2021-12-31",
+        "is_sharpe": -1.8602,
+        "oos_sharpe": -0.3743,
+        "oos_is_ratio": NaN,
+        "oos_pass": false
+      },
+      {
+        "window": 3,
+        "is_start": "2019-01-01",
+        "is_end": "2021-12-31",
+        "oos_start": "2022-01-01",
+        "oos_end": "2022-06-30",
+        "is_sharpe": -1.5359,
+        "oos_sharpe": 0.6923,
+        "oos_is_ratio": NaN,
+        "oos_pass": false
+      },
+      {
+        "window": 4,
+        "is_start": "2019-07-01",
+        "is_end": "2022-06-30",
+        "oos_start": "2022-07-01",
+        "oos_end": "2022-12-31",
+        "is_sharpe": -1.3252,
+        "oos_sharpe": 0.6167,
+        "oos_is_ratio": NaN,
+        "oos_pass": false
+      }
+    ],
+    "windows_passed": 0,
+    "wf_sharpe_std": 1.3538856254776472,
+    "wf_sharpe_min": -2.6602
+  },
+  "sensitivity": {
+    "base_sharpe": -1.5396,
+    "params": {
+      "BASELINE_LOOKBACK_DAYS": {
+        "-20%": {
+          "value": 16,
+          "sharpe": -1.2645,
+          "sharpe_change_pct": 17.868277474668755
+        },
+        "+20%": {
+          "value": 24,
+          "sharpe": -1.9332,
+          "sharpe_change_pct": -25.565081839438808
+        }
+      },
+      "ENTRY_ZSCORE": {
+        "-20%": {
+          "value": 1.2000000000000002,
+          "sharpe": -1.4658,
+          "sharpe_change_pct": 4.793452844894784
+        },
+        "+20%": {
+          "value": 1.7999999999999998,
+          "sharpe": -1.4561,
+          "sharpe_change_pct": 5.423486619901281
+        }
+      },
+      "EXIT_ZSCORE": {
+        "-20%": {
+          "value": 0.2,
+          "sharpe": -1.5396,
+          "sharpe_change_pct": 0.0
+        },
+        "+20%": {
+          "value": 0.3,
+          "sharpe": -1.5396,
+          "sharpe_change_pct": 0.0
+        }
+      },
+      "HEDGE_LOOKBACK_DAYS": {
+        "-20%": {
+          "value": 16,
+          "sharpe": -1.0288,
+          "sharpe_change_pct": 33.17744868797091
+        },
+        "+20%": {
+          "value": 24,
+          "sharpe": -1.95,
+          "sharpe_change_pct": -26.65627435697583
+        }
+      },
+      "VIX_FILTER_THRESHOLD": {
+        "-20%": {
+          "value": 24.0,
+          "sharpe": -1.5434,
+          "sharpe_change_pct": -0.24681735515718534
+        },
+        "+20%": {
+          "value": 36.0,
+          "sharpe": -1.5458,
+          "sharpe_change_pct": -0.4027020005196144
+        }
+      }
+    },
+    "sensitivity_pass": false
+  },
+  "parameter_sweep": {
+    "total_combinations": 324,
+    "best_is_sharpe": -0.1076,
+    "median_is_sharpe": -1.5387,
+    "best_params": {
+      "BASELINE_LOOKBACK_DAYS": 10.0,
+      "HEDGE_LOOKBACK_DAYS": 10.0,
+      "ENTRY_ZSCORE": 2.0,
+      "EXIT_ZSCORE": 0.1,
+      "STOP_ZSCORE": 3.0,
+      "VIX_FILTER_THRESHOLD": 30.0,
+      "OPEN_SKIP_MINUTES": 15,
+      "EOD_EXIT_TIME": "15:45",
+      "INIT_CASH": 25000.0,
+      "SPY_NOTIONAL": 12500.0,
+      "QQQ_NOTIONAL": 12500.0
+    },
+    "sweep_summary": {
+      "BASELINE_LOOKBACK_DAYS": {
+        "count": 324.0,
+        "mean": 18.75,
+        "std": 7.406538405052042,
+        "min": 10.0,
+        "25%": 13.75,
+        "50%": 17.5,
+        "75%": 22.5,
+        "max": 30.0
+      },
+      "ENTRY_ZSCORE": {
+        "count": 324.0,
+        "mean": 1.5666666666666667,
+        "std": 0.3304935796531462,
+        "min": 1.2,
+        "25%": 1.2,
+        "50%": 1.5,
+        "75%": 2.0,
+        "max": 2.0
+      },
+      "EXIT_ZSCORE": {
+        "count": 324.0,
+        "mean": 0.2833333333333334,
+        "std": 0.16524678982657307,
+        "min": 0.1,
+        "25%": 0.1,
+        "50%": 0.25,
+        "75%": 0.5,
+        "max": 0.5
+      },
+      "HEDGE_LOOKBACK_DAYS": {
+        "count": 324.0,
+        "mean": 20.0,
+        "std": 8.177595307636585,
+        "min": 10.0,
+        "25%": 10.0,
+        "50%": 20.0,
+        "75%": 30.0,
+        "max": 30.0
+      },
+      "VIX_FILTER_THRESHOLD": {
+        "count": 324.0,
+        "mean": 30.0,
+        "std": 4.088797653818292,
+        "min": 25.0,
+        "25%": 25.0,
+        "50%": 30.0,
+        "75%": 35.0,
+        "max": 35.0
+      },
+      "is_sharpe": {
+        "count": 324.0,
+        "mean": -1.4392185185185185,
+        "std": 0.6055847521527468,
+        "min": -2.2784,
+        "25%": -1.9997749999999999,
+        "50%": -1.5387,
+        "75%": -0.9619,
+        "max": -0.1076
+      },
+      "is_mdd": {
+        "count": 324.0,
+        "mean": -0.4153342592592593,
+        "std": 0.2771304166488358,
+        "min": -0.9877,
+        "25%": -0.6558,
+        "50%": -0.37095,
+        "75%": -0.167425,
+        "max": -0.0264
+      },
+      "is_trades": {
+        "count": 324.0,
+        "mean": 3037.472222222222,
+        "std": 1837.7977168726745,
+        "min": 108.0,
+        "25%": 1473.0,
+        "50%": 2782.0,
+        "75%": 4592.25,
+        "max": 6684.0
+      },
+      "is_win_rate": {
+        "count": 324.0,
+        "mean": 0.1576759259259259,
+        "std": 0.10447018198169568,
+        "min": 0.048,
+        "25%": 0.09972500000000001,
+        "50%": 0.12304999999999999,
+        "75%": 0.16555,
+        "max": 0.477
+      },
+      "is_profit_factor": {
+        "count": 324.0,
+        "mean": 0.442500925925926,
+        "std": 0.22382310345450687,
+        "min": 0.1005,
+        "25%": 0.277225,
+        "50%": 0.37834999999999996,
+        "75%": 0.5824,
+        "max": 0.9574
+      },
+      "is_avg_tpd": {
+        "count": 324.0,
+        "mean": 2.0127777777777776,
+        "std": 1.217940834425462,
+        "min": 0.07,
+        "25%": 0.975,
+        "50%": 1.84,
+        "75%": 3.0425,
+        "max": 4.43
+      }
+    }
+  },
+  "oos_data_quality": {
+    "strategy_name": "H63v2_SPY_QQQ_Pairs",
+    "oos_total_rows": 609,
+    "oos_clean_rows": 609,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "Open": 0,
+      "High": 0,
+      "Low": 0,
+      "Close": 0,
+      "Volume": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "data_quality": {
+    "survivorship_bias": "N/A \u2014 SPY and QQQ are broad market ETFs",
+    "minute_data_source": "Alpaca SIP feed (cached H63v1 run, split-adjusted)",
+    "daily_data_source": "yfinance auto_adjust=True (SPY, QQQ, ^VIX)",
+    "lookahead_bias": "None \u2014 daily baseline uses prior-day closes; 1-bar fill latency",
+    "h63v2_fix": "Intraday z-score anchored to daily close baseline (not rolling window)"
+  },
+  "pdt_note": "Strategy targets 3-8 spread crossings/day (6-16 day trades/day). PDT designation required. Minimum capital $30K recommended."
+}

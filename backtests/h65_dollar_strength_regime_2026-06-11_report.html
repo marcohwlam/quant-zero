@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>H65 Gate 1 Report — US Dollar Strength Regime Signal</title>
+<style>
+body { font-family: Arial, sans-serif; max-width: 1100px; margin: 40px auto; color: #333; }
+h1 { color: #1a1a2e; } h2 { color: #16213e; border-bottom: 2px solid #eee; padding-bottom: 4px; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th, td { padding: 8px 12px; border: 1px solid #ddd; text-align: left; font-size: 0.9em; }
+th { background: #f4f4f4; font-weight: bold; }
+.verdict { font-size: 2em; font-weight: bold; color: #dc3545; margin: 20px 0; }
+.metric-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.metric-box { background: #f9f9f9; border: 1px solid #ddd; border-radius: 6px; padding: 12px; }
+.metric-val { font-size: 1.2em; font-weight: bold; color: #1a1a2e; }
+.perm-badge { color: #dc3545; font-weight: bold; font-size: 1.1em; }
+.warn { color: #856404; background: #fff3cd; padding: 10px; border-radius: 4px; margin: 10px 0; }
+.critical { color: #721c24; background: #f8d7da; padding: 10px; border-radius: 4px; margin: 10px 0; }
+.ok { color: #155724; background: #d4edda; padding: 10px; border-radius: 4px; margin: 10px 0; }
+.info { color: #0c5460; background: #d1ecf1; padding: 10px; border-radius: 4px; margin: 10px 0; }
+</style>
+</head>
+<body>
+<h1>Gate 1 Report — H65 US Dollar Strength Regime Signal</h1>
+<p><strong>Report Date:</strong> 2026-06-11 | <strong>IS:</strong> 2003-01-01→2023-12-31 | <strong>OOS:</strong> 2024-01-01→2026-06-10</p>
+<p>Strategy: DX-Y.NYB 20/60-day momentum → binary SPY/SHY allocation. Rising dollar (global tightening) → SHY. Flat/falling dollar → SPY. Execute at T+1 open.</p>
+<p>Replaces H58 (Cu/Au retired QUA-207). References: Miranda-Agrippino &amp; Rey (2020), Rey (2013).</p>
+
+<div class="verdict">Gate 1 Verdict: FAIL</div>
+<div class="warn"><strong>V2.0 Investigation Flag:</strong> IS Sharpe < 1.0. If primary drag is 2014–2015 dollar bull, flag for v2.0: longer lookback or dual-filter with VIX (QUA-213 spec).</div>
+
+<div class="info">
+<strong>QUA-213 VARIANT COMPARISON (required):</strong><br>
+Variant-1 (baseline lookback=20): IS Sharpe=0.5761 | MDD=-25.65% | Trades=258<br>
+Variant-2 (primary  lookback=60): IS Sharpe=0.6756 | MDD=-20.69% | Trades=163<br>
+<strong>Selected for Gate 1: primary_lookback60</strong> — lookback=60 expected to resolve 2014–2015 US exceptionalism false trigger.
+</div>
+
+
+
+<div class="critical">
+<strong>PERMUTATION TEST (CRITICAL):</strong>
+<span class="perm-badge">p = 0.0990</span>
+(FAIL — no statistical alpha. Retire H65.)
+Block-shuffle permutation (1000 shuffles, 325 regime blocks).
+</div>
+
+<h2>Gate 1 Criteria</h2>
+<table><thead><tr><th>Criterion</th><th>Value</th><th>Threshold</th><th>Status</th><th>Note</th></tr></thead>
+<tbody><tr><td><strong>IS_Sharpe</strong></td><td>0.6756</td><td>> 1.0</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>OOS_Sharpe</strong></td><td>1.1105</td><td>> 0.7</td><td style='color:#28a745;font-weight:bold'>PASS</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>IS_MaxDrawdown</strong></td><td>-20.69</td><td>> -20%</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>IS_CAGR</strong></td><td>7.3</td><td>>= 10%</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>IS_TradeCount</strong></td><td>163</td><td>>= 100</td><td style='color:#28a745;font-weight:bold'>PASS</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>WF_Consistency</strong></td><td>1/4</td><td>>= 3/4 windows</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>Permutation_pvalue</strong></td><td>0.099</td><td>< 0.05</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'>CRITICAL</td></tr>
+</tbody></table>
+
+<h2>IS Performance (2003-01-01 to 2023-12-31) — Selected Variant: primary_lookback60</h2>
+<div class="metric-grid">
+  <div class="metric-box"><div>Sharpe Ratio</div><div class="metric-val">0.6756</div></div>
+  <div class="metric-box"><div>CAGR</div><div class="metric-val">7.30%</div></div>
+  <div class="metric-box"><div>Max Drawdown</div><div class="metric-val">-20.69%</div></div>
+  <div class="metric-box"><div>Total Return</div><div class="metric-val">339.12%</div></div>
+  <div class="metric-box"><div>Win Rate</div><div class="metric-val">58.90%</div></div>
+  <div class="metric-box"><div>Profit Factor</div><div class="metric-val">2.1101</div></div>
+  <div class="metric-box"><div>Trade Count</div><div class="metric-val">163</div></div>
+  <div class="metric-box"><div>Transitions/yr</div><div class="metric-val">15.5</div></div>
+  <div class="metric-box"><div>% Time in SPY</div><div class="metric-val">50.3%</div></div>
+</div>
+
+<h2>OOS Performance (2024-01-01 to 2026-06-10)</h2>
+<div class="metric-grid">
+  <div class="metric-box"><div>Sharpe Ratio</div><div class="metric-val">1.1105</div></div>
+  <div class="metric-box"><div>CAGR</div><div class="metric-val">14.47%</div></div>
+  <div class="metric-box"><div>Max Drawdown</div><div class="metric-val">-16.78%</div></div>
+  <div class="metric-box"><div>Win Rate</div><div class="metric-val">61.11%</div></div>
+  <div class="metric-box"><div>Trade Count</div><div class="metric-val">18</div></div>
+  <div class="metric-box"><div>OOS Degradation</div><div class="metric-val">-64.4%</div></div>
+</div>
+
+<h2>Statistical Rigor Pipeline</h2>
+<table><thead><tr><th>Metric</th><th>Value</th><th>Threshold</th><th>Status</th></tr></thead><tbody>
+<tr><td>MC p5 Sharpe (1000 bootstrap)</td><td>1.2240</td><td>&ge; 0.5</td><td>PASS</td></tr>
+<tr><td>MC Median Sharpe</td><td>3.4625</td><td>-</td><td>-</td></tr>
+<tr><td>Block Bootstrap Sharpe 95% CI</td><td>[0.3361, 1.0836]</td><td>-</td><td>-</td></tr>
+<tr><td>Block Bootstrap MDD 95% CI</td><td>[-37.14%, -12.70%]</td><td>-</td><td>-</td></tr>
+<tr><td><strong>Permutation test p-value (1000 perms, block-shuffle)</strong></td>
+    <td><strong>0.0990</strong></td>
+    <td>&le; 0.05</td>
+    <td style='color:#dc3545;font-weight:bold'>FAIL — CRITICAL</td></tr>
+<tr><td>Market Impact (SPY, $25K notional)</td><td>0.0069 bps</td><td>-</td>
+    <td>OK</td></tr>
+<tr><td>Deflated Sharpe Ratio</td><td>1.0000</td><td>&gt; 0</td>
+    <td>PASS</td></tr>
+</tbody></table>
+
+<h2>Walk-Forward Analysis (4 expanding windows)</h2>
+<table><thead><tr><th>#</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>OOS Pass</th></tr></thead>
+<tbody><tr><td>1</td><td>2003-01-01→2010-12-31</td><td>2011-01-01→2015-12-31</td><td>0.8815</td><td>0.5051</td><td style='color:#dc3545;font-weight:bold'>FAIL</td></tr>
+<tr><td>2</td><td>2003-01-01→2013-12-31</td><td>2014-01-01→2017-12-31</td><td>0.7265</td><td>1.0436</td><td style='color:#28a745;font-weight:bold'>PASS</td></tr>
+<tr><td>3</td><td>2003-01-01→2016-12-31</td><td>2017-01-01→2020-12-31</td><td>0.7418</td><td>0.5727</td><td style='color:#dc3545;font-weight:bold'>FAIL</td></tr>
+<tr><td>4</td><td>2003-01-01→2018-12-31</td><td>2019-01-01→2023-12-31</td><td>0.7384</td><td>0.4937</td><td style='color:#dc3545;font-weight:bold'>FAIL</td></tr>
+</tbody></table>
+<p>Windows passed: <strong>1/4</strong> | WF Sharpe std: 0.2271</p>
+
+<h2>Sub-Period Diagnostics (QUA-213 required)</h2>
+<table><thead><tr><th>Period</th><th>Window</th><th>Sharpe</th><th>CAGR</th><th>MDD</th><th>Trades</th><th>% SPY</th><th>Note</th></tr></thead>
+<tbody><tr><td>pre_gfc_only</td><td>2003-01-01→2007-12-31</td><td>0.7801</td><td>8.6%</td><td>-13.7%</td><td>41</td><td>67.5%</td><td style='font-size:0.8em'></td></tr>
+<tr><td>gfc_only</td><td>2007-01-01→2009-12-31</td><td>0.8948</td><td>13.7%</td><td>-19.6%</td><td>22</td><td>68.0%</td><td style='font-size:0.8em'></td></tr>
+<tr><td>dollar_bull_2014_15</td><td>2014-01-01→2015-12-31</td><td>1.0657</td><td>8.6%</td><td>-9.3%</td><td>13</td><td>30.0%</td><td style='font-size:0.8em'></td></tr>
+<tr><td>rate_shock_2022</td><td>2022-01-01→2022-12-31</td><td>-1.8762</td><td>-13.8%</td><td>-15.1%</td><td>2</td><td>14.7%</td><td style='font-size:0.8em'></td></tr>
+<tr><td>ai_bull_2023</td><td>2023-01-01→2023-12-31</td><td>2.6385</td><td>30.2%</td><td>-5.6%</td><td>16</td><td>63.2%</td><td style='font-size:0.8em'></td></tr>
+<tr><td>post_gfc_2010_2019</td><td>2010-01-01→2019-12-31</td><td>0.7879</td><td>7.1%</td><td>-10.1%</td><td>74</td><td>43.5%</td><td style='font-size:0.8em'></td></tr>
+<tr><td>dotcom_2000_2002</td><td>2000-01-01→2002-12-31</td><td>-0.7911</td><td>-13.2%</td><td>-42.5%</td><td>11</td><td>40.0%</td><td style='font-size:0.8em'>Pre-IS period. SHY started 2002-07-30; BIL used as risk-off substitute. QUA-213 requires explicit MD...</td></tr>
+</tbody></table>
+
+<h2>Smoothing Comparison</h2>
+<table><thead><tr><th>Smoothing</th><th>Sharpe</th><th>CAGR</th><th>MDD</th><th>Transitions</th></tr></thead><tbody>
+<tr><td>smooth=1 (baseline)</td><td>0.6756</td><td>7.3%</td>
+    <td>-20.7%</td><td>325</td></tr>
+<tr><td>smooth=2</td><td>0.5907</td><td>6.6%</td>
+    <td>-27.3%</td><td>235</td></tr>
+</tbody></table>
+<p><em>smooth=2 requires 2 consecutive DXY mom > threshold before exiting SPY. Reduces FX whipsaw at cost of slower exit. Fewer transitions = lower cost drag.</em></p>
+
+
+<h2>Parameter Sweep — Top 10 IS Configurations</h2>
+<table><thead><tr><th>Lookback</th><th>Threshold</th><th>Smooth</th><th>Risk-off</th><th>IS Sharpe</th><th>IS CAGR</th><th>IS MDD</th><th>IS Trades</th></tr></thead>
+<tbody><tr><td>20</td><td>0.0050</td><td>1</td><td>SHY</td><td>0.8129</td><td>10.5%</td><td>-23.4%</td><td>268</td></tr>
+<tr><td>20</td><td>0.0050</td><td>1</td><td>BIL</td><td>0.7809</td><td>10.0%</td><td>-23.8%</td><td>268</td></tr>
+<tr><td>20</td><td>0.0050</td><td>2</td><td>SHY</td><td>0.7727</td><td>10.2%</td><td>-25.6%</td><td>180</td></tr>
+<tr><td>20</td><td>0.0050</td><td>2</td><td>BIL</td><td>0.7488</td><td>9.8%</td><td>-26.1%</td><td>180</td></tr>
+<tr><td>20</td><td>0.0050</td><td>3</td><td>SHY</td><td>0.6902</td><td>9.3%</td><td>-31.0%</td><td>145</td></tr>
+<tr><td>40</td><td>0.0000</td><td>1</td><td>SHY</td><td>0.6879</td><td>7.6%</td><td>-17.4%</td><td>187</td></tr>
+<tr><td>60</td><td>0.0000</td><td>1</td><td>SHY</td><td>0.6756</td><td>7.3%</td><td>-20.7%</td><td>163</td></tr>
+<tr><td>60</td><td>0.0050</td><td>2</td><td>SHY</td><td>0.6754</td><td>8.1%</td><td>-23.5%</td><td>106</td></tr>
+<tr><td>20</td><td>0.0050</td><td>3</td><td>BIL</td><td>0.6739</td><td>9.0%</td><td>-31.2%</td><td>145</td></tr>
+<tr><td>60</td><td>0.0050</td><td>1</td><td>SHY</td><td>0.6703</td><td>7.8%</td><td>-24.6%</td><td>153</td></tr>
+</tbody></table>
+
+<h2>Transaction Cost Model (ED-SLIP-001)</h2>
+<ul>
+  <li>Fixed: $0.005/share | Slippage: 0.005% of notional (ultra-liquid: SPY ADV &gt; 50M shares/day)</li>
+  <li>Market impact: Almgren-Chriss k=0.1 × σ × √(Q/ADV) × notional</li>
+  <li>Signal asset DX-Y.NYB: not traded. No FX transaction costs.</li>
+</ul>
+
+<h2>Data Quality Checklist</h2>
+<ul>
+  <li>✓ Survivorship bias: SPY/SHY are active ETFs — no survivorship bias</li>
+  <li>✓ Price adjustment: yfinance auto_adjust=True (splits + dividends)</li>
+  <li>✓ DX-Y.NYB: ICE US Dollar Index cash level (not futures); no roll-gap check required</li>
+  <li>✓ Forward fill: DX-Y.NYB ffill(limit=3) into SPY equity calendar (weekends + holidays)</li>
+  <li>✓ Lookahead bias: signal at T computed from T close; execution at T+1 open</li>
+  <li>✓ Earnings exclusion: N/A — ETF strategy</li>
+  <li>⚠ 2000-2002 dot-com diagnostic uses BIL as risk-off (SHY started 2002-07-30)</li>
+</ul>
+
+<h2>Known Risks</h2>
+<ul>
+  <li><strong>2014–2015 US exceptionalism:</strong> DXY +25% concurrent with modest SPY gains = false risk-off. 60-day lookback reduces but may not eliminate this drag.</li>
+  <li><strong>2023 AI bull mid-year:</strong> DXY Jul–Oct 2023 rise while SPY gained on AI theme. Known failure mode per QUA-213.</li>
+  <li><strong>GFC concentration:</strong> GFC 2008-2009 is the primary Sharpe generator. WF folds excluding GFC are the definitive stability test.</li>
+</ul>
+
+</body></html>

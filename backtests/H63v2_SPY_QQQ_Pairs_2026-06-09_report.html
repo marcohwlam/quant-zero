@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>H63v2 Gate 1 v2.2 Report</title>
+<style>
+body { font-family: Arial, sans-serif; max-width: 1100px; margin: 40px auto; color: #333; }
+h1 { color: #1a1a2e; } h2 { color: #16213e; border-bottom: 2px solid #eee; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th, td { padding: 8px 12px; border: 1px solid #ddd; text-align: left; font-size: 0.9em; }
+th { background: #f4f4f4; font-weight: bold; }
+.verdict { font-size: 2em; font-weight: bold; color: #dc3545; margin: 20px 0; }
+.metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.metric-box { background: #f9f9f9; border: 1px solid #ddd; border-radius: 6px; padding: 12px; }
+.metric-val { font-size: 1.3em; font-weight: bold; color: #1a1a2e; }
+.freq-badge { color: #dc3545; font-weight: bold; font-size: 1.1em; }
+.warn { color: #856404; background: #fff3cd; padding: 10px; border-radius: 4px; margin: 10px 0; }
+.critical { color: #721c24; background: #f8d7da; padding: 10px; border-radius: 4px; margin: 10px 0; }
+</style>
+</head>
+<body>
+<h1>Gate 1 v2.2 Report — H63v2 SPY/QQQ Pairs Daily Baseline Mean Reversion</h1>
+<p><strong>Report Date:</strong> 2026-06-09 | <strong>IS:</strong> 2018-01-01→2023-12-31 | <strong>OOS:</strong> 2024-01-01→2026-06-06</p>
+<p><strong>Key fix vs H63v1:</strong> Z-score anchored to daily close baseline (not intraday rolling window) to eliminate 12-15/day false signals.</p>
+
+<div class="verdict">Gate 1 Verdict: FAIL</div>
+
+<div class="critical">
+<strong>Trade Frequency (CRITICAL):</strong> IS avg trades/day = <span class="freq-badge">1.82/day</span> (target: 3.0–8.0/day)
+ — OUTSIDE TARGET RANGE ✗ (escalate to Engineering Director)
+</div>
+
+<h2>Gate 1 Criteria</h2>
+<table><thead><tr><th>Criterion</th><th>Value</th><th>Threshold</th><th>Status</th><th>Note</th></tr></thead>
+<tbody><tr><td>IS_Sharpe</td><td>-1.5396</td><td>> 1.0</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td>OOS_Sharpe</td><td>-1.3189</td><td>> 0.7</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td>IS_MaxDrawdown</td><td>-37.13</td><td>> -20%</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td>OOS_Degradation</td><td>100.0</td><td>< 40%</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td>IS_TradeCount</td><td>2751</td><td>>= 100</td><td style='color:#28a745;font-weight:bold'>PASS</td><td style='font-size:0.85em'></td></tr>
+<tr><td>TradeFrequency</td><td>1.82</td><td>3-8/day</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'>LOW (1.82/day)</td></tr>
+</tbody></table>
+
+<h2>IS Performance (2018-01-01 to 2023-12-31)</h2>
+<div class="metric-grid">
+  <div class="metric-box"><div>Sharpe Ratio</div><div class="metric-val">-1.5396</div></div>
+  <div class="metric-box"><div>Max Drawdown</div><div class="metric-val">-37.13%</div></div>
+  <div class="metric-box"><div>Total Return</div><div class="metric-val">-36.12%</div></div>
+  <div class="metric-box"><div>Win Rate</div><div class="metric-val">12.10%</div></div>
+  <div class="metric-box"><div>Profit Factor</div><div class="metric-val">0.427</div></div>
+  <div class="metric-box"><div>Trade Count (459/yr)</div><div class="metric-val">2751</div></div>
+  <div class="metric-box"><div>Avg Trades/Day (TARGET 3-8)</div><div class="metric-val freq-badge">1.82</div></div>
+  <div class="metric-box"><div>PpT (bps)</div><div class="metric-val">-1.31</div></div>
+  <div class="metric-box"><div>Avg PnL/Trade</div><div class="metric-val">$-3.28</div></div>
+  <div class="metric-box"><div>Cost Ratio</div><div class="metric-val">1870.6%</div></div>
+</div>
+
+<h2>OOS Performance (2024-01-01 to 2026-06-06)</h2>
+<div class="metric-grid">
+  <div class="metric-box"><div>Sharpe Ratio</div><div class="metric-val">-1.3189</div></div>
+  <div class="metric-box"><div>Max Drawdown</div><div class="metric-val">-10.26%</div></div>
+  <div class="metric-box"><div>Total Return</div><div class="metric-val">-9.25%</div></div>
+  <div class="metric-box"><div>Win Rate</div><div class="metric-val">12.79%</div></div>
+  <div class="metric-box"><div>Trade Count (374/yr)</div><div class="metric-val">907</div></div>
+  <div class="metric-box"><div>OOS Degradation</div><div class="metric-val">100.0% vs IS</div></div>
+  <div class="metric-box"><div>Avg Trades/Day</div><div class="metric-val">1.49</div></div>
+</div>
+
+<h2>Statistical Rigor Pipeline</h2>
+<table><thead><tr><th>Metric</th><th>Value</th><th>Threshold</th><th>Status</th></tr></thead><tbody>
+<tr><td>MC p5 Sharpe (1000 bootstrap)</td><td>-3.5010</td><td>>= 0.5</td><td>WARN – pessimistic bound weak</td></tr>
+<tr><td>MC Median Sharpe</td><td>-2.8740</td><td>-</td><td>-</td></tr>
+<tr><td>MC p95 Sharpe</td><td>-2.2832</td><td>-</td><td>-</td></tr>
+<tr><td>Block Bootstrap Sharpe CI 95%</td><td>[-2.1806, -0.7935]</td><td>-</td><td>-</td></tr>
+<tr><td>Block Bootstrap MDD CI 95%</td><td>[-56.74%, -17.08%]</td><td>-</td><td>-</td></tr>
+<tr><td>Permutation Test p-value (500 perms)</td><td>1.0000</td><td><= 0.05</td><td>FAIL – no statistical alpha</td></tr>
+<tr><td>Market Impact (per leg)</td><td>0.007 bps</td><td>-</td><td>OK</td></tr>
+<tr><td>Deflated Sharpe Ratio</td><td>0.0015</td><td>> 0</td><td>PASS</td></tr>
+</tbody></table>
+
+<h2>Walk-Forward Analysis (4 windows)</h2>
+<table><thead><tr><th>Win</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>OOS</th></tr></thead>
+<tbody><tr><td>1</td><td>2018-01-01→2020-12-31</td><td>2021-01-01→2021-06-30</td><td>-1.764</td><td>-2.660</td><td style='color:#dc3545;font-weight:bold'>FAIL</td></tr>
+<tr><td>2</td><td>2018-07-01→2021-06-30</td><td>2021-07-01→2021-12-31</td><td>-1.860</td><td>-0.374</td><td style='color:#dc3545;font-weight:bold'>FAIL</td></tr>
+<tr><td>3</td><td>2019-01-01→2021-12-31</td><td>2022-01-01→2022-06-30</td><td>-1.536</td><td>0.692</td><td style='color:#dc3545;font-weight:bold'>FAIL</td></tr>
+<tr><td>4</td><td>2019-07-01→2022-06-30</td><td>2022-07-01→2022-12-31</td><td>-1.325</td><td>0.617</td><td style='color:#dc3545;font-weight:bold'>FAIL</td></tr>
+</tbody></table>
+<p>Windows passed (OOS Sharpe > 0.7): <strong>0/4</strong> | WF Sharpe std: 1.3539 | WF min: -2.6602</p>
+
+<h2>Parameter Sweep — Top 10 IS Configurations</h2>
+<table><thead>
+<tr><th>Baseline</th><th>Entry Z</th><th>Exit Z</th><th>Hedge</th><th>VIX Thresh</th><th>IS Sharpe</th><th>IS MDD</th><th>IS Trades</th><th>Avg TPD</th></tr>
+</thead><tbody><tr><td>10</td><td>2.0</td><td>0.1</td><td>10</td><td>30</td><td>-0.1076</td><td>-3.1%</td><td>124.0</td><td style='color:#dc3545'>0.08</td></tr>
+<tr><td>10</td><td>2.0</td><td>0.25</td><td>10</td><td>30</td><td>-0.1076</td><td>-3.1%</td><td>124.0</td><td style='color:#dc3545'>0.08</td></tr>
+<tr><td>10</td><td>2.0</td><td>0.5</td><td>10</td><td>30</td><td>-0.1076</td><td>-3.1%</td><td>124.0</td><td style='color:#dc3545'>0.08</td></tr>
+<tr><td>10</td><td>2.0</td><td>0.1</td><td>10</td><td>25</td><td>-0.1322</td><td>-2.6%</td><td>108.0</td><td style='color:#dc3545'>0.07</td></tr>
+<tr><td>10</td><td>2.0</td><td>0.25</td><td>10</td><td>25</td><td>-0.1322</td><td>-2.6%</td><td>108.0</td><td style='color:#dc3545'>0.07</td></tr>
+<tr><td>10</td><td>2.0</td><td>0.5</td><td>10</td><td>25</td><td>-0.1322</td><td>-2.6%</td><td>108.0</td><td style='color:#dc3545'>0.07</td></tr>
+<tr><td>10</td><td>2.0</td><td>0.1</td><td>10</td><td>35</td><td>-0.1796</td><td>-3.6%</td><td>133.0</td><td style='color:#dc3545'>0.09</td></tr>
+<tr><td>10</td><td>2.0</td><td>0.25</td><td>10</td><td>35</td><td>-0.1796</td><td>-3.6%</td><td>133.0</td><td style='color:#dc3545'>0.09</td></tr>
+<tr><td>10</td><td>2.0</td><td>0.5</td><td>10</td><td>35</td><td>-0.1796</td><td>-3.6%</td><td>133.0</td><td style='color:#dc3545'>0.09</td></tr>
+<tr><td>10</td><td>1.2</td><td>0.1</td><td>10</td><td>30</td><td>-0.1991</td><td>-4.7%</td><td>573.0</td><td style='color:#dc3545'>0.38</td></tr>
+</tbody></table>
+
+<h2>Transaction Cost Model</h2>
+<p>Fixed: $0.005/share | Slippage: 0.005% of notional (ED-SLIP-001 ultra-liquid ETF tier) | Market impact: Almgren-Chriss sqrt-model (k=0.1 × σ × √(Q/ADV) × notional).</p>
+
+<h2>Data Quality</h2>
+<ul>
+  <li><strong>Minute data:</strong> Alpaca SIP feed (cached from H63v1 run), split-adjusted, 1-min RTH</li>
+  <li><strong>Daily data:</strong> yfinance auto_adjust=True (SPY, QQQ, ^VIX)</li>
+  <li><strong>Survivorship bias:</strong> N/A (SPY/QQQ are broad market ETFs)</li>
+  <li><strong>Lookahead bias:</strong> None — daily baseline uses prior-day closes; fill at next bar open (1-bar latency)</li>
+  <li><strong>H63v2 fix:</strong> Z-score baseline computed once at session open from prior N daily closes — eliminates intraday rolling-window self-reversion artifact</li>
+</ul>
+
+</body></html>

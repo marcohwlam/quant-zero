@@ -1,0 +1,305 @@
+{
+  "calibration_date": "2026-06-15",
+  "ticket": "QUA-244",
+  "replaces": "QUA-164 RSI(2) minute-bar baseline",
+  "data_source": "Alpaca/IEX 1-minute bars (minute_bars.db)",
+  "data_coverage": {
+    "SPY": "2022-01-03 to 2024-12-31",
+    "QQQ": "2022-01-03 to 2024-12-31"
+  },
+  "universe": [
+    "SPY",
+    "QQQ"
+  ],
+  "n_windows": 6,
+  "strategy": "VWAP deviation mean reversion (long+short, intraday-flat)",
+  "strategy_rationale": "RSI(2) at 1-min resolution has ~3-min median hold \u2014 captures microstructure noise rather than signal. VWAP deviation mean reversion (Avellaneda-Lee 2010, adapted for session VWAP) targets 15\u2013120 min holds and is representative of the live H60 intraday strategy family. Long + short legs reduce directional bias.",
+  "parameters": {
+    "ENTRY_Z": 1.5,
+    "EXIT_Z": 0.25,
+    "STOP_Z": 3.0,
+    "LOOKBACK_BARS": 30,
+    "TIME_STOP_BARS": 60,
+    "TRADE_START_ET": "10:30",
+    "TRADE_END_ET": "14:30",
+    "EOD_EXIT_ET": "15:00",
+    "POSITION_VALUE": 10000.0
+  },
+  "annualization": {
+    "method": "sqrt(TRADING_MINUTES_PER_YEAR)",
+    "trading_minutes_per_year": 98280,
+    "factor": 313.5
+  },
+  "cost_model": {
+    "fixed_per_share": 0.005,
+    "market_impact_k": 0.1,
+    "slippage_overrides": {
+      "SPY": 0.00015,
+      "QQQ": 0.0002,
+      "default": 0.0005
+    },
+    "formula": "fixed_bps = 2*0.005/price*10000; mi_bps = 0.1*sigma*sqrt(Q/ADV)*10000",
+    "adv_source": "yfinance total-market (consolidated tape) \u2014 QUA-243 fix applied"
+  },
+  "window_results": [
+    {
+      "window_id": 1,
+      "is_period": "2022-01-01 to 2022-03-31",
+      "oos_period": "2022-04-01 to 2022-04-30",
+      "net_oos_sharpe": -40.2406,
+      "net_profit_per_trade_bps": -4.29,
+      "max_drawdown_pct": -7.097,
+      "is_trade_count": 1194,
+      "oos_trade_count": 323,
+      "cost_to_gross_ratio": 0.0579,
+      "session_forced_exit_rate": 0.0,
+      "median_hold_minutes": 6.0,
+      "long_trades": 839,
+      "short_trades": 678,
+      "exit_reasons": {
+        "stop_loss": 1174,
+        "reversion": 343
+      }
+    },
+    {
+      "window_id": 2,
+      "is_period": "2022-07-01 to 2022-09-30",
+      "oos_period": "2022-10-01 to 2022-10-31",
+      "net_oos_sharpe": -25.2767,
+      "net_profit_per_trade_bps": -3.14,
+      "max_drawdown_pct": -5.1,
+      "is_trade_count": 1029,
+      "oos_trade_count": 324,
+      "cost_to_gross_ratio": 0.0686,
+      "session_forced_exit_rate": 0.002,
+      "median_hold_minutes": 7.0,
+      "long_trades": 694,
+      "short_trades": 659,
+      "exit_reasons": {
+        "stop_loss": 1001,
+        "reversion": 349,
+        "eod_flat": 3
+      }
+    },
+    {
+      "window_id": 3,
+      "is_period": "2023-01-01 to 2023-03-31",
+      "oos_period": "2023-04-01 to 2023-04-30",
+      "net_oos_sharpe": -82.9062,
+      "net_profit_per_trade_bps": -5.36,
+      "max_drawdown_pct": -8.583,
+      "is_trade_count": 1149,
+      "oos_trade_count": 327,
+      "cost_to_gross_ratio": 0.0795,
+      "session_forced_exit_rate": 0.0,
+      "median_hold_minutes": 6.0,
+      "long_trades": 722,
+      "short_trades": 754,
+      "exit_reasons": {
+        "stop_loss": 1128,
+        "reversion": 346,
+        "time_stop": 2
+      }
+    },
+    {
+      "window_id": 4,
+      "is_period": "2023-07-01 to 2023-09-30",
+      "oos_period": "2023-10-01 to 2023-10-31",
+      "net_oos_sharpe": -49.6047,
+      "net_profit_per_trade_bps": -3.75,
+      "max_drawdown_pct": -7.777,
+      "is_trade_count": 1199,
+      "oos_trade_count": 420,
+      "cost_to_gross_ratio": 0.1196,
+      "session_forced_exit_rate": 0.001,
+      "median_hold_minutes": 6.0,
+      "long_trades": 851,
+      "short_trades": 768,
+      "exit_reasons": {
+        "reversion": 399,
+        "stop_loss": 1218,
+        "eod_flat": 2
+      }
+    },
+    {
+      "window_id": 5,
+      "is_period": "2024-01-01 to 2024-03-31",
+      "oos_period": "2024-04-01 to 2024-04-30",
+      "net_oos_sharpe": -53.1815,
+      "net_profit_per_trade_bps": -4.37,
+      "max_drawdown_pct": -8.0,
+      "is_trade_count": 1292,
+      "oos_trade_count": 362,
+      "cost_to_gross_ratio": 0.1413,
+      "session_forced_exit_rate": 0.001,
+      "median_hold_minutes": 6.0,
+      "long_trades": 850,
+      "short_trades": 804,
+      "exit_reasons": {
+        "reversion": 428,
+        "stop_loss": 1223,
+        "eod_flat": 1,
+        "time_stop": 2
+      }
+    },
+    {
+      "window_id": 6,
+      "is_period": "2024-07-01 to 2024-09-30",
+      "oos_period": "2024-10-01 to 2024-10-31",
+      "net_oos_sharpe": -62.9298,
+      "net_profit_per_trade_bps": -3.64,
+      "max_drawdown_pct": -8.465,
+      "is_trade_count": 1008,
+      "oos_trade_count": 413,
+      "cost_to_gross_ratio": 0.0746,
+      "session_forced_exit_rate": 0.006,
+      "median_hold_minutes": 6.0,
+      "long_trades": 685,
+      "short_trades": 736,
+      "exit_reasons": {
+        "stop_loss": 1090,
+        "reversion": 322,
+        "eod_flat": 8,
+        "time_stop": 1
+      }
+    }
+  ],
+  "distributions": {
+    "net_oos_sharpe": {
+      "values": [
+        -40.2406,
+        -25.2767,
+        -82.9062,
+        -49.6047,
+        -53.1815,
+        -62.9298
+      ],
+      "mean": -52.3566,
+      "std": 19.6644,
+      "p10": -72.918,
+      "p25": -60.4927,
+      "p50": -51.3931,
+      "p75": -42.5816,
+      "p90": -32.7587,
+      "min": -82.9062,
+      "max": -25.2767
+    },
+    "net_profit_per_trade_bps": {
+      "values": [
+        -4.29,
+        -3.14,
+        -5.36,
+        -3.75,
+        -4.37,
+        -3.64
+      ],
+      "mean": -4.0917,
+      "std": 0.7684,
+      "p10": -4.865,
+      "p25": -4.35,
+      "p50": -4.02,
+      "p75": -3.6675,
+      "p90": -3.39,
+      "min": -5.36,
+      "max": -3.14
+    },
+    "max_drawdown_pct": {
+      "values": [
+        -7.097,
+        -5.1,
+        -8.583,
+        -7.777,
+        -8.0,
+        -8.465
+      ],
+      "mean": -7.5037,
+      "std": 1.2925,
+      "p10": -8.524,
+      "p25": -8.3487,
+      "p50": -7.8885,
+      "p75": -7.267,
+      "p90": -6.0985,
+      "min": -8.583,
+      "max": -5.1
+    },
+    "is_trade_count": {
+      "values": [
+        1194.0,
+        1029.0,
+        1149.0,
+        1199.0,
+        1292.0,
+        1008.0
+      ],
+      "mean": 1145.1667,
+      "std": 108.7813,
+      "p10": 1018.5,
+      "p25": 1059.0,
+      "p50": 1171.5,
+      "p75": 1197.75,
+      "p90": 1245.5,
+      "min": 1008.0,
+      "max": 1292.0
+    },
+    "cost_to_gross_ratio": {
+      "values": [
+        0.0579,
+        0.0686,
+        0.0795,
+        0.1196,
+        0.1413,
+        0.0746
+      ],
+      "mean": 0.0902,
+      "std": 0.0327,
+      "p10": 0.0633,
+      "p25": 0.0701,
+      "p50": 0.0771,
+      "p75": 0.1096,
+      "p90": 0.1305,
+      "min": 0.0579,
+      "max": 0.1413
+    }
+  },
+  "threshold_shift_assessment_vs_rsi2": {},
+  "gate1_threshold_compliance": {
+    "net_oos_sharpe": {
+      "p50": -51.3931,
+      "threshold": 0.7,
+      "passes": false
+    },
+    "net_profit_per_trade_bps": {
+      "p50": -4.02,
+      "threshold": 5.0,
+      "passes": false
+    },
+    "max_drawdown_pct": {
+      "p50": -7.8885,
+      "threshold": -1.5,
+      "passes": false
+    },
+    "is_trade_count": {
+      "p50": 1171.5,
+      "threshold": 300,
+      "passes": true
+    },
+    "cost_to_gross_ratio": {
+      "p50": 0.0771,
+      "threshold": 0.4,
+      "passes": true
+    }
+  },
+  "gate1_thresholds_current": {
+    "net_oos_sharpe": 0.7,
+    "net_profit_per_trade_bps": 5.0,
+    "max_drawdown_pct": -1.5,
+    "is_trade_count": 300,
+    "cost_to_gross_ratio": 0.4
+  },
+  "hold_period_check": {
+    "overall_median_hold_minutes": 6.0,
+    "passes_15_120_range": false,
+    "target": "15\u2013120 min (criteria: hold period representative of live strategies)"
+  },
+  "rsi2_baseline_path": null
+}

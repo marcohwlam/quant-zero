@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<title>H62 Gate 1 Report — 2026-06-10</title>
+<style>
+  body{font-family:sans-serif;margin:40px;background:#f9f9f9;}
+  table{border-collapse:collapse;width:100%;margin-bottom:24px;}
+  th,td{border:1px solid #ccc;padding:6px 10px;text-align:left;}
+  th{background:#e8e8e8;}
+  .verdict{font-size:2em;font-weight:bold;color:#e74c3c;margin:20px 0;}
+  .metric{display:inline-block;min-width:160px;padding:12px;margin:6px;
+           background:white;border:1px solid #ddd;border-radius:4px;}
+  .metric-val{font-size:1.4em;font-weight:bold;}
+  .pass{color:#27ae60;} .fail{color:#e74c3c;}
+  pre{background:#fff;border:1px solid #ddd;padding:20px;white-space:pre-wrap;font-size:13px;}
+</style>
+</head><body>
+<h1>H62 Intraday Half-Hour Cross-Sectional Seasonality — Gate 1 v2.2</h1>
+<p>Run date: 2026-06-10 | Data: Alpaca SIP 30m (REAL) | Universe: 50 tickers</p>
+<div class="verdict">VERDICT: FAIL</div>
+<h2>Core Metrics</h2>
+<div>
+  <div class="metric"><div>IS Sharpe</div><div class="metric-val fail">-22.8899</div></div>
+  <div class="metric"><div>OOS Sharpe</div><div class="metric-val fail">-25.9546</div></div>
+  <div class="metric"><div>IS MDD</div><div class="metric-val fail">-97.91%</div></div>
+  <div class="metric"><div>OOS MDD</div><div class="metric-val fail">-83.99%</div></div>
+  <div class="metric"><div>IS Trades</div><div class="metric-val pass">61,604</div></div>
+  <div class="metric"><div>Profit/Trade</div><div class="metric-val fail">-11.57 bps</div></div>
+  <div class="metric"><div>Cost/Gross</div><div class="metric-val pass">0.3113</div></div>
+  <div class="metric"><div>WF Passed</div><div class="metric-val fail">0/6</div></div>
+  <div class="metric"><div>MC p5 Sharpe</div><div class="metric-val fail">-24.9002</div></div>
+  <div class="metric"><div>Permutation p</div><div class="metric-val pass">0.0000</div></div>
+</div>
+<h2>Walk-Forward Table</h2>
+<table>
+  <tr><th>Win</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>IS Trades</th><th>OOS Trades</th></tr>
+  <tr><td>1</td><td>2022-01-01–2022-03-31</td><td>2022-04-01–2022-04-30</td><td>-18.4244</td><td>-22.4042</td><td>8686</td><td>2527</td></tr><tr><td>2</td><td>2022-05-01–2022-07-31</td><td>2022-08-01–2022-08-31</td><td>-27.6532</td><td>-20.8787</td><td>9842</td><td>2660</td></tr><tr><td>3</td><td>2022-09-01–2022-11-30</td><td>2022-12-01–2022-12-31</td><td>-24.3570</td><td>-37.4645</td><td>8107</td><td>2498</td></tr><tr><td>4</td><td>2023-01-01–2023-03-31</td><td>2023-04-01–2023-04-30</td><td>-24.3635</td><td>-17.8836</td><td>8075</td><td>1919</td></tr><tr><td>5</td><td>2023-05-01–2023-07-31</td><td>2023-08-01–2023-08-31</td><td>-31.8742</td><td>-31.9505</td><td>7296</td><td>2185</td></tr><tr><td>6</td><td>2023-09-01–2023-11-30</td><td>2023-12-01–2023-12-31</td><td>-25.2299</td><td>-21.0177</td><td>5890</td><td>1919</td></tr>
+</table>
+<h2>Bucket Breakdown (IS)</h2>
+<table>
+  <tr><th>Bucket</th><th>Time</th><th>IS Sharpe</th><th>Mean Net (bps)</th><th>Trades</th><th>% Active</th></tr>
+  <tr><td>h=0</td><td>09:30</td><td>-6.1270</td><td>-11.81</td><td>9506</td><td>100.0%</td></tr><tr><td>h=1</td><td>10:00</td><td>-10.9333</td><td>-12.43</td><td>9368</td><td>99.2%</td></tr><tr><td>h=2</td><td>10:30</td><td>-9.2262</td><td>-10.36</td><td>9008</td><td>95.4%</td></tr><tr><td>h=3</td><td>11:00</td><td>-13.7414</td><td>-11.92</td><td>8150</td><td>87.0%</td></tr><tr><td>h=4</td><td>11:30</td><td>-17.5408</td><td>-11.39</td><td>6495</td><td>69.7%</td></tr><tr><td>h=7</td><td>13:00</td><td>-16.2939</td><td>-11.13</td><td>3468</td><td>37.5%</td></tr><tr><td>h=8</td><td>13:30</td><td>-11.2025</td><td>-11.14</td><td>3074</td><td>33.5%</td></tr><tr><td>h=9</td><td>14:00</td><td>-15.0761</td><td>-11.69</td><td>3208</td><td>34.5%</td></tr><tr><td>h=10</td><td>14:30</td><td>-16.1611</td><td>-10.93</td><td>2492</td><td>27.4%</td></tr><tr><td>h=11</td><td>15:00</td><td>-15.1139</td><td>-12.59</td><td>2438</td><td>26.6%</td></tr><tr><td>h=12</td><td>15:30</td><td>-15.3257</td><td>-11.36</td><td>4397</td><td>47.7%</td></tr>
+</table>
+<h2>Statistical Tests</h2>
+<table>
+  <tr><th>Test</th><th>Value</th><th>Threshold</th><th>Result</th></tr>
+  <tr><td>MC p5 Sharpe</td><td>-24.9002</td><td>&gt; 0.5</td><td class="fail">FAIL</td></tr>
+  <tr><td>MC Median Sharpe</td><td>-22.9803</td><td>—</td><td>—</td></tr>
+  <tr><td>Bootstrap Sharpe CI</td><td>[-26.6777, -21.2515]</td><td>—</td><td>—</td></tr>
+  <tr><td>Permutation p-value</td><td>0.0000</td><td>&lt; 0.05</td><td class="pass">PASS</td></tr>
+  <tr><td>WF OOS Sharpe Std</td><td>6.9937</td><td>&lt; 1.5</td><td class="fail">FLAG</td></tr>
+</table>
+<h2>Full Verdict</h2>
+<pre>============================================================
+GATE 1 v2.2 VERDICT REPORT — H62
+Run Date: 2026-06-10
+Data Source: Alpaca SIP 30m bars (REAL DATA)
+============================================================
+
+VERDICT: FAIL
+
+IS Sharpe:   -22.8899
+OOS Sharpe:  -25.9546
+IS MDD:      -97.91%
+OOS MDD:     -83.99%
+IS trades:   61,604
+Permutation p-value: 0.0000
+MC p5 Sharpe: -24.9002
+Bootstrap CI: [-26.6777, -21.2515]
+WF variance: 6.9937
+
+CORE METRICS
+----------------------------------------
+  [FAIL] IS Sharpe > 1.0
+  [FAIL] OOS Sharpe > 0.7
+  [FAIL] IS MDD > -20%
+  [FAIL] OOS MDD > -20%
+  [PASS] IS Trades > 300
+  [FAIL] Profit/Trade > 5 bps
+  [PASS] Cost/Gross < 0.40
+  [FAIL] WF passed ≥ 3/6
+  [PASS] Permutation p < 0.05
+  [FAIL] MC p5 Sharpe > 0.5
+
+WALK-FORWARD TABLE
+----------------------------------------
+Win    IS Start      IS End   OOS Start     OOS End  IS Sharpe  OOS Sharpe
+  1  2022-01-01  2022-03-31  2022-04-01  2022-04-30   -18.4244    -22.4042
+  2  2022-05-01  2022-07-31  2022-08-01  2022-08-31   -27.6532    -20.8787
+  3  2022-09-01  2022-11-30  2022-12-01  2022-12-31   -24.3570    -37.4645
+  4  2023-01-01  2023-03-31  2023-04-01  2023-04-30   -24.3635    -17.8836
+  5  2023-05-01  2023-07-31  2023-08-01  2023-08-31   -31.8742    -31.9505
+  6  2023-09-01  2023-11-30  2023-12-01  2023-12-31   -25.2299    -21.0177
+
+BUCKET BREAKDOWN (IS)
+----------------------------------------
+  Bucket   Time   Sharpe  MeanNet bps   Trades  %Active
+  h= 0  09:30  -6.1270       -11.81     9506   100.0%
+  h= 1  10:00  -10.9333       -12.43     9368    99.2%
+  h=10  14:30  -16.1611       -10.93     2492    27.4%
+  h=11  15:00  -15.1139       -12.59     2438    26.6%
+  h=12  15:30  -15.3257       -11.36     4397    47.7%
+  h= 2  10:30  -9.2262       -10.36     9008    95.4%
+  h= 3  11:00  -13.7414       -11.92     8150    87.0%
+  h= 4  11:30  -17.5408       -11.39     6495    69.7%
+  h= 7  13:00  -16.2939       -11.13     3468    37.5%
+  h= 8  13:30  -11.2025       -11.14     3074    33.5%
+  h= 9  14:00  -15.0761       -11.69     3208    34.5%
+
+AUTO-DISQUALIFICATION
+----------------------------------------
+  ✗ OOS MDD -84.0% exceeds 2× threshold
+
+CHECKS: 3/10 passed
+============================================================</pre>
+</body></html>

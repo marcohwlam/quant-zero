@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>H83 Elder Triple Screen Gate 1</title>
+<style>body{font-family:monospace;margin:20px} table{border-collapse:collapse;width:100%}
+td,th{border:1px solid #ccc;padding:6px} h1{color:#333}</style></head>
+<body>
+<h1>H83 Elder Triple Screen Multi-ETF — Gate 1 Report</h1>
+<p>Standard (IS 2003-2018 / OOS 2019-2025) | 2026-06-22</p>
+<h2 style="color:#e74c3c">Overall: FAIL | CS=0.3096</h2>
+<table><tr><td>oos_sharpe_gt_0.7</td><td style='color:red'>FAIL</td></tr><tr><td>is_mdd_lt_30pct</td><td style='color:green'>PASS</td></tr><tr><td>cpr_lt_0.25</td><td style='color:green'>PASS</td></tr><tr><td>is_ppt_gt_15bps</td><td style='color:green'>PASS</td></tr><tr><td>composite_score_ge_0.60</td><td style='color:red'>FAIL</td></tr><tr><td>is_tpq_ge_30</td><td style='color:red'>FAIL</td></tr></table>
+<h3>Composite Score Breakdown</h3>
+<table><tr><th>Component</th><th>Normalized</th><th>Weight</th><th>Contribution</th></tr>
+<tr><td>NetSharpe (OOS)</td><td>0.061</td><td>0.40</td><td>0.025</td></tr>
+<tr><td>Stability (IS MDD)</td><td>0.363</td><td>0.30</td><td>0.109</td></tr>
+<tr><td>PpT (IS)</td><td>0.381</td><td>0.20</td><td>0.076</td></tr>
+<tr><td>Trade Adequacy</td><td>1.000</td><td>0.10</td><td>0.100</td></tr>
+</table>
+<h3>IS Period (2003-01-01 → 2018-12-31)</h3>
+<table>
+<tr><td>Sharpe</td><td>0.4344</td></tr>
+<tr><td>Max Drawdown</td><td>-12.74%</td></tr>
+<tr><td>Total Return</td><td>36.16%</td></tr>
+<tr><td>Trade Count</td><td>378</td></tr>
+<tr><td>Trades/Quarter</td><td>5.9</td></tr>
+<tr><td>PpT (bps)</td><td>38.07</td></tr>
+<tr><td>CPR</td><td>0.0397</td></tr>
+<tr><td>Win Rate</td><td>65.87%</td></tr>
+<tr><td>Avg Hold Days</td><td>10.6</td></tr>
+</table>
+<p style='color:orange'>Quarters with &lt;30 trades: 2004Q4, 2005Q1, 2005Q2, 2005Q3, 2005Q4, 2006Q1, 2006Q2, 2006Q3, 2006Q4, 2007Q1, 2007Q2, 2007Q3, 2007Q4, 2008Q1, 2008Q2, 2008Q3, 2008Q4, 2009Q1, 2009Q2, 2009Q3, 2009Q4, 2010Q2, 2010Q3, 2010Q4, 2011Q1, 2011Q2, 2011Q3, 2011Q4, 2012Q1, 2012Q2, 2012Q3, 2012Q4, 2013Q1, 2013Q2, 2013Q3, 2013Q4, 2014Q1, 2014Q2, 2014Q3, 2014Q4, 2015Q1, 2015Q2, 2015Q3, 2015Q4, 2016Q1, 2016Q2, 2016Q3, 2016Q4, 2017Q1, 2017Q2, 2017Q3, 2017Q4, 2018Q1, 2018Q2, 2018Q3, 2018Q4</p>
+<h3>OOS Period (2019-01-01 → 2025-12-31)</h3>
+<table>
+<tr><td>Sharpe</td><td>-0.3467</td></tr>
+<tr><td>Max Drawdown</td><td>-16.79%</td></tr>
+<tr><td>Total Return</td><td>-12.31%</td></tr>
+<tr><td>Trade Count</td><td>179</td></tr>
+<tr><td>Trades/Quarter</td><td>7.0</td></tr>
+<tr><td>PpT (bps)</td><td>-24.28</td></tr>
+<tr><td>CPR</td><td>0.0358</td></tr>
+<tr><td>Win Rate</td><td>56.28%</td></tr>
+</table>
+<h3>Statistical Rigor</h3>
+<table>
+<tr><td>MC P5/Median/P95 Sharpe</td><td>-2.845 / -1.017 / 0.902</td></tr>
+<tr><td>Bootstrap 95% CI</td><td>[-3.303, 1.350]</td></tr>
+<tr><td>Market Impact</td><td>4.092 bps</td></tr>
+<tr><td>Permutation p-value</td><td>0.7984 (FAIL)</td></tr>
+</table>
+<h3>Walk-Forward Windows</h3><table border='1'><tr><th>Window</th><th>Start</th><th>End</th><th>Sharpe</th><th>Trades</th></tr><tr><td>1</td><td>2003-01-01</td><td>2005-08-30</td><td>-0.412</td><td>20</td></tr><tr><td>2</td><td>2005-08-31</td><td>2008-04-29</td><td>0.798</td><td>82</td></tr><tr><td>3</td><td>2008-04-30</td><td>2010-12-28</td><td>0.456</td><td>75</td></tr><tr><td>4</td><td>2010-12-29</td><td>2013-08-27</td><td>0.471</td><td>61</td></tr><tr><td>5</td><td>2013-08-28</td><td>2016-04-26</td><td>-0.154</td><td>67</td></tr><tr><td>6</td><td>2016-04-27</td><td>2018-12-25</td><td>0.874</td><td>67</td></tr></table>
+<h3>Parameter Sweep (OOS Sharpe)</h3><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>oversold_threshold</th>
+      <th>hard_stop_pct</th>
+      <th>max_positions</th>
+      <th>is_sharpe</th>
+      <th>oos_sharpe</th>
+      <th>is_mdd</th>
+      <th>oos_mdd</th>
+      <th>is_trade_count</th>
+      <th>oos_trade_count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>15</td>
+      <td>0.060</td>
+      <td>3</td>
+      <td>0.395</td>
+      <td>-0.161</td>
+      <td>-0.196</td>
+      <td>-0.140</td>
+      <td>271</td>
+      <td>135</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>0.060</td>
+      <td>4</td>
+      <td>0.376</td>
+      <td>-0.006</td>
+      <td>-0.175</td>
+      <td>-0.123</td>
+      <td>304</td>
+      <td>145</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>0.075</td>
+      <td>3</td>
+      <td>0.399</td>
+      <td>-0.318</td>
+      <td>-0.181</td>
+      <td>-0.187</td>
+      <td>265</td>
+      <td>133</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>0.075</td>
+      <td>4</td>
+      <td>0.453</td>
+      <td>-0.155</td>
+      <td>-0.140</td>
+      <td>-0.145</td>
+      <td>296</td>
+      <td>143</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>0.090</td>
+      <td>3</td>
+      <td>0.401</td>
+      <td>-0.240</td>
+      <td>-0.182</td>
+      <td>-0.164</td>
+      <td>264</td>
+      <td>130</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>0.090</td>
+      <td>4</td>
+      <td>0.456</td>
+      <td>-0.119</td>
+      <td>-0.143</td>
+      <td>-0.151</td>
+      <td>295</td>
+      <td>139</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>0.060</td>
+      <td>3</td>
+      <td>0.459</td>
+      <td>-0.480</td>
+      <td>-0.188</td>
+      <td>-0.240</td>
+      <td>337</td>
+      <td>165</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>0.060</td>
+      <td>4</td>
+      <td>0.404</td>
+      <td>-0.309</td>
+      <td>-0.169</td>
+      <td>-0.156</td>
+      <td>382</td>
+      <td>182</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>0.075</td>
+      <td>3</td>
+      <td>0.529</td>
+      <td>-0.275</td>
+      <td>-0.142</td>
+      <td>-0.174</td>
+      <td>335</td>
+      <td>162</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>0.075</td>
+      <td>4</td>
+      <td>0.434</td>
+      <td>-0.347</td>
+      <td>-0.127</td>
+      <td>-0.168</td>
+      <td>378</td>
+      <td>179</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>0.090</td>
+      <td>3</td>
+      <td>0.544</td>
+      <td>-0.245</td>
+      <td>-0.147</td>
+      <td>-0.165</td>
+      <td>335</td>
+      <td>159</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>0.090</td>
+      <td>4</td>
+      <td>0.464</td>
+      <td>-0.263</td>
+      <td>-0.134</td>
+      <td>-0.160</td>
+      <td>377</td>
+      <td>175</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>0.060</td>
+      <td>3</td>
+      <td>0.629</td>
+      <td>-0.083</td>
+      <td>-0.132</td>
+      <td>-0.186</td>
+      <td>389</td>
+      <td>208</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>0.060</td>
+      <td>4</td>
+      <td>0.592</td>
+      <td>-0.040</td>
+      <td>-0.116</td>
+      <td>-0.131</td>
+      <td>442</td>
+      <td>229</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>0.075</td>
+      <td>3</td>
+      <td>0.585</td>
+      <td>-0.103</td>
+      <td>-0.119</td>
+      <td>-0.193</td>
+      <td>389</td>
+      <td>197</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>0.075</td>
+      <td>4</td>
+      <td>0.543</td>
+      <td>-0.029</td>
+      <td>-0.100</td>
+      <td>-0.128</td>
+      <td>440</td>
+      <td>219</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>0.090</td>
+      <td>3</td>
+      <td>0.576</td>
+      <td>-0.000</td>
+      <td>-0.122</td>
+      <td>-0.148</td>
+      <td>389</td>
+      <td>198</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>0.090</td>
+      <td>4</td>
+      <td>0.567</td>
+      <td>-0.036</td>
+      <td>-0.100</td>
+      <td>-0.127</td>
+      <td>438</td>
+      <td>216</td>
+    </tr>
+  </tbody>
+</table>
+</body></html>

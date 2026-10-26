@@ -1,0 +1,418 @@
+{
+  "strategy": "H65b_Dollar_Strength_Regime_v2",
+  "version": "2.0",
+  "gate": "Gate 1",
+  "report_date": "2026-06-12",
+  "is_window": {
+    "start": "2003-01-01",
+    "end": "2023-12-31"
+  },
+  "oos_window": {
+    "start": "2024-01-01",
+    "end": "2026-06-12"
+  },
+  "qua224_variant_comparison": {
+    "variant_1_baseline": {
+      "params": {
+        "lookback_days": 60,
+        "vix_threshold": 20.0,
+        "signal_threshold": 0.0,
+        "riskoff_asset": "SHY"
+      },
+      "is_sharpe": 0.6692,
+      "is_cagr": 0.0599,
+      "is_mdd": -0.1803,
+      "is_trades": 31,
+      "n_transitions": 61,
+      "pct_in_spy": 0.5832
+    },
+    "variant_2_tight_vix": {
+      "params": {
+        "lookback_days": 60,
+        "vix_threshold": 18.0,
+        "signal_threshold": 0.0,
+        "riskoff_asset": "SHY"
+      },
+      "is_sharpe": 0.5448,
+      "is_cagr": 0.0431,
+      "is_mdd": -0.1637,
+      "is_trades": 35,
+      "n_transitions": 69,
+      "pct_in_spy": 0.4929
+    },
+    "variant_3_wide_vix": {
+      "params": {
+        "lookback_days": 60,
+        "vix_threshold": 25.0,
+        "signal_threshold": 0.0,
+        "riskoff_asset": "SHY"
+      },
+      "is_sharpe": 0.6725,
+      "is_cagr": 0.075,
+      "is_mdd": -0.2203,
+      "is_trades": 23,
+      "n_transitions": 45,
+      "pct_in_spy": 0.7637
+    },
+    "selected_variant": "wide_vix25",
+    "selected_params": {
+      "spy_ticker": "SPY",
+      "dxy_ticker": "DX-Y.NYB",
+      "vix_ticker": "^VIX",
+      "lookback_days": 60,
+      "signal_threshold": 0.0,
+      "vix_threshold": 25.0,
+      "asymmetric_exit": true,
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    },
+    "note": "QUA-224 v2.0 tests three VIX threshold variants. Asymmetric exit is required design \u2014 not varied. Selected variant used for full Gate 1 analysis."
+  },
+  "selected_params": {
+    "spy_ticker": "SPY",
+    "dxy_ticker": "DX-Y.NYB",
+    "vix_ticker": "^VIX",
+    "lookback_days": 60,
+    "signal_threshold": 0.0,
+    "vix_threshold": 25.0,
+    "asymmetric_exit": true,
+    "riskoff_asset": "SHY",
+    "init_cash": 25000
+  },
+  "is_metrics": {
+    "params": {
+      "spy_ticker": "SPY",
+      "dxy_ticker": "DX-Y.NYB",
+      "vix_ticker": "^VIX",
+      "lookback_days": 60,
+      "signal_threshold": 0.0,
+      "vix_threshold": 25.0,
+      "asymmetric_exit": true,
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    },
+    "data_quality": {
+      "survivorship_bias_flag": "SPY/SHY are live ETFs \u2014 no survivorship bias",
+      "price_adjusted": true,
+      "auto_adjust": true,
+      "spy_ticker": "SPY",
+      "dxy_ticker": "DX-Y.NYB",
+      "vix_ticker": "^VIX",
+      "dxy_note": "DX-Y.NYB is the ICE US Dollar Index cash level (not a futures contract). No roll-gap check required. ffill(limit=3) into SPY equity calendar.",
+      "vix_note": "^VIX CBOE VIX. Available from 1990. ffill(limit=5) into SPY calendar. VIX is not traded \u2014 signal only. No transaction cost for VIX.",
+      "riskoff_asset": "SHY",
+      "asymmetric_exit": true,
+      "earnings_exclusion": "N/A \u2014 ETF strategy",
+      "delisted_tickers": "N/A \u2014 SPY/SHY are active ETFs",
+      "signal_lag": "dxy_signal + vix_level at T uses only close data through T; position change executes at T+1 open (no look-ahead bias)"
+    },
+    "sharpe": 0.6725,
+    "cagr": 0.075,
+    "max_drawdown": -0.2203,
+    "total_return": 3.5641,
+    "win_rate": 0.4783,
+    "profit_factor": 3.652,
+    "trade_count": 23,
+    "n_transitions": 45,
+    "transitions_per_year": 2.1,
+    "transitions_per_wf_fold": 11.2,
+    "pf1_status": "WARN: 11.2/fold < 30",
+    "spy_days": 4036,
+    "riskoff_days": 1249,
+    "pct_in_spy": 0.7637,
+    "avg_hold_days": 175.4,
+    "years": 20.996577686516083
+  },
+  "oos_metrics": {
+    "params": {
+      "spy_ticker": "SPY",
+      "dxy_ticker": "DX-Y.NYB",
+      "vix_ticker": "^VIX",
+      "lookback_days": 60,
+      "signal_threshold": 0.0,
+      "vix_threshold": 25.0,
+      "asymmetric_exit": true,
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    },
+    "data_quality": {
+      "survivorship_bias_flag": "SPY/SHY are live ETFs \u2014 no survivorship bias",
+      "price_adjusted": true,
+      "auto_adjust": true,
+      "spy_ticker": "SPY",
+      "dxy_ticker": "DX-Y.NYB",
+      "vix_ticker": "^VIX",
+      "dxy_note": "DX-Y.NYB is the ICE US Dollar Index cash level (not a futures contract). No roll-gap check required. ffill(limit=3) into SPY equity calendar.",
+      "vix_note": "^VIX CBOE VIX. Available from 1990. ffill(limit=5) into SPY calendar. VIX is not traded \u2014 signal only. No transaction cost for VIX.",
+      "riskoff_asset": "SHY",
+      "asymmetric_exit": true,
+      "earnings_exclusion": "N/A \u2014 ETF strategy",
+      "delisted_tickers": "N/A \u2014 SPY/SHY are active ETFs",
+      "signal_lag": "dxy_signal + vix_level at T uses only close data through T; position change executes at T+1 open (no look-ahead bias)"
+    },
+    "sharpe": 1.0823,
+    "cagr": 0.161,
+    "max_drawdown": -0.1972,
+    "total_return": 0.4404,
+    "win_rate": 0.6,
+    "profit_factor": 7.8843,
+    "trade_count": 5,
+    "n_transitions": 9,
+    "transitions_per_year": 3.7,
+    "transitions_per_wf_fold": 2.2,
+    "pf1_status": "WARN: 2.2/fold < 30",
+    "spy_days": 524,
+    "riskoff_days": 89,
+    "pct_in_spy": 0.8548,
+    "avg_hold_days": 104.6,
+    "years": 2.4449007529089664
+  },
+  "gate1_verdict": {
+    "criteria": {
+      "IS_Sharpe": {
+        "value": 0.6725,
+        "threshold": "> 1.0",
+        "pass": false
+      },
+      "OOS_Sharpe": {
+        "value": 1.0823,
+        "threshold": "> 0.7",
+        "pass": true
+      },
+      "IS_MaxDrawdown": {
+        "value": -22.03,
+        "threshold": "> -20%",
+        "pass": false
+      },
+      "IS_CAGR": {
+        "value": 7.5,
+        "threshold": ">= 10%",
+        "pass": false
+      },
+      "IS_TradeCount": {
+        "value": 23,
+        "threshold": ">= 100",
+        "pass": false
+      },
+      "WF_Consistency": {
+        "value": "3/4",
+        "threshold": ">= 3/4 windows",
+        "pass": true
+      },
+      "Permutation_pvalue": {
+        "value": 0.164,
+        "threshold": "< 0.05",
+        "pass": false,
+        "note": "CRITICAL"
+      },
+      "Sharpe_2022": {
+        "value": -1.8762,
+        "threshold": "> 0.0 (v1.0 was -1.876)",
+        "pass": false,
+        "note": "QUA-224 critical fix target"
+      }
+    },
+    "verdict": "FAIL",
+    "oos_degradation": -0.6094,
+    "selected_variant": "wide_vix25",
+    "sharpe_2022": -1.8762,
+    "sharpe_2022_fixed": false,
+    "trade_count_flag": "IS trade count 23 < 120. QUA-224 requires flagging to Research Director. VIX filter may have reduced trades below viable threshold."
+  },
+  "statistical_rigor": {
+    "mc_p5_sharpe": 2.3267282815864063,
+    "mc_median_sharpe": 7.319608790633049,
+    "mc_p95_sharpe": 11.892482790300967,
+    "sharpe_ci_low": 0.28987483761650396,
+    "sharpe_ci_high": 1.0758370650264035,
+    "mdd_ci_low": -0.3875831864773121,
+    "mdd_ci_high": -0.15414521534994244,
+    "win_rate_ci_low": 0.5138841324200912,
+    "win_rate_ci_high": 0.5485159817351598,
+    "permutation_pvalue": 0.164,
+    "permutation_test_pass": false,
+    "permutation_n": 1000,
+    "permutation_n_blocks": 46,
+    "permutation_pvalue_note": "Block-shuffle permutation of regime allocation vector. p < 0.05 confirms DXY+VIX dual-filter has genuine predictive power.",
+    "market_impact_bps": 0.007993401668172865,
+    "liquidity_constrained": false,
+    "order_to_adv_ratio": 6.953948663398162e-07,
+    "adv_shares": 53630045.0,
+    "sigma_daily": 0.009585524833857561,
+    "dsr": 1.0,
+    "wf_sharpe_std": 0.144540003113325,
+    "wf_sharpe_min": 0.4987
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "window": 1,
+        "is_start": "2003-01-01",
+        "is_end": "2010-12-31",
+        "oos_start": "2011-01-01",
+        "oos_end": "2015-12-31",
+        "is_sharpe": 0.755,
+        "oos_sharpe": 0.4987,
+        "oos_pass": false
+      },
+      {
+        "window": 2,
+        "is_start": "2003-01-01",
+        "is_end": "2013-12-31",
+        "oos_start": "2014-01-01",
+        "oos_end": "2017-12-31",
+        "is_sharpe": 0.7534,
+        "oos_sharpe": 0.7105,
+        "oos_pass": true
+      },
+      {
+        "window": 3,
+        "is_start": "2003-01-01",
+        "is_end": "2016-12-31",
+        "oos_start": "2017-01-01",
+        "oos_end": "2020-12-31",
+        "is_sharpe": 0.6549,
+        "oos_sharpe": 0.9066,
+        "oos_pass": true
+      },
+      {
+        "window": 4,
+        "is_start": "2003-01-01",
+        "is_end": "2018-12-31",
+        "oos_start": "2019-01-01",
+        "oos_end": "2023-12-31",
+        "is_sharpe": 0.6573,
+        "oos_sharpe": 0.7264,
+        "oos_pass": true
+      }
+    ],
+    "windows_passed": 3,
+    "wf_sharpe_std": 0.144540003113325,
+    "wf_sharpe_min": 0.4987,
+    "gfc_dependency_flag": false
+  },
+  "sub_period_diagnostics": {
+    "pre_gfc_only": {
+      "start": "2003-01-01",
+      "end": "2007-12-31",
+      "sharpe": 0.9412,
+      "cagr": 0.1203,
+      "max_drawdown": -0.1371,
+      "trade_count": 1,
+      "pct_in_spy": 0.9984,
+      "transitions_per_year": 0.2,
+      "total_return": 0.764
+    },
+    "gfc_only": {
+      "start": "2007-01-01",
+      "end": "2009-12-31",
+      "sharpe": 0.2665,
+      "cagr": 0.0287,
+      "max_drawdown": -0.2201,
+      "trade_count": 4,
+      "pct_in_spy": 0.6834,
+      "transitions_per_year": 2.3,
+      "total_return": 0.0884
+    },
+    "dollar_bull_2014_15": {
+      "start": "2014-01-01",
+      "end": "2015-12-31",
+      "sharpe": 0.194,
+      "cagr": 0.0155,
+      "max_drawdown": -0.1743,
+      "trade_count": 3,
+      "pct_in_spy": 0.6958,
+      "transitions_per_year": 2.5,
+      "total_return": 0.0312
+    },
+    "rate_shock_2022": {
+      "start": "2022-01-01",
+      "end": "2022-12-31",
+      "sharpe": -1.8762,
+      "cagr": -0.138,
+      "max_drawdown": -0.1509,
+      "trade_count": 2,
+      "pct_in_spy": 0.1474,
+      "transitions_per_year": 3.0,
+      "total_return": -0.1376
+    },
+    "ai_bull_2023": {
+      "start": "2023-01-01",
+      "end": "2023-12-31",
+      "sharpe": 1.7209,
+      "cagr": 0.2365,
+      "max_drawdown": -0.0995,
+      "trade_count": 2,
+      "pct_in_spy": 0.996,
+      "transitions_per_year": 3.0,
+      "total_return": 0.2356
+    },
+    "post_gfc_2010_2019": {
+      "start": "2010-01-01",
+      "end": "2019-12-31",
+      "sharpe": 0.7511,
+      "cagr": 0.0799,
+      "max_drawdown": -0.1745,
+      "trade_count": 12,
+      "pct_in_spy": 0.773,
+      "transitions_per_year": 2.3,
+      "total_return": 1.1567
+    },
+    "dotcom_2000_2002": {
+      "start": "2000-01-01",
+      "end": "2002-12-31",
+      "sharpe": -1.1163,
+      "cagr": -0.1743,
+      "max_drawdown": -0.4777,
+      "trade_count": 6,
+      "pct_in_spy": 0.4314,
+      "transitions_per_year": 4.0,
+      "total_return": -0.4369,
+      "risk_off_asset": "BIL",
+      "note": "Pre-IS period. SHY started 2002-07-30; BIL used as risk-off substitute. QUA-224 requires explicit MDD reporting for this period."
+    }
+  },
+  "parameter_sweep": {
+    "total_combinations": 54,
+    "best_is_sharpe": 0.8169,
+    "median_is_sharpe": 0.6001000000000001,
+    "best_params": {
+      "spy_ticker": "SPY",
+      "dxy_ticker": "DX-Y.NYB",
+      "vix_ticker": "^VIX",
+      "lookback_days": "80",
+      "signal_threshold": 0.0,
+      "vix_threshold": 25.0,
+      "asymmetric_exit": true,
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    }
+  },
+  "dotcom_2000_2002_diagnostic": {
+    "mdd": -0.4777,
+    "sharpe": -1.1163,
+    "note": "Pre-IS period. SHY started 2002-07-30; BIL used as risk-off substitute. QUA-224 requires explicit MDD reporting for this period."
+  },
+  "data_quality": {
+    "survivorship_bias": "N/A \u2014 SPY/SHY are active ETFs",
+    "price_adjusted": true,
+    "dxy_note": "DX-Y.NYB ICE US Dollar Index cash level; ffill(limit=3) into SPY calendar",
+    "vix_note": "^VIX CBOE VIX; ffill(limit=5) into SPY calendar",
+    "lookahead_bias": "None \u2014 signal at T from T close; T+1 open execution",
+    "asymmetric_exit": true
+  },
+  "v1_comparison": {
+    "v1_is_sharpe": 0.676,
+    "v1_2022_sharpe": -1.876,
+    "v1_wf_consistency": "1/4",
+    "v2_fixes": [
+      "VIX > vix_threshold co-condition prevents 2014-2015 false positive",
+      "Asymmetric exit prevents Q4 2022 premature re-entry (sticky risk-off until VIX clears)"
+    ]
+  },
+  "hypothesis_ref": "research/hypotheses/65b_dollar_strength_regime_v2.md",
+  "academic_refs": [
+    "Miranda-Agrippino & Rey (2020) RoES \u2014 dollar as global financial cycle factor",
+    "Ang & Bekaert (2004) NBER \u2014 stock return predictability and VIX regimes"
+  ]
+}

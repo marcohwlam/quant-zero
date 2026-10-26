@@ -1,0 +1,103 @@
+========================================================================
+GATE 1 VERDICT — H65b Dollar Strength Regime v2.0 (VIX Dual-Filter)
+Report Date: 2026-06-12
+========================================================================
+
+OVERALL VERDICT: FAIL
+Selected variant: wide_vix25
+
+── QUA-224 VARIANT COMPARISON ───────────────────────────────────────────
+  Variant-1 (vix_thresh=20): IS Sharpe=0.6692 MDD=-18.03% Trades=31
+  Variant-2 (vix_thresh=18): IS Sharpe=0.5448 MDD=-16.37% Trades=35
+  Variant-3 (vix_thresh=25): IS Sharpe=0.6725 MDD=-22.03% Trades=23
+  Selected for Gate 1: wide_vix25
+
+── CRITICAL: 2022 RATE-SHOCK SUB-PERIOD (v1.0 was -1.876) ──────────────
+  2022 Sharpe: -1.8762 (STILL NEGATIVE ✗)
+
+  ⚠ TRADE COUNT FLAG: IS trade count 23 < 120. QUA-224 requires flagging to Research Director. VIX filter may have reduced trades below viable threshold.
+
+── GATE 1 CRITERIA ──────────────────────────────────────────────────────
+  [FAIL] IS_Sharpe: 0.6725 (threshold: > 1.0)
+  [PASS] OOS_Sharpe: 1.0823 (threshold: > 0.7)
+  [FAIL] IS_MaxDrawdown: -22.03 (threshold: > -20%)
+  [FAIL] IS_CAGR: 7.5 (threshold: >= 10%)
+  [FAIL] IS_TradeCount: 23 (threshold: >= 100)
+  [PASS] WF_Consistency: 3/4 (threshold: >= 3/4 windows)
+  [FAIL] Permutation_pvalue: 0.164 (threshold: < 0.05)  [CRITICAL]
+  [FAIL] Sharpe_2022: -1.8762 (threshold: > 0.0 (v1.0 was -1.876))  [QUA-224 critical fix target]
+
+── IS METRICS (2003-01-01 to 2023-12-31) ─────────────────────────────────
+  Sharpe:           0.6725
+  CAGR:             7.50%
+  Max Drawdown:     -22.03%
+  Total Return:     356.41%
+  Win Rate:         47.8%
+  Profit Factor:    3.652
+  Trade Count:      23
+  Transitions/yr:   2.1
+  Avg Hold Days:    175.4
+  % Time in SPY:    76.4%
+
+── OOS METRICS (2024-01-01 to 2026-06-12) ────────────────────────────────
+  Sharpe:           1.0823
+  CAGR:             16.10%
+  Max Drawdown:     -19.72%
+  Total Return:     44.04%
+  Win Rate:         60.0%
+  Trade Count:      5
+  OOS Degradation:  -60.9% vs IS Sharpe
+
+── STATISTICAL RIGOR ────────────────────────────────────────────────────
+  MC p5 Sharpe:     2.3267  [OK]
+  MC median Sharpe: 7.3196
+  Sharpe 95% CI:    [0.2899, 1.0758]
+  MDD 95% CI:       [-38.76%, -15.41%]
+  Permutation p:    0.1640  (FAIL ✗) [CRITICAL]
+  Perm n_blocks:    46
+  Market Impact:    0.008 bps  (OK)
+  DSR:              1.0000  (PASS)
+
+── WALK-FORWARD (4 expanding windows) ───────────────────────────────
+  Window 1: IS 2003-01-01→2010-12-31 OOS 2011-01-01→2015-12-31 | IS Sharpe=0.755 OOS Sharpe=0.499 [FAIL]
+  Window 2: IS 2003-01-01→2013-12-31 OOS 2014-01-01→2017-12-31 | IS Sharpe=0.753 OOS Sharpe=0.711 [PASS]
+  Window 3: IS 2003-01-01→2016-12-31 OOS 2017-01-01→2020-12-31 | IS Sharpe=0.655 OOS Sharpe=0.907 [PASS]
+  Window 4: IS 2003-01-01→2018-12-31 OOS 2019-01-01→2023-12-31 | IS Sharpe=0.657 OOS Sharpe=0.726 [PASS]
+  Windows Passed:    3/4
+  WF Sharpe Std:     0.1445
+  WF Sharpe Min:     0.4987  
+
+── SUB-PERIOD DIAGNOSTICS (QUA-224 required) ───────────────────────────
+  pre_gfc_only: Sharpe=0.941 CAGR=12.0% MDD=-13.7% Trades=1
+  gfc_only: Sharpe=0.267 CAGR=2.9% MDD=-22.0% Trades=4
+  dollar_bull_2014_15: Sharpe=0.194 CAGR=1.6% MDD=-17.4% Trades=3
+  rate_shock_2022: Sharpe=-1.876 CAGR=-13.8% MDD=-15.1% Trades=2 *** CRITICAL FIX TARGET ***
+  ai_bull_2023: Sharpe=1.721 CAGR=23.6% MDD=-10.0% Trades=2
+  post_gfc_2010_2019: Sharpe=0.751 CAGR=8.0% MDD=-17.4% Trades=12
+  dotcom_2000_2002: Sharpe=-1.116 CAGR=-17.4% MDD=-47.8% Trades=6 [Pre-IS period. SHY started 2002-07-30; BIL used as risk-off substitute. QUA-224 ...]
+
+── PARAMETER SWEEP SUMMARY (IS-only) ───────────────────────────────────
+  Best IS Sharpe:    0.8169
+  Median IS Sharpe:  0.6001
+  Worst IS Sharpe:   0.3347
+  Best params:       lookback=80 thresh=0.0000 vix_thresh=25 riskoff=SHY
+
+── COST MODEL ───────────────────────────────────────────────────────────
+  Fixed:    $0.005/share
+  Slippage: 0.005% of notional (ED-SLIP-001 ultra-liquid tier: SPY ADV > 50M/day)
+  Impact:   k=0.1 × sigma × sqrt(Q/ADV) × notional (Almgren-Chriss)
+  Signal:   DX-Y.NYB and ^VIX — not traded. No FX/vol transaction costs.
+
+── DATA QUALITY ─────────────────────────────────────────────────────────
+  Price adjustment: yfinance auto_adjust=True
+  DX-Y.NYB: ICE US Dollar Index cash level (not futures); no roll-gap check
+  ^VIX: CBOE VIX, available from 1990; ffill(limit=5) into equity calendar
+  Survivorship bias: N/A — SPY/SHY are active broad-market ETFs
+  Lookahead bias: signal at T computed from T close; execution at T+1 open
+
+── HYPOTHESIS SOURCE ────────────────────────────────────────────────────
+  H65b v2.0: research/hypotheses/65b_dollar_strength_regime_v2.md
+  Supersedes H65 v1.0 (Gate 1 FAIL, QUA-213). v2.0 task: QUA-224.
+  References: Miranda-Agrippino & Rey (2020), Ang & Bekaert (2004).
+
+========================================================================
