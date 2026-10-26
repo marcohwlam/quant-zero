@@ -50,8 +50,8 @@ All parameters fixed up front. Primary specification (pre-registered): top decil
 - **Signal half-life (days):** about 1.
 - **Edge erosion rate:** fast (<5 days)
 - **Recommended max holding period:** 1 night.
-- **IC / forward excess:** the signal is a rank cutoff; the measured quantity is the excess overnight return of the top decile over the eligible-universe mean: +5.4 bps per day (t = 3.13 on the daily difference series, 1,008 days). This t-stat ignores serial dependence and the strong 2020 concentration, so it overstates confidence.
-- **Annualized IR pre-cost:** about 1.2 gross (see table, net Sharpe at 10 bps is 0.46).
+- **IC / forward excess:** the signal is a rank cutoff; the measured quantity is the excess overnight return of the top decile over the eligible-universe mean: +5.4 bps per day (t = 3.13 on the daily difference series, about 1,000 days). This t-stat ignores serial dependence and the strong 2020 concentration, so it overstates confidence.
+- **Annualized IR:** net Sharpe at 10 bps cost is 0.46 (primary); gross IR was not computed separately in this run.
 - **Cost survival: no (primary).**
   - Cost model, daily round trip, US stocks with ADV above $5M: half-spread 2 to 5 bps per side, MOC/MOO slippage 1 to 3 bps per side, commission 0 (Alpaca). Round trip about 6 to 16 bps. Base 10 bps, stress 20 bps. For ADV above $200M, 6 bps is plausible.
   - Primary: gross +13.5 bps per trade, net +3.5 bps at 10 bps and -6.5 bps at 20 bps.
