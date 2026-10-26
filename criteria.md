@@ -1,6 +1,6 @@
-# Gate 1 Acceptance Criteria (v2.7)
+# Gate 1 Acceptance Criteria (v2.8)
 
-**Version:** 2.7
+**Version:** 2.8
 **Locked by:** CEO — 2026-06-13 ([QUA-238](/QUA/issues/QUA-238); prior lock: [QUA-234](/QUA/issues/QUA-234))
 **Status:** CEO-LOCKED
 **Supersedes:** v2.6. Resolves Track A "pending delivery": `docs/kpi-daily-weekly.md` v1.0 now CEO-locked; composite score binding. No threshold changes.
@@ -126,7 +126,7 @@ Every Gate 1 submission must declare three layers per **PF-5** in
 
 **Why this gates MDD, not just Sharpe:** strategies that lack a regime filter can participate
 fully in bear markets regardless of signal quality — H49/H50/H51 all failed this way
-(long-hold monthly rotation, MDD −30% to −51%, blew the −20% gate). The architecture
+(long-hold monthly rotation, MDD −30% to −51%, blew the MDD gate). The architecture
 declaration catches that failure mode at intake, before compute is spent.
 
 This section is additive — it does not relax any output threshold.
@@ -176,7 +176,8 @@ Track A measures peak-to-trough equity drawdown over the IS period (multi-day ba
 |---|---|
 | Net OOS Sharpe (6-window aggregate) | > **0.7** |
 | Net profit per trade (bps after cost) | > **15 bps** |
-| MDD (peak-to-trough, IS period, CS threshold) | < **20%** acct equity |
+| MDD (peak-to-trough, IS period, CS threshold) | ≤ **15%** acct equity |
+| MDD (peak-to-trough, OOS period) | ≤ **15%** acct equity |
 | IS trade count (per 3-month window) | > **30** |
 | Cost-to-gross-profit ratio | < **0.25** |
 
@@ -184,11 +185,11 @@ Track A measures peak-to-trough equity drawdown over the IS period (multi-day ba
 
 | Asset/Horizon | MDD hard gate ceiling |
 |---|---|
-| Equities swing/daily | < **30%** of account equity (IS period) |
+| Equities swing/daily | ≤ **15%** of account equity (IS and OOS periods) |
 
 **Track A KPI document:** `docs/kpi-daily-weekly.md` v1.0 — **CEO-LOCKED 2026-06-13** ([QUA-238](/QUA/issues/QUA-238)). Composite score formula and hard gates are binding for all Track A submissions.
 
-**Full-backtest MDD disclosure (narrative, not auto-reject gate):** The 20% IS-period CS threshold
+**Full-backtest MDD disclosure (narrative, not auto-reject gate):** The 15% IS-period CS threshold
 applies per 3-month walk-forward window. In addition, the hypothesis narrative submission must
 report full-backtest MDD across the 2022–2024 window. This is a portfolio-level charter constraint
 (MaxDD < −15%), not a per-strategy auto-reject at Gate 1 — but reviewers require visibility.
@@ -242,7 +243,7 @@ Full Track B hard gate list is in `docs/kpi-minute-level.md` §Hard Gates (Gates
 - Profitable gross but unprofitable net.
 - Look-ahead bias detected (rewrite and re-test from scratch).
 - IS trade count below floor (Track A: < 30; Track B: per asset class above).
-- MDD exceeds absolute ceiling (Track A: > 30% IS period; Track B: > 2× CS per session).
+- MDD exceeds absolute ceiling (Track A: > 15% IS or OOS period; Track B: > 2× CS per session).
 - **PDT-incompatible design (US equities intraday, margin accounts)** — requires >3 day trades per 5 rolling days. *(Gate 8, CEO ruling F3, 2026-06-07)* Track B only; Track A swing strategies are PDT-exempt by holding-period design.
 - **Track A overnight guards not documented** — auto-defer if overnight gap, weekend risk, earnings policy, or gap MDD attribution is missing.
 
@@ -269,3 +270,4 @@ Full Track B hard gate list is in `docs/kpi-minute-level.md` §Hard Gates (Gates
 | 2.5 | 2026-06-09 | §Dual-Track Applicability: Gate 1 governs both Track A (daily/weekly) and Track B (minute-level). Track A thresholds marked PENDING calibration. | CEO — [QUA-230](/QUA/issues/QUA-230) |
 | 2.6 | 2026-06-13 | Add calibrated Track A swing/daily equities thresholds. Separate quantitative threshold table into Track A and Track B sections. Add §Swing/Daily-Specific Guards. Add overnight guards to auto-disqualification. Cost model unchanged. Full calibration derivation: `docs/gate1-threshold-calibration-swing-2026-06-13.md`. Risk Director co-sign: [QUA-233](/QUA/issues/QUA-233). | CEO — [QUA-234](/QUA/issues/QUA-234) (Research Director calibration: [QUA-232](/QUA/issues/QUA-232)) |
 | 2.7 | 2026-06-13 | CEO-lock `docs/kpi-daily-weekly.md` v1.0. References in §Track A and §Per-Asset KPI Spec updated to LOCKED. Composite score formula, weights, and hard gates now binding for all Track A submissions. Risk Director co-sign: [QUA-237](/QUA/issues/QUA-237) (UNCONDITIONAL). | CEO — [QUA-238](/QUA/issues/QUA-238) |
+| 2.8 | 2026-10-26 | Track A MDD thresholds tightened to ≤15% for IS and OOS (CS threshold 20% → 15%; hard ceiling 30% → 15%) to match `docs/objective-function-charter.md` (MaxDD < −15%). Tightening only; no other threshold changed. Track B per-session thresholds unchanged. After merge, Engineering re-runs `gate1_verdict_validator` on PASS/PENDING strategies. | CEO directive 2026-10-19 Decision 2; Risk Director — [QUA-797](/QUA/issues/QUA-797) |
