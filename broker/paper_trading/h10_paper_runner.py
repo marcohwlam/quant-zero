@@ -79,7 +79,8 @@ WARNING_THRESHOLD_PCT  = 10.70
 
 # Alpaca paper accounts default to ~$100k; strategy capital is $5k.
 # Values above this ceiling in equity.csv indicate raw Alpaca balance contamination.
-_STRAT_VALUE_CEILING = INITIAL_CAPITAL * 20  # 20× = $100k upper bound
+# QUA-827: 2x capital. The old 20x ($100k) ceiling admitted a raw balance of 99,922.85.
+_STRAT_VALUE_CEILING = INITIAL_CAPITAL * 2  # $10k upper bound
 
 
 def _is_strat_level_value(v: float) -> bool:
@@ -477,6 +478,11 @@ def write_canonical_equity(account_value: float, signal_count: int, trade_count:
 
     # H10 is all-crypto, no separate cash/invested tracking without positions API
     portfolio_value = account_value if account_value > 0 else prev_value
+    if not _is_strat_level_value(portfolio_value):
+        raise ValueError(
+            f"Refusing to write equity {portfolio_value:.2f}: outside strategy range "
+            f"(0, {_STRAT_VALUE_CEILING:.0f}); likely raw Alpaca account balance (QUA-827)."
+        )
     cash = portfolio_value  # conservative: assume flat until position data wired in
     invested = 0.0
     daily_pnl = portfolio_value - prev_value

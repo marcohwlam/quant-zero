@@ -42,3 +42,21 @@ def test_reset_clock_archives(tmp_path, monkeypatch):
     out = r.reset_clock()
     assert sorted(out["archived"]) == ["equity.csv", "evaluations.csv", "meta.json"]
     assert (tmp_path / "trades.csv").exists() and not (tmp_path / "meta.json").exists()
+
+
+def test_raw_alpaca_equity_rejected(tmp_path, monkeypatch):
+    """QUA-827: raw Alpaca balance 99,922.85 must not reach equity.csv."""
+    import pytest
+    monkeypatch.setattr(r, "CANONICAL_DIR", str(tmp_path))
+    assert not r._is_strat_level_value(99922.85)
+    assert r._is_strat_level_value(5000.0)
+    with pytest.raises(ValueError):
+        r.write_canonical_equity(99922.85, 2)
+    assert not (tmp_path / "equity.csv").exists() or "99922.85" not in (tmp_path / "equity.csv").read_text()
+
+
+def test_orchestrator_equity_writer_uses_given_value(tmp_path, monkeypatch):
+    from orchestrator import paper_trading_pipeline as p
+    monkeypatch.setattr(p, "PAPER_TRADING_DIR", tmp_path)
+    p.append_equity_row("x", 5000.0)
+    assert "5000" in (tmp_path / "x" / "equity.csv").read_text()
