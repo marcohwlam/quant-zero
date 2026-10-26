@@ -4,7 +4,7 @@
   "last_updated": "2026-10-26T16:01:16.099474",
   "run_date": "2026-10-26",
   "dry_run": false,
-  "portfolio_value": 99922.85,
+  "portfolio_value": 5000.0,
   "signals": {
     "BTC-USD": {
       "signal": 0,

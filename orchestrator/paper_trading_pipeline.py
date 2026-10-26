@@ -319,7 +319,12 @@ def run_pipeline(dry_run: bool = False) -> dict:
             result = runner_fn(client, dry_run=dry_run)
 
             # Write standardized outputs
-            append_equity_row(strat_id, total_portfolio_value)
+            # QUA-827: the Alpaca account balance is shared (~$100k) and is never a
+            # strategy value. Only runners that report their own ledger value write
+            # equity.csv here; H10 owns its canonical equity.csv via h10_paper_runner.main.
+            strat_value = result.get("strategy_value")
+            if strat_value is not None:
+                append_equity_row(strat_id, strat_value)
             write_trades_csv(strat_id, result.get("trade_log", []))
 
             meta = {
@@ -328,7 +333,7 @@ def run_pipeline(dry_run: bool = False) -> dict:
                 "last_updated": datetime.now().isoformat(),
                 "run_date": date.today().isoformat(),
                 "dry_run": dry_run,
-                "portfolio_value": total_portfolio_value,
+                "portfolio_value": strat_value,
                 "signals": result.get("signals"),
                 "is_report": result.get("is_report"),
                 "registry": {

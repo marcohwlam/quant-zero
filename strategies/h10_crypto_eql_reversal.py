@@ -245,6 +245,7 @@ def simulate_trades_single_asset(
     params: dict,
     init_cash: float,
     is_btc: bool = False,
+    gate_log: dict | None = None,
 ) -> tuple[list[dict], pd.Series]:
     """
     Simulate H10 EQL/EQH reversal on a single crypto asset.
@@ -265,6 +266,9 @@ def simulate_trades_single_asset(
     - Time stop: max_hold_bars days
 
     Transaction costs: taker fee + slippage applied at entry and exit.
+
+    If gate_log is a dict, it is overwritten on every bar with that bar's entry-gate
+    state, so after the call it describes the final bar (the live evaluation bar).
 
     Returns:
         trade_log: list of trade dicts
@@ -373,12 +377,40 @@ def simulate_trades_single_asset(
                 hold_days += 1
 
         # ── Entry logic if flat ───────────────────────────────────────────────
+        if gate_log is not None and (position != 0 or i < params["atr_period"] + params["lookback_n_bars"]):
+            gate_log.clear()
+            gate_log.update({
+                "bar_date": str(date.date()),
+                "in_position": position != 0,
+                "warmup_ok": i >= params["atr_period"] + params["lookback_n_bars"],
+            })
         if position == 0 and i >= params["atr_period"] + params["lookback_n_bars"]:
 
             regime_ok = bool(regime_aligned.iloc[i])
             eql_zones, eqh_zones = find_eql_eqh_zones(
                 swing_highs, swing_lows, atr, params, i
             )
+
+            if gate_log is not None:
+                _near_eql = bool(eql_zones) and abs(
+                    min(eql_zones, key=lambda z: abs(bar_close - z)) - bar_close
+                ) < bar_atr
+                _near_eqh = bool(eqh_zones) and abs(
+                    max(eqh_zones, key=lambda z: abs(bar_close - z)) - bar_close
+                ) < bar_atr
+                gate_log.clear()
+                gate_log.update({
+                    "bar_date": str(date.date()),
+                    "in_position": False,
+                    "warmup_ok": True,
+                    "regime_ok": regime_ok,           # BTC 20d ROC > gate (long entries only)
+                    "eql_zone_count": len(eql_zones),
+                    "eqh_zone_count": len(eqh_zones),
+                    "near_eql_zone": _near_eql,       # price within 1 ATR of nearest EQL
+                    "near_eqh_zone": _near_eqh,
+                    "pending_entry": (pending_entry or {}).get("direction"),
+                    "pending_ready": bool((pending_entry or {}).get("ready", False)),
+                })
 
             # ── Long entry: EQL recovery ─────────────────────────────────────
             if regime_ok and eql_zones:
@@ -633,6 +665,7 @@ def run_strategy(
 
     combined_value = None
     all_trades: list[dict] = []
+    gate_logs: dict[str, dict] = {}
 
     for ticker in universe:
         ohlcv = ohlcv_dict.get(ticker)
@@ -649,8 +682,10 @@ def run_strategy(
         is_btc = "BTC" in ticker.upper()
         asset_cash = capital_map.get(ticker, init_cash / len(universe))
 
+        gate_logs[ticker] = {}
         trades, pv = simulate_trades_single_asset(
-            ohlcv_bt, btc_regime, params, asset_cash, is_btc=is_btc
+            ohlcv_bt, btc_regime, params, asset_cash, is_btc=is_btc,
+            gate_log=gate_logs[ticker],
         )
 
         for t in trades:
@@ -669,6 +704,7 @@ def run_strategy(
     metrics["period"] = f"{start} to {end}"
     metrics["data_quality"] = quality
     metrics["trade_log"] = all_trades
+    metrics["gate_log"] = gate_logs
     metrics["portfolio_value"] = combined_value
     metrics["returns"] = combined_value.pct_change().dropna().values
 

@@ -73,13 +73,14 @@ CANONICAL_DIR    = os.path.join(
 )
 INITIAL_CAPITAL  = 5000.0
 PAPER_START_DATE = "2026-03-16"
-RUNNER_VERSION   = "1.2.0"
+RUNNER_VERSION   = "1.3.0"
 DEMOTION_THRESHOLD_PCT = 16.05   # 1.5 × 10.7%
 WARNING_THRESHOLD_PCT  = 10.70
 
 # Alpaca paper accounts default to ~$100k; strategy capital is $5k.
 # Values above this ceiling in equity.csv indicate raw Alpaca balance contamination.
-_STRAT_VALUE_CEILING = INITIAL_CAPITAL * 20  # 20× = $100k upper bound
+# QUA-827: 2x capital. The old 20x ($100k) ceiling admitted a raw balance of 99,922.85.
+_STRAT_VALUE_CEILING = INITIAL_CAPITAL * 2  # $10k upper bound
 
 
 def _is_strat_level_value(v: float) -> bool:
@@ -120,8 +121,9 @@ def get_current_signal(lookback_days: int = 60) -> dict:
             trades = result.get("trade_log", [])
             ticker_trades = [t for t in trades if t.get("ticker") == ticker]
 
+            gate = (result.get("gate_log") or {}).get(ticker, {})
             if not ticker_trades:
-                signal_info[ticker] = {"signal": 0, "signal_type": "flat"}
+                signal_info[ticker] = {"signal": 0, "signal_type": "flat", "gate": gate}
                 continue
 
             last_trade = ticker_trades[-1]
@@ -131,13 +133,13 @@ def get_current_signal(lookback_days: int = 60) -> dict:
             if last_trade.get("exit_reason") == "end_of_data":
                 direction = last_trade.get("direction", "flat")
                 if direction == "long":
-                    signal_info[ticker] = {"signal": 1, "signal_type": "eql_long"}
+                    signal_info[ticker] = {"signal": 1, "signal_type": "eql_long", "gate": gate}
                 elif direction == "short":
-                    signal_info[ticker] = {"signal": -1, "signal_type": "eqh_short"}
+                    signal_info[ticker] = {"signal": -1, "signal_type": "eqh_short", "gate": gate}
                 else:
-                    signal_info[ticker] = {"signal": 0, "signal_type": "flat"}
+                    signal_info[ticker] = {"signal": 0, "signal_type": "flat", "gate": gate}
             else:
-                signal_info[ticker] = {"signal": 0, "signal_type": "flat"}
+                signal_info[ticker] = {"signal": 0, "signal_type": "flat", "gate": gate}
 
         signal_info["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         signal_info["backtest_sharpe"] = round(result.get("sharpe", 0), 4)
@@ -147,7 +149,8 @@ def get_current_signal(lookback_days: int = 60) -> dict:
     except Exception as exc:
         logger.error(f"Signal evaluation failed: {exc}")
         return {
-            ticker: {"signal": 0, "signal_type": "flat"} for ticker in UNIVERSE
+            ticker: {"signal": 0, "signal_type": "flat", "gate": {"error": str(exc)}}
+            for ticker in UNIVERSE
         } | {"timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "error": str(exc)}
 
 
@@ -287,6 +290,9 @@ def execute_signals(
 
             if not dry_run:
                 try:
+                    entry_record["realized_pl"] = float(
+                        (current_position or {}).get("unrealized_pl", 0) or 0
+                    )
                     result = client.close_position(ticker)
                     logger.info(f"  Position closed for {ticker}")
                     entry_record["order_id"] = result.get("id")
@@ -302,6 +308,79 @@ def execute_signals(
         execution_log.append(entry_record)
 
     return execution_log
+
+
+# ── Per-evaluation gate logging ───────────────────────────────────────────────
+
+EVALUATION_COLUMNS = [
+    "timestamp", "ticker", "signal", "signal_type", "has_position", "blocked_by",
+    "regime_ok", "eql_zone_count", "eqh_zone_count", "near_eql_zone", "near_eqh_zone",
+    "pending_entry", "pending_ready", "bar_date",
+]
+
+
+def blocking_gate(gate: dict, signal: int, has_position: bool) -> str:
+    """
+    Name the first gate that stopped an entry on this evaluation.
+
+    Order mirrors the entry path in strategies/h10_crypto_eql_reversal.py. Returns
+    "none" when the signal is non-flat, "position_open" when already holding.
+    """
+    if signal != 0:
+        return "none"
+    if has_position or gate.get("in_position"):
+        return "position_open"
+    if not gate or "error" in gate:
+        return "signal_eval_error"
+    if not gate.get("warmup_ok", True):
+        return "warmup"
+    if not gate.get("regime_ok", True):
+        return "btc_regime_gate"
+    if not (gate.get("eql_zone_count") or gate.get("eqh_zone_count")):
+        return "no_eql_eqh_zone"
+    if not (gate.get("near_eql_zone") or gate.get("near_eqh_zone") or gate.get("pending_entry")):
+        return "price_not_near_zone"
+    if gate.get("pending_entry") and not gate.get("pending_ready"):
+        return "awaiting_recovery_confirmation"
+    return "no_breach_recovery_pattern"
+
+
+def _evaluations_path() -> str:
+    return os.path.join(CANONICAL_DIR, "evaluations.csv")
+
+
+def count_evaluations() -> tuple:
+    """Return (per_ticker_rows, distinct_runs) from evaluations.csv; (0, 0) if absent."""
+    try:
+        with open(_evaluations_path(), newline="") as f:
+            rows = list(csv.DictReader(f))
+    except FileNotFoundError:
+        return 0, 0
+    return len(rows), len({r.get("timestamp") for r in rows})
+
+
+def write_evaluation_log(signals: dict, execution_log: list) -> None:
+    """Append one row per ticker per run recording which gate blocked entry."""
+    os.makedirs(CANONICAL_DIR, exist_ok=True)
+    path = _evaluations_path()
+    new_file = not os.path.exists(path)
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    has_pos = {r.get("ticker"): bool(r.get("has_position")) for r in execution_log}
+    with open(path, "a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=EVALUATION_COLUMNS)
+        if new_file:
+            writer.writeheader()
+        for t in UNIVERSE:
+            info = signals.get(t, {})
+            gate = info.get("gate") or {}
+            sig = int(info.get("signal", 0) or 0)
+            writer.writerow({
+                "timestamp": stamp, "ticker": t, "signal": sig,
+                "signal_type": info.get("signal_type", "flat"),
+                "has_position": has_pos.get(t, False),
+                "blocked_by": blocking_gate(gate, sig, has_pos.get(t, False)),
+                **{k: gate.get(k, "") for k in EVALUATION_COLUMNS[6:]},
+            })
 
 
 # ── Trade Log ─────────────────────────────────────────────────────────────────
@@ -399,6 +478,11 @@ def write_canonical_equity(account_value: float, signal_count: int, trade_count:
 
     # H10 is all-crypto, no separate cash/invested tracking without positions API
     portfolio_value = account_value if account_value > 0 else prev_value
+    if not _is_strat_level_value(portfolio_value):
+        raise ValueError(
+            f"Refusing to write equity {portfolio_value:.2f}: outside strategy range "
+            f"(0, {_STRAT_VALUE_CEILING:.0f}); likely raw Alpaca account balance (QUA-827)."
+        )
     cash = portfolio_value  # conservative: assume flat until position data wired in
     invested = 0.0
     daily_pnl = portfolio_value - prev_value
@@ -481,6 +565,8 @@ def write_canonical_meta(
     execution_log: list,
     signal_count: int,
     account_baseline: float = 0.0,
+    realized_pnl: float = 0.0,
+    raw_account_value: float = 0.0,
 ):
     """Overwrite meta.json with current runner state (spec §4.2.3)."""
     _ensure_canonical_headers()
@@ -519,8 +605,10 @@ def write_canonical_meta(
     )
     total_trades = prev_total_trades + new_fills
 
-    prev_evals = int(existing.get("total_signal_evaluations", 0) or 0)
-    total_evals = prev_evals + signal_count
+    # Derived from evaluations.csv, not incremented: an increment counter silently
+    # loses history whenever meta.json is rewritten (QUA-824: 6 vs 62 rows).
+    # Unit: one evaluation = one ticker on one run.
+    total_evals, total_eval_runs = count_evaluations()
 
     paper_start = datetime.strptime(PAPER_START_DATE, "%Y-%m-%d")
     days_in_paper = (datetime.now() - paper_start).days
@@ -549,7 +637,9 @@ def write_canonical_meta(
         "runner_version": RUNNER_VERSION,
         "paper_start_date": PAPER_START_DATE,
         "initial_capital": INITIAL_CAPITAL,
-        "account_baseline": round(account_baseline, 2),
+        "account_baseline": round(account_baseline, 2),  # informational only, not used in value
+        "raw_account_value": round(raw_account_value, 2),
+        "realized_pnl": round(realized_pnl, 2),
         "current_portfolio_value": round(portfolio_value, 2),
         "current_cash": round(portfolio_value, 2),  # conservative: no open positions tracked
         "current_invested": 0.0,
@@ -562,6 +652,7 @@ def write_canonical_meta(
         "warning_threshold_pct": WARNING_THRESHOLD_PCT,
         "total_trades": total_trades,
         "total_signal_evaluations": total_evals,
+        "total_evaluation_runs": total_eval_runs,
         "days_in_paper": days_in_paper,
         "rolling_sharpe_30d": None,
         "rolling_sharpe_since_start": None,
@@ -701,12 +792,33 @@ def compute_shortfall_report(trade_log: list) -> dict:
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
-def main(dry_run: bool = False, shortfall_report_only: bool = False, repair_equity: bool = False):
+def reset_clock() -> dict:
+    """
+    Archive equity.csv, evaluations.csv and meta.json, then restart the paper clock
+    (QUA-824, CEO Option 1). trades.csv is kept as the append-only fill ledger.
+    """
+    stamp = datetime.now().strftime("%Y%m%dT%H%M%S")
+    archive = os.path.join(CANONICAL_DIR, "archive", stamp)
+    os.makedirs(archive, exist_ok=True)
+    moved = []
+    for path in (_canonical_equity_path(), _evaluations_path(), _canonical_meta_path()):
+        if os.path.exists(path):
+            os.replace(path, os.path.join(archive, os.path.basename(path)))
+            moved.append(os.path.basename(path))
+    logger.info(f"Clock reset: archived {moved} to {archive}")
+    return {"archived": moved, "archive_dir": archive}
+
+
+def main(dry_run: bool = False, shortfall_report_only: bool = False, repair_equity: bool = False,
+         reset_clock_only: bool = False):
     logger.info("=" * 60)
     logger.info(f"H10 Paper Trading Runner — {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     logger.info(f"Strategy: {STRATEGY_NAME}")
     logger.info(f"Mode: {'DRY RUN' if dry_run else 'LIVE PAPER'}")
     logger.info("=" * 60)
+
+    if reset_clock_only:
+        return reset_clock()
 
     if repair_equity:
         # Load account_baseline from meta.json for historical correction
@@ -771,12 +883,14 @@ def main(dry_run: bool = False, shortfall_report_only: bool = False, repair_equi
     if is_report.get("action_triggered"):
         logger.warning(f"ACTION REQUIRED: {is_report.get('action_note')}")
 
-    # 6. Write canonical equity.csv and meta.json
+    # 6. Write canonical equity.csv, evaluations.csv and meta.json
     #
-    # Alpaca paper accounts default to $100k, but our strategy capital is INITIAL_CAPITAL.
-    # We store the Alpaca balance at paper-start as account_baseline in meta.json, then
-    # compute portfolio_value = INITIAL_CAPITAL + (raw_balance - baseline) so that
-    # cumulative P&L tracks strategy returns, not the arbitrary Alpaca starting balance.
+    # QUA-824: strategy value is built from H10's own ledger, never from the Alpaca
+    # account balance. The paper account is shared (~$100k) and its balance moves with
+    # other activity, so INITIAL_CAPITAL + (raw - baseline) booked -212.26 of P&L on a
+    # strategy with 0 trades and 0 positions. Now:
+    #   value = INITIAL_CAPITAL + realized P&L on closed H10 trades
+    #                           + unrealized P&L on open H10 (UNIVERSE) positions
     raw_account_value = float(account.get("portfolio_value", 0))
 
     _existing_meta: dict = {}
@@ -786,40 +900,22 @@ def main(dry_run: bool = False, shortfall_report_only: bool = False, repair_equi
     except (FileNotFoundError, json.JSONDecodeError):
         pass
 
-    account_baseline = float(_existing_meta.get("account_baseline", 0) or 0)
-    if account_baseline <= 0 and raw_account_value > 0:
-        # If meta.json was lost, recover baseline from last clean equity row to preserve
-        # cumulative P&L continuity. Avoids silently resetting the strategy baseline
-        # to the current raw Alpaca balance (which would make P&L appear to restart at 0).
-        try:
-            with open(_canonical_equity_path(), newline="") as _eq_f:
-                _eq_rows = list(csv.DictReader(_eq_f))
-            _clean_vals = [
-                float(r["portfolio_value"]) for r in _eq_rows
-                if r.get("portfolio_value")
-                and _is_strat_level_value(float(r.get("portfolio_value", 0) or 0))
-            ]
-            if _clean_vals:
-                _last_strat = _clean_vals[-1]
-                # Invert: baseline = raw - (strat - initial)
-                account_baseline = raw_account_value - (_last_strat - INITIAL_CAPITAL)
-                logger.warning(
-                    f"account_baseline missing from meta.json — recovered from equity history: "
-                    f"baseline={account_baseline:.2f} (last_strat_val={_last_strat:.2f})"
-                )
-            else:
-                account_baseline = raw_account_value
-                logger.info(f"First run: captured account_baseline={account_baseline:.2f}")
-        except FileNotFoundError:
-            account_baseline = raw_account_value
-            logger.info(f"First run: captured account_baseline={account_baseline:.2f}")
+    account_baseline = float(_existing_meta.get("account_baseline", 0) or 0) or raw_account_value
+    realized_pnl = float(_existing_meta.get("realized_pnl", 0) or 0)
+    if not dry_run:
+        realized_pnl += sum(float(r.get("realized_pl") or 0) for r in execution_log)
+    unrealized_pnl = 0.0
+    for _t in UNIVERSE:
+        _pos = client.get_position(_t)
+        if _pos is not None:
+            unrealized_pnl += float(_pos.get("unrealized_pl", 0) or 0)
+    account_value = INITIAL_CAPITAL + realized_pnl + unrealized_pnl
+    logger.info(
+        f"Strategy value={account_value:.2f} (realized={realized_pnl:.2f}, "
+        f"unrealized={unrealized_pnl:.2f}); raw Alpaca={raw_account_value:.2f} not used"
+    )
 
-    if raw_account_value > 0 and account_baseline > 0:
-        account_value = INITIAL_CAPITAL + (raw_account_value - account_baseline)
-    else:
-        account_value = (
-            float(_existing_meta.get("current_portfolio_value", 0) or 0) or INITIAL_CAPITAL
-        )
+    write_evaluation_log(signals, execution_log)
 
     signal_count = len(UNIVERSE)
     fill_count = sum(
@@ -829,7 +925,8 @@ def main(dry_run: bool = False, shortfall_report_only: bool = False, repair_equi
     )
     write_canonical_equity(account_value, signal_count, fill_count)
     write_canonical_meta(account_value, signals, execution_log, signal_count,
-                         account_baseline=account_baseline)
+                         account_baseline=account_baseline, realized_pnl=realized_pnl,
+                         raw_account_value=raw_account_value)
 
     # 7. Summary
     summary = {
@@ -858,6 +955,10 @@ if __name__ == "__main__":
         help="Print implementation shortfall report from trade log and exit"
     )
     parser.add_argument(
+        "--reset-clock", action="store_true",
+        help="Archive equity/evaluations/meta and restart the paper clock (QUA-824).",
+    )
+    parser.add_argument(
         "--repair-equity", action="store_true",
         help=(
             "One-time repair of equity.csv: correct rows where raw Alpaca account equity "
@@ -870,8 +971,9 @@ if __name__ == "__main__":
         dry_run=args.dry_run,
         shortfall_report_only=args.shortfall_report,
         repair_equity=args.repair_equity,
+        reset_clock_only=args.reset_clock,
     )
-    if result and not args.shortfall_report and not args.repair_equity:
+    if result and not args.shortfall_report and not args.repair_equity and not args.reset_clock:
         print("\nSummary:")
         print(f"  Account value: ${result.get('account_value', 0):.2f}")
         print(f"  IS report:     {result.get('is_report', {})}")
