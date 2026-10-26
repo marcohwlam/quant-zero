@@ -66,6 +66,69 @@ def _strat_dir(strat_id: str) -> Path:
     return d
 
 
+def _load_prev_meta(strat_id: str) -> dict:
+    """Load existing meta.json for a strategy; returns {} on missing or parse error."""
+    path = PAPER_TRADING_DIR / strat_id / "meta.json"
+    if not path.exists():
+        return {}
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return {}
+
+
+def compute_strategy_equity(
+    capital_allocated: float,
+    assets: list,
+    all_positions: list,
+    prev_meta: dict,
+) -> dict:
+    """
+    Compute per-strategy equity from open Alpaca positions.
+
+    strategy_equity = capital_allocated + unrealized_pnl + cumulative_realized_pnl
+
+    unrealized_pnl:          sum of Alpaca unrealized_pl for this strategy's assets.
+    cumulative_realized_pnl: carried forward from prev_meta; incremented when a
+                             previously open position is no longer present (position
+                             closed → P&L became realized cash in the account).
+
+    Position closed detection: compares open_positions_detail stored in prev_meta
+    against current positions. When a symbol disappears, its last known unrealized_pl
+    is added to cumulative_realized_pnl. Daily cadence means the approximation error
+    equals intraday PnL movement from last snapshot to fill time.
+
+    Returns dict with strategy_equity, unrealized_pnl, cumulative_realized_pnl,
+    and open_positions_detail (stored in meta.json for next-run detection).
+    """
+    alpaca_assets = {a.replace("-", "") for a in (assets or [])}
+    strat_positions = [p for p in all_positions if p.get("symbol") in alpaca_assets]
+
+    unrealized_pnl = sum(float(p.get("unrealized_pl", 0)) for p in strat_positions)
+
+    # Carry forward cumulative realized PnL and detect newly closed positions
+    prev_cum_realized = float(prev_meta.get("cumulative_realized_pnl", 0) or 0)
+    prev_detail = {
+        d["symbol"]: float(d.get("unrealized_pl", 0))
+        for d in (prev_meta.get("open_positions_detail", []) or [])
+    }
+    current_symbols = {p["symbol"] for p in strat_positions}
+    # Positions present last run but absent now were closed; add their last unrealized_pl
+    newly_realized = sum(pnl for sym, pnl in prev_detail.items() if sym not in current_symbols)
+    cumulative_realized_pnl = round(prev_cum_realized + newly_realized, 4)
+
+    return {
+        "strategy_equity": round(capital_allocated + unrealized_pnl + cumulative_realized_pnl, 4),
+        "unrealized_pnl": round(unrealized_pnl, 4),
+        "cumulative_realized_pnl": cumulative_realized_pnl,
+        "open_positions_detail": [
+            {"symbol": p["symbol"], "unrealized_pl": float(p.get("unrealized_pl", 0))}
+            for p in strat_positions
+        ],
+    }
+
+
 def append_equity_row(strat_id: str, portfolio_value: float) -> None:
     """Upsert today's equity snapshot into equity.csv (one row per date)."""
     path = _strat_dir(strat_id) / "equity.csv"
@@ -298,6 +361,13 @@ def run_pipeline(dry_run: bool = False) -> dict:
     total_portfolio_value = float(account.get("portfolio_value", 0))
     logger.info(f"Alpaca connected — portfolio=${total_portfolio_value:,.2f} status={account.get('status')}")
 
+    # Fetch positions once; shared across all strategies for per-strategy equity calc
+    try:
+        all_positions = client.get_positions()
+    except Exception as exc:
+        logger.warning(f"Could not fetch positions for equity tracking: {exc}. Per-strategy equity will use capital_allocated only.")
+        all_positions = []
+
     registry = _load_registry()
     results = {}
 
@@ -316,10 +386,28 @@ def run_pipeline(dry_run: bool = False) -> dict:
 
         logger.info(f"--- Running {strat['name']} ({strat_id}) ---")
         try:
+            # Load previous meta for realized PnL carry-forward before runner modifies it
+            prev_meta = _load_prev_meta(strat_id)
+
             result = runner_fn(client, dry_run=dry_run)
 
+            # Compute per-strategy equity from positions (not total Alpaca account value)
+            capital_allocated = float(strat.get("capital_allocated", 0))
+            equity_data = compute_strategy_equity(
+                capital_allocated=capital_allocated,
+                assets=strat.get("assets", []),
+                all_positions=all_positions,
+                prev_meta=prev_meta,
+            )
+            strategy_equity = equity_data["strategy_equity"]
+            logger.info(
+                f"  {strat_id} equity=${strategy_equity:.2f} "
+                f"(unrealized_pnl={equity_data['unrealized_pnl']:.2f}, "
+                f"realized_pnl={equity_data['cumulative_realized_pnl']:.2f})"
+            )
+
             # Write standardized outputs
-            append_equity_row(strat_id, total_portfolio_value)
+            append_equity_row(strat_id, strategy_equity)
             write_trades_csv(strat_id, result.get("trade_log", []))
 
             meta = {
@@ -328,19 +416,24 @@ def run_pipeline(dry_run: bool = False) -> dict:
                 "last_updated": datetime.now().isoformat(),
                 "run_date": date.today().isoformat(),
                 "dry_run": dry_run,
-                "portfolio_value": total_portfolio_value,
+                "portfolio_value": strategy_equity,
+                "strategy_equity": strategy_equity,
+                "capital_allocated": capital_allocated,
+                "unrealized_pnl": equity_data["unrealized_pnl"],
+                "cumulative_realized_pnl": equity_data["cumulative_realized_pnl"],
+                "open_positions_detail": equity_data["open_positions_detail"],
                 "signals": result.get("signals"),
                 "is_report": result.get("is_report"),
                 "registry": {
                     "asset_class": strat.get("asset_class"),
-                    "capital_allocated": strat.get("capital_allocated"),
+                    "capital_allocated": capital_allocated,
                     "gate1_approved": strat.get("gate1_approved"),
                     "start_date": strat.get("start_date"),
                 },
             }
             write_meta_json(strat_id, meta)
 
-            results[strat_id] = {"status": "OK", "signals": result.get("signals"), "is_report": result.get("is_report")}
+            results[strat_id] = {"status": "OK", "strategy_equity": strategy_equity, "signals": result.get("signals"), "is_report": result.get("is_report")}
             logger.info(f"  {strat_id} → OK")
 
         except Exception as exc:
@@ -359,7 +452,7 @@ def run_pipeline(dry_run: bool = False) -> dict:
     summary = {
         "pipeline_run": datetime.now().isoformat(),
         "dry_run": dry_run,
-        "portfolio_value": total_portfolio_value,
+        "total_portfolio_value": total_portfolio_value,
         "strategies": results,
     }
 
@@ -384,9 +477,11 @@ def main():
 
     summary = run_pipeline(dry_run=args.dry_run)
     print("\nPipeline summary:")
-    print(f"  portfolio_value : ${summary['portfolio_value']:,.2f}")
+    print(f"  total_portfolio_value : ${summary['total_portfolio_value']:,.2f}")
     for sid, r in summary["strategies"].items():
-        print(f"  {sid:40s}  {r['status']}")
+        eq = r.get("strategy_equity")
+        eq_str = f"  equity=${eq:,.2f}" if eq is not None else ""
+        print(f"  {sid:40s}  {r['status']}{eq_str}")
     return summary
 
 
