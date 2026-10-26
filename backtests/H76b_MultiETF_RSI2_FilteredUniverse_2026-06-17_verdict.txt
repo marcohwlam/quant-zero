@@ -1,0 +1,87 @@
+H76b Multi-ETF RSI-2 Filtered Universe — Gate 1 Verdict
+Date: 2026-06-17
+Universe: SPY, QQQ, IWM, XLK, XLV, XLE, XLF, XLP, XLI, XLB
+Removed vs H76: XLU (IS Sharpe -0.512), XLY (IS Sharpe -0.778)
+Task: QUA-330
+
+OVERALL VERDICT: FAIL
+
+H76b vs H76 CHANGES:
+  RSI entry threshold: <3 (was <5)
+  Max positions: 5 (was 4) | Position weight: 20% (was 25%)
+  Rolling quality gate: 252-day Sharpe >= 0 per instrument (new)
+  Universe: 10 ETFs (XLU and XLY removed)
+
+PRIMARY GATE CHECKS:
+  IS Sharpe      : 0.3155  FAIL (> 1.0)
+  OOS Sharpe     : 0.2615  FAIL (> 0.70)
+  IS MDD (CS)    : 9.31%  PASS (< 20%)
+  IS MDD (Gate 7): 9.31%  PASS (< 30%)
+  OOS MDD        : 6.87%  PASS (< 20%)
+  OOS PpT        : 10.29 bps  FAIL (> 15 bps)
+  IS trades      : 306  PASS (>= 100)
+  WF trades/fold : PASS (all folds > 30)
+  CPR            : 0.1230  PASS (< 0.25)
+
+STATISTICAL TESTS:
+  Permutation p  : 0.6550  FAIL (< 0.05)
+  MC p5 Sharpe   : 0.4461  WEAK (< 0.5)
+  Bootstrap CI   : [-0.1119, 0.8259]
+  DSR            : 0.2860
+  Sensitivity Δ  : 22.9%  PASS (< 30%)
+
+WALK-FORWARD (4 IS folds):
+  Fold 1 (2005-01-01–2008-06-30): Sharpe=0.2681, MDD=-4.19%, trades=70
+  Fold 2 (2008-07-01–2011-12-31): Sharpe=0.4950, MDD=-5.19%, trades=53
+  Fold 3 (2012-01-01–2015-06-30): Sharpe=1.0678, MDD=-3.71%, trades=85
+  Fold 4 (2015-07-01–2018-12-31): Sharpe=-0.3035, MDD=-9.30%, trades=94
+  WF passed: 3/4
+  WF Sharpe std: 0.4914
+  WF Sharpe min: -0.3035  FLAG
+  Gate 7 (any fold MDD>30%): PASS
+
+PER-INSTRUMENT (IS — top by PpT):
+  XLE: trades=27, PpT=128.5 bps, WR=77.8%, Sharpe~=5.348
+  XLF: trades=28, PpT=76.8 bps, WR=82.1%, Sharpe~=4.313
+  XLV: trades=27, PpT=33.0 bps, WR=74.1%, Sharpe~=1.511
+  IWM: trades=24, PpT=19.6 bps, WR=62.5%, Sharpe~=0.907
+  XLI: trades=31, PpT=17.7 bps, WR=64.5%, Sharpe~=0.727
+  XLB: trades=38, PpT=6.4 bps, WR=57.9%, Sharpe~=0.232
+  SPY: trades=32, PpT=1.6 bps, WR=71.9%, Sharpe~=0.073
+  QQQ: trades=30, PpT=-0.3 bps, WR=60.0%, Sharpe~=-0.015
+  XLK: trades=35, PpT=-1.7 bps, WR=62.9%, Sharpe~=-0.084
+  XLP: trades=34, PpT=-6.7 bps, WR=67.7%, Sharpe~=-0.381
+
+IS SUMMARY (2005-01-01 to 2018-12-31):
+  Sharpe: 0.3155
+  MDD: 9.31%
+  Win rate: 67.65%
+  Profit factor: 1.39
+  Trade count: 306 (21.9/yr)
+  PpT: 13.77 bps
+  SPY regime active: 79.8%
+  Exit breakdown: {'RSI_EXIT': 243, 'MAX_HOLD': 43, 'STOP_LOSS': 20}
+  Concurrent: {'pct_time_2plus_positions': 0.067, 'pct_time_5plus_positions': 0.0202, 'avg_n_positions_when_invested': 2.1456, 'max_simultaneous_positions': 5, 'pct_time_in_market': 0.1462}
+
+OOS SUMMARY (2019-01-01 to 2024-12-31):
+  Sharpe: 0.2615
+  MDD: 6.87%
+  Win rate: 66.03%
+  Profit factor: 1.22
+  Trade count: 156 (26.0/yr)
+  PpT: 10.29 bps
+  2022 regime: {'2022_trade_count': 9, '2022_regime_active_pct': 0.1912, '2022_n_positions_mean': 0.1873, '2022_note': 'SPY 200-DMA filter should block entries from Jan 2022 bear leg'}
+
+PARAMETER SWEEP (9 combinations):
+  Max Sharpe sensitivity: 22.9% — PASS (<30%)
+  See: H76b_MultiETF_RSI2_FilteredUniverse_2026-06-17_sweep.csv
+
+SLIPPAGE MODEL:
+  SPY/QQQ/IWM: 0.005% one-way (ultra-liquid, ED-SLIP-001)
+  XLK/XLV/XLE/XLF/XLP/XLI/XLB: 0.05% one-way (canonical standard)
+  Commission: $0.005/share each side (all instruments)
+
+FAMILY CONTEXT:
+  This is the 2nd and FINAL iteration of Multi-ETF RSI-2 (per QUA-181).
+  H76 FAIL (IS Sharpe 0.54) → H76b (IS Sharpe 0.3155)
+  If FAIL: Multi-ETF RSI-2 family RETIRED.

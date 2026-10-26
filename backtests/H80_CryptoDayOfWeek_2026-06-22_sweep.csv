@@ -1,0 +1,9 @@
+scenario,parameter,low_val,base_val,high_val,low_sharpe,base_sharpe,high_sharpe,delta_ratio,passed
+TAKER,trend_filter_sma,40.0,50.0,60.0,0.5625,0.5625,0.5625,0.0,True
+TAKER,vol_filter_rv,0.6400000000000001,0.8,0.96,0.5625,0.5625,0.5625,0.0,True
+TAKER,stop_loss_pct,0.024,0.03,0.036,0.5605,0.5625,0.4518,0.1932,True
+TAKER,long_size_pct,0.4,0.5,0.6,0.5449,0.5625,0.5733,0.0505,True
+MAKER,trend_filter_sma,40.0,50.0,60.0,0.8014,0.8014,0.8014,0.0,True
+MAKER,vol_filter_rv,0.6400000000000001,0.8,0.96,0.8014,0.8014,0.8014,0.0,True
+MAKER,stop_loss_pct,0.024,0.03,0.036,0.8169,0.8014,0.6823,0.168,True
+MAKER,long_size_pct,0.4,0.5,0.6,0.8025,0.8014,0.798,0.0056,True

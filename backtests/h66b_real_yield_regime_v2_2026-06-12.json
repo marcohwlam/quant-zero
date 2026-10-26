@@ -1,0 +1,8177 @@
+{
+  "strategy": "H66_v2_Real_Yield_Regime_TIP_VIX",
+  "version": "2.0",
+  "gate": "Gate 1",
+  "report_date": "2026-06-12",
+  "is_window": {
+    "start": "2004-01-01",
+    "end": "2023-12-31"
+  },
+  "oos_window": {
+    "start": "2024-01-01",
+    "end": "2026-06-10"
+  },
+  "baseline_params": {
+    "spy_ticker": "SPY",
+    "tip_ticker": "TIP",
+    "lookback_days": 60,
+    "signal_threshold": 0.01,
+    "smoothing_days": 1,
+    "vix_override_threshold": 35.0,
+    "riskoff_asset": "SHY",
+    "init_cash": 25000
+  },
+  "is_metrics": {
+    "params": {
+      "spy_ticker": "SPY",
+      "tip_ticker": "TIP",
+      "lookback_days": 60,
+      "signal_threshold": 0.01,
+      "smoothing_days": 1,
+      "vix_override_threshold": 35.0,
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    },
+    "gfc_diagnostic": {
+      "gfc_first_exit_date": "2008-08-05",
+      "gfc_first_exit_price": 90.88,
+      "gfc_n_exits_aug_dec_2008": 3,
+      "note": "Strategy exits SPY to SHY during GFC \u2014 validates PF-2 gate. VIX override or TIP 60d signal triggered; catches Oct 2008 crisis."
+    },
+    "shock_2022_diagnostic": {
+      "spy_days_2022": 12,
+      "shy_days_2022": 239,
+      "pct_in_spy_2022": 0.0478,
+      "strategy_return_2022": -0.0649,
+      "strategy_mdd_2022": -0.0717,
+      "validation_note": "PF-4 anchor: TIP fell 14.4% in 2022; 60d signal should exit Q1 2022. VIX briefly hit ~37 in Jan 2022 \u2014 override borderline. Primary TIP 60d signal sufficient for 2022 protection."
+    },
+    "data_quality": {
+      "survivorship_bias_flag": "SPY/SHY are live ETFs \u2014 no survivorship bias",
+      "price_adjusted": true,
+      "auto_adjust": true,
+      "spy_ticker": "SPY",
+      "tip_ticker": "TIP",
+      "vix_ticker": "^VIX",
+      "tip_note": "TIP (iShares TIPS Bond ETF, ~$38B AUM). Inception Feb 2003; IS start 2004 applies 1-year buffer per RD guidance.",
+      "vix_note": "^VIX (CBOE Volatility Index). Used as crisis circuit-breaker only. VIX>35 threshold not optimized \u2014 canonical crisis level per academic literature.",
+      "riskoff_asset": "SHY",
+      "earnings_exclusion": "N/A \u2014 ETF strategy",
+      "delisted_tickers": "N/A \u2014 SPY/SHY/TIP/VIX are active ETFs/indices",
+      "forward_fill_policy": "TIP reindexed to SPY calendar with ffill(limit=3). VIX reindexed to SPY calendar with ffill(limit=5). Silent forward-fill NOT applied for equity data gaps >= 5 days.",
+      "signal_lag": "tip_signal at T uses only TIP/VIX close data through T; position change executes at T+1 open (no look-ahead bias)",
+      "survivorship_bias": "SPY, TIP, SHY are broad-market/treasury ETFs \u2014 no survivorship bias",
+      "vix_override_note": "VIX override threshold (35.0) not selected by grid search \u2014 canonical crisis threshold per academic literature (Bailey et al. 2014). Not counted as an optimized parameter for DSR purposes."
+    },
+    "sharpe": 0.8462,
+    "cagr": 0.0878,
+    "max_drawdown": -0.301,
+    "total_return": 4.3842,
+    "win_rate": 0.6103,
+    "profit_factor": 2.3046,
+    "trade_count": 195,
+    "n_transitions": 389,
+    "transitions_per_year": 19.5,
+    "transitions_per_wf_fold": 97.2,
+    "pf1_status": "PASS (97.2/fold >= 30)",
+    "spy_days": 2374,
+    "riskoff_days": 2659,
+    "pct_in_spy": 0.4717,
+    "avg_hold_days": 12.2,
+    "years": 19.99726214921287
+  },
+  "oos_metrics": {
+    "params": {
+      "spy_ticker": "SPY",
+      "tip_ticker": "TIP",
+      "lookback_days": 60,
+      "signal_threshold": 0.01,
+      "smoothing_days": 1,
+      "vix_override_threshold": 35.0,
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    },
+    "gfc_diagnostic": {
+      "gfc_first_exit_date": null,
+      "note": "No exit signal fired Aug\u2013Dec 2008. Days in SHY Aug 1\u2013Sep 15: 0. VIX override may have not reached 35 before Oct 2008 liquidation event."
+    },
+    "shock_2022_diagnostic": {},
+    "data_quality": {
+      "survivorship_bias_flag": "SPY/SHY are live ETFs \u2014 no survivorship bias",
+      "price_adjusted": true,
+      "auto_adjust": true,
+      "spy_ticker": "SPY",
+      "tip_ticker": "TIP",
+      "vix_ticker": "^VIX",
+      "tip_note": "TIP (iShares TIPS Bond ETF, ~$38B AUM). Inception Feb 2003; IS start 2004 applies 1-year buffer per RD guidance.",
+      "vix_note": "^VIX (CBOE Volatility Index). Used as crisis circuit-breaker only. VIX>35 threshold not optimized \u2014 canonical crisis level per academic literature.",
+      "riskoff_asset": "SHY",
+      "earnings_exclusion": "N/A \u2014 ETF strategy",
+      "delisted_tickers": "N/A \u2014 SPY/SHY/TIP/VIX are active ETFs/indices",
+      "forward_fill_policy": "TIP reindexed to SPY calendar with ffill(limit=3). VIX reindexed to SPY calendar with ffill(limit=5). Silent forward-fill NOT applied for equity data gaps >= 5 days.",
+      "signal_lag": "tip_signal at T uses only TIP/VIX close data through T; position change executes at T+1 open (no look-ahead bias)",
+      "survivorship_bias": "SPY, TIP, SHY are broad-market/treasury ETFs \u2014 no survivorship bias",
+      "vix_override_note": "VIX override threshold (35.0) not selected by grid search \u2014 canonical crisis threshold per academic literature (Bailey et al. 2014). Not counted as an optimized parameter for DSR purposes."
+    },
+    "sharpe": 0.6456,
+    "cagr": 0.068,
+    "max_drawdown": -0.2235,
+    "total_return": 0.1742,
+    "win_rate": 0.6667,
+    "profit_factor": 1.3826,
+    "trade_count": 30,
+    "n_transitions": 60,
+    "transitions_per_year": 24.6,
+    "transitions_per_wf_fold": 15.0,
+    "pf1_status": "WARN: 15.0/fold < 30",
+    "spy_days": 327,
+    "riskoff_days": 284,
+    "pct_in_spy": 0.5352,
+    "avg_hold_days": 10.9,
+    "years": 2.439425051334702
+  },
+  "gfc_exit_diagnostic": {
+    "gfc_first_exit_date": "2008-08-05",
+    "gfc_first_exit_price": 90.88,
+    "gfc_n_exits_aug_dec_2008": 3,
+    "note": "Strategy exits SPY to SHY during GFC \u2014 validates PF-2 gate. VIX override or TIP 60d signal triggered; catches Oct 2008 crisis."
+  },
+  "shock_2022_diagnostic": {
+    "spy_days_2022": 12,
+    "shy_days_2022": 239,
+    "pct_in_spy_2022": 0.0478,
+    "strategy_return_2022": -0.0649,
+    "strategy_mdd_2022": -0.0717,
+    "validation_note": "PF-4 anchor: TIP fell 14.4% in 2022; 60d signal should exit Q1 2022. VIX briefly hit ~37 in Jan 2022 \u2014 override borderline. Primary TIP 60d signal sufficient for 2022 protection."
+  },
+  "gate1_verdict": {
+    "criteria": {
+      "IS_Sharpe": {
+        "value": 0.8462,
+        "threshold": "> 1.0",
+        "pass": false
+      },
+      "OOS_Sharpe": {
+        "value": 0.6456,
+        "threshold": "> 0.7",
+        "pass": false
+      },
+      "IS_MaxDrawdown": {
+        "value": 30.1,
+        "threshold": "< 20%",
+        "pass": false
+      },
+      "IS_CAGR": {
+        "value": 8.78,
+        "threshold": ">= 10%",
+        "pass": false
+      },
+      "IS_TradeCount": {
+        "value": 195,
+        "threshold": ">= 100",
+        "pass": true
+      },
+      "WF_Consistency": {
+        "value": "3/4",
+        "threshold": ">= 3/4 windows",
+        "pass": true
+      },
+      "Permutation_pvalue": {
+        "value": 1.0,
+        "threshold": "< 0.05",
+        "pass": false,
+        "note": "CRITICAL"
+      },
+      "DSR_zscore": {
+        "value": 29.2438,
+        "threshold": "> 0.0",
+        "pass": true
+      },
+      "Param_sensitivity": {
+        "value": "0.0% max delta",
+        "threshold": "< 30%",
+        "pass": false,
+        "note": "Secondary sweep \u2014 only run if IS Sharpe > 1.0"
+      }
+    },
+    "verdict": "FAIL",
+    "oos_degradation": 0.2371,
+    "family_iteration_notice": "FINAL iteration for H66 family per QUA-226. If FAIL, report to Research Director for retirement."
+  },
+  "statistical_rigor": {
+    "mc_p5_sharpe": 0.4821,
+    "mc_median_sharpe": 0.8462,
+    "mc_p95_sharpe": 1.2508,
+    "sharpe_ci_low": 0.3819,
+    "sharpe_ci_high": 1.3104,
+    "mdd_ci_low": -0.3591,
+    "mdd_ci_high": -0.1336,
+    "win_rate_ci_low": 0.5128,
+    "win_rate_ci_high": 0.5392,
+    "observed_sharpe": 0.8462,
+    "permutation_n": 1000,
+    "permutation_n_blocks": 420,
+    "block_size": 12,
+    "perm_sharpe_p5": 0.8462,
+    "perm_sharpe_median": 0.8462,
+    "perm_sharpe_p95": 0.8462,
+    "permutation_pvalue": 1.0,
+    "permutation_test_pass": false,
+    "permutation_pvalue_note": "Block-shuffle permutation on daily returns. p < 0.05 confirms TIP+VIX signal has genuine predictive power.",
+    "dsr": 29.2438,
+    "dsr_passed": true,
+    "dsr_summary": "DSR: PASS  z-score=29.2438, p=1.0000, SR_hat=0.846, SR*=0.0401 (n_trials=15, n_obs=5033)",
+    "wf_sharpe_std": 0.4496,
+    "wf_sharpe_min": 0.2507
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "window": 1,
+        "is_start": "2004-01-01",
+        "is_end": "2010-12-31",
+        "oos_start": "2011-01-01",
+        "oos_end": "2015-12-31",
+        "is_sharpe": 0.95,
+        "oos_sharpe": 0.2507,
+        "oos_pass": false
+      },
+      {
+        "window": 2,
+        "is_start": "2004-01-01",
+        "is_end": "2013-12-31",
+        "oos_start": "2014-01-01",
+        "oos_end": "2017-12-31",
+        "is_sharpe": 0.6438,
+        "oos_sharpe": 1.5042,
+        "oos_pass": true
+      },
+      {
+        "window": 3,
+        "is_start": "2004-01-01",
+        "is_end": "2016-12-31",
+        "oos_start": "2017-01-01",
+        "oos_end": "2020-12-31",
+        "is_sharpe": 0.7594,
+        "oos_sharpe": 0.7352,
+        "oos_pass": true
+      },
+      {
+        "window": 4,
+        "is_start": "2004-01-01",
+        "is_end": "2018-12-31",
+        "oos_start": "2019-01-01",
+        "oos_end": "2023-12-31",
+        "is_sharpe": 0.8129,
+        "oos_sharpe": 0.9416,
+        "oos_pass": true
+      }
+    ],
+    "windows_passed": 3,
+    "wf_sharpe_std": 0.4496,
+    "wf_sharpe_min": 0.2507,
+    "design_note": "Expanding IS windows; OOS covers post-GFC (2011-2015), rate normalization (2014-2017), late bull+COVID (2017-2020), COVID+2022 (2019-2023). Same structure as v1 for comparability."
+  },
+  "sub_period_diagnostics": {
+    "pre_gfc_only": {
+      "start": "2004-01-01",
+      "end": "2007-12-31",
+      "sharpe": 1.4862,
+      "cagr": 0.1395,
+      "max_drawdown": -0.0991,
+      "trade_count": 31,
+      "pct_in_spy": 0.5413,
+      "transitions_per_year": 15.3,
+      "total_return": 0.6855
+    },
+    "gfc_only": {
+      "start": "2007-01-01",
+      "end": "2009-12-31",
+      "sharpe": 1.0147,
+      "cagr": 0.1417,
+      "max_drawdown": -0.1774,
+      "trade_count": 24,
+      "pct_in_spy": 0.5325,
+      "transitions_per_year": 15.7,
+      "total_return": 0.4877
+    },
+    "rate_normalization": {
+      "start": "2014-01-01",
+      "end": "2018-12-31",
+      "sharpe": 1.7262,
+      "cagr": 0.1016,
+      "max_drawdown": -0.0468,
+      "trade_count": 49,
+      "pct_in_spy": 0.3126,
+      "transitions_per_year": 19.6,
+      "total_return": 0.6219
+    },
+    "taper_tantrum_2013": {
+      "start": "2013-01-01",
+      "end": "2013-12-31",
+      "sharpe": 1.205,
+      "cagr": 0.0423,
+      "max_drawdown": -0.0207,
+      "trade_count": 8,
+      "pct_in_spy": 0.1275,
+      "transitions_per_year": 16.1,
+      "total_return": 0.0422
+    },
+    "rate_shock_2022": {
+      "start": "2022-01-01",
+      "end": "2022-12-31",
+      "sharpe": -1.5967,
+      "cagr": -0.0649,
+      "max_drawdown": -0.0715,
+      "trade_count": 6,
+      "pct_in_spy": 0.0478,
+      "transitions_per_year": 12.0,
+      "total_return": -0.0647
+    },
+    "covid_recovery_2023": {
+      "start": "2023-01-01",
+      "end": "2023-12-31",
+      "sharpe": 3.1054,
+      "cagr": 0.3144,
+      "max_drawdown": -0.0418,
+      "trade_count": 12,
+      "pct_in_spy": 0.376,
+      "transitions_per_year": 23.1,
+      "total_return": 0.3132
+    }
+  },
+  "sensitivity_sweep": {
+    "sweep_table": [],
+    "base_sharpe": 0.8462,
+    "max_sharpe_delta_pct": 0.0,
+    "param_sensitivity_passed": false,
+    "param_sensitivity_note": "Skipped \u2014 IS Sharpe below Gate 1 threshold"
+  },
+  "equity_curve_is": [
+    {
+      "date": "2004-01-02",
+      "equity": 24882.52
+    },
+    {
+      "date": "2004-01-05",
+      "equity": 25153.2
+    },
+    {
+      "date": "2004-01-06",
+      "equity": 25177.8
+    },
+    {
+      "date": "2004-01-07",
+      "equity": 25262.82
+    },
+    {
+      "date": "2004-01-08",
+      "equity": 25363.47
+    },
+    {
+      "date": "2004-01-09",
+      "equity": 25142.03
+    },
+    {
+      "date": "2004-01-12",
+      "equity": 25327.7
+    },
+    {
+      "date": "2004-01-13",
+      "equity": 25180.05
+    },
+    {
+      "date": "2004-01-14",
+      "equity": 25390.32
+    },
+    {
+      "date": "2004-01-15",
+      "equity": 25452.95
+    },
+    {
+      "date": "2004-01-16",
+      "equity": 25553.62
+    },
+    {
+      "date": "2004-01-20",
+      "equity": 25546.9
+    },
+    {
+      "date": "2004-01-21",
+      "equity": 25748.24
+    },
+    {
+      "date": "2004-01-22",
+      "equity": 25681.13
+    },
+    {
+      "date": "2004-01-23",
+      "equity": 25598.36
+    },
+    {
+      "date": "2004-01-26",
+      "equity": 25920.49
+    },
+    {
+      "date": "2004-01-27",
+      "equity": 25654.3
+    },
+    {
+      "date": "2004-01-28",
+      "equity": 25361.24
+    },
+    {
+      "date": "2004-01-29",
+      "equity": 25385.86
+    },
+    {
+      "date": "2004-01-30",
+      "equity": 25385.86
+    },
+    {
+      "date": "2004-02-02",
+      "equity": 25495.46
+    },
+    {
+      "date": "2004-02-03",
+      "equity": 25452.95
+    },
+    {
+      "date": "2004-02-04",
+      "equity": 25244.91
+    },
+    {
+      "date": "2004-02-05",
+      "equity": 25318.74
+    },
+    {
+      "date": "2004-02-06",
+      "equity": 25602.83
+    },
+    {
+      "date": "2004-02-09",
+      "equity": 25609.55
+    },
+    {
+      "date": "2004-02-10",
+      "equity": 25692.32
+    },
+    {
+      "date": "2004-02-11",
+      "equity": 25965.22
+    },
+    {
+      "date": "2004-02-12",
+      "equity": 25871.28
+    },
+    {
+      "date": "2004-02-13",
+      "equity": 25754.94
+    },
+    {
+      "date": "2004-02-17",
+      "equity": 25987.62
+    },
+    {
+      "date": "2004-02-18",
+      "equity": 25873.52
+    },
+    {
+      "date": "2004-02-19",
+      "equity": 25777.33
+    },
+    {
+      "date": "2004-02-20",
+      "equity": 25699.02
+    },
+    {
+      "date": "2004-02-23",
+      "equity": 25634.16
+    },
+    {
+      "date": "2004-02-24",
+      "equity": 25589.41
+    },
+    {
+      "date": "2004-02-25",
+      "equity": 25696.79
+    },
+    {
+      "date": "2004-02-26",
+      "equity": 25712.45
+    },
+    {
+      "date": "2004-02-27",
+      "equity": 25730.35
+    },
+    {
+      "date": "2004-03-01",
+      "equity": 25985.37
+    },
+    {
+      "date": "2004-03-02",
+      "equity": 25833.24
+    },
+    {
+      "date": "2004-03-03",
+      "equity": 25880.22
+    },
+    {
+      "date": "2004-03-04",
+      "equity": 25947.34
+    },
+    {
+      "date": "2004-03-05",
+      "equity": 26034.58
+    },
+    {
+      "date": "2004-03-08",
+      "equity": 25716.92
+    },
+    {
+      "date": "2004-03-09",
+      "equity": 25614.03
+    },
+    {
+      "date": "2004-03-10",
+      "equity": 25184.52
+    },
+    {
+      "date": "2004-03-11",
+      "equity": 24857.92
+    },
+    {
+      "date": "2004-03-12",
+      "equity": 25184.52
+    },
+    {
+      "date": "2004-03-15",
+      "equity": 24875.81
+    },
+    {
+      "date": "2004-03-16",
+      "equity": 25007.79
+    },
+    {
+      "date": "2004-03-17",
+      "equity": 25287.42
+    },
+    {
+      "date": "2004-03-18",
+      "equity": 25294.13
+    },
+    {
+      "date": "2004-03-19",
+      "equity": 24931.59
+    },
+    {
+      "date": "2004-03-22",
+      "equity": 24615.07
+    },
+    {
+      "date": "2004-03-23",
+      "equity": 24572.41
+    },
+    {
+      "date": "2004-03-24",
+      "equity": 24592.61
+    },
+    {
+      "date": "2004-03-25",
+      "equity": 24918.13
+    },
+    {
+      "date": "2004-03-26",
+      "equity": 24924.85
+    },
+    {
+      "date": "2004-03-29",
+      "equity": 25275.05
+    },
+    {
+      "date": "2004-03-30",
+      "equity": 25360.36
+    },
+    {
+      "date": "2004-03-31",
+      "equity": 25389.55
+    },
+    {
+      "date": "2004-04-01",
+      "equity": 25542.19
+    },
+    {
+      "date": "2004-04-02",
+      "equity": 25735.24
+    },
+    {
+      "date": "2004-04-05",
+      "equity": 25876.67
+    },
+    {
+      "date": "2004-04-06",
+      "equity": 25793.61
+    },
+    {
+      "date": "2004-04-07",
+      "equity": 25733.0
+    },
+    {
+      "date": "2004-04-08",
+      "equity": 25674.64
+    },
+    {
+      "date": "2004-04-12",
+      "equity": 25775.66
+    },
+    {
+      "date": "2004-04-13",
+      "equity": 25414.22
+    },
+    {
+      "date": "2004-04-14",
+      "equity": 25233.51
+    },
+    {
+      "date": "2004-04-15",
+      "equity": 25248.87
+    },
+    {
+      "date": "2004-04-16",
+      "equity": 25282.66
+    },
+    {
+      "date": "2004-04-19",
+      "equity": 25251.93
+    },
+    {
+      "date": "2004-04-20",
+      "equity": 25193.6
+    },
+    {
+      "date": "2004-04-21",
+      "equity": 25196.67
+    },
+    {
+      "date": "2004-04-22",
+      "equity": 25233.51
+    },
+    {
+      "date": "2004-04-23",
+      "equity": 25181.32
+    },
+    {
+      "date": "2004-04-26",
+      "equity": 25184.38
+    },
+    {
+      "date": "2004-04-27",
+      "equity": 25215.09
+    },
+    {
+      "date": "2004-04-28",
+      "equity": 25162.92
+    },
+    {
+      "date": "2004-04-29",
+      "equity": 25159.84
+    },
+    {
+      "date": "2004-04-30",
+      "equity": 25172.1
+    },
+    {
+      "date": "2004-05-03",
+      "equity": 25183.17
+    },
+    {
+      "date": "2004-05-04",
+      "equity": 25177.01
+    },
+    {
+      "date": "2004-05-05",
+      "equity": 25167.81
+    },
+    {
+      "date": "2004-05-06",
+      "equity": 25161.64
+    },
+    {
+      "date": "2004-05-07",
+      "equity": 25057.1
+    },
+    {
+      "date": "2004-05-10",
+      "equity": 25069.39
+    },
+    {
+      "date": "2004-05-11",
+      "equity": 25072.48
+    },
+    {
+      "date": "2004-05-12",
+      "equity": 25078.61
+    },
+    {
+      "date": "2004-05-13",
+      "equity": 25066.31
+    },
+    {
+      "date": "2004-05-14",
+      "equity": 25106.29
+    },
+    {
+      "date": "2004-05-17",
+      "equity": 25140.12
+    },
+    {
+      "date": "2004-05-18",
+      "equity": 25115.51
+    },
+    {
+      "date": "2004-05-19",
+      "equity": 25103.21
+    },
+    {
+      "date": "2004-05-20",
+      "equity": 25115.51
+    },
+    {
+      "date": "2004-05-21",
+      "equity": 25115.51
+    },
+    {
+      "date": "2004-05-24",
+      "equity": 25121.67
+    },
+    {
+      "date": "2004-05-25",
+      "equity": 25121.67
+    },
+    {
+      "date": "2004-05-26",
+      "equity": 25167.81
+    },
+    {
+      "date": "2004-05-27",
+      "equity": 25180.1
+    },
+    {
+      "date": "2004-05-28",
+      "equity": 25170.87
+    },
+    {
+      "date": "2004-06-01",
+      "equity": 25135.13
+    },
+    {
+      "date": "2004-06-02",
+      "equity": 25119.74
+    },
+    {
+      "date": "2004-06-03",
+      "equity": 25125.92
+    },
+    {
+      "date": "2004-06-04",
+      "equity": 25085.86
+    },
+    {
+      "date": "2004-06-07",
+      "equity": 25095.1
+    },
+    {
+      "date": "2004-06-08",
+      "equity": 25098.2
+    },
+    {
+      "date": "2004-06-09",
+      "equity": 25058.14
+    },
+    {
+      "date": "2004-06-10",
+      "equity": 25055.06
+    },
+    {
+      "date": "2004-06-14",
+      "equity": 24990.4
+    },
+    {
+      "date": "2004-06-15",
+      "equity": 25073.54
+    },
+    {
+      "date": "2004-06-16",
+      "equity": 25055.06
+    },
+    {
+      "date": "2004-06-17",
+      "equity": 25085.86
+    },
+    {
+      "date": "2004-06-18",
+      "equity": 25070.48
+    },
+    {
+      "date": "2004-06-21",
+      "equity": 25088.95
+    },
+    {
+      "date": "2004-06-22",
+      "equity": 25098.2
+    },
+    {
+      "date": "2004-06-23",
+      "equity": 25104.35
+    },
+    {
+      "date": "2004-06-24",
+      "equity": 25128.98
+    },
+    {
+      "date": "2004-06-25",
+      "equity": 25132.08
+    },
+    {
+      "date": "2004-06-28",
+      "equity": 25073.54
+    },
+    {
+      "date": "2004-06-29",
+      "equity": 25098.2
+    },
+    {
+      "date": "2004-06-30",
+      "equity": 25165.94
+    },
+    {
+      "date": "2004-07-01",
+      "equity": 25171.19
+    },
+    {
+      "date": "2004-07-02",
+      "equity": 25239.08
+    },
+    {
+      "date": "2004-07-06",
+      "equity": 25232.9
+    },
+    {
+      "date": "2004-07-07",
+      "equity": 25235.98
+    },
+    {
+      "date": "2004-07-08",
+      "equity": 25245.24
+    },
+    {
+      "date": "2004-07-09",
+      "equity": 25245.24
+    },
+    {
+      "date": "2004-07-12",
+      "equity": 25254.51
+    },
+    {
+      "date": "2004-07-13",
+      "equity": 25235.98
+    },
+    {
+      "date": "2004-07-14",
+      "equity": 25226.74
+    },
+    {
+      "date": "2004-07-15",
+      "equity": 25226.74
+    },
+    {
+      "date": "2004-07-16",
+      "equity": 25276.07
+    },
+    {
+      "date": "2004-07-19",
+      "equity": 25156.79
+    },
+    {
+      "date": "2004-07-20",
+      "equity": 25475.96
+    },
+    {
+      "date": "2004-07-21",
+      "equity": 25006.33
+    },
+    {
+      "date": "2004-07-22",
+      "equity": 25074.72
+    },
+    {
+      "date": "2004-07-23",
+      "equity": 24864.98
+    },
+    {
+      "date": "2004-07-26",
+      "equity": 24817.11
+    },
+    {
+      "date": "2004-07-27",
+      "equity": 25049.64
+    },
+    {
+      "date": "2004-07-28",
+      "equity": 25124.88
+    },
+    {
+      "date": "2004-07-29",
+      "equity": 25232.03
+    },
+    {
+      "date": "2004-07-30",
+      "equity": 25293.58
+    },
+    {
+      "date": "2004-08-02",
+      "equity": 25346.02
+    },
+    {
+      "date": "2004-08-03",
+      "equity": 25149.96
+    },
+    {
+      "date": "2004-08-04",
+      "equity": 25147.68
+    },
+    {
+      "date": "2004-08-05",
+      "equity": 24737.32
+    },
+    {
+      "date": "2004-08-06",
+      "equity": 24383.97
+    },
+    {
+      "date": "2004-08-09",
+      "equity": 24418.15
+    },
+    {
+      "date": "2004-08-10",
+      "equity": 24732.75
+    },
+    {
+      "date": "2004-08-11",
+      "equity": 24682.6
+    },
+    {
+      "date": "2004-08-12",
+      "equity": 24413.59
+    },
+    {
+      "date": "2004-08-13",
+      "equity": 24461.46
+    },
+    {
+      "date": "2004-08-16",
+      "equity": 24714.52
+    },
+    {
+      "date": "2004-08-17",
+      "equity": 24853.59
+    },
+    {
+      "date": "2004-08-18",
+      "equity": 25108.92
+    },
+    {
+      "date": "2004-08-19",
+      "equity": 25035.97
+    },
+    {
+      "date": "2004-08-20",
+      "equity": 25211.51
+    },
+    {
+      "date": "2004-08-23",
+      "equity": 25147.68
+    },
+    {
+      "date": "2004-08-24",
+      "equity": 25181.86
+    },
+    {
+      "date": "2004-08-25",
+      "equity": 25352.85
+    },
+    {
+      "date": "2004-08-26",
+      "equity": 25352.85
+    },
+    {
+      "date": "2004-08-27",
+      "equity": 25432.64
+    },
+    {
+      "date": "2004-08-30",
+      "equity": 25222.91
+    },
+    {
+      "date": "2004-08-31",
+      "equity": 25355.13
+    },
+    {
+      "date": "2004-09-01",
+      "equity": 25403.01
+    },
+    {
+      "date": "2004-09-02",
+      "equity": 25690.25
+    },
+    {
+      "date": "2004-09-03",
+      "equity": 25585.39
+    },
+    {
+      "date": "2004-09-07",
+      "equity": 25754.09
+    },
+    {
+      "date": "2004-09-08",
+      "equity": 25690.25
+    },
+    {
+      "date": "2004-09-09",
+      "equity": 25667.46
+    },
+    {
+      "date": "2004-09-10",
+      "equity": 25799.7
+    },
+    {
+      "date": "2004-09-13",
+      "equity": 25884.04
+    },
+    {
+      "date": "2004-09-14",
+      "equity": 25936.47
+    },
+    {
+      "date": "2004-09-15",
+      "equity": 25740.42
+    },
+    {
+      "date": "2004-09-16",
+      "equity": 25817.92
+    },
+    {
+      "date": "2004-09-17",
+      "equity": 25927.59
+    },
+    {
+      "date": "2004-09-20",
+      "equity": 25771.92
+    },
+    {
+      "date": "2004-09-21",
+      "equity": 25884.08
+    },
+    {
+      "date": "2004-09-22",
+      "equity": 25561.3
+    },
+    {
+      "date": "2004-09-23",
+      "equity": 25423.95
+    },
+    {
+      "date": "2004-09-24",
+      "equity": 25540.7
+    },
+    {
+      "date": "2004-09-27",
+      "equity": 25378.16
+    },
+    {
+      "date": "2004-09-28",
+      "equity": 25499.48
+    },
+    {
+      "date": "2004-09-29",
+      "equity": 25627.7
+    },
+    {
+      "date": "2004-09-30",
+      "equity": 25609.37
+    },
+    {
+      "date": "2004-10-01",
+      "equity": 26042.05
+    },
+    {
+      "date": "2004-10-04",
+      "equity": 26085.55
+    },
+    {
+      "date": "2004-10-05",
+      "equity": 26099.28
+    },
+    {
+      "date": "2004-10-06",
+      "equity": 26277.84
+    },
+    {
+      "date": "2004-10-07",
+      "equity": 25996.26
+    },
+    {
+      "date": "2004-10-08",
+      "equity": 25781.06
+    },
+    {
+      "date": "2004-10-11",
+      "equity": 25886.38
+    },
+    {
+      "date": "2004-10-12",
+      "equity": 25785.65
+    },
+    {
+      "date": "2004-10-13",
+      "equity": 25559.0
+    },
+    {
+      "date": "2004-10-14",
+      "equity": 25352.98
+    },
+    {
+      "date": "2004-10-15",
+      "equity": 25494.92
+    },
+    {
+      "date": "2004-10-18",
+      "equity": 25591.06
+    },
+    {
+      "date": "2004-10-19",
+      "equity": 25375.88
+    },
+    {
+      "date": "2004-10-20",
+      "equity": 25325.51
+    },
+    {
+      "date": "2004-10-21",
+      "equity": 25490.34
+    },
+    {
+      "date": "2004-10-22",
+      "equity": 25204.17
+    },
+    {
+      "date": "2004-10-25",
+      "equity": 25174.42
+    },
+    {
+      "date": "2004-10-26",
+      "equity": 25559.0
+    },
+    {
+      "date": "2004-10-27",
+      "equity": 25865.77
+    },
+    {
+      "date": "2004-10-28",
+      "equity": 25943.62
+    },
+    {
+      "date": "2004-10-29",
+      "equity": 25939.03
+    },
+    {
+      "date": "2004-11-01",
+      "equity": 26009.99
+    },
+    {
+      "date": "2004-11-02",
+      "equity": 26019.16
+    },
+    {
+      "date": "2004-11-03",
+      "equity": 26346.53
+    },
+    {
+      "date": "2004-11-04",
+      "equity": 26705.92
+    },
+    {
+      "date": "2004-11-05",
+      "equity": 26873.04
+    },
+    {
+      "date": "2004-11-08",
+      "equity": 26834.13
+    },
+    {
+      "date": "2004-11-09",
+      "equity": 26843.85
+    },
+    {
+      "date": "2004-11-10",
+      "equity": 26820.16
+    },
+    {
+      "date": "2004-11-11",
+      "equity": 26884.91
+    },
+    {
+      "date": "2004-11-12",
+      "equity": 27068.44
+    },
+    {
+      "date": "2004-11-15",
+      "equity": 27134.88
+    },
+    {
+      "date": "2004-11-16",
+      "equity": 26940.85
+    },
+    {
+      "date": "2004-11-17",
+      "equity": 27100.63
+    },
+    {
+      "date": "2004-11-18",
+      "equity": 27137.16
+    },
+    {
+      "date": "2004-11-19",
+      "equity": 26835.85
+    },
+    {
+      "date": "2004-11-22",
+      "equity": 26963.68
+    },
+    {
+      "date": "2004-11-23",
+      "equity": 27004.76
+    },
+    {
+      "date": "2004-11-24",
+      "equity": 27068.68
+    },
+    {
+      "date": "2004-11-26",
+      "equity": 27048.14
+    },
+    {
+      "date": "2004-11-29",
+      "equity": 26924.88
+    },
+    {
+      "date": "2004-11-30",
+      "equity": 26943.13
+    },
+    {
+      "date": "2004-12-01",
+      "equity": 27249.0
+    },
+    {
+      "date": "2004-12-02",
+      "equity": 27271.82
+    },
+    {
+      "date": "2004-12-03",
+      "equity": 27324.43
+    },
+    {
+      "date": "2004-12-06",
+      "equity": 27321.32
+    },
+    {
+      "date": "2004-12-07",
+      "equity": 27067.22
+    },
+    {
+      "date": "2004-12-08",
+      "equity": 27225.17
+    },
+    {
+      "date": "2004-12-09",
+      "equity": 27321.32
+    },
+    {
+      "date": "2004-12-10",
+      "equity": 27348.79
+    },
+    {
+      "date": "2004-12-13",
+      "equity": 27586.89
+    },
+    {
+      "date": "2004-12-14",
+      "equity": 27683.04
+    },
+    {
+      "date": "2004-12-15",
+      "equity": 27703.63
+    },
+    {
+      "date": "2004-12-16",
+      "equity": 27687.61
+    },
+    {
+      "date": "2004-12-17",
+      "equity": 27503.15
+    },
+    {
+      "date": "2004-12-20",
+      "equity": 27510.06
+    },
+    {
+      "date": "2004-12-21",
+      "equity": 27721.66
+    },
+    {
+      "date": "2004-12-22",
+      "equity": 27788.36
+    },
+    {
+      "date": "2004-12-23",
+      "equity": 27809.07
+    },
+    {
+      "date": "2004-12-27",
+      "equity": 27751.55
+    },
+    {
+      "date": "2004-12-28",
+      "equity": 27903.37
+    },
+    {
+      "date": "2004-12-29",
+      "equity": 27944.77
+    },
+    {
+      "date": "2004-12-30",
+      "equity": 27891.87
+    },
+    {
+      "date": "2004-12-31",
+      "equity": 27832.06
+    },
+    {
+      "date": "2005-01-03",
+      "equity": 27700.96
+    },
+    {
+      "date": "2005-01-04",
+      "equity": 27362.84
+    },
+    {
+      "date": "2005-01-05",
+      "equity": 27174.21
+    },
+    {
+      "date": "2005-01-06",
+      "equity": 27312.23
+    },
+    {
+      "date": "2005-01-07",
+      "equity": 27273.14
+    },
+    {
+      "date": "2005-01-10",
+      "equity": 27401.94
+    },
+    {
+      "date": "2005-01-11",
+      "equity": 27213.33
+    },
+    {
+      "date": "2005-01-12",
+      "equity": 27303.03
+    },
+    {
+      "date": "2005-01-13",
+      "equity": 27084.53
+    },
+    {
+      "date": "2005-01-14",
+      "equity": 27227.13
+    },
+    {
+      "date": "2005-01-18",
+      "equity": 27510.06
+    },
+    {
+      "date": "2005-01-19",
+      "equity": 27222.53
+    },
+    {
+      "date": "2005-01-20",
+      "equity": 27056.93
+    },
+    {
+      "date": "2005-01-21",
+      "equity": 26891.31
+    },
+    {
+      "date": "2005-01-24",
+      "equity": 26838.39
+    },
+    {
+      "date": "2005-01-25",
+      "equity": 26914.31
+    },
+    {
+      "date": "2005-01-26",
+      "equity": 26994.82
+    },
+    {
+      "date": "2005-01-27",
+      "equity": 27040.81
+    },
+    {
+      "date": "2005-01-28",
+      "equity": 27040.81
+    },
+    {
+      "date": "2005-01-31",
+      "equity": 27208.73
+    },
+    {
+      "date": "2005-02-01",
+      "equity": 27381.24
+    },
+    {
+      "date": "2005-02-02",
+      "equity": 27464.05
+    },
+    {
+      "date": "2005-02-03",
+      "equity": 27392.74
+    },
+    {
+      "date": "2005-02-04",
+      "equity": 27684.86
+    },
+    {
+      "date": "2005-02-07",
+      "equity": 27648.04
+    },
+    {
+      "date": "2005-02-08",
+      "equity": 27680.24
+    },
+    {
+      "date": "2005-02-09",
+      "equity": 27473.25
+    },
+    {
+      "date": "2005-02-10",
+      "equity": 27572.15
+    },
+    {
+      "date": "2005-02-11",
+      "equity": 27809.07
+    },
+    {
+      "date": "2005-02-14",
+      "equity": 27788.36
+    },
+    {
+      "date": "2005-02-15",
+      "equity": 27891.87
+    },
+    {
+      "date": "2005-02-16",
+      "equity": 27910.25
+    },
+    {
+      "date": "2005-02-17",
+      "equity": 27684.86
+    },
+    {
+      "date": "2005-02-18",
+      "equity": 27721.66
+    },
+    {
+      "date": "2005-02-22",
+      "equity": 27309.93
+    },
+    {
+      "date": "2005-02-23",
+      "equity": 27379.34
+    },
+    {
+      "date": "2005-02-24",
+      "equity": 27605.57
+    },
+    {
+      "date": "2005-02-25",
+      "equity": 27878.49
+    },
+    {
+      "date": "2005-02-28",
+      "equity": 27695.0
+    },
+    {
+      "date": "2005-03-01",
+      "equity": 27832.62
+    },
+    {
+      "date": "2005-03-02",
+      "equity": 27818.85
+    },
+    {
+      "date": "2005-03-03",
+      "equity": 27938.47
+    },
+    {
+      "date": "2005-03-04",
+      "equity": 27938.47
+    },
+    {
+      "date": "2005-03-07",
+      "equity": 27964.9
+    },
+    {
+      "date": "2005-03-08",
+      "equity": 27934.5
+    },
+    {
+      "date": "2005-03-09",
+      "equity": 27924.12
+    },
+    {
+      "date": "2005-03-10",
+      "equity": 27903.42
+    },
+    {
+      "date": "2005-03-11",
+      "equity": 27896.52
+    },
+    {
+      "date": "2005-03-14",
+      "equity": 27886.16
+    },
+    {
+      "date": "2005-03-15",
+      "equity": 27875.79
+    },
+    {
+      "date": "2005-03-16",
+      "equity": 27910.31
+    },
+    {
+      "date": "2005-03-17",
+      "equity": 27920.7
+    },
+    {
+      "date": "2005-03-18",
+      "equity": 27906.86
+    },
+    {
+      "date": "2005-03-21",
+      "equity": 27924.12
+    },
+    {
+      "date": "2005-03-22",
+      "equity": 27875.79
+    },
+    {
+      "date": "2005-03-23",
+      "equity": 27872.35
+    },
+    {
+      "date": "2005-03-24",
+      "equity": 27879.24
+    },
+    {
+      "date": "2005-03-28",
+      "equity": 27865.42
+    },
+    {
+      "date": "2005-03-29",
+      "equity": 27886.16
+    },
+    {
+      "date": "2005-03-30",
+      "equity": 27889.61
+    },
+    {
+      "date": "2005-03-31",
+      "equity": 27927.59
+    },
+    {
+      "date": "2005-04-01",
+      "equity": 27944.91
+    },
+    {
+      "date": "2005-04-04",
+      "equity": 27944.91
+    },
+    {
+      "date": "2005-04-05",
+      "equity": 27951.83
+    },
+    {
+      "date": "2005-04-06",
+      "equity": 27972.59
+    },
+    {
+      "date": "2005-04-07",
+      "equity": 27962.22
+    },
+    {
+      "date": "2005-04-08",
+      "equity": 27958.76
+    },
+    {
+      "date": "2005-04-11",
+      "equity": 27958.76
+    },
+    {
+      "date": "2005-04-12",
+      "equity": 27976.05
+    },
+    {
+      "date": "2005-04-13",
+      "equity": 28017.6
+    },
+    {
+      "date": "2005-04-14",
+      "equity": 28041.85
+    },
+    {
+      "date": "2005-04-15",
+      "equity": 28086.81
+    },
+    {
+      "date": "2005-04-18",
+      "equity": 28176.97
+    },
+    {
+      "date": "2005-04-19",
+      "equity": 28400.71
+    },
+    {
+      "date": "2005-04-20",
+      "equity": 28004.88
+    },
+    {
+      "date": "2005-04-21",
+      "equity": 28548.22
+    },
+    {
+      "date": "2005-04-22",
+      "equity": 28440.05
+    },
+    {
+      "date": "2005-04-25",
+      "equity": 28626.89
+    },
+    {
+      "date": "2005-04-26",
+      "equity": 28349.07
+    },
+    {
+      "date": "2005-04-27",
+      "equity": 28459.71
+    },
+    {
+      "date": "2005-04-28",
+      "equity": 28103.22
+    },
+    {
+      "date": "2005-04-29",
+      "equity": 28484.3
+    },
+    {
+      "date": "2005-05-02",
+      "equity": 28644.11
+    },
+    {
+      "date": "2005-05-03",
+      "equity": 28693.27
+    },
+    {
+      "date": "2005-05-04",
+      "equity": 28914.56
+    },
+    {
+      "date": "2005-05-05",
+      "equity": 28981.61
+    },
+    {
+      "date": "2005-05-06",
+      "equity": 28917.29
+    },
+    {
+      "date": "2005-05-09",
+      "equity": 28902.97
+    },
+    {
+      "date": "2005-05-10",
+      "equity": 28924.44
+    },
+    {
+      "date": "2005-05-11",
+      "equity": 28942.31
+    },
+    {
+      "date": "2005-05-12",
+      "equity": 28956.59
+    },
+    {
+      "date": "2005-05-13",
+      "equity": 28988.79
+    },
+    {
+      "date": "2005-05-16",
+      "equity": 28981.61
+    },
+    {
+      "date": "2005-05-17",
+      "equity": 29269.11
+    },
+    {
+      "date": "2005-05-18",
+      "equity": 29569.87
+    },
+    {
+      "date": "2005-05-19",
+      "equity": 29694.16
+    },
+    {
+      "date": "2005-05-20",
+      "equity": 29651.9
+    },
+    {
+      "date": "2005-05-23",
+      "equity": 29815.98
+    },
+    {
+      "date": "2005-05-24",
+      "equity": 29746.36
+    },
+    {
+      "date": "2005-05-25",
+      "equity": 29723.99
+    },
+    {
+      "date": "2005-05-26",
+      "equity": 29883.09
+    },
+    {
+      "date": "2005-05-27",
+      "equity": 29932.8
+    },
+    {
+      "date": "2005-05-31",
+      "equity": 29741.4
+    },
+    {
+      "date": "2005-06-01",
+      "equity": 29994.93
+    },
+    {
+      "date": "2005-06-02",
+      "equity": 30059.56
+    },
+    {
+      "date": "2005-06-03",
+      "equity": 29907.94
+    },
+    {
+      "date": "2005-06-06",
+      "equity": 29880.6
+    },
+    {
+      "date": "2005-06-07",
+      "equity": 29902.97
+    },
+    {
+      "date": "2005-06-08",
+      "equity": 29848.3
+    },
+    {
+      "date": "2005-06-09",
+      "equity": 29989.96
+    },
+    {
+      "date": "2005-06-10",
+      "equity": 29920.37
+    },
+    {
+      "date": "2005-06-13",
+      "equity": 30014.82
+    },
+    {
+      "date": "2005-06-14",
+      "equity": 30084.43
+    },
+    {
+      "date": "2005-06-15",
+      "equity": 30141.6
+    },
+    {
+      "date": "2005-06-16",
+      "equity": 30218.66
+    },
+    {
+      "date": "2005-06-17",
+      "equity": 30330.46
+    },
+    {
+      "date": "2005-06-20",
+      "equity": 30340.46
+    },
+    {
+      "date": "2005-06-21",
+      "equity": 30357.92
+    },
+    {
+      "date": "2005-06-22",
+      "equity": 30382.88
+    },
+    {
+      "date": "2005-06-23",
+      "equity": 29956.11
+    },
+    {
+      "date": "2005-06-24",
+      "equity": 29736.48
+    },
+    {
+      "date": "2005-06-27",
+      "equity": 29778.91
+    },
+    {
+      "date": "2005-06-28",
+      "equity": 30028.49
+    },
+    {
+      "date": "2005-06-29",
+      "equity": 29948.62
+    },
+    {
+      "date": "2005-06-30",
+      "equity": 29786.39
+    },
+    {
+      "date": "2005-07-01",
+      "equity": 29873.74
+    },
+    {
+      "date": "2005-07-05",
+      "equity": 30113.34
+    },
+    {
+      "date": "2005-07-06",
+      "equity": 29861.26
+    },
+    {
+      "date": "2005-07-07",
+      "equity": 29978.57
+    },
+    {
+      "date": "2005-07-08",
+      "equity": 30320.5
+    },
+    {
+      "date": "2005-07-11",
+      "equity": 30475.22
+    },
+    {
+      "date": "2005-07-12",
+      "equity": 30555.1
+    },
+    {
+      "date": "2005-07-13",
+      "equity": 30557.95
+    },
+    {
+      "date": "2005-07-14",
+      "equity": 30557.95
+    },
+    {
+      "date": "2005-07-15",
+      "equity": 30561.72
+    },
+    {
+      "date": "2005-07-18",
+      "equity": 30554.17
+    },
+    {
+      "date": "2005-07-19",
+      "equity": 30565.53
+    },
+    {
+      "date": "2005-07-20",
+      "equity": 30561.72
+    },
+    {
+      "date": "2005-07-21",
+      "equity": 30531.5
+    },
+    {
+      "date": "2005-07-22",
+      "equity": 30561.72
+    },
+    {
+      "date": "2005-07-25",
+      "equity": 30550.41
+    },
+    {
+      "date": "2005-07-26",
+      "equity": 30542.84
+    },
+    {
+      "date": "2005-07-27",
+      "equity": 30542.84
+    },
+    {
+      "date": "2005-07-28",
+      "equity": 30546.62
+    },
+    {
+      "date": "2005-07-29",
+      "equity": 30527.71
+    },
+    {
+      "date": "2005-08-01",
+      "equity": 30509.14
+    },
+    {
+      "date": "2005-08-02",
+      "equity": 30512.94
+    },
+    {
+      "date": "2005-08-03",
+      "equity": 30524.3
+    },
+    {
+      "date": "2005-08-04",
+      "equity": 30524.3
+    },
+    {
+      "date": "2005-08-05",
+      "equity": 30497.78
+    },
+    {
+      "date": "2005-08-08",
+      "equity": 30467.47
+    },
+    {
+      "date": "2005-08-09",
+      "equity": 30501.56
+    },
+    {
+      "date": "2005-08-10",
+      "equity": 30501.56
+    },
+    {
+      "date": "2005-08-11",
+      "equity": 30524.3
+    },
+    {
+      "date": "2005-08-12",
+      "equity": 30562.19
+    },
+    {
+      "date": "2005-08-15",
+      "equity": 30547.05
+    },
+    {
+      "date": "2005-08-16",
+      "equity": 30562.19
+    },
+    {
+      "date": "2005-08-17",
+      "equity": 30569.79
+    },
+    {
+      "date": "2005-08-18",
+      "equity": 30596.29
+    },
+    {
+      "date": "2005-08-19",
+      "equity": 30584.93
+    },
+    {
+      "date": "2005-08-22",
+      "equity": 30588.72
+    },
+    {
+      "date": "2005-08-23",
+      "equity": 30619.05
+    },
+    {
+      "date": "2005-08-24",
+      "equity": 30622.82
+    },
+    {
+      "date": "2005-08-25",
+      "equity": 30619.05
+    },
+    {
+      "date": "2005-08-26",
+      "equity": 30596.29
+    },
+    {
+      "date": "2005-08-29",
+      "equity": 30603.89
+    },
+    {
+      "date": "2005-08-30",
+      "equity": 30649.34
+    },
+    {
+      "date": "2005-08-31",
+      "equity": 30728.91
+    },
+    {
+      "date": "2005-09-01",
+      "equity": 30766.16
+    },
+    {
+      "date": "2005-09-02",
+      "equity": 30804.13
+    },
+    {
+      "date": "2005-09-06",
+      "equity": 30754.74
+    },
+    {
+      "date": "2005-09-07",
+      "equity": 30731.94
+    },
+    {
+      "date": "2005-09-08",
+      "equity": 30716.73
+    },
+    {
+      "date": "2005-09-09",
+      "equity": 30903.93
+    },
+    {
+      "date": "2005-09-12",
+      "equity": 30842.04
+    },
+    {
+      "date": "2005-09-13",
+      "equity": 30803.2
+    },
+    {
+      "date": "2005-09-14",
+      "equity": 30667.88
+    },
+    {
+      "date": "2005-09-15",
+      "equity": 30751.42
+    },
+    {
+      "date": "2005-09-16",
+      "equity": 30728.6
+    },
+    {
+      "date": "2005-09-19",
+      "equity": 30736.22
+    },
+    {
+      "date": "2005-09-20",
+      "equity": 30713.4
+    },
+    {
+      "date": "2005-09-21",
+      "equity": 30743.83
+    },
+    {
+      "date": "2005-09-22",
+      "equity": 30755.23
+    },
+    {
+      "date": "2005-09-23",
+      "equity": 30728.6
+    },
+    {
+      "date": "2005-09-26",
+      "equity": 30705.8
+    },
+    {
+      "date": "2005-09-27",
+      "equity": 30694.38
+    },
+    {
+      "date": "2005-09-28",
+      "equity": 30705.8
+    },
+    {
+      "date": "2005-09-29",
+      "equity": 30982.12
+    },
+    {
+      "date": "2005-09-30",
+      "equity": 31077.89
+    },
+    {
+      "date": "2005-10-03",
+      "equity": 31040.4
+    },
+    {
+      "date": "2005-10-04",
+      "equity": 31036.56
+    },
+    {
+      "date": "2005-10-05",
+      "equity": 31051.99
+    },
+    {
+      "date": "2005-10-06",
+      "equity": 31051.99
+    },
+    {
+      "date": "2005-10-07",
+      "equity": 31075.15
+    },
+    {
+      "date": "2005-10-10",
+      "equity": 30791.35
+    },
+    {
+      "date": "2005-10-11",
+      "equity": 30747.23
+    },
+    {
+      "date": "2005-10-12",
+      "equity": 30505.86
+    },
+    {
+      "date": "2005-10-13",
+      "equity": 30492.02
+    },
+    {
+      "date": "2005-10-14",
+      "equity": 30499.62
+    },
+    {
+      "date": "2005-10-17",
+      "equity": 30575.58
+    },
+    {
+      "date": "2005-10-18",
+      "equity": 30555.22
+    },
+    {
+      "date": "2005-10-19",
+      "equity": 31143.5
+    },
+    {
+      "date": "2005-10-20",
+      "equity": 30595.88
+    },
+    {
+      "date": "2005-10-21",
+      "equity": 30715.26
+    },
+    {
+      "date": "2005-10-24",
+      "equity": 31190.23
+    },
+    {
+      "date": "2005-10-25",
+      "equity": 31127.92
+    },
+    {
+      "date": "2005-10-26",
+      "equity": 31058.3
+    },
+    {
+      "date": "2005-10-27",
+      "equity": 31081.51
+    },
+    {
+      "date": "2005-10-28",
+      "equity": 31081.51
+    },
+    {
+      "date": "2005-10-31",
+      "equity": 31069.91
+    },
+    {
+      "date": "2005-11-01",
+      "equity": 31043.24
+    },
+    {
+      "date": "2005-11-02",
+      "equity": 31367.68
+    },
+    {
+      "date": "2005-11-03",
+      "equity": 31501.57
+    },
+    {
+      "date": "2005-11-04",
+      "equity": 31460.38
+    },
+    {
+      "date": "2005-11-07",
+      "equity": 31519.88
+    },
+    {
+      "date": "2005-11-08",
+      "equity": 31559.26
+    },
+    {
+      "date": "2005-11-09",
+      "equity": 31519.88
+    },
+    {
+      "date": "2005-11-10",
+      "equity": 31563.21
+    },
+    {
+      "date": "2005-11-11",
+      "equity": 31575.0
+    },
+    {
+      "date": "2005-11-14",
+      "equity": 31527.74
+    },
+    {
+      "date": "2005-11-15",
+      "equity": 31551.38
+    },
+    {
+      "date": "2005-11-16",
+      "equity": 31590.73
+    },
+    {
+      "date": "2005-11-17",
+      "equity": 31618.28
+    },
+    {
+      "date": "2005-11-18",
+      "equity": 31618.28
+    },
+    {
+      "date": "2005-11-21",
+      "equity": 31637.99
+    },
+    {
+      "date": "2005-11-22",
+      "equity": 31681.31
+    },
+    {
+      "date": "2005-11-23",
+      "equity": 31641.95
+    },
+    {
+      "date": "2005-11-25",
+      "equity": 31669.47
+    },
+    {
+      "date": "2005-11-28",
+      "equity": 31677.35
+    },
+    {
+      "date": "2005-11-29",
+      "equity": 31653.71
+    },
+    {
+      "date": "2005-11-30",
+      "equity": 31657.67
+    },
+    {
+      "date": "2005-12-01",
+      "equity": 31626.48
+    },
+    {
+      "date": "2005-12-02",
+      "equity": 31654.15
+    },
+    {
+      "date": "2005-12-05",
+      "equity": 31618.57
+    },
+    {
+      "date": "2005-12-06",
+      "equity": 31662.02
+    },
+    {
+      "date": "2005-12-07",
+      "equity": 31665.97
+    },
+    {
+      "date": "2005-12-08",
+      "equity": 31705.44
+    },
+    {
+      "date": "2005-12-09",
+      "equity": 31673.87
+    },
+    {
+      "date": "2005-12-12",
+      "equity": 31669.91
+    },
+    {
+      "date": "2005-12-13",
+      "equity": 31685.7
+    },
+    {
+      "date": "2005-12-14",
+      "equity": 31721.25
+    },
+    {
+      "date": "2005-12-15",
+      "equity": 31721.25
+    },
+    {
+      "date": "2005-12-16",
+      "equity": 31740.97
+    },
+    {
+      "date": "2005-12-19",
+      "equity": 31721.25
+    },
+    {
+      "date": "2005-12-20",
+      "equity": 31717.29
+    },
+    {
+      "date": "2005-12-21",
+      "equity": 31717.29
+    },
+    {
+      "date": "2005-12-22",
+      "equity": 31744.92
+    },
+    {
+      "date": "2005-12-23",
+      "equity": 31760.72
+    }
+  ],
+  "equity_curve_oos": [
+    {
+      "date": "2024-01-02",
+      "equity": 25024.06
+    },
+    {
+      "date": "2024-01-03",
+      "equity": 24821.21
+    },
+    {
+      "date": "2024-01-04",
+      "equity": 24741.84
+    },
+    {
+      "date": "2024-01-05",
+      "equity": 24775.48
+    },
+    {
+      "date": "2024-01-08",
+      "equity": 25126.54
+    },
+    {
+      "date": "2024-01-09",
+      "equity": 25088.7
+    },
+    {
+      "date": "2024-01-10",
+      "equity": 25229.54
+    },
+    {
+      "date": "2024-01-11",
+      "equity": 25218.51
+    },
+    {
+      "date": "2024-01-12",
+      "equity": 25235.85
+    },
+    {
+      "date": "2024-01-16",
+      "equity": 25143.89
+    },
+    {
+      "date": "2024-01-17",
+      "equity": 25005.14
+    },
+    {
+      "date": "2024-01-18",
+      "equity": 25225.87
+    },
+    {
+      "date": "2024-01-19",
+      "equity": 25538.04
+    },
+    {
+      "date": "2024-01-22",
+      "equity": 25591.64
+    },
+    {
+      "date": "2024-01-23",
+      "equity": 25665.74
+    },
+    {
+      "date": "2024-01-24",
+      "equity": 25693.59
+    },
+    {
+      "date": "2024-01-25",
+      "equity": 25832.34
+    },
+    {
+      "date": "2024-01-26",
+      "equity": 25799.75
+    },
+    {
+      "date": "2024-01-29",
+      "equity": 26002.61
+    },
+    {
+      "date": "2024-01-30",
+      "equity": 25982.64
+    },
+    {
+      "date": "2024-01-31",
+      "equity": 25561.68
+    },
+    {
+      "date": "2024-02-01",
+      "equity": 25893.82
+    },
+    {
+      "date": "2024-02-02",
+      "equity": 26164.48
+    },
+    {
+      "date": "2024-02-05",
+      "equity": 26069.88
+    },
+    {
+      "date": "2024-02-06",
+      "equity": 26145.04
+    },
+    {
+      "date": "2024-02-07",
+      "equity": 26361.55
+    },
+    {
+      "date": "2024-02-08",
+      "equity": 26373.12
+    },
+    {
+      "date": "2024-02-09",
+      "equity": 26524.47
+    },
+    {
+      "date": "2024-02-12",
+      "equity": 26512.91
+    },
+    {
+      "date": "2024-02-13",
+      "equity": 26150.28
+    },
+    {
+      "date": "2024-02-14",
+      "equity": 26386.26
+    },
+    {
+      "date": "2024-02-15",
+      "equity": 26567.04
+    },
+    {
+      "date": "2024-02-16",
+      "equity": 26435.65
+    },
+    {
+      "date": "2024-02-20",
+      "equity": 26291.13
+    },
+    {
+      "date": "2024-02-21",
+      "equity": 26314.78
+    },
+    {
+      "date": "2024-02-22",
+      "equity": 26855.56
+    },
+    {
+      "date": "2024-02-23",
+      "equity": 26873.95
+    },
+    {
+      "date": "2024-02-26",
+      "equity": 26776.2
+    },
+    {
+      "date": "2024-02-27",
+      "equity": 26825.6
+    },
+    {
+      "date": "2024-02-28",
+      "equity": 26766.11
+    },
+    {
+      "date": "2024-02-29",
+      "equity": 26765.01
+    },
+    {
+      "date": "2024-03-01",
+      "equity": 27015.7
+    },
+    {
+      "date": "2024-03-04",
+      "equity": 26986.79
+    },
+    {
+      "date": "2024-03-05",
+      "equity": 26717.71
+    },
+    {
+      "date": "2024-03-06",
+      "equity": 26852.78
+    },
+    {
+      "date": "2024-03-07",
+      "equity": 27118.7
+    },
+    {
+      "date": "2024-03-08",
+      "equity": 26956.31
+    },
+    {
+      "date": "2024-03-11",
+      "equity": 26933.19
+    },
+    {
+      "date": "2024-03-12",
+      "equity": 27222.23
+    },
+    {
+      "date": "2024-03-13",
+      "equity": 27224.59
+    },
+    {
+      "date": "2024-03-14",
+      "equity": 27201.25
+    },
+    {
+      "date": "2024-03-15",
+      "equity": 27184.56
+    },
+    {
+      "date": "2024-03-18",
+      "equity": 27187.89
+    },
+    {
+      "date": "2024-03-19",
+      "equity": 27211.25
+    },
+    {
+      "date": "2024-03-20",
+      "equity": 27254.61
+    },
+    {
+      "date": "2024-03-21",
+      "equity": 27254.61
+    },
+    {
+      "date": "2024-03-22",
+      "equity": 27274.63
+    },
+    {
+      "date": "2024-03-25",
+      "equity": 27261.29
+    },
+    {
+      "date": "2024-03-26",
+      "equity": 27267.95
+    },
+    {
+      "date": "2024-03-27",
+      "equity": 27297.98
+    },
+    {
+      "date": "2024-03-28",
+      "equity": 27281.3
+    },
+    {
+      "date": "2024-04-01",
+      "equity": 27224.39
+    },
+    {
+      "date": "2024-04-02",
+      "equity": 27237.79
+    },
+    {
+      "date": "2024-04-03",
+      "equity": 27257.87
+    },
+    {
+      "date": "2024-04-04",
+      "equity": 27284.65
+    },
+    {
+      "date": "2024-04-05",
+      "equity": 27241.14
+    },
+    {
+      "date": "2024-04-08",
+      "equity": 27214.36
+    },
+    {
+      "date": "2024-04-09",
+      "equity": 27241.14
+    },
+    {
+      "date": "2024-04-10",
+      "equity": 27130.69
+    },
+    {
+      "date": "2024-04-11",
+      "equity": 27164.15
+    },
+    {
+      "date": "2024-04-12",
+      "equity": 27180.89
+    },
+    {
+      "date": "2024-04-15",
+      "equity": 27170.85
+    },
+    {
+      "date": "2024-04-16",
+      "equity": 27154.11
+    },
+    {
+      "date": "2024-04-17",
+      "equity": 27174.2
+    },
+    {
+      "date": "2024-04-18",
+      "equity": 27160.8
+    },
+    {
+      "date": "2024-04-19",
+      "equity": 27167.5
+    },
+    {
+      "date": "2024-04-22",
+      "equity": 27180.89
+    },
+    {
+      "date": "2024-04-23",
+      "equity": 27204.32
+    },
+    {
+      "date": "2024-04-24",
+      "equity": 27194.27
+    },
+    {
+      "date": "2024-04-25",
+      "equity": 27174.2
+    },
+    {
+      "date": "2024-04-26",
+      "equity": 27180.89
+    },
+    {
+      "date": "2024-04-29",
+      "equity": 27194.27
+    },
+    {
+      "date": "2024-04-30",
+      "equity": 27160.8
+    },
+    {
+      "date": "2024-05-01",
+      "equity": 27215.21
+    },
+    {
+      "date": "2024-05-02",
+      "equity": 27255.49
+    },
+    {
+      "date": "2024-05-03",
+      "equity": 27299.15
+    },
+    {
+      "date": "2024-05-06",
+      "equity": 27295.79
+    },
+    {
+      "date": "2024-05-07",
+      "equity": 27299.15
+    },
+    {
+      "date": "2024-05-08",
+      "equity": 27292.44
+    },
+    {
+      "date": "2024-05-09",
+      "equity": 27315.94
+    },
+    {
+      "date": "2024-05-10",
+      "equity": 27264.12
+    },
+    {
+      "date": "2024-05-13",
+      "equity": 27358.21
+    },
+    {
+      "date": "2024-05-14",
+      "equity": 27385.13
+    },
+    {
+      "date": "2024-05-15",
+      "equity": 27435.61
+    },
+    {
+      "date": "2024-05-16",
+      "equity": 27372.39
+    },
+    {
+      "date": "2024-05-17",
+      "equity": 27411.71
+    },
+    {
+      "date": "2024-05-20",
+      "equity": 27443.27
+    },
+    {
+      "date": "2024-05-21",
+      "equity": 27510.53
+    },
+    {
+      "date": "2024-05-22",
+      "equity": 27431.37
+    },
+    {
+      "date": "2024-05-23",
+      "equity": 27231.14
+    },
+    {
+      "date": "2024-05-24",
+      "equity": 27337.36
+    },
+    {
+      "date": "2024-05-28",
+      "equity": 27313.84
+    },
+    {
+      "date": "2024-05-29",
+      "equity": 27303.77
+    },
+    {
+      "date": "2024-05-30",
+      "equity": 27334.0
+    },
+    {
+      "date": "2024-05-31",
+      "equity": 27370.96
+    },
+    {
+      "date": "2024-06-03",
+      "equity": 27401.97
+    },
+    {
+      "date": "2024-06-04",
+      "equity": 27428.93
+    },
+    {
+      "date": "2024-06-05",
+      "equity": 27455.9
+    },
+    {
+      "date": "2024-06-06",
+      "equity": 27438.02
+    },
+    {
+      "date": "2024-06-07",
+      "equity": 27405.02
+    },
+    {
+      "date": "2024-06-10",
+      "equity": 27364.62
+    },
+    {
+      "date": "2024-06-11",
+      "equity": 27394.92
+    },
+    {
+      "date": "2024-06-12",
+      "equity": 27379.86
+    },
+    {
+      "date": "2024-06-13",
+      "equity": 27434.13
+    },
+    {
+      "date": "2024-06-14",
+      "equity": 27450.56
+    },
+    {
+      "date": "2024-06-17",
+      "equity": 27665.64
+    },
+    {
+      "date": "2024-06-18",
+      "equity": 27734.85
+    },
+    {
+      "date": "2024-06-20",
+      "equity": 27660.67
+    },
+    {
+      "date": "2024-06-21",
+      "equity": 27624.16
+    },
+    {
+      "date": "2024-06-24",
+      "equity": 27535.74
+    },
+    {
+      "date": "2024-06-25",
+      "equity": 27640.14
+    },
+    {
+      "date": "2024-06-26",
+      "equity": 27674.1
+    },
+    {
+      "date": "2024-06-27",
+      "equity": 27717.06
+    },
+    {
+      "date": "2024-06-28",
+      "equity": 27609.67
+    },
+    {
+      "date": "2024-07-01",
+      "equity": 27665.61
+    },
+    {
+      "date": "2024-07-02",
+      "equity": 27605.83
+    },
+    {
+      "date": "2024-07-03",
+      "equity": 27742.55
+    },
+    {
+      "date": "2024-07-05",
+      "equity": 27901.38
+    },
+    {
+      "date": "2024-07-08",
+      "equity": 27933.35
+    },
+    {
+      "date": "2024-07-09",
+      "equity": 27960.32
+    },
+    {
+      "date": "2024-07-10",
+      "equity": 28235.04
+    },
+    {
+      "date": "2024-07-11",
+      "equity": 27993.28
+    },
+    {
+      "date": "2024-07-12",
+      "equity": 28168.61
+    },
+    {
+      "date": "2024-07-15",
+      "equity": 28245.53
+    },
+    {
+      "date": "2024-07-16",
+      "equity": 28411.86
+    },
+    {
+      "date": "2024-07-17",
+      "equity": 28016.26
+    },
+    {
+      "date": "2024-07-18",
+      "equity": 27802.48
+    },
+    {
+      "date": "2024-07-19",
+      "equity": 27619.17
+    },
+    {
+      "date": "2024-07-22",
+      "equity": 27901.89
+    },
+    {
+      "date": "2024-07-23",
+      "equity": 27858.43
+    },
+    {
+      "date": "2024-07-24",
+      "equity": 27231.56
+    },
+    {
+      "date": "2024-07-25",
+      "equity": 27090.71
+    },
+    {
+      "date": "2024-07-26",
+      "equity": 27391.9
+    },
+    {
+      "date": "2024-07-29",
+      "equity": 27407.89
+    },
+    {
+      "date": "2024-07-30",
+      "equity": 27270.02
+    },
+    {
+      "date": "2024-07-31",
+      "equity": 27710.07
+    },
+    {
+      "date": "2024-08-01",
+      "equity": 27320.47
+    },
+    {
+      "date": "2024-08-02",
+      "equity": 26815.49
+    },
+    {
+      "date": "2024-08-05",
+      "equity": 26040.29
+    },
+    {
+      "date": "2024-08-06",
+      "equity": 26099.0
+    },
+    {
+      "date": "2024-08-07",
+      "equity": 25617.03
+    },
+    {
+      "date": "2024-08-08",
+      "equity": 26204.18
+    },
+    {
+      "date": "2024-08-09",
+      "equity": 26318.76
+    },
+    {
+      "date": "2024-08-12",
+      "equity": 26332.48
+    },
+    {
+      "date": "2024-08-13",
+      "equity": 26761.94
+    },
+    {
+      "date": "2024-08-14",
+      "equity": 26845.68
+    },
+    {
+      "date": "2024-08-15",
+      "equity": 27302.08
+    },
+    {
+      "date": "2024-08-16",
+      "equity": 27362.8
+    },
+    {
+      "date": "2024-08-19",
+      "equity": 27622.34
+    },
+    {
+      "date": "2024-08-20",
+      "equity": 27577.77
+    },
+    {
+      "date": "2024-08-21",
+      "equity": 27671.8
+    },
+    {
+      "date": "2024-08-22",
+      "equity": 27456.33
+    },
+    {
+      "date": "2024-08-23",
+      "equity": 27745.74
+    },
+    {
+      "date": "2024-08-26",
+      "equity": 27680.12
+    },
+    {
+      "date": "2024-08-27",
+      "equity": 27717.82
+    },
+    {
+      "date": "2024-08-28",
+      "equity": 27558.19
+    },
+    {
+      "date": "2024-08-29",
+      "equity": 27560.63
+    },
+    {
+      "date": "2024-08-30",
+      "equity": 27821.64
+    },
+    {
+      "date": "2024-09-03",
+      "equity": 27253.6
+    },
+    {
+      "date": "2024-09-04",
+      "equity": 27198.26
+    },
+    {
+      "date": "2024-09-05",
+      "equity": 27132.64
+    },
+    {
+      "date": "2024-09-06",
+      "equity": 26679.67
+    },
+    {
+      "date": "2024-09-09",
+      "equity": 26975.94
+    },
+    {
+      "date": "2024-09-10",
+      "equity": 27092.48
+    },
+    {
+      "date": "2024-09-11",
+      "equity": 27368.18
+    },
+    {
+      "date": "2024-09-12",
+      "equity": 27596.87
+    },
+    {
+      "date": "2024-09-13",
+      "equity": 27739.86
+    },
+    {
+      "date": "2024-09-16",
+      "equity": 27780.51
+    },
+    {
+      "date": "2024-09-17",
+      "equity": 27791.77
+    },
+    {
+      "date": "2024-09-18",
+      "equity": 27710.0
+    },
+    {
+      "date": "2024-09-19",
+      "equity": 28179.12
+    },
+    {
+      "date": "2024-09-20",
+      "equity": 28130.79
+    },
+    {
+      "date": "2024-09-23",
+      "equity": 28200.54
+    },
+    {
+      "date": "2024-09-24",
+      "equity": 28280.6
+    },
+    {
+      "date": "2024-09-25",
+      "equity": 28218.71
+    },
+    {
+      "date": "2024-09-26",
+      "equity": 28329.72
+    },
+    {
+      "date": "2024-09-27",
+      "equity": 28288.95
+    },
+    {
+      "date": "2024-09-30",
+      "equity": 28401.44
+    },
+    {
+      "date": "2024-10-01",
+      "equity": 28148.96
+    },
+    {
+      "date": "2024-10-02",
+      "equity": 28160.75
+    },
+    {
+      "date": "2024-10-03",
+      "equity": 28109.67
+    },
+    {
+      "date": "2024-10-04",
+      "equity": 28363.12
+    },
+    {
+      "date": "2024-10-07",
+      "equity": 28108.68
+    },
+    {
+      "date": "2024-10-08",
+      "equity": 28372.46
+    },
+    {
+      "date": "2024-10-09",
+      "equity": 28567.46
+    },
+    {
+      "date": "2024-10-10",
+      "equity": 28517.85
+    },
+    {
+      "date": "2024-10-11",
+      "equity": 28687.31
+    },
+    {
+      "date": "2024-10-14",
+      "equity": 28920.15
+    },
+    {
+      "date": "2024-10-15",
+      "equity": 28697.14
+    },
+    {
+      "date": "2024-10-16",
+      "equity": 28820.92
+    },
+    {
+      "date": "2024-10-17",
+      "equity": 28823.38
+    },
+    {
+      "date": "2024-10-18",
+      "equity": 28933.41
+    },
+    {
+      "date": "2024-10-21",
+      "equity": 28886.25
+    },
+    {
+      "date": "2024-10-22",
+      "equity": 28871.02
+    },
+    {
+      "date": "2024-10-23",
+      "equity": 28609.21
+    },
+    {
+      "date": "2024-10-24",
+      "equity": 28670.61
+    },
+    {
+      "date": "2024-10-25",
+      "equity": 28769.95
+    },
+    {
+      "date": "2024-10-28",
+      "equity": 28755.98
+    },
+    {
+      "date": "2024-10-29",
+      "equity": 28766.45
+    },
+    {
+      "date": "2024-10-30",
+      "equity": 28742.02
+    },
+    {
+      "date": "2024-10-31",
+      "equity": 28749.01
+    },
+    {
+      "date": "2024-11-01",
+      "equity": 28739.55
+    },
+    {
+      "date": "2024-11-04",
+      "equity": 28760.56
+    },
+    {
+      "date": "2024-11-05",
+      "equity": 28753.56
+    },
+    {
+      "date": "2024-11-06",
+      "equity": 28718.53
+    },
+    {
+      "date": "2024-11-07",
+      "equity": 28767.57
+    },
+    {
+      "date": "2024-11-08",
+      "equity": 28746.55
+    },
+    {
+      "date": "2024-11-11",
+      "equity": 28725.53
+    },
+    {
+      "date": "2024-11-12",
+      "equity": 28697.51
+    },
+    {
+      "date": "2024-11-13",
+      "equity": 28739.55
+    },
+    {
+      "date": "2024-11-14",
+      "equity": 28697.51
+    },
+    {
+      "date": "2024-11-15",
+      "equity": 28729.04
+    },
+    {
+      "date": "2024-11-18",
+      "equity": 28750.05
+    },
+    {
+      "date": "2024-11-19",
+      "equity": 28750.05
+    },
+    {
+      "date": "2024-11-20",
+      "equity": 28736.04
+    },
+    {
+      "date": "2024-11-21",
+      "equity": 28729.04
+    },
+    {
+      "date": "2024-11-22",
+      "equity": 28725.53
+    },
+    {
+      "date": "2024-11-25",
+      "equity": 28781.58
+    },
+    {
+      "date": "2024-11-26",
+      "equity": 28781.58
+    },
+    {
+      "date": "2024-11-27",
+      "equity": 28799.09
+    },
+    {
+      "date": "2024-11-29",
+      "equity": 28834.12
+    },
+    {
+      "date": "2024-12-02",
+      "equity": 28832.36
+    },
+    {
+      "date": "2024-12-03",
+      "equity": 28835.87
+    },
+    {
+      "date": "2024-12-04",
+      "equity": 28867.5
+    },
+    {
+      "date": "2024-12-05",
+      "equity": 28867.5
+    },
+    {
+      "date": "2024-12-06",
+      "equity": 28895.61
+    },
+    {
+      "date": "2024-12-09",
+      "equity": 28885.07
+    },
+    {
+      "date": "2024-12-10",
+      "equity": 28881.55
+    },
+    {
+      "date": "2024-12-11",
+      "equity": 28874.53
+    },
+    {
+      "date": "2024-12-12",
+      "equity": 28860.47
+    },
+    {
+      "date": "2024-12-13",
+      "equity": 28846.42
+    },
+    {
+      "date": "2024-12-16",
+      "equity": 28849.93
+    },
+    {
+      "date": "2024-12-17",
+      "equity": 28853.44
+    },
+    {
+      "date": "2024-12-18",
+      "equity": 28800.56
+    },
+    {
+      "date": "2024-12-19",
+      "equity": 28832.28
+    },
+    {
+      "date": "2024-12-20",
+      "equity": 28835.81
+    },
+    {
+      "date": "2024-12-23",
+      "equity": 28818.19
+    },
+    {
+      "date": "2024-12-24",
+      "equity": 28832.28
+    },
+    {
+      "date": "2024-12-26",
+      "equity": 28839.34
+    },
+    {
+      "date": "2024-12-27",
+      "equity": 28846.4
+    },
+    {
+      "date": "2024-12-30",
+      "equity": 28888.71
+    },
+    {
+      "date": "2024-12-31",
+      "equity": 28906.34
+    },
+    {
+      "date": "2025-01-02",
+      "equity": 28899.28
+    },
+    {
+      "date": "2025-01-03",
+      "equity": 28899.28
+    },
+    {
+      "date": "2025-01-06",
+      "equity": 28906.34
+    },
+    {
+      "date": "2025-01-07",
+      "equity": 28888.71
+    },
+    {
+      "date": "2025-01-08",
+      "equity": 28906.34
+    },
+    {
+      "date": "2025-01-10",
+      "equity": 28853.45
+    },
+    {
+      "date": "2025-01-13",
+      "equity": 28860.49
+    },
+    {
+      "date": "2025-01-14",
+      "equity": 28867.55
+    },
+    {
+      "date": "2025-01-15",
+      "equity": 28931.02
+    },
+    {
+      "date": "2025-01-16",
+      "equity": 28948.65
+    },
+    {
+      "date": "2025-01-17",
+      "equity": 28941.59
+    },
+    {
+      "date": "2025-01-21",
+      "equity": 28952.17
+    },
+    {
+      "date": "2025-01-22",
+      "equity": 28945.12
+    },
+    {
+      "date": "2025-01-23",
+      "equity": 28945.12
+    },
+    {
+      "date": "2025-01-24",
+      "equity": 28962.74
+    },
+    {
+      "date": "2025-01-27",
+      "equity": 29005.06
+    },
+    {
+      "date": "2025-01-28",
+      "equity": 29012.12
+    },
+    {
+      "date": "2025-01-29",
+      "equity": 28994.48
+    },
+    {
+      "date": "2025-01-30",
+      "equity": 29012.12
+    },
+    {
+      "date": "2025-01-31",
+      "equity": 29015.65
+    },
+    {
+      "date": "2025-02-03",
+      "equity": 28995.47
+    },
+    {
+      "date": "2025-02-04",
+      "equity": 29023.78
+    },
+    {
+      "date": "2025-02-05",
+      "equity": 29041.47
+    },
+    {
+      "date": "2025-02-06",
+      "equity": 29055.39
+    },
+    {
+      "date": "2025-02-07",
+      "equity": 29048.77
+    },
+    {
+      "date": "2025-02-10",
+      "equity": 29062.94
+    },
+    {
+      "date": "2025-02-11",
+      "equity": 29055.85
+    },
+    {
+      "date": "2025-02-12",
+      "equity": 29255.06
+    },
+    {
+      "date": "2025-02-13",
+      "equity": 29346.8
+    },
+    {
+      "date": "2025-02-14",
+      "equity": 29333.74
+    },
+    {
+      "date": "2025-02-18",
+      "equity": 29418.43
+    },
+    {
+      "date": "2025-02-19",
+      "equity": 29371.49
+    },
+    {
+      "date": "2025-02-20",
+      "equity": 29375.06
+    },
+    {
+      "date": "2025-02-21",
+      "equity": 28889.81
+    },
+    {
+      "date": "2025-02-24",
+      "equity": 28760.64
+    },
+    {
+      "date": "2025-02-25",
+      "equity": 28620.12
+    },
+    {
+      "date": "2025-02-26",
+      "equity": 28634.31
+    },
+    {
+      "date": "2025-02-27",
+      "equity": 28185.31
+    },
+    {
+      "date": "2025-02-28",
+      "equity": 28617.29
+    },
+    {
+      "date": "2025-03-03",
+      "equity": 28124.75
+    },
+    {
+      "date": "2025-03-04",
+      "equity": 27797.81
+    },
+    {
+      "date": "2025-03-05",
+      "equity": 28091.15
+    },
+    {
+      "date": "2025-03-06",
+      "equity": 27747.73
+    },
+    {
+      "date": "2025-03-07",
+      "equity": 27744.36
+    },
+    {
+      "date": "2025-03-10",
+      "equity": 27794.87
+    },
+    {
+      "date": "2025-03-11",
+      "equity": 27621.7
+    },
+    {
+      "date": "2025-03-12",
+      "equity": 27767.1
+    },
+    {
+      "date": "2025-03-13",
+      "equity": 27399.92
+    },
+    {
+      "date": "2025-03-14",
+      "equity": 27961.28
+    },
+    {
+      "date": "2025-03-17",
+      "equity": 28175.18
+    },
+    {
+      "date": "2025-03-18",
+      "equity": 27873.06
+    },
+    {
+      "date": "2025-03-19",
+      "equity": 28174.19
+    },
+    {
+      "date": "2025-03-20",
+      "equity": 28093.37
+    },
+    {
+      "date": "2025-03-21",
+      "equity": 28102.56
+    },
+    {
+      "date": "2025-03-24",
+      "equity": 28601.84
+    },
+    {
+      "date": "2025-03-25",
+      "equity": 28670.06
+    },
+    {
+      "date": "2025-03-26",
+      "equity": 28330.45
+    },
+    {
+      "date": "2025-03-27",
+      "equity": 28255.8
+    },
+    {
+      "date": "2025-03-28",
+      "equity": 27691.27
+    },
+    {
+      "date": "2025-03-31",
+      "equity": 27875.66
+    },
+    {
+      "date": "2025-04-01",
+      "equity": 27953.77
+    },
+    {
+      "date": "2025-04-02",
+      "equity": 28129.25
+    },
+    {
+      "date": "2025-04-03",
+      "equity": 26754.02
+    },
+    {
+      "date": "2025-04-04",
+      "equity": 25200.83
+    },
+    {
+      "date": "2025-04-07",
+      "equity": 24406.9
+    },
+    {
+      "date": "2025-04-08",
+      "equity": 24392.14
+    },
+    {
+      "date": "2025-04-09",
+      "equity": 24377.38
+    },
+    {
+      "date": "2025-04-10",
+      "equity": 24030.71
+    },
+    {
+      "date": "2025-04-11",
+      "equity": 23914.31
+    },
+    {
+      "date": "2025-04-14",
+      "equity": 23966.53
+    },
+    {
+      "date": "2025-04-15",
+      "equity": 23875.48
+    },
+    {
+      "date": "2025-04-16",
+      "equity": 23355.64
+    },
+    {
+      "date": "2025-04-17",
+      "equity": 23388.26
+    },
+    {
+      "date": "2025-04-21",
+      "equity": 22843.19
+    },
+    {
+      "date": "2025-04-22",
+      "equity": 23424.8
+    },
+    {
+      "date": "2025-04-23",
+      "equity": 23780.21
+    },
+    {
+      "date": "2025-04-24",
+      "equity": 24270.47
+    },
+    {
+      "date": "2025-04-25",
+      "equity": 24442.3
+    },
+    {
+      "date": "2025-04-28",
+      "equity": 24451.44
+    },
+    {
+      "date": "2025-04-29",
+      "equity": 24602.38
+    },
+    {
+      "date": "2025-04-30",
+      "equity": 24611.96
+    },
+    {
+      "date": "2025-05-01",
+      "equity": 24782.91
+    },
+    {
+      "date": "2025-05-02",
+      "equity": 25143.54
+    },
+    {
+      "date": "2025-05-05",
+      "equity": 25002.16
+    },
+    {
+      "date": "2025-05-06",
+      "equity": 24797.27
+    },
+    {
+      "date": "2025-05-07",
+      "equity": 24899.5
+    },
+    {
+      "date": "2025-05-08",
+      "equity": 25069.59
+    },
+    {
+      "date": "2025-05-09",
+      "equity": 25038.27
+    },
+    {
+      "date": "2025-05-12",
+      "equity": 25849.57
+    },
+    {
+      "date": "2025-05-13",
+      "equity": 25860.03
+    },
+    {
+      "date": "2025-05-14",
+      "equity": 25848.94
+    },
+    {
+      "date": "2025-05-15",
+      "equity": 25973.79
+    },
+    {
+      "date": "2025-05-16",
+      "equity": 26136.48
+    },
+    {
+      "date": "2025-05-19",
+      "equity": 26164.76
+    },
+    {
+      "date": "2025-05-20",
+      "equity": 26077.75
+    },
+    {
+      "date": "2025-05-21",
+      "equity": 25868.69
+    },
+    {
+      "date": "2025-05-22",
+      "equity": 25884.39
+    },
+    {
+      "date": "2025-05-23",
+      "equity": 25900.09
+    },
+    {
+      "date": "2025-05-27",
+      "equity": 25909.5
+    },
+    {
+      "date": "2025-05-28",
+      "equity": 25890.67
+    },
+    {
+      "date": "2025-05-29",
+      "equity": 25918.93
+    },
+    {
+      "date": "2025-05-30",
+      "equity": 25950.33
+    },
+    {
+      "date": "2025-06-02",
+      "equity": 25928.91
+    },
+    {
+      "date": "2025-06-03",
+      "equity": 25922.61
+    },
+    {
+      "date": "2025-06-04",
+      "equity": 25969.86
+    },
+    {
+      "date": "2025-06-05",
+      "equity": 25941.5
+    },
+    {
+      "date": "2025-06-06",
+      "equity": 25897.4
+    },
+    {
+      "date": "2025-06-09",
+      "equity": 25916.3
+    },
+    {
+      "date": "2025-06-10",
+      "equity": 25916.3
+    },
+    {
+      "date": "2025-06-11",
+      "equity": 25957.25
+    },
+    {
+      "date": "2025-06-12",
+      "equity": 25979.31
+    },
+    {
+      "date": "2025-06-13",
+      "equity": 25960.41
+    },
+    {
+      "date": "2025-06-16",
+      "equity": 25957.25
+    },
+    {
+      "date": "2025-06-17",
+      "equity": 25969.86
+    },
+    {
+      "date": "2025-06-18",
+      "equity": 25982.46
+    },
+    {
+      "date": "2025-06-20",
+      "equity": 26001.36
+    },
+    {
+      "date": "2025-06-23",
+      "equity": 26036.01
+    },
+    {
+      "date": "2025-06-24",
+      "equity": 26058.06
+    },
+    {
+      "date": "2025-06-25",
+      "equity": 26061.21
+    },
+    {
+      "date": "2025-06-26",
+      "equity": 26092.71
+    },
+    {
+      "date": "2025-06-27",
+      "equity": 26083.26
+    },
+    {
+      "date": "2025-06-30",
+      "equity": 26102.17
+    },
+    {
+      "date": "2025-07-01",
+      "equity": 26074.99
+    },
+    {
+      "date": "2025-07-02",
+      "equity": 26071.83
+    },
+    {
+      "date": "2025-07-03",
+      "equity": 26043.38
+    },
+    {
+      "date": "2025-07-07",
+      "equity": 25930.25
+    },
+    {
+      "date": "2025-07-08",
+      "equity": 25916.09
+    },
+    {
+      "date": "2025-07-09",
+      "equity": 26037.88
+    },
+    {
+      "date": "2025-07-10",
+      "equity": 26103.82
+    },
+    {
+      "date": "2025-07-11",
+      "equity": 26012.2
+    },
+    {
+      "date": "2025-07-14",
+      "equity": 26061.76
+    },
+    {
+      "date": "2025-07-15",
+      "equity": 25950.57
+    },
+    {
+      "date": "2025-07-16",
+      "equity": 26037.19
+    },
+    {
+      "date": "2025-07-17",
+      "equity": 26196.28
+    },
+    {
+      "date": "2025-07-18",
+      "equity": 26177.12
+    },
+    {
+      "date": "2025-07-21",
+      "equity": 26226.68
+    },
+    {
+      "date": "2025-07-22",
+      "equity": 26230.43
+    },
+    {
+      "date": "2025-07-23",
+      "equity": 26453.24
+    },
+    {
+      "date": "2025-07-24",
+      "equity": 26445.51
+    },
+    {
+      "date": "2025-07-25",
+      "equity": 26461.54
+    },
+    {
+      "date": "2025-07-28",
+      "equity": 26458.32
+    },
+    {
+      "date": "2025-07-29",
+      "equity": 26480.77
+    },
+    {
+      "date": "2025-07-30",
+      "equity": 26419.91
+    },
+    {
+      "date": "2025-07-31",
+      "equity": 26323.15
+    },
+    {
+      "date": "2025-08-01",
+      "equity": 25901.96
+    },
+    {
+      "date": "2025-08-04",
+      "equity": 26286.15
+    },
+    {
+      "date": "2025-08-05",
+      "equity": 26156.05
+    },
+    {
+      "date": "2025-08-06",
+      "equity": 26351.6
+    },
+    {
+      "date": "2025-08-07",
+      "equity": 26330.06
+    },
+    {
+      "date": "2025-08-08",
+      "equity": 26530.49
+    },
+    {
+      "date": "2025-08-11",
+      "equity": 26479.26
+    },
+    {
+      "date": "2025-08-12",
+      "equity": 26754.5
+    },
+    {
+      "date": "2025-08-13",
+      "equity": 26843.94
+    },
+    {
+      "date": "2025-08-14",
+      "equity": 26846.38
+    },
+    {
+      "date": "2025-08-15",
+      "equity": 26784.99
+    },
+    {
+      "date": "2025-08-18",
+      "equity": 26779.3
+    },
+    {
+      "date": "2025-08-19",
+      "equity": 26637.41
+    },
+    {
+      "date": "2025-08-20",
+      "equity": 26568.3
+    },
+    {
+      "date": "2025-08-21",
+      "equity": 26464.22
+    },
+    {
+      "date": "2025-08-22",
+      "equity": 26861.02
+    },
+    {
+      "date": "2025-08-25",
+      "equity": 26745.55
+    },
+    {
+      "date": "2025-08-26",
+      "equity": 26854.92
+    },
+    {
+      "date": "2025-08-27",
+      "equity": 26914.68
+    },
+    {
+      "date": "2025-08-28",
+      "equity": 27007.78
+    },
+    {
+      "date": "2025-08-29",
+      "equity": 26850.44
+    },
+    {
+      "date": "2025-09-02",
+      "equity": 26656.11
+    },
+    {
+      "date": "2025-09-03",
+      "equity": 26797.18
+    },
+    {
+      "date": "2025-09-04",
+      "equity": 27015.91
+    },
+    {
+      "date": "2025-09-05",
+      "equity": 26939.48
+    },
+    {
+      "date": "2025-09-08",
+      "equity": 27004.12
+    },
+    {
+      "date": "2025-09-09",
+      "equity": 27065.1
+    },
+    {
+      "date": "2025-09-10",
+      "equity": 27141.53
+    },
+    {
+      "date": "2025-09-11",
+      "equity": 27361.89
+    },
+    {
+      "date": "2025-09-12",
+      "equity": 27352.94
+    },
+    {
+      "date": "2025-09-15",
+      "equity": 27495.23
+    },
+    {
+      "date": "2025-09-16",
+      "equity": 27458.24
+    },
+    {
+      "date": "2025-09-17",
+      "equity": 27424.9
+    },
+    {
+      "date": "2025-09-18",
+      "equity": 27550.12
+    },
+    {
+      "date": "2025-09-19",
+      "equity": 27683.47
+    },
+    {
+      "date": "2025-09-22",
+      "equity": 27811.48
+    },
+    {
+      "date": "2025-09-23",
+      "equity": 27663.5
+    },
+    {
+      "date": "2025-09-24",
+      "equity": 27577.47
+    },
+    {
+      "date": "2025-09-25",
+      "equity": 27453.13
+    },
+    {
+      "date": "2025-09-26",
+      "equity": 27606.83
+    },
+    {
+      "date": "2025-09-29",
+      "equity": 27682.66
+    },
+    {
+      "date": "2025-09-30",
+      "equity": 27784.57
+    },
+    {
+      "date": "2025-10-01",
+      "equity": 27877.12
+    },
+    {
+      "date": "2025-10-02",
+      "equity": 27908.51
+    },
+    {
+      "date": "2025-10-03",
+      "equity": 27908.1
+    },
+    {
+      "date": "2025-10-06",
+      "equity": 28005.94
+    },
+    {
+      "date": "2025-10-07",
+      "equity": 27904.43
+    },
+    {
+      "date": "2025-10-08",
+      "equity": 28067.1
+    },
+    {
+      "date": "2025-10-09",
+      "equity": 27987.6
+    },
+    {
+      "date": "2025-10-10",
+      "equity": 27248.07
+    },
+    {
+      "date": "2025-10-13",
+      "equity": 27656.56
+    },
+    {
+      "date": "2025-10-14",
+      "equity": 27623.54
+    },
+    {
+      "date": "2025-10-15",
+      "equity": 27743.4
+    },
+    {
+      "date": "2025-10-16",
+      "equity": 27558.72
+    },
+    {
+      "date": "2025-10-17",
+      "equity": 27711.6
+    },
+    {
+      "date": "2025-10-20",
+      "equity": 27993.31
+    },
+    {
+      "date": "2025-10-21",
+      "equity": 27992.9
+    },
+    {
+      "date": "2025-10-22",
+      "equity": 27850.62
+    },
+    {
+      "date": "2025-10-23",
+      "equity": 28012.06
+    },
+    {
+      "date": "2025-10-24",
+      "equity": 28235.88
+    },
+    {
+      "date": "2025-10-27",
+      "equity": 28561.61
+    },
+    {
+      "date": "2025-10-28",
+      "equity": 28635.81
+    },
+    {
+      "date": "2025-10-29",
+      "equity": 28649.26
+    },
+    {
+      "date": "2025-10-30",
+      "equity": 28341.06
+    },
+    {
+      "date": "2025-10-31",
+      "equity": 28431.97
+    },
+    {
+      "date": "2025-11-03",
+      "equity": 28484.15
+    },
+    {
+      "date": "2025-11-04",
+      "equity": 28153.93
+    },
+    {
+      "date": "2025-11-05",
+      "equity": 28249.33
+    },
+    {
+      "date": "2025-11-06",
+      "equity": 27952.95
+    },
+    {
+      "date": "2025-11-07",
+      "equity": 27979.85
+    },
+    {
+      "date": "2025-11-10",
+      "equity": 28406.69
+    },
+    {
+      "date": "2025-11-11",
+      "equity": 28470.29
+    },
+    {
+      "date": "2025-11-12",
+      "equity": 28485.78
+    },
+    {
+      "date": "2025-11-13",
+      "equity": 28023.47
+    },
+    {
+      "date": "2025-11-14",
+      "equity": 28018.99
+    },
+    {
+      "date": "2025-11-17",
+      "equity": 27763.78
+    },
+    {
+      "date": "2025-11-18",
+      "equity": 27633.34
+    },
+    {
+      "date": "2025-11-19",
+      "equity": 27709.0
+    },
+    {
+      "date": "2025-11-20",
+      "equity": 28160.44
+    },
+    {
+      "date": "2025-11-21",
+      "equity": 28194.4
+    },
+    {
+      "date": "2025-11-24",
+      "equity": 28197.8
+    },
+    {
+      "date": "2025-11-25",
+      "equity": 28214.77
+    },
+    {
+      "date": "2025-11-26",
+      "equity": 28296.74
+    },
+    {
+      "date": "2025-11-28",
+      "equity": 28447.99
+    },
+    {
+      "date": "2025-12-01",
+      "equity": 28235.45
+    },
+    {
+      "date": "2025-12-02",
+      "equity": 28252.5
+    },
+    {
+      "date": "2025-12-03",
+      "equity": 28269.57
+    },
+    {
+      "date": "2025-12-04",
+      "equity": 28249.09
+    },
+    {
+      "date": "2025-12-05",
+      "equity": 28238.86
+    },
+    {
+      "date": "2025-12-08",
+      "equity": 28232.03
+    },
+    {
+      "date": "2025-12-09",
+      "equity": 28218.39
+    },
+    {
+      "date": "2025-12-10",
+      "equity": 28266.15
+    },
+    {
+      "date": "2025-12-11",
+      "equity": 28269.57
+    },
+    {
+      "date": "2025-12-12",
+      "equity": 28272.98
+    },
+    {
+      "date": "2025-12-15",
+      "equity": 28290.03
+    },
+    {
+      "date": "2025-12-16",
+      "equity": 28303.68
+    },
+    {
+      "date": "2025-12-17",
+      "equity": 28307.09
+    },
+    {
+      "date": "2025-12-18",
+      "equity": 28327.57
+    },
+    {
+      "date": "2025-12-19",
+      "equity": 28322.43
+    },
+    {
+      "date": "2025-12-22",
+      "equity": 28308.74
+    },
+    {
+      "date": "2025-12-23",
+      "equity": 28295.05
+    },
+    {
+      "date": "2025-12-24",
+      "equity": 28312.16
+    },
+    {
+      "date": "2025-12-26",
+      "equity": 28332.7
+    },
+    {
+      "date": "2025-12-29",
+      "equity": 28346.38
+    },
+    {
+      "date": "2025-12-30",
+      "equity": 28353.23
+    },
+    {
+      "date": "2025-12-31",
+      "equity": 28342.96
+    },
+    {
+      "date": "2026-01-02",
+      "equity": 28356.65
+    },
+    {
+      "date": "2026-01-05",
+      "equity": 28366.92
+    },
+    {
+      "date": "2026-01-06",
+      "equity": 28370.34
+    },
+    {
+      "date": "2026-01-07",
+      "equity": 28366.92
+    },
+    {
+      "date": "2026-01-08",
+      "equity": 28356.65
+    },
+    {
+      "date": "2026-01-09",
+      "equity": 28346.38
+    },
+    {
+      "date": "2026-01-12",
+      "equity": 28346.38
+    },
+    {
+      "date": "2026-01-13",
+      "equity": 28353.23
+    },
+    {
+      "date": "2026-01-14",
+      "equity": 28360.08
+    },
+    {
+      "date": "2026-01-15",
+      "equity": 28339.54
+    },
+    {
+      "date": "2026-01-16",
+      "equity": 28332.7
+    },
+    {
+      "date": "2026-01-20",
+      "equity": 28336.12
+    },
+    {
+      "date": "2026-01-21",
+      "equity": 28349.81
+    },
+    {
+      "date": "2026-01-22",
+      "equity": 28339.54
+    },
+    {
+      "date": "2026-01-23",
+      "equity": 28349.81
+    },
+    {
+      "date": "2026-01-26",
+      "equity": 28360.08
+    },
+    {
+      "date": "2026-01-27",
+      "equity": 28366.92
+    },
+    {
+      "date": "2026-01-28",
+      "equity": 28366.92
+    },
+    {
+      "date": "2026-01-29",
+      "equity": 28377.19
+    },
+    {
+      "date": "2026-01-30",
+      "equity": 28401.14
+    },
+    {
+      "date": "2026-02-02",
+      "equity": 28387.41
+    },
+    {
+      "date": "2026-02-03",
+      "equity": 28383.98
+    },
+    {
+      "date": "2026-02-04",
+      "equity": 28397.71
+    },
+    {
+      "date": "2026-02-05",
+      "equity": 28442.33
+    },
+    {
+      "date": "2026-02-06",
+      "equity": 28442.33
+    },
+    {
+      "date": "2026-02-09",
+      "equity": 28449.2
+    },
+    {
+      "date": "2026-02-10",
+      "equity": 28466.36
+    },
+    {
+      "date": "2026-02-11",
+      "equity": 28438.9
+    },
+    {
+      "date": "2026-02-12",
+      "equity": 28466.36
+    },
+    {
+      "date": "2026-02-13",
+      "equity": 28467.2
+    },
+    {
+      "date": "2026-02-17",
+      "equity": 28512.17
+    },
+    {
+      "date": "2026-02-18",
+      "equity": 28541.21
+    },
+    {
+      "date": "2026-02-19",
+      "equity": 28565.76
+    },
+    {
+      "date": "2026-02-20",
+      "equity": 28768.16
+    },
+    {
+      "date": "2026-02-23",
+      "equity": 28725.32
+    },
+    {
+      "date": "2026-02-24",
+      "equity": 28725.32
+    },
+    {
+      "date": "2026-02-25",
+      "equity": 28718.4
+    },
+    {
+      "date": "2026-02-26",
+      "equity": 28728.78
+    },
+    {
+      "date": "2026-02-27",
+      "equity": 28848.59
+    },
+    {
+      "date": "2026-03-02",
+      "equity": 28864.93
+    },
+    {
+      "date": "2026-03-03",
+      "equity": 28611.52
+    },
+    {
+      "date": "2026-03-04",
+      "equity": 28647.0
+    },
+    {
+      "date": "2026-03-05",
+      "equity": 28626.23
+    },
+    {
+      "date": "2026-03-06",
+      "equity": 28581.45
+    },
+    {
+      "date": "2026-03-09",
+      "equity": 28828.16
+    },
+    {
+      "date": "2026-03-10",
+      "equity": 28782.51
+    },
+    {
+      "date": "2026-03-11",
+      "equity": 28746.9
+    },
+    {
+      "date": "2026-03-12",
+      "equity": 28480.39
+    },
+    {
+      "date": "2026-03-13",
+      "equity": 28497.65
+    },
+    {
+      "date": "2026-03-16",
+      "equity": 28532.17
+    },
+    {
+      "date": "2026-03-17",
+      "equity": 28463.52
+    },
+    {
+      "date": "2026-03-18",
+      "equity": 28071.47
+    },
+    {
+      "date": "2026-03-19",
+      "equity": 27876.3
+    },
+    {
+      "date": "2026-03-20",
+      "equity": 27541.22
+    },
+    {
+      "date": "2026-03-23",
+      "equity": 27979.35
+    },
+    {
+      "date": "2026-03-24",
+      "equity": 27938.61
+    },
+    {
+      "date": "2026-03-25",
+      "equity": 27969.16
+    },
+    {
+      "date": "2026-03-26",
+      "equity": 27908.07
+    },
+    {
+      "date": "2026-03-27",
+      "equity": 27965.77
+    },
+    {
+      "date": "2026-03-30",
+      "equity": 28003.11
+    },
+    {
+      "date": "2026-03-31",
+      "equity": 28026.87
+    },
+    {
+      "date": "2026-04-01",
+      "equity": 28025.84
+    },
+    {
+      "date": "2026-04-02",
+      "equity": 28039.46
+    },
+    {
+      "date": "2026-04-06",
+      "equity": 28012.23
+    },
+    {
+      "date": "2026-04-07",
+      "equity": 28032.65
+    },
+    {
+      "date": "2026-04-08",
+      "equity": 28059.89
+    },
+    {
+      "date": "2026-04-09",
+      "equity": 28066.7
+    },
+    {
+      "date": "2026-04-10",
+      "equity": 28056.49
+    },
+    {
+      "date": "2026-04-13",
+      "equity": 28076.91
+    },
+    {
+      "date": "2026-04-14",
+      "equity": 28097.34
+    },
+    {
+      "date": "2026-04-15",
+      "equity": 28282.92
+    },
+    {
+      "date": "2026-04-16",
+      "equity": 28351.72
+    },
+    {
+      "date": "2026-04-17",
+      "equity": 28690.92
+    },
+    {
+      "date": "2026-04-20",
+      "equity": 28634.12
+    },
+    {
+      "date": "2026-04-21",
+      "equity": 28448.52
+    },
+    {
+      "date": "2026-04-22",
+      "equity": 28663.57
+    },
+    {
+      "date": "2026-04-23",
+      "equity": 28649.68
+    },
+    {
+      "date": "2026-04-24",
+      "equity": 28775.64
+    },
+    {
+      "date": "2026-04-27",
+      "equity": 28824.84
+    },
+    {
+      "date": "2026-04-28",
+      "equity": 28685.64
+    },
+    {
+      "date": "2026-04-29",
+      "equity": 28681.24
+    },
+    {
+      "date": "2026-04-30",
+      "equity": 28964.44
+    },
+    {
+      "date": "2026-05-01",
+      "equity": 29044.04
+    },
+    {
+      "date": "2026-05-04",
+      "equity": 28938.44
+    },
+    {
+      "date": "2026-05-05",
+      "equity": 29168.84
+    },
+    {
+      "date": "2026-05-06",
+      "equity": 29382.03
+    },
+    {
+      "date": "2026-05-07",
+      "equity": 29357.04
+    },
+    {
+      "date": "2026-05-08",
+      "equity": 29382.03
+    },
+    {
+      "date": "2026-05-11",
+      "equity": 29491.54
+    },
+    {
+      "date": "2026-05-12",
+      "equity": 29374.45
+    },
+    {
+      "date": "2026-05-13",
+      "equity": 29385.17
+    },
+    {
+      "date": "2026-05-14",
+      "equity": 29374.45
+    },
+    {
+      "date": "2026-05-15",
+      "equity": 29338.69
+    },
+    {
+      "date": "2026-05-18",
+      "equity": 29353.0
+    },
+    {
+      "date": "2026-05-19",
+      "equity": 29331.55
+    },
+    {
+      "date": "2026-05-20",
+      "equity": 29370.87
+    },
+    {
+      "date": "2026-05-21",
+      "equity": 29367.3
+    },
+    {
+      "date": "2026-05-22",
+      "equity": 29360.15
+    },
+    {
+      "date": "2026-05-26",
+      "equity": 29392.32
+    },
+    {
+      "date": "2026-05-27",
+      "equity": 29395.9
+    },
+    {
+      "date": "2026-05-28",
+      "equity": 29410.2
+    },
+    {
+      "date": "2026-05-29",
+      "equity": 29424.5
+    },
+    {
+      "date": "2026-06-01",
+      "equity": 29407.65
+    },
+    {
+      "date": "2026-06-02",
+      "equity": 29407.65
+    },
+    {
+      "date": "2026-06-03",
+      "equity": 29393.31
+    },
+    {
+      "date": "2026-06-04",
+      "equity": 29414.82
+    },
+    {
+      "date": "2026-06-05",
+      "equity": 29353.86
+    },
+    {
+      "date": "2026-06-08",
+      "equity": 29368.2
+    },
+    {
+      "date": "2026-06-09",
+      "equity": 29382.55
+    }
+  ],
+  "trade_log_is": [
+    {
+      "entry_date": "2004-01-02",
+      "exit_date": "2004-04-14",
+      "entry_price": 74.1825,
+      "exit_price": 75.003,
+      "shares": 337,
+      "pnl": 276.53,
+      "entry_cost": 3.3937,
+      "exit_cost": 3.0036,
+      "transaction_cost": 6.3973,
+      "liquidity_constrained": false,
+      "hold_days": 70,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007521
+    },
+    {
+      "entry_date": "2004-07-19",
+      "exit_date": "2004-11-09",
+      "entry_price": 74.0511,
+      "exit_price": 78.5909,
+      "shares": 341,
+      "pnl": 1548.09,
+      "entry_cost": 3.0087,
+      "exit_cost": 3.0973,
+      "transaction_cost": 6.106,
+      "liquidity_constrained": false,
+      "hold_days": 80,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007525
+    },
+    {
+      "entry_date": "2004-11-10",
+      "exit_date": "2004-11-11",
+      "entry_price": 78.5957,
+      "exit_price": 78.6581,
+      "shares": 341,
+      "pnl": 21.28,
+      "entry_cost": 3.0945,
+      "exit_cost": 3.0942,
+      "transaction_cost": 6.1887,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008501
+    },
+    {
+      "entry_date": "2004-11-12",
+      "exit_date": "2004-12-03",
+      "entry_price": 79.2066,
+      "exit_price": 80.3254,
+      "shares": 339,
+      "pnl": 379.25,
+      "entry_cost": 3.0858,
+      "exit_cost": 3.0963,
+      "transaction_cost": 6.1821,
+      "liquidity_constrained": false,
+      "hold_days": 14,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008572
+    },
+    {
+      "entry_date": "2004-12-06",
+      "exit_date": "2005-02-23",
+      "entry_price": 80.2763,
+      "exit_price": 80.4478,
+      "shares": 340,
+      "pnl": 58.31,
+      "entry_cost": 3.1041,
+      "exit_cost": 3.1099,
+      "transaction_cost": 6.214,
+      "liquidity_constrained": false,
+      "hold_days": 54,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008184
+    },
+    {
+      "entry_date": "2005-02-24",
+      "exit_date": "2005-03-03",
+      "entry_price": 80.6758,
+      "exit_price": 82.2945,
+      "shares": 339,
+      "pnl": 548.76,
+      "entry_cost": 3.1049,
+      "exit_cost": 3.1356,
+      "transaction_cost": 6.2404,
+      "liquidity_constrained": false,
+      "hold_days": 5,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009574
+    },
+    {
+      "entry_date": "2005-03-07",
+      "exit_date": "2005-03-08",
+      "entry_price": 82.9896,
+      "exit_price": 82.9777,
+      "shares": 336,
+      "pnl": -3.97,
+      "entry_cost": 3.12,
+      "exit_cost": 3.1206,
+      "transaction_cost": 6.2407,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008315
+    },
+    {
+      "entry_date": "2005-04-18",
+      "exit_date": "2005-05-05",
+      "entry_price": 77.5151,
+      "exit_price": 79.908,
+      "shares": 362,
+      "pnl": 866.23,
+      "entry_cost": 3.2599,
+      "exit_cost": 3.3169,
+      "transaction_cost": 6.5768,
+      "liquidity_constrained": false,
+      "hold_days": 13,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007722
+    },
+    {
+      "entry_date": "2005-05-17",
+      "exit_date": "2005-07-13",
+      "entry_price": 79.0706,
+      "exit_price": 83.3672,
+      "shares": 366,
+      "pnl": 1572.56,
+      "entry_cost": 3.3344,
+      "exit_cost": 3.4044,
+      "transaction_cost": 6.7387,
+      "liquidity_constrained": false,
+      "hold_days": 39,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004159
+    },
+    {
+      "entry_date": "2005-09-09",
+      "exit_date": "2005-09-13",
+      "entry_price": 84.4496,
+      "exit_price": 84.6354,
+      "shares": 363,
+      "pnl": 67.44,
+      "entry_cost": 3.3996,
+      "exit_cost": 3.4022,
+      "transaction_cost": 6.8018,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007335
+    },
+    {
+      "entry_date": "2005-09-14",
+      "exit_date": "2005-09-15",
+      "entry_price": 84.3883,
+      "exit_price": 84.2673,
+      "shares": 365,
+      "pnl": -44.16,
+      "entry_cost": 3.4112,
+      "exit_cost": 3.4091,
+      "transaction_cost": 6.8203,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009449
+    },
+    {
+      "entry_date": "2005-09-29",
+      "exit_date": "2005-10-03",
+      "entry_price": 83.2476,
+      "exit_price": 84.1946,
+      "shares": 368,
+      "pnl": 348.49,
+      "entry_cost": 3.4129,
+      "exit_cost": 3.4322,
+      "transaction_cost": 6.8451,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00801
+    },
+    {
+      "entry_date": "2005-10-10",
+      "exit_date": "2005-10-13",
+      "entry_price": 81.967,
+      "exit_price": 80.4284,
+      "shares": 379,
+      "pnl": -583.13,
+      "entry_cost": 3.4905,
+      "exit_cost": 3.4603,
+      "transaction_cost": 6.9508,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008447
+    },
+    {
+      "entry_date": "2005-10-17",
+      "exit_date": "2005-10-18",
+      "entry_price": 81.3643,
+      "exit_price": 81.4419,
+      "shares": 374,
+      "pnl": 28.99,
+      "entry_cost": 3.4345,
+      "exit_cost": 3.4375,
+      "transaction_cost": 6.8721,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009916
+    },
+    {
+      "entry_date": "2005-10-19",
+      "exit_date": "2005-10-26",
+      "entry_price": 80.474,
+      "exit_price": 81.8321,
+      "shares": 379,
+      "pnl": 514.69,
+      "entry_cost": 3.4704,
+      "exit_cost": 3.5068,
+      "transaction_cost": 6.9772,
+      "liquidity_constrained": false,
+      "hold_days": 5,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008415
+    },
+    {
+      "entry_date": "2005-11-01",
+      "exit_date": "2005-11-07",
+      "entry_price": 82.5834,
+      "exit_price": 83.7906,
+      "shares": 376,
+      "pnl": 453.89,
+      "entry_cost": 3.4946,
+      "exit_cost": 3.5172,
+      "transaction_cost": 7.0118,
+      "liquidity_constrained": false,
+      "hold_days": 4,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00656
+    },
+    {
+      "entry_date": "2006-01-04",
+      "exit_date": "2006-01-05",
+      "entry_price": 87.3447,
+      "exit_price": 87.5254,
+      "shares": 364,
+      "pnl": 65.74,
+      "entry_cost": 3.4597,
+      "exit_cost": 3.4636,
+      "transaction_cost": 6.9233,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009801
+    },
+    {
+      "entry_date": "2006-01-10",
+      "exit_date": "2006-01-12",
+      "entry_price": 88.3981,
+      "exit_price": 88.8539,
+      "shares": 360,
+      "pnl": 164.11,
+      "entry_cost": 3.4421,
+      "exit_cost": 3.4521,
+      "transaction_cost": 6.8942,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007307
+    },
+    {
+      "entry_date": "2006-01-17",
+      "exit_date": "2006-01-20",
+      "entry_price": 88.2673,
+      "exit_price": 88.3032,
+      "shares": 363,
+      "pnl": 13.04,
+      "entry_cost": 3.47,
+      "exit_cost": 3.4789,
+      "transaction_cost": 6.949,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009816
+    },
+    {
+      "entry_date": "2006-01-23",
+      "exit_date": "2006-01-26",
+      "entry_price": 86.8972,
+      "exit_price": 87.5941,
+      "shares": 369,
+      "pnl": 257.16,
+      "entry_cost": 3.5095,
+      "exit_cost": 3.517,
+      "transaction_cost": 7.0265,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009832
+    },
+    {
+      "entry_date": "2006-02-01",
+      "exit_date": "2006-02-15",
+      "entry_price": 88.0056,
+      "exit_price": 87.8902,
+      "shares": 368,
+      "pnl": -42.47,
+      "entry_cost": 3.508,
+      "exit_cost": 3.512,
+      "transaction_cost": 7.0201,
+      "liquidity_constrained": false,
+      "hold_days": 10,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.000597
+    },
+    {
+      "entry_date": "2006-02-23",
+      "exit_date": "2006-02-24",
+      "entry_price": 89.0039,
+      "exit_price": 88.8746,
+      "shares": 363,
+      "pnl": -46.95,
+      "entry_cost": 3.48,
+      "exit_cost": 3.478,
+      "transaction_cost": 6.958,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004572
+    },
+    {
+      "entry_date": "2006-03-01",
+      "exit_date": "2006-03-03",
+      "entry_price": 88.5426,
+      "exit_price": 88.5717,
+      "shares": 365,
+      "pnl": 10.6,
+      "entry_cost": 3.492,
+      "exit_cost": 3.4876,
+      "transaction_cost": 6.9796,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009856
+    },
+    {
+      "entry_date": "2006-07-12",
+      "exit_date": "2006-07-19",
+      "entry_price": 88.281,
+      "exit_price": 86.2001,
+      "shares": 370,
+      "pnl": -769.94,
+      "entry_cost": 3.5455,
+      "exit_cost": 3.5041,
+      "transaction_cost": 7.0496,
+      "liquidity_constrained": false,
+      "hold_days": 5,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007128
+    },
+    {
+      "entry_date": "2006-07-20",
+      "exit_date": "2006-10-16",
+      "entry_price": 87.5659,
+      "exit_price": 95.1833,
+      "shares": 364,
+      "pnl": 2772.75,
+      "entry_cost": 3.4716,
+      "exit_cost": 3.5885,
+      "transaction_cost": 7.06,
+      "liquidity_constrained": false,
+      "hold_days": 61,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008284
+    },
+    {
+      "entry_date": "2006-10-17",
+      "exit_date": "2006-10-19",
+      "entry_price": 95.1681,
+      "exit_price": 95.0927,
+      "shares": 365,
+      "pnl": -27.55,
+      "entry_cost": 3.598,
+      "exit_cost": 3.5944,
+      "transaction_cost": 7.1924,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008778
+    },
+    {
+      "entry_date": "2006-11-08",
+      "exit_date": "2006-11-14",
+      "entry_price": 96.235,
+      "exit_price": 96.8915,
+      "shares": 361,
+      "pnl": 237.0,
+      "entry_cost": 3.5763,
+      "exit_cost": 3.5884,
+      "transaction_cost": 7.1647,
+      "liquidity_constrained": false,
+      "hold_days": 4,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00647
+    },
+    {
+      "entry_date": "2006-11-30",
+      "exit_date": "2006-12-18",
+      "entry_price": 97.9365,
+      "exit_price": 99.9345,
+      "shares": 359,
+      "pnl": 717.25,
+      "entry_cost": 3.5956,
+      "exit_cost": 3.6317,
+      "transaction_cost": 7.2273,
+      "liquidity_constrained": false,
+      "hold_days": 12,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.001157
+    },
+    {
+      "entry_date": "2007-03-19",
+      "exit_date": "2007-05-23",
+      "entry_price": 98.0421,
+      "exit_price": 107.6586,
+      "shares": 370,
+      "pnl": 3558.1,
+      "entry_cost": 3.7375,
+      "exit_cost": 3.8777,
+      "transaction_cost": 7.6152,
+      "liquidity_constrained": false,
+      "hold_days": 46,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.002928
+    },
+    {
+      "entry_date": "2007-08-06",
+      "exit_date": "2007-08-07",
+      "entry_price": 101.9644,
+      "exit_price": 103.1669,
+      "shares": 397,
+      "pnl": 477.41,
+      "entry_cost": 4.0747,
+      "exit_cost": 4.0994,
+      "transaction_cost": 8.1741,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.002967
+    },
+    {
+      "entry_date": "2007-08-14",
+      "exit_date": "2008-04-18",
+      "entry_price": 103.0178,
+      "exit_price": 99.6991,
+      "shares": 398,
+      "pnl": -1320.84,
+      "entry_cost": 4.1083,
+      "exit_cost": 4.0469,
+      "transaction_cost": 8.1552,
+      "liquidity_constrained": false,
+      "hold_days": 171,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006147
+    },
+    {
+      "entry_date": "2008-04-22",
+      "exit_date": "2008-04-23",
+      "entry_price": 99.1812,
+      "exit_price": 99.0892,
+      "shares": 400,
+      "pnl": -36.79,
+      "entry_cost": 4.0538,
+      "exit_cost": 4.0501,
+      "transaction_cost": 8.1039,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009218
+    },
+    {
+      "entry_date": "2008-05-06",
+      "exit_date": "2008-05-07",
+      "entry_price": 100.4945,
+      "exit_price": 101.8161,
+      "shares": 393,
+      "pnl": 519.38,
+      "entry_cost": 3.9989,
+      "exit_cost": 4.0305,
+      "transaction_cost": 8.0294,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.000645
+    },
+    {
+      "entry_date": "2008-05-12",
+      "exit_date": "2008-05-28",
+      "entry_price": 99.9419,
+      "exit_price": 99.8642,
+      "shares": 402,
+      "pnl": -31.24,
+      "entry_cost": 4.0794,
+      "exit_cost": 4.0761,
+      "transaction_cost": 8.1555,
+      "liquidity_constrained": false,
+      "hold_days": 11,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": -0.005463
+    },
+    {
+      "entry_date": "2008-07-03",
+      "exit_date": "2008-07-07",
+      "entry_price": 91.6856,
+      "exit_price": 91.4354,
+      "shares": 438,
+      "pnl": -109.57,
+      "entry_cost": 4.2554,
+      "exit_cost": 4.241,
+      "transaction_cost": 8.4964,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008779
+    },
+    {
+      "entry_date": "2008-07-08",
+      "exit_date": "2008-07-09",
+      "entry_price": 90.1565,
+      "exit_price": 91.9474,
+      "shares": 445,
+      "pnl": 796.97,
+      "entry_cost": 4.2846,
+      "exit_cost": 4.3286,
+      "transaction_cost": 8.6131,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004439
+    },
+    {
+      "entry_date": "2008-07-10",
+      "exit_date": "2008-07-21",
+      "entry_price": 89.7526,
+      "exit_price": 91.2334,
+      "shares": 457,
+      "pnl": 676.74,
+      "entry_cost": 4.3924,
+      "exit_cost": 4.4317,
+      "transaction_cost": 8.8241,
+      "liquidity_constrained": false,
+      "hold_days": 7,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009953
+    },
+    {
+      "entry_date": "2008-07-22",
+      "exit_date": "2008-07-24",
+      "entry_price": 90.2719,
+      "exit_price": 92.5532,
+      "shares": 462,
+      "pnl": 1053.99,
+      "entry_cost": 4.4583,
+      "exit_cost": 4.5166,
+      "transaction_cost": 8.9749,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007294
+    },
+    {
+      "entry_date": "2008-07-25",
+      "exit_date": "2008-07-28",
+      "entry_price": 90.8056,
+      "exit_price": 90.5122,
+      "shares": 472,
+      "pnl": -138.47,
+      "entry_cost": 4.5658,
+      "exit_cost": 4.5614,
+      "transaction_cost": 9.1272,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.002689
+    },
+    {
+      "entry_date": "2008-07-29",
+      "exit_date": "2008-07-30",
+      "entry_price": 89.428,
+      "exit_price": 91.6661,
+      "shares": 479,
+      "pnl": 1072.05,
+      "entry_cost": 4.6072,
+      "exit_cost": 4.6664,
+      "transaction_cost": 9.2737,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007669
+    },
+    {
+      "entry_date": "2008-08-01",
+      "exit_date": "2008-08-05",
+      "entry_price": 91.6928,
+      "exit_price": 90.88,
+      "shares": 479,
+      "pnl": -389.34,
+      "entry_cost": 4.6657,
+      "exit_cost": 4.6517,
+      "transaction_cost": 9.3175,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.005625
+    },
+    {
+      "entry_date": "2008-08-08",
+      "exit_date": "2008-08-12",
+      "entry_price": 91.3033,
+      "exit_price": 93.9523,
+      "shares": 478,
+      "pnl": 1266.21,
+      "entry_cost": 4.6553,
+      "exit_cost": 4.7223,
+      "transaction_cost": 9.3776,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": -0.004132
+    },
+    {
+      "entry_date": "2008-08-21",
+      "exit_date": "2008-09-18",
+      "entry_price": 91.426,
+      "exit_price": 85.132,
+      "shares": 494,
+      "pnl": -3109.21,
+      "entry_cost": 4.814,
+      "exit_cost": 4.6844,
+      "transaction_cost": 9.4984,
+      "liquidity_constrained": false,
+      "hold_days": 19,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.017724
+    },
+    {
+      "entry_date": "2009-04-20",
+      "exit_date": "2009-04-21",
+      "entry_price": 63.0112,
+      "exit_price": 60.9912,
+      "shares": 680,
+      "pnl": -1373.58,
+      "entry_cost": 5.7071,
+      "exit_cost": 5.6077,
+      "transaction_cost": 11.3148,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.028143
+    },
+    {
+      "entry_date": "2009-05-05",
+      "exit_date": "2009-05-06",
+      "entry_price": 66.716,
+      "exit_price": 67.5165,
+      "shares": 622,
+      "pnl": 497.9,
+      "entry_cost": 5.304,
+      "exit_cost": 5.3245,
+      "transaction_cost": 10.6285,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006839
+    },
+    {
+      "entry_date": "2009-05-13",
+      "exit_date": "2009-05-14",
+      "entry_price": 66.1047,
+      "exit_price": 65.3365,
+      "shares": 636,
+      "pnl": -488.6,
+      "entry_cost": 5.3988,
+      "exit_cost": 5.3733,
+      "transaction_cost": 10.772,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009597
+    },
+    {
+      "entry_date": "2009-05-15",
+      "exit_date": "2009-06-15",
+      "entry_price": 65.8322,
+      "exit_price": 69.1958,
+      "shares": 631,
+      "pnl": 2122.42,
+      "entry_cost": 5.347,
+      "exit_cost": 5.4387,
+      "transaction_cost": 10.7857,
+      "liquidity_constrained": false,
+      "hold_days": 20,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": -0.001339
+    },
+    {
+      "entry_date": "2009-07-01",
+      "exit_date": "2009-07-07",
+      "entry_price": 68.4039,
+      "exit_price": 66.4389,
+      "shares": 642,
+      "pnl": -1261.56,
+      "entry_cost": 5.4918,
+      "exit_cost": 5.4412,
+      "transaction_cost": 10.933,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.003127
+    },
+    {
+      "entry_date": "2009-07-15",
+      "exit_date": "2009-07-16",
+      "entry_price": 68.0114,
+      "exit_price": 68.8756,
+      "shares": 627,
+      "pnl": 541.88,
+      "entry_cost": 5.3785,
+      "exit_cost": 5.4076,
+      "transaction_cost": 10.7861,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006748
+    },
+    {
+      "entry_date": "2009-07-17",
+      "exit_date": "2009-07-24",
+      "entry_price": 69.678,
+      "exit_price": 71.9863,
+      "shares": 621,
+      "pnl": 1433.46,
+      "entry_cost": 5.3827,
+      "exit_cost": 5.4464,
+      "transaction_cost": 10.8291,
+      "liquidity_constrained": false,
+      "hold_days": 5,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.0055
+    },
+    {
+      "entry_date": "2009-07-27",
+      "exit_date": "2009-08-07",
+      "entry_price": 72.5076,
+      "exit_price": 74.7564,
+      "shares": 617,
+      "pnl": 1387.54,
+      "entry_cost": 5.4268,
+      "exit_cost": 5.4729,
+      "transaction_cost": 10.8997,
+      "liquidity_constrained": false,
+      "hold_days": 9,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007161
+    },
+    {
+      "entry_date": "2009-08-18",
+      "exit_date": "2010-02-08",
+      "entry_price": 72.989,
+      "exit_price": 79.8564,
+      "shares": 635,
+      "pnl": 4360.8,
+      "entry_cost": 5.5815,
+      "exit_cost": 5.8124,
+      "transaction_cost": 11.3939,
+      "liquidity_constrained": false,
+      "hold_days": 119,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008459
+    },
+    {
+      "entry_date": "2010-05-03",
+      "exit_date": "2010-05-04",
+      "entry_price": 89.7006,
+      "exit_price": 89.4033,
+      "shares": 565,
+      "pnl": -167.98,
+      "entry_cost": 5.4452,
+      "exit_cost": 5.4459,
+      "transaction_cost": 10.8911,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009964
+    },
+    {
+      "entry_date": "2010-05-05",
+      "exit_date": "2010-05-10",
+      "entry_price": 87.5818,
+      "exit_price": 86.9992,
+      "shares": 577,
+      "pnl": -336.15,
+      "entry_cost": 5.5059,
+      "exit_cost": 5.5202,
+      "transaction_cost": 11.026,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.024284
+    },
+    {
+      "entry_date": "2010-05-11",
+      "exit_date": "2010-05-20",
+      "entry_price": 86.4624,
+      "exit_price": 82.1686,
+      "shares": 580,
+      "pnl": -2490.39,
+      "entry_cost": 5.5301,
+      "exit_cost": 5.4016,
+      "transaction_cost": 10.9317,
+      "liquidity_constrained": false,
+      "hold_days": 7,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.027155
+    },
+    {
+      "entry_date": "2010-05-26",
+      "exit_date": "2010-05-27",
+      "entry_price": 81.511,
+      "exit_price": 82.0259,
+      "shares": 585,
+      "pnl": 301.18,
+      "entry_cost": 5.4221,
+      "exit_cost": 5.4471,
+      "transaction_cost": 10.8693,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.024194
+    },
+    {
+      "entry_date": "2010-05-28",
+      "exit_date": "2010-06-02",
+      "entry_price": 83.1339,
+      "exit_price": 81.1919,
+      "shares": 577,
+      "pnl": -1120.54,
+      "entry_cost": 5.4039,
+      "exit_cost": 5.3486,
+      "transaction_cost": 10.7525,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.025771
+    },
+    {
+      "entry_date": "2010-06-03",
+      "exit_date": "2010-06-07",
+      "entry_price": 83.1414,
+      "exit_price": 80.5308,
+      "shares": 563,
+      "pnl": -1469.78,
+      "entry_cost": 5.2756,
+      "exit_cost": 5.2047,
+      "transaction_cost": 10.4803,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.03191
+    },
+    {
+      "entry_date": "2010-06-09",
+      "exit_date": "2010-07-27",
+      "entry_price": 80.5793,
+      "exit_price": 84.6656,
+      "shares": 562,
+      "pnl": 2296.48,
+      "entry_cost": 5.1806,
+      "exit_cost": 5.2979,
+      "transaction_cost": 10.4785,
+      "liquidity_constrained": false,
+      "hold_days": 33,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008752
+    },
+    {
+      "entry_date": "2010-08-02",
+      "exit_date": "2010-08-03",
+      "entry_price": 84.5486,
+      "exit_price": 84.8996,
+      "shares": 564,
+      "pnl": 197.99,
+      "entry_cost": 5.3051,
+      "exit_cost": 5.3187,
+      "transaction_cost": 10.6239,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009312
+    },
+    {
+      "entry_date": "2010-08-04",
+      "exit_date": "2010-12-08",
+      "entry_price": 84.9562,
+      "exit_price": 93.3225,
+      "shares": 564,
+      "pnl": 4718.59,
+      "entry_cost": 5.3083,
+      "exit_cost": 5.5432,
+      "transaction_cost": 10.8516,
+      "liquidity_constrained": false,
+      "hold_days": 88,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00174
+    },
+    {
+      "entry_date": "2011-03-07",
+      "exit_date": "2011-08-09",
+      "entry_price": 101.3709,
+      "exit_price": 87.8273,
+      "shares": 519,
+      "pnl": -7029.15,
+      "entry_cost": 5.3061,
+      "exit_cost": 5.0089,
+      "transaction_cost": 10.3149,
+      "liquidity_constrained": false,
+      "hold_days": 108,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.064355
+    },
+    {
+      "entry_date": "2011-08-16",
+      "exit_date": "2011-08-19",
+      "entry_price": 92.005,
+      "exit_price": 86.9726,
+      "shares": 496,
+      "pnl": -2496.07,
+      "entry_cost": 4.9073,
+      "exit_cost": 4.7735,
+      "transaction_cost": 9.6807,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.06794
+    },
+    {
+      "entry_date": "2011-08-30",
+      "exit_date": "2011-09-07",
+      "entry_price": 93.0523,
+      "exit_price": 91.4385,
+      "shares": 464,
+      "pnl": -748.8,
+      "entry_cost": 4.6203,
+      "exit_cost": 4.5633,
+      "transaction_cost": 9.1836,
+      "liquidity_constrained": false,
+      "hold_days": 5,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.062715
+    },
+    {
+      "entry_date": "2011-09-08",
+      "exit_date": "2011-09-12",
+      "entry_price": 92.0819,
+      "exit_price": 88.1353,
+      "shares": 460,
+      "pnl": -1815.45,
+      "entry_cost": 4.5305,
+      "exit_cost": 4.4292,
+      "transaction_cost": 8.9597,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.064974
+    },
+    {
+      "entry_date": "2011-09-15",
+      "exit_date": "2011-09-22",
+      "entry_price": 92.9136,
+      "exit_price": 87.6471,
+      "shares": 437,
+      "pnl": -2301.44,
+      "entry_cost": 4.3135,
+      "exit_cost": 4.1859,
+      "transaction_cost": 8.4995,
+      "liquidity_constrained": false,
+      "hold_days": 5,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.056762
+    },
+    {
+      "entry_date": "2011-10-11",
+      "exit_date": "2011-10-31",
+      "entry_price": 92.0164,
+      "exit_price": 98.4131,
+      "shares": 415,
+      "pnl": 2654.6,
+      "entry_cost": 4.0724,
+      "exit_cost": 4.2035,
+      "transaction_cost": 8.2759,
+      "liquidity_constrained": false,
+      "hold_days": 14,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006135
+    },
+    {
+      "entry_date": "2011-11-01",
+      "exit_date": "2011-11-04",
+      "entry_price": 94.4624,
+      "exit_price": 96.9193,
+      "shares": 433,
+      "pnl": 1063.81,
+      "entry_cost": 4.305,
+      "exit_cost": 4.3613,
+      "transaction_cost": 8.6663,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": -0.006606
+    },
+    {
+      "entry_date": "2011-11-07",
+      "exit_date": "2011-11-10",
+      "entry_price": 97.0632,
+      "exit_price": 96.5787,
+      "shares": 432,
+      "pnl": -209.32,
+      "entry_cost": 4.347,
+      "exit_cost": 4.3485,
+      "transaction_cost": 8.6955,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.015278
+    },
+    {
+      "entry_date": "2011-11-11",
+      "exit_date": "2011-11-30",
+      "entry_price": 97.4038,
+      "exit_price": 95.5725,
+      "shares": 428,
+      "pnl": -783.79,
+      "entry_cost": 4.3265,
+      "exit_cost": 4.2898,
+      "transaction_cost": 8.6162,
+      "liquidity_constrained": false,
+      "hold_days": 12,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00867
+    },
+    {
+      "entry_date": "2011-12-01",
+      "exit_date": "2012-02-06",
+      "entry_price": 96.6453,
+      "exit_price": 104.3493,
+      "shares": 424,
+      "pnl": 3266.49,
+      "entry_cost": 4.2716,
+      "exit_cost": 4.374,
+      "transaction_cost": 8.6455,
+      "liquidity_constrained": false,
+      "hold_days": 44,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004616
+    },
+    {
+      "entry_date": "2012-02-07",
+      "exit_date": "2012-02-10",
+      "entry_price": 104.5179,
+      "exit_price": 104.4895,
+      "shares": 423,
+      "pnl": -12.02,
+      "entry_cost": 4.3665,
+      "exit_cost": 4.3674,
+      "transaction_cost": 8.7339,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009259
+    },
+    {
+      "entry_date": "2012-02-13",
+      "exit_date": "2012-03-15",
+      "entry_price": 105.4137,
+      "exit_price": 109.1315,
+      "shares": 419,
+      "pnl": 1557.77,
+      "entry_cost": 4.3447,
+      "exit_cost": 4.4346,
+      "transaction_cost": 8.7793,
+      "liquidity_constrained": false,
+      "hold_days": 22,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.005655
+    },
+    {
+      "entry_date": "2012-03-26",
+      "exit_date": "2012-03-27",
+      "entry_price": 110.0458,
+      "exit_price": 110.8772,
+      "shares": 416,
+      "pnl": 345.87,
+      "entry_cost": 4.4269,
+      "exit_cost": 4.4458,
+      "transaction_cost": 8.8726,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006335
+    },
+    {
+      "entry_date": "2012-03-28",
+      "exit_date": "2012-03-29",
+      "entry_price": 110.3978,
+      "exit_price": 109.2343,
+      "shares": 418,
+      "pnl": -486.34,
+      "entry_cost": 4.4573,
+      "exit_cost": 4.4324,
+      "transaction_cost": 8.8897,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009855
+    },
+    {
+      "entry_date": "2012-03-30",
+      "exit_date": "2012-04-02",
+      "entry_price": 110.257,
+      "exit_price": 110.0167,
+      "shares": 414,
+      "pnl": -99.49,
+      "entry_cost": 4.4105,
+      "exit_cost": 4.4056,
+      "transaction_cost": 8.8162,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007623
+    },
+    {
+      "entry_date": "2012-04-03",
+      "exit_date": "2012-04-04",
+      "entry_price": 110.8203,
+      "exit_price": 109.6881,
+      "shares": 412,
+      "pnl": -466.44,
+      "entry_cost": 4.3939,
+      "exit_cost": 4.3742,
+      "transaction_cost": 8.7681,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 2.7e-05
+    },
+    {
+      "entry_date": "2012-04-11",
+      "exit_date": "2012-04-26",
+      "entry_price": 107.417,
+      "exit_price": 108.6476,
+      "shares": 421,
+      "pnl": 518.08,
+      "entry_cost": 4.422,
+      "exit_cost": 4.4609,
+      "transaction_cost": 8.883,
+      "liquidity_constrained": false,
+      "hold_days": 11,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006391
+    },
+    {
+      "entry_date": "2012-05-02",
+      "exit_date": "2012-05-03",
+      "entry_price": 109.4746,
+      "exit_price": 109.7819,
+      "shares": 418,
+      "pnl": 128.45,
+      "entry_cost": 4.4468,
+      "exit_cost": 4.453,
+      "transaction_cost": 8.8998,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009316
+    },
+    {
+      "entry_date": "2012-05-04",
+      "exit_date": "2012-08-15",
+      "entry_price": 108.3794,
+      "exit_price": 110.5867,
+      "shares": 423,
+      "pnl": 933.7,
+      "entry_cost": 4.4803,
+      "exit_cost": 4.5263,
+      "transaction_cost": 9.0066,
+      "liquidity_constrained": false,
+      "hold_days": 71,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004296
+    },
+    {
+      "entry_date": "2012-09-04",
+      "exit_date": "2012-09-05",
+      "entry_price": 110.9226,
+      "exit_price": 110.9406,
+      "shares": 422,
+      "pnl": 7.63,
+      "entry_cost": 4.4871,
+      "exit_cost": 4.4866,
+      "transaction_cost": 8.9737,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009643
+    },
+    {
+      "entry_date": "2012-09-06",
+      "exit_date": "2012-09-07",
+      "entry_price": 111.4888,
+      "exit_price": 113.2367,
+      "shares": 420,
+      "pnl": 734.12,
+      "entry_cost": 4.4964,
+      "exit_cost": 4.5345,
+      "transaction_cost": 9.0309,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008068
+    },
+    {
+      "entry_date": "2012-09-11",
+      "exit_date": "2012-09-12",
+      "entry_price": 112.9359,
+      "exit_price": 113.5355,
+      "shares": 421,
+      "pnl": 252.45,
+      "entry_cost": 4.5405,
+      "exit_cost": 4.5543,
+      "transaction_cost": 9.0948,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.005624
+    },
+    {
+      "entry_date": "2012-09-14",
+      "exit_date": "2012-10-15",
+      "entry_price": 115.5154,
+      "exit_price": 113.2246,
+      "shares": 414,
+      "pnl": -948.39,
+      "entry_cost": 4.5229,
+      "exit_cost": 4.4606,
+      "transaction_cost": 8.9835,
+      "liquidity_constrained": false,
+      "hold_days": 21,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009167
+    },
+    {
+      "entry_date": "2012-11-01",
+      "exit_date": "2012-11-02",
+      "entry_price": 111.997,
+      "exit_price": 113.5803,
+      "shares": 419,
+      "pnl": 663.41,
+      "entry_cost": 4.5031,
+      "exit_cost": 4.5387,
+      "transaction_cost": 9.0418,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008667
+    },
+    {
+      "entry_date": "2012-11-05",
+      "exit_date": "2012-12-14",
+      "entry_price": 111.7598,
+      "exit_price": 112.5052,
+      "shares": 426,
+      "pnl": 317.53,
+      "entry_cost": 4.5732,
+      "exit_cost": 4.5818,
+      "transaction_cost": 9.155,
+      "liquidity_constrained": false,
+      "hold_days": 28,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009665
+    },
+    {
+      "entry_date": "2012-12-17",
+      "exit_date": "2012-12-18",
+      "entry_price": 112.6453,
+      "exit_price": 113.8333,
+      "shares": 425,
+      "pnl": 504.91,
+      "entry_cost": 4.5774,
+      "exit_cost": 4.5945,
+      "transaction_cost": 9.1719,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007021
+    },
+    {
+      "entry_date": "2012-12-24",
+      "exit_date": "2012-12-26",
+      "entry_price": 113.4521,
+      "exit_price": 113.5579,
+      "shares": 426,
+      "pnl": 45.07,
+      "entry_cost": 4.5969,
+      "exit_cost": 4.5995,
+      "transaction_cost": 9.1965,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00669
+    },
+    {
+      "entry_date": "2013-04-05",
+      "exit_date": "2013-04-09",
+      "entry_price": 123.1301,
+      "exit_price": 125.1468,
+      "shares": 394,
+      "pnl": 794.55,
+      "entry_cost": 4.4431,
+      "exit_cost": 4.4852,
+      "transaction_cost": 8.9283,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007014
+    },
+    {
+      "entry_date": "2013-04-25",
+      "exit_date": "2013-05-06",
+      "entry_price": 126.6412,
+      "exit_price": 129.1372,
+      "shares": 389,
+      "pnl": 970.94,
+      "entry_cost": 4.4852,
+      "exit_cost": 4.538,
+      "transaction_cost": 9.0232,
+      "liquidity_constrained": false,
+      "hold_days": 7,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.003962
+    },
+    {
+      "entry_date": "2013-09-19",
+      "exit_date": "2013-09-24",
+      "entry_price": 139.516,
+      "exit_price": 137.2473,
+      "shares": 360,
+      "pnl": -816.73,
+      "entry_cost": 4.3664,
+      "exit_cost": 4.3264,
+      "transaction_cost": 8.6928,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009624
+    },
+    {
+      "entry_date": "2013-10-01",
+      "exit_date": "2013-10-07",
+      "entry_price": 135.8494,
+      "exit_price": 135.2439,
+      "shares": 364,
+      "pnl": -220.41,
+      "entry_cost": 4.3418,
+      "exit_cost": 4.3348,
+      "transaction_cost": 8.6766,
+      "liquidity_constrained": false,
+      "hold_days": 4,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00852
+    },
+    {
+      "entry_date": "2013-10-23",
+      "exit_date": "2013-10-25",
+      "entry_price": 141.2383,
+      "exit_price": 141.7793,
+      "shares": 349,
+      "pnl": 188.78,
+      "entry_cost": 4.2772,
+      "exit_cost": 4.2865,
+      "transaction_cost": 8.5637,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004545
+    },
+    {
+      "entry_date": "2013-10-28",
+      "exit_date": "2013-10-29",
+      "entry_price": 142.1108,
+      "exit_price": 142.6841,
+      "shares": 349,
+      "pnl": 200.06,
+      "entry_cost": 4.2913,
+      "exit_cost": 4.302,
+      "transaction_cost": 8.5933,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008287
+    },
+    {
+      "entry_date": "2013-11-13",
+      "exit_date": "2013-11-21",
+      "entry_price": 142.2724,
+      "exit_price": 144.5744,
+      "shares": 349,
+      "pnl": 803.42,
+      "entry_cost": 4.2793,
+      "exit_cost": 4.3217,
+      "transaction_cost": 8.6009,
+      "liquidity_constrained": false,
+      "hold_days": 6,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": -0.000117
+    },
+    {
+      "entry_date": "2013-11-26",
+      "exit_date": "2013-12-06",
+      "entry_price": 146.0131,
+      "exit_price": 145.9478,
+      "shares": 346,
+      "pnl": -22.58,
+      "entry_cost": 4.3091,
+      "exit_cost": 4.3054,
+      "transaction_cost": 8.6145,
+      "liquidity_constrained": false,
+      "hold_days": 7,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007202
+    },
+    {
+      "entry_date": "2014-02-04",
+      "exit_date": "2014-02-05",
+      "entry_price": 142.1188,
+      "exit_price": 141.9561,
+      "shares": 356,
+      "pnl": -57.91,
+      "entry_cost": 4.3881,
+      "exit_cost": 4.3829,
+      "transaction_cost": 8.7711,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00152
+    },
+    {
+      "entry_date": "2014-03-03",
+      "exit_date": "2014-03-21",
+      "entry_price": 149.9982,
+      "exit_price": 153.1312,
+      "shares": 337,
+      "pnl": 1055.82,
+      "entry_cost": 4.2771,
+      "exit_cost": 4.3165,
+      "transaction_cost": 8.5936,
+      "liquidity_constrained": false,
+      "hold_days": 14,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008875
+    },
+    {
+      "entry_date": "2014-03-24",
+      "exit_date": "2014-04-03",
+      "entry_price": 152.447,
+      "exit_price": 154.3223,
+      "shares": 338,
+      "pnl": 633.85,
+      "entry_cost": 4.317,
+      "exit_cost": 4.349,
+      "transaction_cost": 8.666,
+      "liquidity_constrained": false,
+      "hold_days": 8,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007958
+    },
+    {
+      "entry_date": "2014-04-07",
+      "exit_date": "2014-04-09",
+      "entry_price": 151.7209,
+      "exit_price": 151.4097,
+      "shares": 344,
+      "pnl": -107.03,
+      "entry_cost": 4.3887,
+      "exit_cost": 4.3876,
+      "transaction_cost": 8.7763,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007083
+    },
+    {
+      "entry_date": "2014-04-11",
+      "exit_date": "2014-04-30",
+      "entry_price": 148.6123,
+      "exit_price": 152.9108,
+      "shares": 351,
+      "pnl": 1508.79,
+      "entry_cost": 4.4377,
+      "exit_cost": 4.5172,
+      "transaction_cost": 8.9548,
+      "liquidity_constrained": false,
+      "hold_days": 12,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008288
+    },
+    {
+      "entry_date": "2014-05-02",
+      "exit_date": "2014-08-21",
+      "entry_price": 153.6464,
+      "exit_price": 163.1933,
+      "shares": 350,
+      "pnl": 3341.42,
+      "entry_cost": 4.516,
+      "exit_cost": 4.6816,
+      "transaction_cost": 9.1976,
+      "liquidity_constrained": false,
+      "hold_days": 77,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00719
+    },
+    {
+      "entry_date": "2014-08-27",
+      "exit_date": "2014-09-09",
+      "entry_price": 164.3186,
+      "exit_price": 164.2754,
+      "shares": 347,
+      "pnl": -15.0,
+      "entry_cost": 4.6615,
+      "exit_cost": 4.6307,
+      "transaction_cost": 9.2923,
+      "liquidity_constrained": false,
+      "hold_days": 8,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00586
+    },
+    {
+      "entry_date": "2014-12-15",
+      "exit_date": "2014-12-16",
+      "entry_price": 166.3633,
+      "exit_price": 163.5362,
+      "shares": 344,
+      "pnl": -972.52,
+      "entry_cost": 4.6488,
+      "exit_cost": 4.5984,
+      "transaction_cost": 9.2472,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.003209
+    },
+    {
+      "entry_date": "2014-12-17",
+      "exit_date": "2014-12-18",
+      "entry_price": 163.4477,
+      "exit_price": 168.6092,
+      "shares": 344,
+      "pnl": 1775.56,
+      "entry_cost": 4.6069,
+      "exit_cost": 4.713,
+      "transaction_cost": 9.3199,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.001687
+    },
+    {
+      "entry_date": "2015-01-26",
+      "exit_date": "2015-01-27",
+      "entry_price": 169.5425,
+      "exit_price": 168.0741,
+      "shares": 344,
+      "pnl": -505.11,
+      "entry_cost": 4.7224,
+      "exit_cost": 4.6989,
+      "transaction_cost": 9.4213,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008928
+    },
+    {
+      "entry_date": "2015-01-28",
+      "exit_date": "2015-02-09",
+      "entry_price": 169.0952,
+      "exit_price": 169.5647,
+      "shares": 342,
+      "pnl": 160.56,
+      "entry_cost": 4.6902,
+      "exit_cost": 4.6937,
+      "transaction_cost": 9.3839,
+      "liquidity_constrained": false,
+      "hold_days": 8,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006186
+    },
+    {
+      "entry_date": "2015-03-02",
+      "exit_date": "2015-03-03",
+      "entry_price": 174.5695,
+      "exit_price": 175.113,
+      "shares": 332,
+      "pnl": 180.46,
+      "entry_cost": 4.6192,
+      "exit_cost": 4.6273,
+      "transaction_cost": 9.2464,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008194
+    },
+    {
+      "entry_date": "2015-03-06",
+      "exit_date": "2015-03-09",
+      "entry_price": 173.4432,
+      "exit_price": 172.0242,
+      "shares": 336,
+      "pnl": -476.77,
+      "entry_cost": 4.6534,
+      "exit_cost": 4.6302,
+      "transaction_cost": 9.2836,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": -0.001071
+    },
+    {
+      "entry_date": "2015-03-19",
+      "exit_date": "2015-03-20",
+      "entry_price": 173.8904,
+      "exit_price": 174.4307,
+      "shares": 333,
+      "pnl": 179.92,
+      "entry_cost": 4.6372,
+      "exit_cost": 4.6476,
+      "transaction_cost": 9.2848,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009524
+    },
+    {
+      "entry_date": "2015-03-23",
+      "exit_date": "2015-04-01",
+      "entry_price": 175.0493,
+      "exit_price": 171.6691,
+      "shares": 332,
+      "pnl": -1122.22,
+      "entry_cost": 4.6438,
+      "exit_cost": 4.5939,
+      "transaction_cost": 9.2377,
+      "liquidity_constrained": false,
+      "hold_days": 7,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007629
+    },
+    {
+      "entry_date": "2015-04-02",
+      "exit_date": "2015-04-10",
+      "entry_price": 171.0562,
+      "exit_price": 174.0065,
+      "shares": 334,
+      "pnl": 985.39,
+      "entry_cost": 4.6111,
+      "exit_cost": 4.6492,
+      "transaction_cost": 9.2603,
+      "liquidity_constrained": false,
+      "hold_days": 5,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008934
+    },
+    {
+      "entry_date": "2015-04-20",
+      "exit_date": "2015-04-22",
+      "entry_price": 173.9179,
+      "exit_price": 174.6803,
+      "shares": 334,
+      "pnl": 254.64,
+      "entry_cost": 4.6453,
+      "exit_cost": 4.6583,
+      "transaction_cost": 9.3036,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.003936
+    },
+    {
+      "entry_date": "2016-02-04",
+      "exit_date": "2016-02-18",
+      "entry_price": 161.2072,
+      "exit_price": 163.285,
+      "shares": 364,
+      "pnl": 756.31,
+      "entry_cost": 4.8729,
+      "exit_cost": 4.9147,
+      "transaction_cost": 9.7876,
+      "liquidity_constrained": false,
+      "hold_days": 9,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007537
+    },
+    {
+      "entry_date": "2016-02-24",
+      "exit_date": "2016-06-23",
+      "entry_price": 161.1396,
+      "exit_price": 179.1652,
+      "shares": 369,
+      "pnl": 6651.45,
+      "entry_cost": 4.9367,
+      "exit_cost": 5.2176,
+      "transaction_cost": 10.1543,
+      "liquidity_constrained": false,
+      "hold_days": 84,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.005297
+    },
+    {
+      "entry_date": "2016-06-27",
+      "exit_date": "2016-09-12",
+      "entry_price": 172.1733,
+      "exit_price": 181.3683,
+      "shares": 384,
+      "pnl": 3530.89,
+      "entry_cost": 5.3496,
+      "exit_cost": 5.5066,
+      "transaction_cost": 10.8562,
+      "liquidity_constrained": false,
+      "hold_days": 53,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004783
+    },
+    {
+      "entry_date": "2016-09-16",
+      "exit_date": "2016-09-20",
+      "entry_price": 183.249,
+      "exit_price": 184.0182,
+      "shares": 381,
+      "pnl": 293.09,
+      "entry_cost": 5.502,
+      "exit_cost": 5.5174,
+      "transaction_cost": 11.0195,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009831
+    },
+    {
+      "entry_date": "2016-09-26",
+      "exit_date": "2016-09-27",
+      "entry_price": 184.5708,
+      "exit_price": 183.7092,
+      "shares": 380,
+      "pnl": -327.41,
+      "entry_cost": 5.5224,
+      "exit_cost": 5.5064,
+      "transaction_cost": 11.0288,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00856
+    },
+    {
+      "entry_date": "2016-10-27",
+      "exit_date": "2016-10-28",
+      "entry_price": 184.193,
+      "exit_price": 182.9284,
+      "shares": 378,
+      "pnl": -478.05,
+      "entry_cost": 5.4412,
+      "exit_cost": 5.4117,
+      "transaction_cost": 10.8529,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.003615
+    },
+    {
+      "entry_date": "2017-02-23",
+      "exit_date": "2017-03-02",
+      "entry_price": 204.533,
+      "exit_price": 206.816,
+      "shares": 338,
+      "pnl": 771.66,
+      "entry_cost": 5.1973,
+      "exit_cost": 5.2497,
+      "transaction_cost": 10.4471,
+      "liquidity_constrained": false,
+      "hold_days": 5,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009478
+    },
+    {
+      "entry_date": "2017-03-16",
+      "exit_date": "2017-03-31",
+      "entry_price": 206.4584,
+      "exit_price": 204.5421,
+      "shares": 338,
+      "pnl": -647.71,
+      "entry_cost": 5.2453,
+      "exit_cost": 5.2096,
+      "transaction_cost": 10.4549,
+      "liquidity_constrained": false,
+      "hold_days": 11,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009092
+    },
+    {
+      "entry_date": "2017-04-05",
+      "exit_date": "2017-04-10",
+      "entry_price": 204.8852,
+      "exit_price": 204.0739,
+      "shares": 338,
+      "pnl": -274.21,
+      "entry_cost": 5.2134,
+      "exit_cost": 5.1998,
+      "transaction_cost": 10.4132,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.003724
+    },
+    {
+      "entry_date": "2017-04-17",
+      "exit_date": "2017-04-20",
+      "entry_price": 202.1535,
+      "exit_price": 203.0247,
+      "shares": 342,
+      "pnl": 297.97,
+      "entry_cost": 5.231,
+      "exit_cost": 5.2398,
+      "transaction_cost": 10.4708,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008634
+    },
+    {
+      "entry_date": "2017-04-24",
+      "exit_date": "2017-04-25",
+      "entry_price": 205.683,
+      "exit_price": 206.285,
+      "shares": 338,
+      "pnl": 203.47,
+      "entry_cost": 5.2331,
+      "exit_cost": 5.2459,
+      "transaction_cost": 10.479,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009362
+    },
+    {
+      "entry_date": "2017-05-01",
+      "exit_date": "2017-05-02",
+      "entry_price": 206.9837,
+      "exit_price": 207.0914,
+      "shares": 337,
+      "pnl": 36.28,
+      "entry_cost": 5.2386,
+      "exit_cost": 5.2411,
+      "transaction_cost": 10.4797,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007268
+    },
+    {
+      "entry_date": "2017-05-30",
+      "exit_date": "2017-06-13",
+      "entry_price": 209.2905,
+      "exit_price": 211.5482,
+      "shares": 333,
+      "pnl": 751.81,
+      "entry_cost": 5.2283,
+      "exit_cost": 5.2664,
+      "transaction_cost": 10.4947,
+      "liquidity_constrained": false,
+      "hold_days": 10,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009374
+    },
+    {
+      "entry_date": "2017-08-04",
+      "exit_date": "2017-08-08",
+      "entry_price": 215.6963,
+      "exit_price": 215.6557,
+      "shares": 328,
+      "pnl": -13.33,
+      "entry_cost": 5.22,
+      "exit_cost": 5.2215,
+      "transaction_cost": 10.4415,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00827
+    },
+    {
+      "entry_date": "2017-08-10",
+      "exit_date": "2017-08-14",
+      "entry_price": 214.6245,
+      "exit_price": 213.9827,
+      "shares": 329,
+      "pnl": -211.14,
+      "entry_cost": 5.2408,
+      "exit_cost": 5.2374,
+      "transaction_cost": 10.4782,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007292
+    },
+    {
+      "entry_date": "2017-09-06",
+      "exit_date": "2017-09-19",
+      "entry_price": 215.1039,
+      "exit_price": 218.9062,
+      "shares": 328,
+      "pnl": 1247.17,
+      "entry_cost": 5.2645,
+      "exit_cost": 5.2983,
+      "transaction_cost": 10.5628,
+      "liquidity_constrained": false,
+      "hold_days": 9,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008607
+    },
+    {
+      "entry_date": "2017-09-26",
+      "exit_date": "2017-10-06",
+      "entry_price": 218.4306,
+      "exit_price": 222.5403,
+      "shares": 329,
+      "pnl": 1352.07,
+      "entry_cost": 5.296,
+      "exit_cost": 5.3556,
+      "transaction_cost": 10.6517,
+      "liquidity_constrained": false,
+      "hold_days": 8,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007699
+    },
+    {
+      "entry_date": "2017-10-16",
+      "exit_date": "2017-10-17",
+      "entry_price": 223.5011,
+      "exit_price": 223.486,
+      "shares": 327,
+      "pnl": -4.93,
+      "entry_cost": 5.3287,
+      "exit_cost": 5.3293,
+      "transaction_cost": 10.658,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006978
+    },
+    {
+      "entry_date": "2017-11-09",
+      "exit_date": "2017-11-10",
+      "entry_price": 225.708,
+      "exit_price": 225.6751,
+      "shares": 324,
+      "pnl": -10.65,
+      "entry_cost": 5.3278,
+      "exit_cost": 5.3277,
+      "transaction_cost": 10.6555,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009103
+    },
+    {
+      "entry_date": "2017-12-28",
+      "exit_date": "2018-01-09",
+      "entry_price": 235.8046,
+      "exit_price": 241.5002,
+      "shares": 309,
+      "pnl": 1759.94,
+      "entry_cost": 5.2394,
+      "exit_cost": 5.3311,
+      "transaction_cost": 10.5705,
+      "liquidity_constrained": false,
+      "hold_days": 7,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.0081
+    },
+    {
+      "entry_date": "2018-05-09",
+      "exit_date": "2018-05-10",
+      "entry_price": 236.5635,
+      "exit_price": 238.8797,
+      "shares": 315,
+      "pnl": 729.6,
+      "entry_cost": 5.4094,
+      "exit_cost": 5.4483,
+      "transaction_cost": 10.8577,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009488
+    },
+    {
+      "entry_date": "2018-05-11",
+      "exit_date": "2018-05-15",
+      "entry_price": 240.5227,
+      "exit_price": 239.9843,
+      "shares": 313,
+      "pnl": -168.54,
+      "entry_cost": 5.4394,
+      "exit_cost": 5.4256,
+      "transaction_cost": 10.865,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008586
+    },
+    {
+      "entry_date": "2018-05-30",
+      "exit_date": "2018-05-31",
+      "entry_price": 239.0556,
+      "exit_price": 240.4791,
+      "shares": 316,
+      "pnl": 449.81,
+      "entry_cost": 5.4622,
+      "exit_cost": 5.485,
+      "transaction_cost": 10.9472,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009837
+    },
+    {
+      "entry_date": "2018-06-01",
+      "exit_date": "2018-06-04",
+      "entry_price": 240.7437,
+      "exit_price": 242.5822,
+      "shares": 315,
+      "pnl": 579.14,
+      "entry_cost": 5.4768,
+      "exit_cost": 5.5014,
+      "transaction_cost": 10.9782,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009258
+    },
+    {
+      "entry_date": "2018-06-15",
+      "exit_date": "2018-06-18",
+      "entry_price": 245.5441,
+      "exit_price": 244.5236,
+      "shares": 311,
+      "pnl": -317.36,
+      "entry_cost": 5.4644,
+      "exit_cost": 5.4488,
+      "transaction_cost": 10.9132,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009079
+    },
+    {
+      "entry_date": "2018-07-02",
+      "exit_date": "2018-07-03",
+      "entry_price": 239.2502,
+      "exit_price": 242.1981,
+      "shares": 318,
+      "pnl": 937.44,
+      "entry_cost": 5.4698,
+      "exit_cost": 5.5191,
+      "transaction_cost": 10.989,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007828
+    },
+    {
+      "entry_date": "2018-07-05",
+      "exit_date": "2018-07-10",
+      "entry_price": 241.6114,
+      "exit_price": 247.1155,
+      "shares": 319,
+      "pnl": 1755.79,
+      "entry_cost": 5.5263,
+      "exit_cost": 5.6302,
+      "transaction_cost": 11.1565,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.0098
+    },
+    {
+      "entry_date": "2018-07-16",
+      "exit_date": "2018-07-17",
+      "entry_price": 248.2427,
+      "exit_price": 247.1687,
+      "shares": 318,
+      "pnl": -341.52,
+      "entry_cost": 5.6425,
+      "exit_cost": 5.626,
+      "transaction_cost": 11.2685,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009439
+    },
+    {
+      "entry_date": "2018-07-18",
+      "exit_date": "2018-07-24",
+      "entry_price": 249.0594,
+      "exit_price": 250.1156,
+      "shares": 316,
+      "pnl": 333.76,
+      "entry_cost": 5.621,
+      "exit_cost": 5.6212,
+      "transaction_cost": 11.2422,
+      "liquidity_constrained": false,
+      "hold_days": 4,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006183
+    },
+    {
+      "entry_date": "2018-08-10",
+      "exit_date": "2018-08-23",
+      "entry_price": 251.6248,
+      "exit_price": 253.826,
+      "shares": 314,
+      "pnl": 691.18,
+      "entry_cost": 5.5998,
+      "exit_cost": 5.6419,
+      "transaction_cost": 11.2417,
+      "liquidity_constrained": false,
+      "hold_days": 9,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008289
+    },
+    {
+      "entry_date": "2018-08-24",
+      "exit_date": "2018-08-30",
+      "entry_price": 254.2791,
+      "exit_price": 258.2373,
+      "shares": 313,
+      "pnl": 1238.94,
+      "entry_cost": 5.6281,
+      "exit_cost": 5.6937,
+      "transaction_cost": 11.3218,
+      "liquidity_constrained": false,
+      "hold_days": 4,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009131
+    },
+    {
+      "entry_date": "2018-08-31",
+      "exit_date": "2018-09-04",
+      "entry_price": 257.2972,
+      "exit_price": 257.261,
+      "shares": 315,
+      "pnl": -11.4,
+      "entry_cost": 5.7134,
+      "exit_cost": 5.7128,
+      "transaction_cost": 11.4261,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007961
+    },
+    {
+      "entry_date": "2019-01-04",
+      "exit_date": "2019-01-08",
+      "entry_price": 222.0763,
+      "exit_price": 230.3207,
+      "shares": 370,
+      "pnl": 3050.41,
+      "entry_cost": 6.1986,
+      "exit_cost": 6.3628,
+      "transaction_cost": 12.5614,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008441
+    },
+    {
+      "entry_date": "2019-01-09",
+      "exit_date": "2019-01-10",
+      "entry_price": 231.0188,
+      "exit_price": 229.8184,
+      "shares": 368,
+      "pnl": -441.76,
+      "entry_cost": 6.3434,
+      "exit_cost": 6.322,
+      "transaction_cost": 12.6655,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009812
+    },
+    {
+      "entry_date": "2019-01-14",
+      "exit_date": "2019-01-15",
+      "entry_price": 230.3909,
+      "exit_price": 231.2175,
+      "shares": 368,
+      "pnl": 304.16,
+      "entry_cost": 6.3346,
+      "exit_cost": 6.3492,
+      "transaction_cost": 12.6838,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009083
+    },
+    {
+      "entry_date": "2019-01-16",
+      "exit_date": "2019-01-24",
+      "entry_price": 233.9517,
+      "exit_price": 236.0515,
+      "shares": 364,
+      "pnl": 764.32,
+      "entry_cost": 6.3266,
+      "exit_cost": 6.35,
+      "transaction_cost": 12.6765,
+      "liquidity_constrained": false,
+      "hold_days": 5,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006519
+    },
+    {
+      "entry_date": "2019-01-25",
+      "exit_date": "2019-01-28",
+      "entry_price": 238.2388,
+      "exit_price": 236.2131,
+      "shares": 361,
+      "pnl": -731.28,
+      "entry_cost": 6.2799,
+      "exit_cost": 6.2505,
+      "transaction_cost": 12.5304,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.005691
+    },
+    {
+      "entry_date": "2019-01-30",
+      "exit_date": "2019-09-16",
+      "entry_price": 237.7815,
+      "exit_price": 271.4009,
+      "shares": 358,
+      "pnl": 12035.73,
+      "entry_cost": 6.2375,
+      "exit_cost": 6.8584,
+      "transaction_cost": 13.0959,
+      "liquidity_constrained": false,
+      "hold_days": 158,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007757
+    },
+    {
+      "entry_date": "2019-09-18",
+      "exit_date": "2019-09-19",
+      "entry_price": 272.0276,
+      "exit_price": 272.9307,
+      "shares": 358,
+      "pnl": 323.32,
+      "entry_cost": 6.8557,
+      "exit_cost": 6.8685,
+      "transaction_cost": 13.7242,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008892
+    },
+    {
+      "entry_date": "2019-09-20",
+      "exit_date": "2019-10-14",
+      "entry_price": 273.1656,
+      "exit_price": 269.0987,
+      "shares": 358,
+      "pnl": -1455.93,
+      "entry_cost": 6.8718,
+      "exit_cost": 6.7895,
+      "transaction_cost": 13.6614,
+      "liquidity_constrained": false,
+      "hold_days": 16,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006633
+    },
+    {
+      "entry_date": "2019-10-21",
+      "exit_date": "2019-10-22",
+      "entry_price": 272.3106,
+      "exit_price": 273.3272,
+      "shares": 354,
+      "pnl": 359.86,
+      "entry_cost": 6.7858,
+      "exit_cost": 6.805,
+      "transaction_cost": 13.5907,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009874
+    },
+    {
+      "entry_date": "2019-10-23",
+      "exit_date": "2019-10-28",
+      "entry_price": 271.6832,
+      "exit_price": 275.4732,
+      "shares": 356,
+      "pnl": 1349.24,
+      "entry_cost": 6.814,
+      "exit_cost": 6.8888,
+      "transaction_cost": 13.7029,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008531
+    },
+    {
+      "entry_date": "2019-12-10",
+      "exit_date": "2019-12-11",
+      "entry_price": 285.4064,
+      "exit_price": 285.5582,
+      "shares": 344,
+      "pnl": 52.21,
+      "entry_cost": 6.7465,
+      "exit_cost": 6.7498,
+      "transaction_cost": 13.4962,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008557
+    },
+    {
+      "entry_date": "2019-12-12",
+      "exit_date": "2019-12-13",
+      "entry_price": 285.9611,
+      "exit_price": 288.1408,
+      "shares": 344,
+      "pnl": 749.79,
+      "entry_cost": 6.7613,
+      "exit_cost": 6.7988,
+      "transaction_cost": 13.5602,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009001
+    },
+    {
+      "entry_date": "2019-12-16",
+      "exit_date": "2019-12-17",
+      "entry_price": 290.3175,
+      "exit_price": 290.9142,
+      "shares": 342,
+      "pnl": 204.06,
+      "entry_cost": 6.7948,
+      "exit_cost": 6.8054,
+      "transaction_cost": 13.6002,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.003187
+    },
+    {
+      "entry_date": "2020-01-06",
+      "exit_date": "2020-02-28",
+      "entry_price": 292.9054,
+      "exit_price": 263.8147,
+      "shares": 340,
+      "pnl": -9890.84,
+      "entry_cost": 6.7861,
+      "exit_cost": 6.4301,
+      "transaction_cost": 13.2162,
+      "liquidity_constrained": false,
+      "hold_days": 37,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.032718
+    },
+    {
+      "entry_date": "2020-03-03",
+      "exit_date": "2020-03-04",
+      "entry_price": 282.8621,
+      "exit_price": 279.7332,
+      "shares": 319,
+      "pnl": -998.11,
+      "entry_cost": 6.3817,
+      "exit_cost": 6.3535,
+      "transaction_cost": 12.7352,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.043029
+    },
+    {
+      "entry_date": "2020-03-05",
+      "exit_date": "2020-03-06",
+      "entry_price": 278.7313,
+      "exit_price": 267.881,
+      "shares": 320,
+      "pnl": -3472.07,
+      "entry_cost": 6.3604,
+      "exit_cost": 6.1679,
+      "transaction_cost": 12.5283,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.046988
+    },
+    {
+      "entry_date": "2020-04-28",
+      "exit_date": "2020-05-04",
+      "entry_price": 267.5371,
+      "exit_price": 258.0489,
+      "shares": 323,
+      "pnl": -3064.68,
+      "entry_cost": 6.2767,
+      "exit_cost": 6.0992,
+      "transaction_cost": 12.3759,
+      "liquidity_constrained": false,
+      "hold_days": 4,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.031406
+    },
+    {
+      "entry_date": "2020-05-06",
+      "exit_date": "2020-05-14",
+      "entry_price": 264.7974,
+      "exit_price": 256.4038,
+      "shares": 314,
+      "pnl": -2635.6,
+      "entry_cost": 5.9917,
+      "exit_cost": 5.8416,
+      "transaction_cost": 11.8333,
+      "liquidity_constrained": false,
+      "hold_days": 6,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.024243
+    },
+    {
+      "entry_date": "2020-05-15",
+      "exit_date": "2020-05-29",
+      "entry_price": 259.5849,
+      "exit_price": 278.0141,
+      "shares": 310,
+      "pnl": 5713.05,
+      "entry_cost": 5.8044,
+      "exit_cost": 6.0787,
+      "transaction_cost": 11.8831,
+      "liquidity_constrained": false,
+      "hold_days": 9,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.005778
+    },
+    {
+      "entry_date": "2020-06-04",
+      "exit_date": "2020-06-12",
+      "entry_price": 286.0051,
+      "exit_price": 283.327,
+      "shares": 301,
+      "pnl": -806.1,
+      "entry_cost": 6.001,
+      "exit_cost": 6.0326,
+      "transaction_cost": 12.0336,
+      "liquidity_constrained": false,
+      "hold_days": 6,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.113325
+    },
+    {
+      "entry_date": "2020-06-16",
+      "exit_date": "2020-06-22",
+      "entry_price": 290.0226,
+      "exit_price": 284.343,
+      "shares": 294,
+      "pnl": -1669.81,
+      "entry_cost": 5.9809,
+      "exit_cost": 5.8834,
+      "transaction_cost": 11.8642,
+      "liquidity_constrained": false,
+      "hold_days": 4,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.031575
+    },
+    {
+      "entry_date": "2020-06-23",
+      "exit_date": "2020-10-22",
+      "entry_price": 289.4614,
+      "exit_price": 317.8963,
+      "shares": 289,
+      "pnl": 8217.68,
+      "entry_cost": 5.858,
+      "exit_cost": 6.2393,
+      "transaction_cost": 12.0972,
+      "liquidity_constrained": false,
+      "hold_days": 85,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009885
+    },
+    {
+      "entry_date": "2020-12-16",
+      "exit_date": "2020-12-24",
+      "entry_price": 342.8394,
+      "exit_price": 342.6356,
+      "shares": 268,
+      "pnl": -54.62,
+      "entry_cost": 6.075,
+      "exit_cost": 6.0373,
+      "transaction_cost": 12.1123,
+      "liquidity_constrained": false,
+      "hold_days": 6,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009643
+    },
+    {
+      "entry_date": "2020-12-28",
+      "exit_date": "2021-01-11",
+      "entry_price": 346.0881,
+      "exit_price": 351.7303,
+      "shares": 265,
+      "pnl": 1495.19,
+      "entry_cost": 6.0194,
+      "exit_cost": 6.1115,
+      "transaction_cost": 12.131,
+      "liquidity_constrained": false,
+      "hold_days": 9,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007438
+    },
+    {
+      "entry_date": "2021-01-15",
+      "exit_date": "2021-01-28",
+      "entry_price": 350.7245,
+      "exit_price": 350.3432,
+      "shares": 266,
+      "pnl": -101.42,
+      "entry_cost": 6.114,
+      "exit_cost": 6.1568,
+      "transaction_cost": 12.2708,
+      "liquidity_constrained": false,
+      "hold_days": 8,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.021844
+    },
+    {
+      "entry_date": "2021-01-29",
+      "exit_date": "2021-02-19",
+      "entry_price": 349.7098,
+      "exit_price": 364.9672,
+      "shares": 267,
+      "pnl": 4073.72,
+      "entry_cost": 6.1862,
+      "exit_cost": 6.4028,
+      "transaction_cost": 12.589,
+      "liquidity_constrained": false,
+      "hold_days": 14,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008492
+    },
+    {
+      "entry_date": "2021-05-17",
+      "exit_date": "2021-09-30",
+      "entry_price": 387.9922,
+      "exit_price": 409.8504,
+      "shares": 251,
+      "pnl": 5486.4,
+      "entry_cost": 6.2828,
+      "exit_cost": 6.5445,
+      "transaction_cost": 12.8272,
+      "liquidity_constrained": false,
+      "hold_days": 95,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009038
+    },
+    {
+      "entry_date": "2021-10-04",
+      "exit_date": "2021-10-08",
+      "entry_price": 407.0635,
+      "exit_price": 413.1027,
+      "shares": 253,
+      "pnl": 1527.91,
+      "entry_cost": 6.5679,
+      "exit_cost": 6.6544,
+      "transaction_cost": 13.2223,
+      "liquidity_constrained": false,
+      "hold_days": 4,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009632
+    },
+    {
+      "entry_date": "2021-10-14",
+      "exit_date": "2021-10-19",
+      "entry_price": 412.7792,
+      "exit_price": 421.9761,
+      "shares": 252,
+      "pnl": 2317.61,
+      "entry_cost": 6.6357,
+      "exit_cost": 6.7508,
+      "transaction_cost": 13.3865,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.005844
+    },
+    {
+      "entry_date": "2021-10-28",
+      "exit_date": "2021-10-29",
+      "entry_price": 428.1778,
+      "exit_price": 428.5092,
+      "shares": 249,
+      "pnl": 82.53,
+      "entry_cost": 6.7148,
+      "exit_cost": 6.7167,
+      "transaction_cost": 13.4315,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004773
+    },
+    {
+      "entry_date": "2021-11-05",
+      "exit_date": "2021-11-23",
+      "entry_price": 441.1697,
+      "exit_price": 439.1784,
+      "shares": 242,
+      "pnl": -481.9,
+      "entry_cost": 6.6603,
+      "exit_cost": 6.6194,
+      "transaction_cost": 13.2797,
+      "liquidity_constrained": false,
+      "hold_days": 12,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.005971
+    },
+    {
+      "entry_date": "2021-11-29",
+      "exit_date": "2021-12-06",
+      "entry_price": 436.2721,
+      "exit_price": 428.7535,
+      "shares": 244,
+      "pnl": -1834.53,
+      "entry_cost": 6.6922,
+      "exit_cost": 6.6294,
+      "transaction_cost": 13.3217,
+      "liquidity_constrained": false,
+      "hold_days": 5,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007499
+    },
+    {
+      "entry_date": "2021-12-20",
+      "exit_date": "2022-01-06",
+      "entry_price": 428.7578,
+      "exit_price": 441.353,
+      "shares": 244,
+      "pnl": 3073.22,
+      "entry_cost": 6.649,
+      "exit_cost": 6.7921,
+      "transaction_cost": 13.4411,
+      "liquidity_constrained": false,
+      "hold_days": 12,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.002479
+    },
+    {
+      "entry_date": "2022-03-14",
+      "exit_date": "2022-03-15",
+      "entry_price": 397.0695,
+      "exit_price": 395.9614,
+      "shares": 267,
+      "pnl": -295.85,
+      "entry_cost": 6.8717,
+      "exit_cost": 6.8729,
+      "transaction_cost": 13.7446,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.001007
+    },
+    {
+      "entry_date": "2022-07-29",
+      "exit_date": "2022-08-02",
+      "entry_price": 387.3736,
+      "exit_price": 388.7864,
+      "shares": 271,
+      "pnl": 382.89,
+      "entry_cost": 6.8497,
+      "exit_cost": 6.8774,
+      "transaction_cost": 13.7271,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004228
+    },
+    {
+      "entry_date": "2022-08-04",
+      "exit_date": "2022-08-08",
+      "entry_price": 393.8269,
+      "exit_price": 394.6119,
+      "shares": 267,
+      "pnl": 209.6,
+      "entry_cost": 6.8471,
+      "exit_cost": 6.8521,
+      "transaction_cost": 13.6992,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008994
+    },
+    {
+      "entry_date": "2022-12-21",
+      "exit_date": "2022-12-23",
+      "entry_price": 367.4258,
+      "exit_price": 363.9263,
+      "shares": 285,
+      "pnl": -997.36,
+      "entry_cost": 6.9135,
+      "exit_cost": 6.8629,
+      "transaction_cost": 13.7764,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004911
+    },
+    {
+      "entry_date": "2022-12-27",
+      "exit_date": "2022-12-29",
+      "entry_price": 366.9848,
+      "exit_price": 363.9073,
+      "shares": 282,
+      "pnl": -867.84,
+      "entry_cost": 6.8277,
+      "exit_cost": 6.7621,
+      "transaction_cost": 13.5898,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.005103
+    },
+    {
+      "entry_date": "2023-01-03",
+      "exit_date": "2023-02-15",
+      "entry_price": 368.4995,
+      "exit_price": 393.3555,
+      "shares": 279,
+      "pnl": 6934.83,
+      "entry_cost": 6.755,
+      "exit_cost": 7.0865,
+      "transaction_cost": 13.8415,
+      "liquidity_constrained": false,
+      "hold_days": 30,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006689
+    },
+    {
+      "entry_date": "2023-02-16",
+      "exit_date": "2023-02-22",
+      "entry_price": 391.9107,
+      "exit_price": 382.9738,
+      "shares": 280,
+      "pnl": -2502.34,
+      "entry_cost": 7.1004,
+      "exit_cost": 6.9721,
+      "transaction_cost": 14.0725,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004348
+    },
+    {
+      "entry_date": "2023-03-16",
+      "exit_date": "2023-03-17",
+      "entry_price": 370.8482,
+      "exit_price": 378.3734,
+      "shares": 294,
+      "pnl": 2212.4,
+      "entry_cost": 7.1236,
+      "exit_cost": 7.2342,
+      "transaction_cost": 14.3578,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007529
+    },
+    {
+      "entry_date": "2023-03-20",
+      "exit_date": "2023-03-22",
+      "entry_price": 376.0937,
+      "exit_price": 383.6754,
+      "shares": 297,
+      "pnl": 2251.76,
+      "entry_cost": 7.2785,
+      "exit_cost": 7.3982,
+      "transaction_cost": 14.6767,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006774
+    },
+    {
+      "entry_date": "2023-03-23",
+      "exit_date": "2023-04-18",
+      "entry_price": 380.2222,
+      "exit_price": 399.8895,
+      "shares": 301,
+      "pnl": 5919.84,
+      "entry_cost": 7.4425,
+      "exit_cost": 7.703,
+      "transaction_cost": 15.1455,
+      "liquidity_constrained": false,
+      "hold_days": 17,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.001795
+    },
+    {
+      "entry_date": "2023-04-26",
+      "exit_date": "2023-05-01",
+      "entry_price": 391.4143,
+      "exit_price": 399.7837,
+      "shares": 309,
+      "pnl": 2586.14,
+      "entry_cost": 7.7718,
+      "exit_cost": 7.9103,
+      "transaction_cost": 15.6821,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008476
+    },
+    {
+      "entry_date": "2023-05-03",
+      "exit_date": "2023-05-31",
+      "entry_price": 395.8796,
+      "exit_price": 402.4876,
+      "shares": 313,
+      "pnl": 2068.31,
+      "entry_cost": 7.9584,
+      "exit_cost": 8.0632,
+      "transaction_cost": 16.0216,
+      "liquidity_constrained": false,
+      "hold_days": 19,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007748
+    },
+    {
+      "entry_date": "2023-06-01",
+      "exit_date": "2023-06-07",
+      "entry_price": 402.3562,
+      "exit_price": 412.2642,
+      "shares": 313,
+      "pnl": 3101.18,
+      "entry_cost": 8.0605,
+      "exit_cost": 8.2028,
+      "transaction_cost": 16.2633,
+      "liquidity_constrained": false,
+      "hold_days": 4,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00684
+    },
+    {
+      "entry_date": "2023-12-04",
+      "exit_date": "2023-12-05",
+      "entry_price": 441.635,
+      "exit_price": 441.2502,
+      "shares": 298,
+      "pnl": -114.68,
+      "entry_cost": 8.2415,
+      "exit_cost": 8.2371,
+      "transaction_cost": 16.4786,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004512
+    },
+    {
+      "entry_date": "2023-12-06",
+      "exit_date": "2023-12-08",
+      "entry_price": 444.7466,
+      "exit_price": 443.3826,
+      "shares": 296,
+      "pnl": -403.77,
+      "entry_cost": 8.2375,
+      "exit_cost": 8.2082,
+      "transaction_cost": 16.4458,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009294
+    },
+    {
+      "entry_date": "2023-12-12",
+      "exit_date": "2023-12-13",
+      "entry_price": 447.48,
+      "exit_price": 450.1965,
+      "shares": 293,
+      "pnl": 795.91,
+      "entry_cost": 8.1637,
+      "exit_cost": 8.1821,
+      "transaction_cost": 16.3458,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00738
+    },
+    {
+      "entry_date": "2023-12-14",
+      "exit_date": "2023-12-29",
+      "entry_price": 458.0167,
+      "exit_price": 462.5513,
+      "shares": 289,
+      "pnl": 1310.52,
+      "entry_cost": 8.1821,
+      "exit_cost": 8.279,
+      "transaction_cost": 16.4611,
+      "liquidity_constrained": false,
+      "hold_days": 10,
+      "exit_reason": "END_OF_DATA",
+      "tip_signal_at_exit": null
+    }
+  ],
+  "trade_log_oos": [
+    {
+      "entry_date": "2024-01-02",
+      "exit_date": "2024-02-28",
+      "entry_price": 459.5457,
+      "exit_price": 491.766,
+      "shares": 54,
+      "pnl": 1739.9,
+      "entry_cost": 1.693,
+      "exit_cost": 1.618,
+      "transaction_cost": 3.311,
+      "liquidity_constrained": false,
+      "hold_days": 39,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008813
+    },
+    {
+      "entry_date": "2024-02-29",
+      "exit_date": "2024-03-13",
+      "entry_price": 494.4926,
+      "exit_price": 503.23,
+      "shares": 54,
+      "pnl": 471.82,
+      "entry_cost": 1.623,
+      "exit_cost": 1.6468,
+      "transaction_cost": 3.2698,
+      "liquidity_constrained": false,
+      "hold_days": 9,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.005158
+    },
+    {
+      "entry_date": "2024-05-10",
+      "exit_date": "2024-05-13",
+      "entry_price": 509.4433,
+      "exit_price": 510.1137,
+      "shares": 53,
+      "pnl": 35.53,
+      "entry_cost": 1.6345,
+      "exit_cost": 1.6353,
+      "transaction_cost": 3.2699,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006366
+    },
+    {
+      "entry_date": "2024-05-16",
+      "exit_date": "2024-05-24",
+      "entry_price": 517.3219,
+      "exit_price": 515.2779,
+      "shares": 53,
+      "pnl": -108.33,
+      "entry_cost": 1.6552,
+      "exit_cost": 1.649,
+      "transaction_cost": 3.3042,
+      "liquidity_constrained": false,
+      "hold_days": 6,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006462
+    },
+    {
+      "entry_date": "2024-06-06",
+      "exit_date": "2024-06-10",
+      "entry_price": 522.3009,
+      "exit_price": 520.4809,
+      "shares": 52,
+      "pnl": -94.64,
+      "entry_cost": 1.6337,
+      "exit_cost": 1.6291,
+      "transaction_cost": 3.2628,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00475
+    },
+    {
+      "entry_date": "2024-06-12",
+      "exit_date": "2024-07-02",
+      "entry_price": 528.7933,
+      "exit_price": 532.4629,
+      "shares": 51,
+      "pnl": 187.15,
+      "entry_cost": 1.6193,
+      "exit_cost": 1.6245,
+      "transaction_cost": 3.2438,
+      "liquidity_constrained": false,
+      "hold_days": 13,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006656
+    },
+    {
+      "entry_date": "2024-07-03",
+      "exit_date": "2024-08-06",
+      "entry_price": 537.4141,
+      "exit_price": 508.4882,
+      "shares": 51,
+      "pnl": -1475.22,
+      "entry_cost": 1.6371,
+      "exit_cost": 1.5812,
+      "transaction_cost": 3.2183,
+      "liquidity_constrained": false,
+      "hold_days": 23,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.042659
+    },
+    {
+      "entry_date": "2024-08-07",
+      "exit_date": "2024-10-25",
+      "entry_price": 517.61,
+      "exit_price": 571.2385,
+      "shares": 50,
+      "pnl": 2681.42,
+      "entry_cost": 1.5719,
+      "exit_cost": 1.6966,
+      "transaction_cost": 3.2685,
+      "liquidity_constrained": false,
+      "hold_days": 56,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006509
+    },
+    {
+      "entry_date": "2025-02-06",
+      "exit_date": "2025-02-07",
+      "entry_price": 597.3604,
+      "exit_price": 598.1769,
+      "shares": 48,
+      "pnl": 39.19,
+      "entry_cost": 1.6968,
+      "exit_cost": 1.6999,
+      "transaction_cost": 3.3967,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007504
+    },
+    {
+      "entry_date": "2025-02-12",
+      "exit_date": "2025-02-13",
+      "entry_price": 590.6672,
+      "exit_price": 595.8014,
+      "shares": 49,
+      "pnl": 251.57,
+      "entry_cost": 1.7154,
+      "exit_cost": 1.7264,
+      "transaction_cost": 3.4418,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006697
+    },
+    {
+      "entry_date": "2025-02-14",
+      "exit_date": "2025-02-19",
+      "entry_price": 601.254,
+      "exit_price": 601.3211,
+      "shares": 48,
+      "pnl": 3.22,
+      "entry_cost": 1.7042,
+      "exit_cost": 1.7034,
+      "transaction_cost": 3.4075,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008365
+    },
+    {
+      "entry_date": "2025-02-21",
+      "exit_date": "2025-03-06",
+      "entry_price": 601.471,
+      "exit_price": 567.2175,
+      "shares": 48,
+      "pnl": -1644.17,
+      "entry_cost": 1.7062,
+      "exit_cost": 1.6269,
+      "transaction_cost": 3.3331,
+      "liquidity_constrained": false,
+      "hold_days": 9,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009032
+    },
+    {
+      "entry_date": "2025-03-11",
+      "exit_date": "2025-04-07",
+      "entry_price": 551.4343,
+      "exit_price": 483.6158,
+      "shares": 50,
+      "pnl": -3390.93,
+      "entry_cost": 1.656,
+      "exit_cost": 1.4955,
+      "transaction_cost": 3.1515,
+      "liquidity_constrained": false,
+      "hold_days": 19,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.046938
+    },
+    {
+      "entry_date": "2025-04-10",
+      "exit_date": "2025-04-11",
+      "entry_price": 526.1711,
+      "exit_price": 517.0504,
+      "shares": 46,
+      "pnl": -419.55,
+      "entry_cost": 1.4936,
+      "exit_cost": 1.4713,
+      "transaction_cost": 2.9649,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.02224
+    },
+    {
+      "entry_date": "2025-04-15",
+      "exit_date": "2025-05-13",
+      "entry_price": 533.5864,
+      "exit_price": 576.7633,
+      "shares": 44,
+      "pnl": 1899.79,
+      "entry_cost": 1.4438,
+      "exit_cost": 1.5183,
+      "transaction_cost": 2.9622,
+      "liquidity_constrained": false,
+      "hold_days": 19,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.00964
+    },
+    {
+      "entry_date": "2025-05-14",
+      "exit_date": "2025-05-21",
+      "entry_price": 581.1827,
+      "exit_price": 581.7362,
+      "shares": 44,
+      "pnl": 24.35,
+      "entry_cost": 1.5279,
+      "exit_cost": 1.5223,
+      "transaction_cost": 3.0502,
+      "liquidity_constrained": false,
+      "hold_days": 5,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007335
+    },
+    {
+      "entry_date": "2025-07-07",
+      "exit_date": "2025-07-09",
+      "entry_price": 618.1531,
+      "exit_price": 617.4958,
+      "shares": 42,
+      "pnl": -27.61,
+      "entry_cost": 1.5208,
+      "exit_cost": 1.5191,
+      "transaction_cost": 3.0399,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009946
+    },
+    {
+      "entry_date": "2025-07-10",
+      "exit_date": "2025-07-24",
+      "entry_price": 618.9861,
+      "exit_price": 629.2258,
+      "shares": 42,
+      "pnl": 430.07,
+      "entry_cost": 1.5221,
+      "exit_cost": 1.5403,
+      "transaction_cost": 3.0624,
+      "liquidity_constrained": false,
+      "hold_days": 10,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009307
+    },
+    {
+      "entry_date": "2025-07-30",
+      "exit_date": "2025-11-18",
+      "entry_price": 630.6081,
+      "exit_price": 658.313,
+      "shares": 41,
+      "pnl": 1135.9,
+      "entry_cost": 1.5062,
+      "exit_cost": 1.5709,
+      "transaction_cost": 3.0772,
+      "liquidity_constrained": false,
+      "hold_days": 78,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007461
+    },
+    {
+      "entry_date": "2025-11-19",
+      "exit_date": "2025-11-20",
+      "entry_price": 657.0772,
+      "exit_price": 669.0613,
+      "shares": 42,
+      "pnl": 503.33,
+      "entry_cost": 1.6066,
+      "exit_cost": 1.6327,
+      "transaction_cost": 3.2392,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.006461
+    },
+    {
+      "entry_date": "2025-11-26",
+      "exit_date": "2025-12-01",
+      "entry_price": 673.8326,
+      "exit_price": 674.9276,
+      "shares": 41,
+      "pnl": 44.89,
+      "entry_cost": 1.6044,
+      "exit_cost": 1.6067,
+      "transaction_cost": 3.2112,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007667
+    },
+    {
+      "entry_date": "2026-02-13",
+      "exit_date": "2026-02-18",
+      "entry_price": 679.8728,
+      "exit_price": 682.1176,
+      "shares": 41,
+      "pnl": 92.04,
+      "entry_cost": 1.6157,
+      "exit_cost": 1.6184,
+      "transaction_cost": 3.2341,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009465
+    },
+    {
+      "entry_date": "2026-02-19",
+      "exit_date": "2026-02-23",
+      "entry_price": 682.017,
+      "exit_price": 685.917,
+      "shares": 41,
+      "pnl": 159.9,
+      "entry_cost": 1.6175,
+      "exit_cost": 1.6264,
+      "transaction_cost": 3.244,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.007557
+    },
+    {
+      "entry_date": "2026-02-27",
+      "exit_date": "2026-03-04",
+      "entry_price": 681.269,
+      "exit_price": 679.7341,
+      "shares": 42,
+      "pnl": -64.47,
+      "entry_cost": 1.657,
+      "exit_cost": 1.6542,
+      "transaction_cost": 3.3113,
+      "liquidity_constrained": false,
+      "hold_days": 3,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009624
+    },
+    {
+      "entry_date": "2026-03-06",
+      "exit_date": "2026-03-12",
+      "entry_price": 671.6148,
+      "exit_price": 669.2932,
+      "shares": 42,
+      "pnl": -97.51,
+      "entry_cost": 1.637,
+      "exit_cost": 1.631,
+      "transaction_cost": 3.268,
+      "liquidity_constrained": false,
+      "hold_days": 4,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009192
+    },
+    {
+      "entry_date": "2026-03-17",
+      "exit_date": "2026-03-19",
+      "entry_price": 670.5976,
+      "exit_price": 655.1426,
+      "shares": 42,
+      "pnl": -649.11,
+      "entry_cost": 1.6334,
+      "exit_cost": 1.6013,
+      "transaction_cost": 3.2347,
+      "liquidity_constrained": false,
+      "hold_days": 2,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.009822
+    },
+    {
+      "entry_date": "2026-03-20",
+      "exit_date": "2026-03-23",
+      "entry_price": 656.5482,
+      "exit_price": 658.0317,
+      "shares": 42,
+      "pnl": 62.31,
+      "entry_cost": 1.6041,
+      "exit_cost": 1.6079,
+      "transaction_cost": 3.212,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.004008
+    },
+    {
+      "entry_date": "2026-04-15",
+      "exit_date": "2026-04-22",
+      "entry_price": 695.3004,
+      "exit_price": 709.109,
+      "shares": 40,
+      "pnl": 552.34,
+      "entry_cost": 1.6139,
+      "exit_cost": 1.6424,
+      "transaction_cost": 3.2563,
+      "liquidity_constrained": false,
+      "hold_days": 5,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008981
+    },
+    {
+      "entry_date": "2026-04-24",
+      "exit_date": "2026-05-06",
+      "entry_price": 710.7911,
+      "exit_price": 728.1182,
+      "shares": 40,
+      "pnl": 693.08,
+      "entry_cost": 1.6442,
+      "exit_cost": 1.6729,
+      "transaction_cost": 3.3171,
+      "liquidity_constrained": false,
+      "hold_days": 8,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.008687
+    },
+    {
+      "entry_date": "2026-05-11",
+      "exit_date": "2026-05-12",
+      "entry_price": 736.4923,
+      "exit_price": 736.8478,
+      "shares": 39,
+      "pnl": 13.86,
+      "entry_cost": 1.6474,
+      "exit_cost": 1.6478,
+      "transaction_cost": 3.2953,
+      "liquidity_constrained": false,
+      "hold_days": 1,
+      "exit_reason": "SIGNAL_EXIT",
+      "tip_signal_at_exit": 0.005596
+    }
+  ]
+}

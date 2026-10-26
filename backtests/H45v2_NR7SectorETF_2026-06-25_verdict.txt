@@ -1,0 +1,94 @@
+H45v2_NR7SectorETF — Gate 1 Verdict
+======================================================================
+Date:    2026-06-25
+IS:      2005-01-01 → 2018-12-31
+OOS:     2019-01-01 → 2026-06-25
+Overall: FAIL (2/10 checks passed)
+
+=== Universe ===
+SPY, QQQ, IWM, XLK, XLF, XLV, XLE, XLI, XLY, XLP, XLB, XLU, GLD, TLT, SLV (+ XLRE/XLC for OOS signals)
+Slippage tier: SPY/QQQ/IWM ultra-liquid (0.005%); all others standard (0.05%)
+Survivorship bias: NONE — all ETFs continuously listed from respective inception dates.
+Earnings policy:   N/A — ETF baskets; no individual earnings risk.
+
+=== IS Performance ===
+Sharpe:       0.0404
+Max Drawdown: -20.51%   [FAIL CS threshold <20% | PASS Gate 7 <30%]
+CAGR:         0.07%
+Win Rate:     50.59%
+Profit Factor:1.1565
+Trade Count:  1263 total | 22.6/quarter   [FAIL: >30/quarter]
+PpT (bps):    0.41   [FAIL: >15 bps]
+CPR:          0.1303   [PASS: <0.25]
+
+=== OOS Performance ===
+Sharpe:       0.2399   [FAIL: >0.7]
+Max Drawdown: -18.51%
+CAGR:         1.34%
+Trade Count:  777
+
+=== Composite Score (kpi-daily-weekly.md v1.0) ===
+CS = 0.40*NetSharpe_norm + 0.30*Stability_norm + 0.20*PpT_norm + 0.10*TradeAdequacy_norm
+  NetSharpe_norm:     0.2960
+  Stability_norm:     0.0000
+  PpT_norm:           0.0041
+  TradeAdequacy_norm: 0.7530
+  CS = 0.1945   [FAIL: >=0.60]
+
+=== Statistical Rigor ===
+MC p5/median/p95:  -0.4086 / 0.0251 / 0.4681
+Sharpe CI 95%:     [-0.4611, 0.5835]
+MDD CI 95%:        [-0.3843, -0.0989]
+Permutation p:     1.0000   [FAIL: <0.05]
+DSR z-score:       -1.8785   [FAIL: >0]
+WF OOS Sharpe std: 1.0663
+
+=== Walk-Forward (4 windows — 4-year IS / 6-month OOS) ===
+  WF1 IS 2009-01-01–2012-12-31: Sharpe=0.4446 trades=404 | OOS 2013-01-01–2013-06-30: Sharpe=1.9875 | PASS
+  WF2 IS 2011-01-01–2014-12-31: Sharpe=0.1183 trades=401 | OOS 2015-01-01–2015-06-30: Sharpe=-0.6485 | FAIL
+  WF3 IS 2013-01-01–2016-12-31: Sharpe=0.3089 trades=339 | OOS 2017-01-01–2017-06-30: Sharpe=-0.2660 | FAIL
+  WF4 IS 2015-01-01–2018-12-31: Sharpe=-0.1923 trades=327 | OOS 2019-01-01–2019-06-30: Sharpe=1.1662 | PASS
+  WF OOS Sharpe>0: 2/4   [FAIL: >=3/4]
+
+=== Parameter Sweep (27 combos) ===
+  max_positions: [3, 5, 7]
+  trend_ma: [150, 200, 250]
+  hold_days: [3, 5, 7]
+  Sharpe range: -0.4744 – 0.1599
+  Sensitivity: 1570.0%   [FAIL: <50%]
+  Combos with Sharpe > 0.7: 0/27
+
+=== Track A Hard Gate 8 (Overnight/Weekend Guards) ===
+  Overnight gap PnL contribution: 3435.6%
+  Weekend gap exposure:            14.5% of avg position notional
+  Gap MDD attribution:             130.2%
+  Earnings policy:                 N/A — All 15 tickers are ETFs (sector baskets, commodity ETFs, bond ETF). No individual earnings risk. ETFs do not report earnings and cannot be halted for single-stock earnings. 5% per-earnings-position cap is inapplicable by asset-class definition.
+  Survivorship bias:               NONE — SPY/QQQ/IWM (1993-2000), SPDR sector ETFs (1998), GLD (2004), TLT (2002), SLV (2006) all continuously listed. XLRE (2015) and XLC (2018) contribute OOS signals only; pre-inception NaN handled as no-signal (no data fabrication). No delisting risk for any ticker in universe.
+
+=== Gate 1 Checks ===
+  [FAIL] Net OOS Sharpe > 0.7
+  [FAIL] Net profit/trade > 15 bps
+  [FAIL] IS MDD < 20% (CS threshold)
+  [PASS] IS MDD < 30% (Gate 7 ceiling)
+  [FAIL] IS trades/quarter > 30
+  [PASS] CPR < 0.25
+  [FAIL] WF OOS Sharpe > 0: >= 3/4
+  [FAIL] Composite Score CS >= 0.60
+  [FAIL] Permutation p < 0.05
+  [FAIL] DSR z-score > 0
+
+=== Recommendation ===
+REJECT — does not meet Gate 1 criteria.
+
+=== Data Quality ===
+Look-ahead:      CLEAN (signal at close → entry at next open with breakout check)
+Same-close fill: NONE (Hard Gate 3 compliant)
+Price adjusted:  auto_adjust=True (yfinance)
+Cost model:      ED-SLIP-001 dual-tier (ultra-liquid SPY/QQQ/IWM 0.005%; standard 0.05%)
+
+=== Files ===
+Report:  H45v2_NR7SectorETF_2026-06-25_report.html
+Metrics: H45v2_NR7SectorETF_2026-06-25.json
+Verdict: H45v2_NR7SectorETF_2026-06-25_verdict.txt
+Trades:  H45v2_NR7SectorETF_2026-06-25_trades.csv
+Sweep:   H45v2_NR7SectorETF_2026-06-25_sweep.csv

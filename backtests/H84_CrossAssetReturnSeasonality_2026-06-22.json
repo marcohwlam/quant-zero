@@ -1,0 +1,402 @@
+{
+  "strategy_name": "H84_CrossAssetReturnSeasonality",
+  "date": "2026-06-22",
+  "hypothesis": "H84",
+  "parent_task": "QUA-380",
+  "universe": [
+    "SPY",
+    "QQQ",
+    "IWM",
+    "XLE",
+    "XLV",
+    "XLP",
+    "HYG",
+    "EEM",
+    "TLT",
+    "IEF",
+    "GLD",
+    "SHY"
+  ],
+  "equity_tickers": [
+    "SPY",
+    "QQQ",
+    "IWM",
+    "XLE",
+    "XLV",
+    "XLP",
+    "HYG",
+    "EEM"
+  ],
+  "bond_gold_tickers": [
+    "TLT",
+    "IEF",
+    "GLD"
+  ],
+  "safe_haven": "SHY",
+  "regime_etf": "SPY",
+  "parameters": {
+    "seasonal_lookback_years": 10,
+    "top_k_etfs": 3,
+    "use_regime_filter": true,
+    "bond_gold_exempt": true,
+    "regime_ma_days": 200,
+    "commission_per_share": 0.005,
+    "market_impact_k": 0.1
+  },
+  "criteria_version": "v2.7 / kpi-daily-weekly.md v1.0",
+  "cost_model": {
+    "ultra_liquid": [
+      "QQQ",
+      "IWM",
+      "SPY"
+    ],
+    "ultra_slip_pct": 0.005,
+    "standard_slip_pct": 0.05,
+    "commission": "$0.005/share",
+    "market_impact": "0.1 \u00d7 \u03c3 \u00d7 sqrt(Q/ADV) \u2014 Almgren-Chriss",
+    "ruling": "ED-SLIP-001"
+  },
+  "is_sharpe": 0.429,
+  "is_cagr": 0.0474,
+  "is_max_drawdown": -0.3027,
+  "is_total_return": 1.6431,
+  "is_win_rate": 0.5689,
+  "is_profit_factor": 1.2689,
+  "is_trade_count": 501,
+  "is_position_switches": 501,
+  "is_avg_ppt_bps": 33.27,
+  "regime_bearish_is_months": 50,
+  "bonds_gold_held_in_bearish_months": 47,
+  "oos_sharpe": 1.4433,
+  "oos_cagr": 0.1958,
+  "oos_max_drawdown": -0.131,
+  "oos_total_return": 0.556,
+  "oos_win_rate": 0.6034,
+  "oos_profit_factor": 3.1469,
+  "oos_trade_count": 58,
+  "oos_position_switches": 58,
+  "oos_avg_ppt_bps": 97.13,
+  "composite_score": 0.4775,
+  "cs_components": {
+    "net_sharpe_norm": 0.7773,
+    "stability_norm": 0.0,
+    "ppt_norm": 0.3327,
+    "trade_adequacy_norm": 1.0
+  },
+  "dsr": 0.3984,
+  "n_trials": 40,
+  "mc_p5_sharpe": 0.17687709152584796,
+  "mc_median_sharpe": 1.3009202103506723,
+  "mc_p95_sharpe": 2.363668760985021,
+  "mc_flag": "MC on 501 IS trade PnLs",
+  "sharpe_ci_low": 0.04478742701016136,
+  "sharpe_ci_high": 0.7707548771892114,
+  "mdd_ci_low": -0.50533265534216,
+  "mdd_ci_high": -0.186792597094774,
+  "win_rate_ci_low": 0.5157867199391172,
+  "win_rate_ci_high": 0.5401493531202436,
+  "permutation_pvalue": 0.959,
+  "permutation_test_pass": false,
+  "permutation_perm_mean": 0.6766574635455597,
+  "permutation_perm_p95": 0.9357265016111187,
+  "market_impact_by_ticker": {
+    "SPY": {
+      "market_impact_bps": 0.0071,
+      "adv_20d": 82181215.0,
+      "avg_price": 452.86,
+      "qty_at_33k": 74.0,
+      "q_over_adv": 1e-06,
+      "liquidity_constrained": false,
+      "slippage_tier": "ultra"
+    },
+    "QQQ": {
+      "market_impact_bps": 0.0133,
+      "adv_20d": 43384915.0,
+      "avg_price": 395.35,
+      "qty_at_33k": 84.0,
+      "q_over_adv": 2e-06,
+      "liquidity_constrained": false,
+      "slippage_tier": "ultra"
+    },
+    "IWM": {
+      "market_impact_bps": 0.0292,
+      "adv_20d": 45841635.0,
+      "avg_price": 188.62,
+      "qty_at_33k": 177.0,
+      "q_over_adv": 4e-06,
+      "liquidity_constrained": false,
+      "slippage_tier": "ultra"
+    },
+    "XLE": {
+      "market_impact_bps": 0.0597,
+      "adv_20d": 37523080.0,
+      "avg_price": 38.78,
+      "qty_at_33k": 860.0,
+      "q_over_adv": 2.3e-05,
+      "liquidity_constrained": false,
+      "slippage_tier": "standard"
+    },
+    "XLV": {
+      "market_impact_bps": 0.046,
+      "adv_20d": 6793110.0,
+      "avg_price": 128.69,
+      "qty_at_33k": 259.0,
+      "q_over_adv": 3.8e-05,
+      "liquidity_constrained": false,
+      "slippage_tier": "standard"
+    },
+    "XLP": {
+      "market_impact_bps": 0.0536,
+      "adv_20d": 11178665.0,
+      "avg_price": 66.69,
+      "qty_at_33k": 500.0,
+      "q_over_adv": 4.5e-05,
+      "liquidity_constrained": false,
+      "slippage_tier": "standard"
+    },
+    "HYG": {
+      "market_impact_bps": 0.017,
+      "adv_20d": 33319870.0,
+      "avg_price": 66.39,
+      "qty_at_33k": 502.0,
+      "q_over_adv": 1.5e-05,
+      "liquidity_constrained": false,
+      "slippage_tier": "standard"
+    },
+    "EEM": {
+      "market_impact_bps": 0.0508,
+      "adv_20d": 30958560.0,
+      "avg_price": 37.1,
+      "qty_at_33k": 898.0,
+      "q_over_adv": 2.9e-05,
+      "liquidity_constrained": false,
+      "slippage_tier": "standard"
+    },
+    "TLT": {
+      "market_impact_bps": 0.0377,
+      "adv_20d": 48639425.0,
+      "avg_price": 87.52,
+      "qty_at_33k": 381.0,
+      "q_over_adv": 8e-06,
+      "liquidity_constrained": false,
+      "slippage_tier": "standard"
+    },
+    "IEF": {
+      "market_impact_bps": 0.034,
+      "adv_20d": 12405725.0,
+      "avg_price": 87.12,
+      "qty_at_33k": 383.0,
+      "q_over_adv": 3.1e-05,
+      "liquidity_constrained": false,
+      "slippage_tier": "standard"
+    },
+    "GLD": {
+      "market_impact_bps": 0.0434,
+      "adv_20d": 7680280.0,
+      "avg_price": 188.54,
+      "qty_at_33k": 177.0,
+      "q_over_adv": 2.3e-05,
+      "liquidity_constrained": false,
+      "slippage_tier": "standard"
+    },
+    "SHY": {
+      "market_impact_bps": 0.0128,
+      "adv_20d": 5692395.0,
+      "avg_price": 74.47,
+      "qty_at_33k": 448.0,
+      "q_over_adv": 7.9e-05,
+      "liquidity_constrained": false,
+      "slippage_tier": "standard"
+    }
+  },
+  "wf_windows": [
+    {
+      "window": 1,
+      "is_start": "2003-01-01",
+      "is_end": "2007-12-31",
+      "sharpe": 1.2609,
+      "max_drawdown": -0.1153,
+      "win_rate": 0.6931,
+      "trade_count": 101,
+      "position_switches": 101,
+      "cagr": 0.1789,
+      "gate7_pass": true
+    },
+    {
+      "window": 2,
+      "is_start": "2008-01-01",
+      "is_end": "2012-12-31",
+      "sharpe": 0.2653,
+      "max_drawdown": -0.1383,
+      "win_rate": 0.5755,
+      "trade_count": 106,
+      "position_switches": 106,
+      "cagr": 0.0269,
+      "gate7_pass": true
+    },
+    {
+      "window": 3,
+      "is_start": "2013-01-01",
+      "is_end": "2017-12-31",
+      "sharpe": 0.176,
+      "max_drawdown": -0.2062,
+      "win_rate": 0.542,
+      "trade_count": 131,
+      "position_switches": 131,
+      "cagr": 0.0129,
+      "gate7_pass": true
+    },
+    {
+      "window": 4,
+      "is_start": "2018-01-01",
+      "is_end": "2023-12-31",
+      "sharpe": -0.0286,
+      "max_drawdown": -0.3026,
+      "win_rate": 0.5032,
+      "trade_count": 155,
+      "position_switches": 155,
+      "cagr": -0.0118,
+      "gate7_pass": false
+    }
+  ],
+  "wf_windows_passed": 3,
+  "wf_sharpe_std": 0.4979,
+  "wf_sharpe_min": -0.0286,
+  "gate7_all_pass": false,
+  "sensitivity_pass": false,
+  "sensitivity_max_delta_pct": 45.38,
+  "sweep_sharpe_min": 0.3384,
+  "sweep_sharpe_max": 0.5331,
+  "comparison_no_exempt": {
+    "sharpe": 0.4246,
+    "max_drawdown": -0.2741,
+    "cagr": 0.0443,
+    "trade_count": 460
+  },
+  "gate_oos_sharpe": true,
+  "gate_cs": false,
+  "gate_gate7": false,
+  "gate_dsr": true,
+  "gate_wf": true,
+  "flag_pf1_ok": true,
+  "gate1_pass": false,
+  "n_checks_passed": 3,
+  "data_quality": {
+    "universe": [
+      "SPY",
+      "QQQ",
+      "IWM",
+      "XLE",
+      "XLV",
+      "XLP",
+      "HYG",
+      "EEM",
+      "TLT",
+      "IEF",
+      "GLD",
+      "SHY"
+    ],
+    "regime_etf": "SPY",
+    "safe_haven": "SHY",
+    "survivorship_bias": "Fixed 12-ETF cross-asset universe: SPY/QQQ/IWM/XLE/XLV/XLP (1998+), TLT/IEF/SHY (2002+), EEM (2003+), GLD (2004+), HYG (2007+). All active ETFs tracking fixed indices \u2014 no survivorship bias.",
+    "price_adjustment": "yfinance auto_adjust=True \u2014 splits and dividends adjusted.",
+    "earnings_exclusion": "N/A \u2014 ETFs are diversified portfolios.",
+    "slippage_tiers": {
+      "ultra_liquid": [
+        "QQQ",
+        "IWM",
+        "SPY"
+      ],
+      "ultra_slip_pct": 0.005,
+      "standard_slip_pct": 0.05,
+      "ruling": "ED-SLIP-001"
+    },
+    "tickers": {
+      "SPY": {
+        "total_obs": 8404,
+        "start": "1993-01-29",
+        "end": "2026-06-18",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "QQQ": {
+        "total_obs": 6862,
+        "start": "1999-03-10",
+        "end": "2026-06-18",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "IWM": {
+        "total_obs": 6554,
+        "start": "2000-05-26",
+        "end": "2026-06-18",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLE": {
+        "total_obs": 6914,
+        "start": "1998-12-22",
+        "end": "2026-06-18",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLV": {
+        "total_obs": 6914,
+        "start": "1998-12-22",
+        "end": "2026-06-18",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLP": {
+        "total_obs": 6914,
+        "start": "1998-12-22",
+        "end": "2026-06-18",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "HYG": {
+        "total_obs": 4829,
+        "start": "2007-04-11",
+        "end": "2026-06-18",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "EEM": {
+        "total_obs": 5833,
+        "start": "2003-04-14",
+        "end": "2026-06-18",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "TLT": {
+        "total_obs": 6011,
+        "start": "2002-07-30",
+        "end": "2026-06-18",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "IEF": {
+        "total_obs": 6011,
+        "start": "2002-07-30",
+        "end": "2026-06-18",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "GLD": {
+        "total_obs": 5429,
+        "start": "2004-11-18",
+        "end": "2026-06-18",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "SHY": {
+        "total_obs": 6011,
+        "start": "2002-07-30",
+        "end": "2026-06-18",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      }
+    },
+    "flagged": []
+  }
+}

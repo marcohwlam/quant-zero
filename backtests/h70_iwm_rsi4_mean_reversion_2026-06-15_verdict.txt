@@ -1,0 +1,72 @@
+H70 IWM RSI-4 Mean Reversion — Gate 1 Verdict
+Date: 2026-06-15
+Strategy: h70_iwm_rsi4_mean_reversion
+
+OVERALL VERDICT: FAIL
+Composite Score: 0.67 (need >= 0.60)
+
+PRIMARY GATE CHECKS:
+  OOS Sharpe    : 0.6075  FAIL (> 0.7)
+  OOS PpT       : 105.96 bps  PASS (> 15 bps)
+  IS MDD (CS)   : 2.25%  PASS (< 20%)
+  IS MDD (Gate7): 2.25%  PASS (< 30%)
+  WF trades>30  : False
+  CPR           : 0.0146  PASS (< 0.25)
+
+STATISTICAL TESTS:
+  Permutation p : 0.3160  FAIL (< 0.05)
+  MC p5 Sharpe  : 2.8088  OK
+  Bootstrap CI  : [0.2750, 1.1968]
+  DSR           : 0.6859
+
+WALK-FORWARD (4 folds):
+  Fold 1 (2005-01-01–2008-06-30): Sharpe=0.5289, MDD=-1.99%, trades=15
+  Fold 2 (2008-07-01–2011-12-31): Sharpe=0.7498, MDD=-2.24%, trades=16
+  Fold 3 (2012-01-01–2015-06-30): Sharpe=1.3169, MDD=-1.21%, trades=19
+  Fold 4 (2015-07-01–2018-12-31): Sharpe=0.3805, MDD=-2.23%, trades=14
+  WF passed: 4/4
+  WF Sharpe std: 0.3559
+  WF Sharpe min: 0.3805  OK
+
+IS SUMMARY (2005-01-01 to 2018-12-31):
+  Sharpe: 0.7217
+  MDD: 2.25%
+  Win rate: 71.88%
+  Profit factor: 2.78
+  Trade count: 64 (4.6/yr)
+  PpT: 98.65 bps
+  Regime active: 73.5% of days
+
+OOS SUMMARY (2019-01-01 to 2024-12-31):
+  Sharpe: 0.6075
+  MDD: 3.46%
+  Win rate: 73.08%
+  Profit factor: 2.10
+  Trade count: 26 (4.3/yr)
+  PpT: 105.96 bps
+  Regime active: 61.0% of days
+
+2022 REGIME SPLIT:
+  Trades in 2022: 0
+  Regime active 2022: 6.0%
+  Note: Near-zero exposure expected when IWM < 200-SMA after Jan 2022
+
+MARKET IMPACT (IWM ultra-liquid):
+  Impact: 0.0145 bps
+  ADV (20d): 34,458,120 shares
+  Liquidity constrained: False
+  Slippage model: ultra_liquid_etf (ED-SLIP-001)
+
+PARAMETER SWEEP: 27 combinations
+  Max Sharpe delta: 69.5% — FAIL (<30%)
+  See: h70_iwm_rsi4_mean_reversion_2026-06-15_sweep.csv
+
+GAP ATTRIBUTION (Track A Hard Gate 8):
+  IS overnight gap trades: 64 (100.0%)
+  IS weekend gap trades:   59 (92.2%)
+  OOS overnight gap trades:26 (100.0%)
+  OOS weekend gap trades:  21 (80.8%)
+
+OOS DATA QUALITY: PASS
+  Coverage: 100.0%
+  Total NaNs: 0

@@ -1,0 +1,194 @@
+{
+  "strategy_name": "H69_SPYTLTRatioMeanReversion",
+  "date": "2026-06-15",
+  "asset_class": "equities",
+  "overall_verdict": "FAIL",
+  "parameters": {
+    "z_lookback": 252,
+    "entry_threshold": 1.0,
+    "exit_threshold": 0.25,
+    "time_stop_days": 20,
+    "trend_window": 200,
+    "init_capital": 100000.0
+  },
+  "is": {
+    "sharpe": 0.529,
+    "cagr": 0.0304,
+    "max_drawdown": -0.1268,
+    "total_return": 0.665,
+    "trade_count": 97,
+    "win_rate": 0.4845,
+    "profit_factor": 1.7423,
+    "avg_ppt_bps": 60.08,
+    "period": "2004-01-01 to 2020-12-31",
+    "years": 17.0
+  },
+  "oos": {
+    "sharpe": -0.8628,
+    "cagr": -0.0652,
+    "max_drawdown": -0.3052,
+    "total_return": -0.2363,
+    "trade_count": 34,
+    "win_rate": 0.2059,
+    "profit_factor": 0.4454,
+    "avg_ppt_bps": -71.09,
+    "period": "2021-01-01 to 2024-12-31",
+    "years": 4.0
+  },
+  "is_sharpe": 0.529,
+  "oos_sharpe": -0.8628,
+  "is_max_drawdown": -0.1268,
+  "oos_max_drawdown": -0.3052,
+  "win_rate": 0.4845,
+  "profit_factor": 1.7423,
+  "trade_count": 97,
+  "dsr": -118.0361,
+  "post_cost_sharpe": 0.529,
+  "look_ahead_bias_flag": false,
+  "gate1_pass": false,
+  "mc_p5_sharpe": 1.1585222581507941,
+  "mc_median_sharpe": 3.7656205100992137,
+  "mc_p95_sharpe": 6.341421871821839,
+  "sharpe_ci_low": 0.08475943388840704,
+  "sharpe_ci_high": 0.8907062211206647,
+  "mdd_ci_low": -0.252045029481662,
+  "mdd_ci_high": -0.07045846176126486,
+  "win_rate_ci_low": 0.09441458284645945,
+  "win_rate_ci_high": 0.166160317831269,
+  "market_impact_bps": 0.0262,
+  "liquidity_constrained": false,
+  "order_to_adv_ratio": 5e-06,
+  "permutation_pvalue": 0.0,
+  "permutation_test_pass": true,
+  "wf_sharpe_std": 0.7202,
+  "wf_sharpe_min": -0.3071,
+  "wf_sharpe_cv": 1.7022,
+  "wf_cv_pass": false,
+  "wf_folds": [
+    {
+      "fold": 1,
+      "test_start": "2007-03-13",
+      "test_end": "2008-04-03",
+      "sharpe": -0.2314,
+      "cagr": -0.0127,
+      "max_drawdown": -0.0361,
+      "trade_count": 7
+    },
+    {
+      "fold": 2,
+      "test_start": "2011-06-09",
+      "test_end": "2012-06-29",
+      "sharpe": 1.3933,
+      "cagr": 0.0961,
+      "max_drawdown": -0.0323,
+      "trade_count": 5
+    },
+    {
+      "fold": 3,
+      "test_start": "2015-09-10",
+      "test_end": "2016-09-30",
+      "sharpe": 0.8375,
+      "cagr": 0.046,
+      "max_drawdown": -0.0532,
+      "trade_count": 3
+    },
+    {
+      "fold": 4,
+      "test_start": "2019-12-10",
+      "test_end": "2020-12-31",
+      "sharpe": -0.3071,
+      "cagr": -0.0289,
+      "max_drawdown": -0.1268,
+      "trade_count": 6
+    }
+  ],
+  "entry_threshold_cv": 0.0121,
+  "entry_threshold_cv_pass": true,
+  "sweep_stability": {
+    "primary_sharpe": 0.529,
+    "sharpe_min": 0.188,
+    "sharpe_max": 0.8385,
+    "sharpe_range": 0.6505,
+    "sharpe_variance_pct": 1.2297,
+    "gate1_stability": "FAIL: variance 123.0% > 30% \u2014 flag to Engineering Director",
+    "n_combinations": 81
+  },
+  "data_quality": {
+    "survivorship_bias": "Fixed 2-ticker universe (SPY, TLT). SPY inception 1993; TLT inception July 2002. Both active major ETFs with no delisting risk. No survivorship bias.",
+    "price_adjustment": "yfinance auto_adjust=True \u2014 splits and dividends adjusted.",
+    "earnings_exclusion": "N/A \u2014 ETFs, no earnings events.",
+    "tickers": {
+      "SPY": {
+        "total_trading_days": 5664,
+        "max_consecutive_missing": 0,
+        "gap_flag": false,
+        "start": "2002-07-01",
+        "end": "2024-12-30"
+      },
+      "TLT": {
+        "total_trading_days": 5644,
+        "max_consecutive_missing": 0,
+        "gap_flag": false,
+        "start": "2002-07-30",
+        "end": "2024-12-30"
+      }
+    },
+    "flagged": []
+  },
+  "oos_data_quality": {
+    "recommendation": "PASS",
+    "oos_coverage": 1.0,
+    "residual_nan_count": 0,
+    "critical_fields_nan": false
+  },
+  "gate1_criteria": [
+    {
+      "name": "IS Net Sharpe",
+      "value": "0.5290",
+      "threshold": "> 1.0",
+      "passed": false
+    },
+    {
+      "name": "OOS Net Sharpe",
+      "value": "-0.8628",
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    {
+      "name": "IS Max Drawdown",
+      "value": "-12.68%",
+      "threshold": "< 20%",
+      "passed": true
+    },
+    {
+      "name": "IS CAGR",
+      "value": "3.04%",
+      "threshold": ">= 10%",
+      "passed": false
+    },
+    {
+      "name": "IS Trade Count",
+      "value": "97",
+      "threshold": ">= 120",
+      "passed": false
+    },
+    {
+      "name": "Net Profit per Trade",
+      "value": "60.08 bps",
+      "threshold": "> 15 bps",
+      "passed": true
+    },
+    {
+      "name": "Permutation p-value",
+      "value": "0.0000",
+      "threshold": "< 0.05",
+      "passed": true
+    },
+    {
+      "name": "Walk-forward CV",
+      "value": "1.7022",
+      "threshold": "< 30%",
+      "passed": false
+    }
+  ]
+}

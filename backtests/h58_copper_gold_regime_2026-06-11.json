@@ -1,0 +1,341 @@
+{
+  "strategy": "H58_Copper_Gold_Regime_Signal",
+  "version": "1.0",
+  "gate": "Gate 1",
+  "report_date": "2026-06-11",
+  "is_window": {
+    "start": "2003-01-01",
+    "end": "2023-12-31"
+  },
+  "oos_window": {
+    "start": "2024-01-01",
+    "end": "2026-06-10"
+  },
+  "default_params": {
+    "spy_ticker": "SPY",
+    "copper_ticker": "HG=F",
+    "gold_ticker": "GC=F",
+    "lookback_days": 20,
+    "signal_threshold": 0.0,
+    "smoothing_days": 1,
+    "riskoff_asset": "SHY",
+    "init_cash": 25000
+  },
+  "is_metrics": {
+    "params": {
+      "spy_ticker": "SPY",
+      "copper_ticker": "HG=F",
+      "gold_ticker": "GC=F",
+      "lookback_days": 20,
+      "signal_threshold": 0.0,
+      "smoothing_days": 1,
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    },
+    "gfc_diagnostic": {
+      "gfc_first_exit_date": "2008-09-08",
+      "gfc_first_exit_price": 92.3369,
+      "gfc_n_exits_aug_dec_2008": 2,
+      "note": "Strategy exits SPY to SHY \u2014 validates PF-2 gate (GFC protection)"
+    },
+    "data_quality": {
+      "survivorship_bias_flag": "SPY/SHY are live ETFs \u2014 no survivorship bias",
+      "price_adjusted": true,
+      "auto_adjust": true,
+      "spy_ticker": "SPY",
+      "copper_ticker": "HG=F",
+      "gold_ticker": "GC=F",
+      "copper_note": "HG=F front-month continuous, yfinance daily; roll gap check applied",
+      "gold_note": "GC=F front-month continuous, yfinance daily; roll gap check applied",
+      "riskoff_asset": "SHY",
+      "earnings_exclusion": "N/A \u2014 ETF strategy",
+      "delisted_tickers": "N/A \u2014 SPY/SHY are active ETFs; HG=F/GC=F are continuous futures",
+      "forward_fill_policy": "HG=F/GC=F forward-filled into SPY calendar (limit=3 days, covers weekend/holiday gaps). Silent forward-fill NOT applied for equity data gaps >= 5 days.",
+      "signal_lag": "cu_au_signal at T uses only HG=F/GC=F close data through T; position change executes at T+1 open (no look-ahead bias)",
+      "survivorship_bias": "SPY and SHY are broad-market/treasury ETFs \u2014 no survivorship bias"
+    },
+    "sharpe": 0.5296,
+    "cagr": 0.0534,
+    "max_drawdown": -0.3194,
+    "total_return": 1.9833,
+    "win_rate": 0.5325,
+    "profit_factor": 1.4124,
+    "trade_count": 308,
+    "n_transitions": 615,
+    "transitions_per_year": 29.3,
+    "transitions_per_wf_fold": 153.8,
+    "pf1_status": "PASS (153.8/fold >= 30)",
+    "spy_days": 2767,
+    "riskoff_days": 2518,
+    "pct_in_spy": 0.5236,
+    "avg_hold_days": 9.0,
+    "years": 20.996577686516083
+  },
+  "oos_metrics": {
+    "params": {
+      "spy_ticker": "SPY",
+      "copper_ticker": "HG=F",
+      "gold_ticker": "GC=F",
+      "lookback_days": 20,
+      "signal_threshold": 0.0,
+      "smoothing_days": 1,
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    },
+    "gfc_diagnostic": {
+      "gfc_first_exit_date": null,
+      "note": "No exit signal fired Aug\u2013Dec 2008. Days in SHY Aug 1\u2013Sep 15: 0"
+    },
+    "data_quality": {
+      "survivorship_bias_flag": "SPY/SHY are live ETFs \u2014 no survivorship bias",
+      "price_adjusted": true,
+      "auto_adjust": true,
+      "spy_ticker": "SPY",
+      "copper_ticker": "HG=F",
+      "gold_ticker": "GC=F",
+      "copper_note": "HG=F front-month continuous, yfinance daily; roll gap check applied",
+      "gold_note": "GC=F front-month continuous, yfinance daily; roll gap check applied",
+      "riskoff_asset": "SHY",
+      "earnings_exclusion": "N/A \u2014 ETF strategy",
+      "delisted_tickers": "N/A \u2014 SPY/SHY are active ETFs; HG=F/GC=F are continuous futures",
+      "forward_fill_policy": "HG=F/GC=F forward-filled into SPY calendar (limit=3 days, covers weekend/holiday gaps). Silent forward-fill NOT applied for equity data gaps >= 5 days.",
+      "signal_lag": "cu_au_signal at T uses only HG=F/GC=F close data through T; position change executes at T+1 open (no look-ahead bias)",
+      "survivorship_bias": "SPY and SHY are broad-market/treasury ETFs \u2014 no survivorship bias"
+    },
+    "sharpe": 0.8688,
+    "cagr": 0.0788,
+    "max_drawdown": -0.1183,
+    "total_return": 0.2032,
+    "win_rate": 0.5278,
+    "profit_factor": 1.4484,
+    "trade_count": 36,
+    "n_transitions": 71,
+    "transitions_per_year": 29.1,
+    "transitions_per_wf_fold": 17.8,
+    "pf1_status": "WARN: 17.8/fold < 30",
+    "spy_days": 269,
+    "riskoff_days": 342,
+    "pct_in_spy": 0.4403,
+    "avg_hold_days": 7.4,
+    "years": 2.439425051334702
+  },
+  "gfc_exit_diagnostic": {
+    "gfc_first_exit_date": "2008-09-08",
+    "gfc_first_exit_price": 92.3369,
+    "gfc_n_exits_aug_dec_2008": 2,
+    "note": "Strategy exits SPY to SHY \u2014 validates PF-2 gate (GFC protection)"
+  },
+  "gate1_verdict": {
+    "criteria": {
+      "IS_Sharpe": {
+        "value": 0.5296,
+        "threshold": "> 1.0",
+        "pass": false
+      },
+      "OOS_Sharpe": {
+        "value": 0.8688,
+        "threshold": "> 0.7",
+        "pass": true
+      },
+      "IS_MaxDrawdown": {
+        "value": -31.94,
+        "threshold": "> -20%",
+        "pass": false
+      },
+      "IS_CAGR": {
+        "value": 5.34,
+        "threshold": ">= 10%",
+        "pass": false
+      },
+      "IS_TradeCount": {
+        "value": 308,
+        "threshold": ">= 100",
+        "pass": true
+      },
+      "WF_Consistency": {
+        "value": "2/4",
+        "threshold": ">= 3/4 windows",
+        "pass": false
+      },
+      "Permutation_pvalue": {
+        "value": 0.153,
+        "threshold": "< 0.05",
+        "pass": false,
+        "note": "CRITICAL \u2014 H51 retired for p=1.0"
+      }
+    },
+    "verdict": "FAIL",
+    "oos_degradation": -0.6405
+  },
+  "statistical_rigor": {
+    "mc_p5_sharpe": 0.10230467189561167,
+    "mc_median_sharpe": 1.630315244350714,
+    "mc_p95_sharpe": 3.1749320656826603,
+    "sharpe_ci_low": 0.1855016807415387,
+    "sharpe_ci_high": 0.9312273688483044,
+    "mdd_ci_low": -0.4141126727197211,
+    "mdd_ci_high": -0.14693387117999743,
+    "win_rate_ci_low": 0.5102739726027398,
+    "win_rate_ci_high": 0.5399543378995434,
+    "permutation_pvalue": 0.153,
+    "permutation_test_pass": false,
+    "permutation_n": 1000,
+    "permutation_n_blocks": 616,
+    "permutation_pvalue_note": "Block-shuffle permutation of regime allocation vector. p < 0.05 confirms Cu/Au signal has genuine predictive power.",
+    "market_impact_bps": 0.006907148801783687,
+    "liquidity_constrained": false,
+    "order_to_adv_ratio": 7.292496420402505e-07,
+    "adv_shares": 51223420.0,
+    "sigma_daily": 0.008088364229636966,
+    "dsr": 1.0,
+    "wf_sharpe_std": 0.32783077189306076,
+    "wf_sharpe_min": 0.4329
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "window": 1,
+        "is_start": "2003-01-01",
+        "is_end": "2010-12-31",
+        "oos_start": "2011-01-01",
+        "oos_end": "2015-12-31",
+        "is_sharpe": 0.5631,
+        "oos_sharpe": 0.4329,
+        "oos_pass": false
+      },
+      {
+        "window": 2,
+        "is_start": "2003-01-01",
+        "is_end": "2013-12-31",
+        "oos_start": "2014-01-01",
+        "oos_end": "2017-12-31",
+        "is_sharpe": 0.5227,
+        "oos_sharpe": 0.969,
+        "oos_pass": true
+      },
+      {
+        "window": 3,
+        "is_start": "2003-01-01",
+        "is_end": "2016-12-31",
+        "oos_start": "2017-01-01",
+        "oos_end": "2020-12-31",
+        "is_sharpe": 0.5582,
+        "oos_sharpe": 1.1785,
+        "oos_pass": true
+      },
+      {
+        "window": 4,
+        "is_start": "2003-01-01",
+        "is_end": "2018-12-31",
+        "oos_start": "2019-01-01",
+        "oos_end": "2023-12-31",
+        "is_sharpe": 0.5641,
+        "oos_sharpe": 0.4372,
+        "oos_pass": false
+      }
+    ],
+    "windows_passed": 2,
+    "wf_sharpe_std": 0.32783077189306076,
+    "wf_sharpe_min": 0.4329,
+    "gfc_dependency_flag": false,
+    "design_note": "Expanding IS windows; OOS covers post-GFC (2011-2015), copper-bust (2014-2017), late bull (2017-2020), COVID+2022 (2019-2023). WF1+WF2 OOS exclude GFC \u2014 key GFC-dependency diagnostic."
+  },
+  "sub_period_diagnostics": {
+    "pre_gfc_only": {
+      "start": "2003-01-01",
+      "end": "2007-12-31",
+      "sharpe": 0.3224,
+      "cagr": 0.0267,
+      "max_drawdown": -0.1359,
+      "trade_count": 78,
+      "pct_in_spy": 0.568,
+      "transitions_per_year": 31.2,
+      "total_return": 0.1409
+    },
+    "gfc_only": {
+      "start": "2007-01-01",
+      "end": "2009-12-31",
+      "sharpe": 0.537,
+      "cagr": 0.0759,
+      "max_drawdown": -0.1952,
+      "trade_count": 31,
+      "pct_in_spy": 0.4848,
+      "transitions_per_year": 20.3,
+      "total_return": 0.2454
+    },
+    "copper_bust_2015_16": {
+      "start": "2015-01-01",
+      "end": "2016-12-31",
+      "sharpe": 0.8541,
+      "cagr": 0.0601,
+      "max_drawdown": -0.0533,
+      "trade_count": 30,
+      "pct_in_spy": 0.4127,
+      "transitions_per_year": 30.0,
+      "total_return": 0.1237
+    },
+    "rate_shock_2022": {
+      "start": "2022-01-01",
+      "end": "2022-12-31",
+      "sharpe": -1.6013,
+      "cagr": -0.2444,
+      "max_drawdown": -0.3047,
+      "trade_count": 18,
+      "pct_in_spy": 0.4741,
+      "transitions_per_year": 36.1,
+      "total_return": -0.2437
+    },
+    "post_gfc_2010_2019": {
+      "start": "2010-01-01",
+      "end": "2019-12-31",
+      "sharpe": 0.9061,
+      "cagr": 0.0723,
+      "max_drawdown": -0.1516,
+      "trade_count": 140,
+      "pct_in_spy": 0.4958,
+      "transitions_per_year": 27.9,
+      "total_return": 1.0087
+    }
+  },
+  "smoothing_comparison": {
+    "smooth_1": {
+      "sharpe": 0.5296,
+      "cagr": 0.0534,
+      "max_drawdown": -0.3194,
+      "n_transitions": 615
+    },
+    "smooth_2": {
+      "sharpe": 0.5792,
+      "cagr": 0.062,
+      "max_drawdown": -0.2642,
+      "n_transitions": 427
+    },
+    "note": "smooth=2 requires 2 consecutive Cu/Au < 0 before exiting SPY. Reduces whipsaw at cost of slower exit. Fewer transitions = lower cost drag."
+  },
+  "parameter_sweep": {
+    "total_combinations": 90,
+    "best_is_sharpe": 0.9111,
+    "median_is_sharpe": 0.6859,
+    "best_params": {
+      "spy_ticker": "SPY",
+      "copper_ticker": "HG=F",
+      "gold_ticker": "GC=F",
+      "lookback_days": "40",
+      "signal_threshold": 0.0,
+      "smoothing_days": "2",
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    }
+  },
+  "data_quality": {
+    "survivorship_bias": "N/A \u2014 SPY/SHY are active ETFs",
+    "price_adjusted": true,
+    "hgf_roll_gap_check": "Applied \u2014 warns on >20% day-over-day moves",
+    "gcf_roll_gap_check": "Applied \u2014 warns on >20% day-over-day moves",
+    "forward_fill": "HG=F/GC=F ffill(limit=3) into SPY calendar",
+    "lookahead_bias": "None \u2014 signal at T from T close; T+1 open execution",
+    "earnings_exclusion": "N/A \u2014 ETF/futures strategy"
+  },
+  "replaces": "H51 (GLD/SPY risk timer, retired 2026-06-09, permutation p=1.0)",
+  "cost_model": "ED-SLIP-001 ultra-liquid tier: $0.005/share + 0.005% slippage + Almgren-Chriss market impact. HG=F/GC=F not traded."
+}

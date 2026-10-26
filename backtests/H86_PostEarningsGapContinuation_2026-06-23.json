@@ -1,0 +1,177 @@
+{
+  "strategy_name": "H86_PostEarningsGapContinuation",
+  "date": "2026-06-23",
+  "asset_class": "equities",
+  "is_sharpe": 1.8235,
+  "oos_sharpe": 0.5063,
+  "is_max_drawdown": -0.008,
+  "oos_max_drawdown": -0.0141,
+  "is_win_rate": 0.7308,
+  "oos_win_rate": 0.5556,
+  "is_profit_factor": "4.9015",
+  "oos_profit_factor": "1.4364",
+  "is_trade_count": 26,
+  "oos_trade_count": 18,
+  "is_total_return": 0.0439,
+  "oos_total_return": 0.0099,
+  "dsr": 1.6871,
+  "gate1_pass": false,
+  "overall_verdict": "FAIL",
+  "n_checks_passed": 7,
+  "n_checks_total": 10,
+  "mc_p5_sharpe": 5.23800727014798,
+  "mc_median_sharpe": 10.675134108711715,
+  "mc_p95_sharpe": 17.18657391398035,
+  "sharpe_ci_low": 0.9723928305503234,
+  "sharpe_ci_high": 2.777009533548998,
+  "mdd_ci_low": -0.012296625006551973,
+  "mdd_ci_high": -0.005305710016583524,
+  "win_rate_ci_low": 0.40714285714285714,
+  "win_rate_ci_high": 0.557202380952381,
+  "permutation_pvalue": 0.0,
+  "permutation_test_pass": true,
+  "wf_windows_passed": 3,
+  "wf_sharpe_std": 0.9782451849485383,
+  "wf_sharpe_min": 0.0,
+  "sensitivity_pass": false,
+  "sensitivity_sharpe_var_pct": 1.1034823142308747,
+  "earnings_coverage_rate": 1.0,
+  "n_tickers_with_data": 45,
+  "base_params": {
+    "gap_pct_min": 0.03,
+    "gap_vol_ratio_min": 1.5,
+    "entry_delay_days": 2,
+    "hold_days": 30,
+    "stop_loss_pct": 0.07,
+    "spy_sma_period": 200,
+    "max_positions": 10,
+    "max_position_pct": 0.05,
+    "init_cash": 25000
+  },
+  "is_period": "2023-07-01 to 2025-03-31",
+  "oos_period": "2025-04-01 to 2026-06-23",
+  "criteria_version": "v2.7 / kpi-daily-weekly.md",
+  "wf_windows": [
+    {
+      "window": 1,
+      "is_start": "2023-07-01",
+      "is_end": "2023-12-31",
+      "oos_start": "2024-01-01",
+      "oos_end": "2024-03-31",
+      "is_sharpe": 1.0891,
+      "oos_sharpe": 2.3975,
+      "is_mdd": -0.0062,
+      "oos_mdd": -0.0019,
+      "is_trades": 5,
+      "oos_trades": 2,
+      "wf_pass": true
+    },
+    {
+      "window": 2,
+      "is_start": "2024-01-01",
+      "is_end": "2024-06-30",
+      "oos_start": "2024-07-01",
+      "oos_end": "2024-09-30",
+      "is_sharpe": 2.3913,
+      "oos_sharpe": 2.3718,
+      "is_mdd": -0.0029,
+      "oos_mdd": -0.0081,
+      "is_trades": 5,
+      "oos_trades": 5,
+      "wf_pass": true
+    },
+    {
+      "window": 3,
+      "is_start": "2024-07-01",
+      "is_end": "2024-12-31",
+      "oos_start": "2025-01-01",
+      "oos_end": "2025-03-31",
+      "is_sharpe": 1.9051,
+      "oos_sharpe": 1.3692,
+      "is_mdd": -0.0081,
+      "oos_mdd": -0.006,
+      "is_trades": 8,
+      "oos_trades": 5,
+      "wf_pass": true
+    },
+    {
+      "window": 4,
+      "is_start": "2024-10-01",
+      "is_end": "2025-03-31",
+      "oos_start": "2025-04-01",
+      "oos_end": "2025-06-30",
+      "is_sharpe": 1.9535,
+      "oos_sharpe": 0.0,
+      "is_mdd": -0.0066,
+      "oos_mdd": 0.0,
+      "is_trades": 8,
+      "oos_trades": 0,
+      "wf_pass": false
+    }
+  ],
+  "checks": [
+    {
+      "gate": "IS Sharpe",
+      "value": "1.8235",
+      "threshold": "> 1.0",
+      "passed": true
+    },
+    {
+      "gate": "OOS Sharpe",
+      "value": "0.5063",
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    {
+      "gate": "IS Max Drawdown",
+      "value": "-0.80%",
+      "threshold": "< 20%",
+      "passed": true
+    },
+    {
+      "gate": "IS Trade Count",
+      "value": "26",
+      "threshold": ">= 100",
+      "passed": false
+    },
+    {
+      "gate": "IS Win Rate",
+      "value": "73.08%",
+      "threshold": "> 50%",
+      "passed": true
+    },
+    {
+      "gate": "IS Profit Factor",
+      "value": "4.9015",
+      "threshold": "> 1.0",
+      "passed": true
+    },
+    {
+      "gate": "DSR",
+      "value": "1.6871",
+      "threshold": "> 0",
+      "passed": true
+    },
+    {
+      "gate": "Walk-Forward OOS Sharpe>0",
+      "value": "3/4",
+      "threshold": ">= 3/4",
+      "passed": true
+    },
+    {
+      "gate": "Parameter Sensitivity",
+      "value": "110.3%",
+      "threshold": "< 50% SR change",
+      "passed": false
+    },
+    {
+      "gate": "Permutation Test",
+      "value": "p=0.0000",
+      "threshold": "p < 0.05",
+      "passed": true
+    }
+  ],
+  "survivorship_bias_note": "WARNING: Universe = current-day S&P 500. Delisted/demoted stocks excluded. Mild upward bias; large-cap names rarely exit via bankruptcy.",
+  "look_ahead_bias_flag": false,
+  "look_ahead_note": "CLEAN \u2014 gap = T+0 open vs T-1 close + 20d vol through T-1. Entry at T+entry_delay close. Stop/regime: same-day close flag, next-day open exit."
+}

@@ -468,6 +468,13 @@ def compute_shortfall_report(trade_log: list) -> dict:
 # ── Main ───────────────────────────────────────────────────────────────────────
 
 def main(dry_run: bool = False, shortfall_report_only: bool = False):
+    # DISABLED: Rule 4 violation — gate1_approved is null. Removed 2026-06-22 per QUA-365/QUA-367.
+    logger.error(
+        "TestMomentum paper runner DISABLED — Rule 4 violation (gate1_approved=null). "
+        "See QUA-365 / QUA-367. Strategy removed from paper trading."
+    )
+    sys.exit(1)
+
     logger.info("=" * 60)
     logger.info(f"TestMomentum Paper Trading Runner — {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     logger.info(f"Strategy: {STRATEGY_NAME} v1.0")

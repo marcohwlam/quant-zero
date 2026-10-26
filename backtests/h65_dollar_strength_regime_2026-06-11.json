@@ -1,0 +1,411 @@
+{
+  "strategy": "H65_Dollar_Strength_Regime_Signal",
+  "version": "1.0",
+  "gate": "Gate 1",
+  "report_date": "2026-06-11",
+  "is_window": {
+    "start": "2003-01-01",
+    "end": "2023-12-31"
+  },
+  "oos_window": {
+    "start": "2024-01-01",
+    "end": "2026-06-10"
+  },
+  "qua213_variant_comparison": {
+    "variant_1_baseline": {
+      "params": {
+        "lookback_days": 20,
+        "smoothing_days": 1,
+        "signal_threshold": 0.0,
+        "riskoff_asset": "SHY"
+      },
+      "is_sharpe": 0.5761,
+      "is_cagr": 0.0657,
+      "is_mdd": -0.2565,
+      "is_trades": 258,
+      "n_transitions": 515,
+      "pct_in_spy": 0.4995
+    },
+    "variant_2_primary": {
+      "params": {
+        "lookback_days": 60,
+        "smoothing_days": 1,
+        "signal_threshold": 0.0,
+        "riskoff_asset": "SHY"
+      },
+      "is_sharpe": 0.6756,
+      "is_cagr": 0.073,
+      "is_mdd": -0.2069,
+      "is_trades": 163,
+      "n_transitions": 325,
+      "pct_in_spy": 0.5027
+    },
+    "selected_variant": "primary_lookback60",
+    "selected_params": {
+      "spy_ticker": "SPY",
+      "dxy_ticker": "DX-Y.NYB",
+      "lookback_days": 60,
+      "signal_threshold": 0.0,
+      "smoothing_days": 1,
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    },
+    "note": "QUA-213 requires both variants tested. lookback=60 expected to resolve 2014\u20132015 US exceptionalism false trigger (DXY +25% concurrent with modest equity gains). Selected variant used for full Gate 1 analysis."
+  },
+  "selected_params": {
+    "spy_ticker": "SPY",
+    "dxy_ticker": "DX-Y.NYB",
+    "lookback_days": 60,
+    "signal_threshold": 0.0,
+    "smoothing_days": 1,
+    "riskoff_asset": "SHY",
+    "init_cash": 25000
+  },
+  "is_metrics": {
+    "params": {
+      "spy_ticker": "SPY",
+      "dxy_ticker": "DX-Y.NYB",
+      "lookback_days": 60,
+      "signal_threshold": 0.0,
+      "smoothing_days": 1,
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    },
+    "gfc_diagnostic": {
+      "gfc_first_exit_date": "2008-08-06",
+      "gfc_first_exit_price": 92.3224,
+      "gfc_n_exits_aug_dec_2008": 1,
+      "note": "Strategy exits SPY to SHY \u2014 validates PF-2 gate (GFC protection)"
+    },
+    "data_quality": {
+      "survivorship_bias_flag": "SPY/SHY are live ETFs \u2014 no survivorship bias",
+      "price_adjusted": true,
+      "auto_adjust": true,
+      "spy_ticker": "SPY",
+      "dxy_ticker": "DX-Y.NYB",
+      "dxy_note": "DX-Y.NYB is the ICE US Dollar Index cash level (not a futures contract). No roll-gap check required. ffill(limit=3) into SPY equity calendar.",
+      "riskoff_asset": "SHY",
+      "earnings_exclusion": "N/A \u2014 ETF strategy",
+      "delisted_tickers": "N/A \u2014 SPY/SHY are active ETFs; DX-Y.NYB is a cash index",
+      "forward_fill_policy": "DX-Y.NYB forward-filled into SPY calendar (limit=3 days, covers weekend/holiday gaps). Silent forward-fill NOT applied for equity data gaps >= 5 days.",
+      "signal_lag": "dxy_signal at T uses only DX-Y.NYB close data through T; position change executes at T+1 open (no look-ahead bias)",
+      "survivorship_bias": "SPY and SHY are broad-market/treasury ETFs \u2014 no survivorship bias"
+    },
+    "sharpe": 0.6756,
+    "cagr": 0.073,
+    "max_drawdown": -0.2069,
+    "total_return": 3.3912,
+    "win_rate": 0.589,
+    "profit_factor": 2.1101,
+    "trade_count": 163,
+    "n_transitions": 325,
+    "transitions_per_year": 15.5,
+    "transitions_per_wf_fold": 81.2,
+    "pf1_status": "PASS (81.2/fold >= 30)",
+    "spy_days": 2657,
+    "riskoff_days": 2628,
+    "pct_in_spy": 0.5027,
+    "avg_hold_days": 16.3,
+    "years": 20.996577686516083
+  },
+  "oos_metrics": {
+    "params": {
+      "spy_ticker": "SPY",
+      "dxy_ticker": "DX-Y.NYB",
+      "lookback_days": 60,
+      "signal_threshold": 0.0,
+      "smoothing_days": 1,
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    },
+    "gfc_diagnostic": {
+      "gfc_first_exit_date": null,
+      "note": "No exit signal fired Aug\u2013Dec 2008. Days in SHY Aug 1\u2013Sep 15: 0"
+    },
+    "data_quality": {
+      "survivorship_bias_flag": "SPY/SHY are live ETFs \u2014 no survivorship bias",
+      "price_adjusted": true,
+      "auto_adjust": true,
+      "spy_ticker": "SPY",
+      "dxy_ticker": "DX-Y.NYB",
+      "dxy_note": "DX-Y.NYB is the ICE US Dollar Index cash level (not a futures contract). No roll-gap check required. ffill(limit=3) into SPY equity calendar.",
+      "riskoff_asset": "SHY",
+      "earnings_exclusion": "N/A \u2014 ETF strategy",
+      "delisted_tickers": "N/A \u2014 SPY/SHY are active ETFs; DX-Y.NYB is a cash index",
+      "forward_fill_policy": "DX-Y.NYB forward-filled into SPY calendar (limit=3 days, covers weekend/holiday gaps). Silent forward-fill NOT applied for equity data gaps >= 5 days.",
+      "signal_lag": "dxy_signal at T uses only DX-Y.NYB close data through T; position change executes at T+1 open (no look-ahead bias)",
+      "survivorship_bias": "SPY and SHY are broad-market/treasury ETFs \u2014 no survivorship bias"
+    },
+    "sharpe": 1.1105,
+    "cagr": 0.1447,
+    "max_drawdown": -0.1678,
+    "total_return": 0.3904,
+    "win_rate": 0.6111,
+    "profit_factor": 4.7072,
+    "trade_count": 18,
+    "n_transitions": 36,
+    "transitions_per_year": 14.8,
+    "transitions_per_wf_fold": 9.0,
+    "pf1_status": "WARN: 9.0/fold < 30",
+    "spy_days": 310,
+    "riskoff_days": 301,
+    "pct_in_spy": 0.5074,
+    "avg_hold_days": 17.2,
+    "years": 2.439425051334702
+  },
+  "gfc_exit_diagnostic": {
+    "gfc_first_exit_date": "2008-08-06",
+    "gfc_first_exit_price": 92.3224,
+    "gfc_n_exits_aug_dec_2008": 1,
+    "note": "Strategy exits SPY to SHY \u2014 validates PF-2 gate (GFC protection)"
+  },
+  "dotcom_2000_2002_diagnostic": {
+    "mdd": -0.4248,
+    "sharpe": -0.7911,
+    "note": "Pre-IS period. SHY started 2002-07-30; BIL used as risk-off substitute. QUA-213 requires explicit MDD reporting for this period. Dollar momentum protection in 2000-2002 was partial (H65 hypothesis PF-2 note: DXY was elevated ~110-115 in 2000 but not surging sharply).",
+    "qua213_requirement": "QUA-213 explicitly requires 2000-2002 MDD reporting. PF-2 estimate has higher uncertainty than GFC. BIL used as risk-off."
+  },
+  "gate1_verdict": {
+    "criteria": {
+      "IS_Sharpe": {
+        "value": 0.6756,
+        "threshold": "> 1.0",
+        "pass": false
+      },
+      "OOS_Sharpe": {
+        "value": 1.1105,
+        "threshold": "> 0.7",
+        "pass": true
+      },
+      "IS_MaxDrawdown": {
+        "value": -20.69,
+        "threshold": "> -20%",
+        "pass": false
+      },
+      "IS_CAGR": {
+        "value": 7.3,
+        "threshold": ">= 10%",
+        "pass": false
+      },
+      "IS_TradeCount": {
+        "value": 163,
+        "threshold": ">= 100",
+        "pass": true
+      },
+      "WF_Consistency": {
+        "value": "1/4",
+        "threshold": ">= 3/4 windows",
+        "pass": false
+      },
+      "Permutation_pvalue": {
+        "value": 0.099,
+        "threshold": "< 0.05",
+        "pass": false,
+        "note": "CRITICAL"
+      }
+    },
+    "verdict": "FAIL",
+    "oos_degradation": -0.6437,
+    "selected_variant": "primary_lookback60",
+    "v2_investigation_flag": "IS Sharpe < 1.0. If primary drag is 2014\u20132015 dollar bull, flag for v2.0: longer lookback or dual-filter with VIX (QUA-213 spec)."
+  },
+  "statistical_rigor": {
+    "mc_p5_sharpe": 1.2239890038975476,
+    "mc_median_sharpe": 3.462451102669725,
+    "mc_p95_sharpe": 6.06556640255796,
+    "sharpe_ci_low": 0.33605839334844806,
+    "sharpe_ci_high": 1.0836332348714568,
+    "mdd_ci_low": -0.3714175616257679,
+    "mdd_ci_high": -0.12698565206415213,
+    "win_rate_ci_low": 0.503234398782344,
+    "win_rate_ci_high": 0.5353881278538812,
+    "permutation_pvalue": 0.099,
+    "permutation_test_pass": false,
+    "permutation_n": 1000,
+    "permutation_n_blocks": 325,
+    "permutation_pvalue_note": "Block-shuffle permutation of regime allocation vector. p < 0.05 confirms DXY signal has genuine predictive power.",
+    "market_impact_bps": 0.006907148806783027,
+    "liquidity_constrained": false,
+    "order_to_adv_ratio": 7.292496430959019e-07,
+    "adv_shares": 51223420.0,
+    "sigma_daily": 0.00808836422963696,
+    "dsr": 1.0,
+    "wf_sharpe_std": 0.2270820047361746,
+    "wf_sharpe_min": 0.4937
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "window": 1,
+        "is_start": "2003-01-01",
+        "is_end": "2010-12-31",
+        "oos_start": "2011-01-01",
+        "oos_end": "2015-12-31",
+        "is_sharpe": 0.8815,
+        "oos_sharpe": 0.5051,
+        "oos_pass": false
+      },
+      {
+        "window": 2,
+        "is_start": "2003-01-01",
+        "is_end": "2013-12-31",
+        "oos_start": "2014-01-01",
+        "oos_end": "2017-12-31",
+        "is_sharpe": 0.7265,
+        "oos_sharpe": 1.0436,
+        "oos_pass": true
+      },
+      {
+        "window": 3,
+        "is_start": "2003-01-01",
+        "is_end": "2016-12-31",
+        "oos_start": "2017-01-01",
+        "oos_end": "2020-12-31",
+        "is_sharpe": 0.7418,
+        "oos_sharpe": 0.5727,
+        "oos_pass": false
+      },
+      {
+        "window": 4,
+        "is_start": "2003-01-01",
+        "is_end": "2018-12-31",
+        "oos_start": "2019-01-01",
+        "oos_end": "2023-12-31",
+        "is_sharpe": 0.7384,
+        "oos_sharpe": 0.4937,
+        "oos_pass": false
+      }
+    ],
+    "windows_passed": 1,
+    "wf_sharpe_std": 0.2270820047361746,
+    "wf_sharpe_min": 0.4937,
+    "gfc_dependency_flag": false,
+    "design_note": "Expanding IS windows; OOS covers post-GFC (2011-2015), dollar-bull (2014-2017), late bull (2017-2020), COVID+2022 (2019-2023). WF1+WF2 OOS exclude GFC \u2014 key GFC-dependency diagnostic."
+  },
+  "sub_period_diagnostics": {
+    "pre_gfc_only": {
+      "start": "2003-01-01",
+      "end": "2007-12-31",
+      "sharpe": 0.7801,
+      "cagr": 0.0856,
+      "max_drawdown": -0.137,
+      "trade_count": 41,
+      "pct_in_spy": 0.6754,
+      "transitions_per_year": 16.2,
+      "total_return": 0.5077
+    },
+    "gfc_only": {
+      "start": "2007-01-01",
+      "end": "2009-12-31",
+      "sharpe": 0.8948,
+      "cagr": 0.1369,
+      "max_drawdown": -0.1957,
+      "trade_count": 22,
+      "pct_in_spy": 0.6795,
+      "transitions_per_year": 14.7,
+      "total_return": 0.4692
+    },
+    "dollar_bull_2014_15": {
+      "start": "2014-01-01",
+      "end": "2015-12-31",
+      "sharpe": 1.0657,
+      "cagr": 0.0861,
+      "max_drawdown": -0.0934,
+      "trade_count": 13,
+      "pct_in_spy": 0.3002,
+      "transitions_per_year": 13.0,
+      "total_return": 0.1792
+    },
+    "rate_shock_2022": {
+      "start": "2022-01-01",
+      "end": "2022-12-31",
+      "sharpe": -1.8762,
+      "cagr": -0.138,
+      "max_drawdown": -0.1509,
+      "trade_count": 2,
+      "pct_in_spy": 0.1474,
+      "transitions_per_year": 3.0,
+      "total_return": -0.1376
+    },
+    "ai_bull_2023": {
+      "start": "2023-01-01",
+      "end": "2023-12-31",
+      "sharpe": 2.6385,
+      "cagr": 0.3018,
+      "max_drawdown": -0.0561,
+      "trade_count": 16,
+      "pct_in_spy": 0.632,
+      "transitions_per_year": 31.1,
+      "total_return": 0.3006
+    },
+    "post_gfc_2010_2019": {
+      "start": "2010-01-01",
+      "end": "2019-12-31",
+      "sharpe": 0.7879,
+      "cagr": 0.0712,
+      "max_drawdown": -0.101,
+      "trade_count": 74,
+      "pct_in_spy": 0.4346,
+      "transitions_per_year": 14.7,
+      "total_return": 0.9885
+    },
+    "dotcom_2000_2002": {
+      "start": "2000-01-01",
+      "end": "2002-12-31",
+      "sharpe": -0.7911,
+      "cagr": -0.1316,
+      "max_drawdown": -0.4248,
+      "trade_count": 11,
+      "pct_in_spy": 0.3995,
+      "transitions_per_year": 7.0,
+      "total_return": -0.345,
+      "risk_off_asset": "BIL",
+      "note": "Pre-IS period. SHY started 2002-07-30; BIL used as risk-off substitute. QUA-213 requires explicit MDD reporting for this period. Dollar momentum protection in 2000-2002 was partial (H65 hypothesis PF-2 note: DXY was elevated ~110-115 in 2000 but not surging sharply)."
+    }
+  },
+  "smoothing_comparison": {
+    "smooth_1": {
+      "sharpe": 0.6756,
+      "cagr": 0.073,
+      "max_drawdown": -0.2069,
+      "n_transitions": 325
+    },
+    "smooth_2": {
+      "sharpe": 0.5907,
+      "cagr": 0.0659,
+      "max_drawdown": -0.2728,
+      "n_transitions": 235
+    },
+    "note": "smooth=2 requires 2 consecutive DXY mom > threshold before exiting SPY. Reduces FX whipsaw at cost of slower exit. Fewer transitions = lower cost drag."
+  },
+  "parameter_sweep": {
+    "total_combinations": 72,
+    "best_is_sharpe": 0.8129,
+    "median_is_sharpe": 0.56765,
+    "best_params": {
+      "spy_ticker": "SPY",
+      "dxy_ticker": "DX-Y.NYB",
+      "lookback_days": "20",
+      "signal_threshold": 0.005,
+      "smoothing_days": "1",
+      "riskoff_asset": "SHY",
+      "init_cash": 25000
+    }
+  },
+  "data_quality": {
+    "survivorship_bias": "N/A \u2014 SPY/SHY are active ETFs",
+    "price_adjusted": true,
+    "dxy_note": "DX-Y.NYB ICE US Dollar Index cash level; no roll-gap check; ffill(limit=3) into SPY calendar",
+    "lookahead_bias": "None \u2014 signal at T from T close; T+1 open execution",
+    "earnings_exclusion": "N/A \u2014 ETF strategy",
+    "shy_availability": "SHY started 2002-07-30; 2000-2002 diagnostic uses BIL"
+  },
+  "replaces": "H58 (Cu/Au Ratio Regime, retired 2026-06-11, QUA-207)",
+  "cost_model": "ED-SLIP-001 ultra-liquid tier: $0.005/share + 0.005% slippage + Almgren-Chriss market impact. DX-Y.NYB not traded.",
+  "hypothesis_ref": "research/hypotheses/65_dollar_strength_regime.md",
+  "academic_refs": [
+    "Miranda-Agrippino & Rey (2020) RoES \u2014 dollar as global financial cycle factor",
+    "Rey (2013) Jackson Hole \u2014 global financial cycle driven by US monetary policy",
+    "Avdjiev, Du, Koch & Shin (2019) IMF Econ Rev \u2014 dollar as global risk factor"
+  ]
+}

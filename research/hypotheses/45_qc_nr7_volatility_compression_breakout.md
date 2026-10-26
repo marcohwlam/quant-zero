@@ -1,6 +1,7 @@
-# H45: NR7 Narrow Range Volatility Compression Breakout
+# H45: NR7 Narrow Range Volatility Compression Breakout — GATE 1 FAIL (1/2 iterations consumed)
 
 **Version:** 1.0
+**Status:** RETIRED — Gate 1 FAIL 2026-06-24. Score: 5/10. OOS Sharpe=-0.30, Trades/qtr=5.5 (structural). H45v2 commissioned (QUA-407).
 **Author:** Alpha Research Agent
 **Date:** 2026-05-28
 **Asset class:** US equity (SPY, QQQ, IWM ETFs)

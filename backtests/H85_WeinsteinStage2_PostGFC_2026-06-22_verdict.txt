@@ -1,0 +1,96 @@
+H85 Weinstein Stage 2 Sector ETF Rotation — Gate 1 Verdict (PostGFC)
+======================================================================
+Date:     2026-06-22
+Strategy: H85_WeinsteinStage2SectorRotation
+Variant:  PostGFC | IS: 2009-01-01→2020-12-31 | OOS: 2021-01-01→2026-06-22
+Criteria: v2.7 / kpi-daily-weekly.md v1.0 — NO IS Sharpe gate
+Overall:  FAIL (5/7 checks passed)
+======================================================================
+
+=== IS Performance (2009-01-01 → 2020-12-31) ===
+Sharpe:           0.7081    [diagnostic only — no IS Sharpe gate in v2.7]
+CAGR:             8.51%
+Max Drawdown:     -22.25%
+Win Rate:         53.72%
+Profit Factor:    1.7707
+Trade Count:      471
+Avg PpT:          36.72 bps
+
+=== OOS Performance (2021-01-01 → 2026-06-22) ===
+Sharpe:           0.3865  [HARD GATE: FAIL > 0.70]
+CAGR:             4.39%
+Max Drawdown:     -28.30%
+Win Rate:         45.71%
+Trade Count:      210
+
+=== Gate 7 Critical Stress Test ===
+Worst IS window MDD:  -18.33%  (ceiling: -30%)
+Gate 7 pass:          ✓ YES
+Windows exceeding 30%: 0
+Worst 5 IS quarterly windows:
+  2010-04-01–2010-06-30: MDD=-18.33% ✓
+  2020-01-01–2020-03-31: MDD=-11.79% ✓
+  2018-01-01–2018-03-31: MDD=-11.43% ✓
+  2018-10-01–2018-12-31: MDD=-10.75% ✓
+  2020-07-01–2020-09-30: MDD=-10.07% ✓
+
+=== PF-1 Quarterly Trade Count ===
+Min quarter trades: 0
+Quarters below 30:  48 (flag-only, not auto-reject per hypothesis PF-1 note)
+
+=== Composite Score (v2.7) ===
+CS = 0.3153  [FAIL: >= 0.60]
+  NetSharpe_norm  = 0.3546 × 0.40 = 0.1418
+  Stability_norm  = 0.0000 × 0.30 = 0.0000
+  PpT_norm        = 0.3672 × 0.20 = 0.0734
+  TradeAdq_norm   = 1.0000 × 0.10 = 0.1000
+
+=== Statistical Rigor ===
+MC p5 Sharpe:       1.5648
+MC Median Sharpe:   2.6622
+Sharpe 95% CI:      [0.2259, 1.1959]
+MDD 95% CI:         [-0.3781, -0.1350]
+Permutation p:      0.0000  [PASS: < 0.05]
+DSR:                0.6695  [PASS: > 0]
+CPR (cost/gross):   0.0716  [PASS: < 0.25]
+Max Market Impact:  0.1626 bps
+
+=== Walk-Forward Analysis ===
+  WF1 (2009-01-01–2011-12-31): Sharpe=0.3388, MDD=-22.25%, trades=105, Gate7=PASS
+  WF2 (2012-01-01–2015-12-31): Sharpe=0.9005, MDD=-9.82%, trades=185, Gate7=PASS
+  WF3 (2016-01-01–2018-12-31): Sharpe=0.6065, MDD=-13.15%, trades=115, Gate7=PASS
+  WF4 (2019-01-01–2020-12-31): Sharpe=1.1463, MDD=-11.84%, trades=66, Gate7=PASS
+  WF Sharpe>0: 4/4  [PASS: >= 3/4]
+
+=== Parameter Sweep (27 combos) ===
+  Sharpe range: 0.1716 – 0.6370
+  Variance vs primary: 65.7%
+
+=== Gate 1 Checks (v2.7) ===
+  [FAIL] OOS Sharpe (hard gate)              0.3865  (threshold: > 0.70)
+  [FAIL] Composite Score CS                  0.3153  (threshold: >= 0.60)
+  [PASS] Gate 7 MDD (all IS windows)         worst=-18.33%  (threshold: < 30%)
+  [PASS] DSR                                 0.6695  (threshold: > 0)
+  [PASS] Walk-Forward Sharpe>0               4/4  (threshold: >= 3/4)
+  [PASS] CPR (cost/gross)                    0.0716  (threshold: < 0.25)
+  [PASS] Avg PpT (IS, bps)                   36.72  (threshold: > 15)
+
+=== Root Cause Analysis ===
+Primary failures (2 of 7 gates):
+  - OOS Sharpe (hard gate): got 0.3865, need > 0.70
+  - Composite Score CS: got 0.3153, need >= 0.60
+
+=== Recommendation ===
+REJECT — do not advance to paper trading.
+
+=== Overnight/Weekend Guards (Hard Gate 8 disclosure) ===
+Signal timing: Friday close → Monday open execution. No same-close fills.
+Overnight gap exposure: ~15-25% of position PnL per hypothesis analysis.
+Weekend gap: max single-sector exposure 25% of portfolio (4 equal-weight positions).
+Earnings: N/A — sector ETFs are diversified; no single-stock earnings exposure.
+Universe: Fixed 10-sector SPDR ETFs (inception 1998) + VNQ (2004) + SHY (2002).
+Survivorship bias: All tickers are index-tracking ETFs (not individual stocks). No delisting risk.
+
+=== Files ===
+Report: backtests/H85_WeinsteinStage2_PostGFC_2026-06-22_report.html
+Verdict: backtests/H85_WeinsteinStage2_PostGFC_2026-06-22_verdict.txt

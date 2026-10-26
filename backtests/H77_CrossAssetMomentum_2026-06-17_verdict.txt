@@ -1,0 +1,30 @@
+FAIL
+IS Sharpe: 0.4585
+OOS Sharpe: 0.8133
+IS MDD: 29.92%
+OOS MDD: 23.51%
+Trade count (IS): 609
+Win rate (IS): 39.41%
+Profit factor (IS): 0.3185
+DSR z-score: 21.2788 (PASS)
+Permutation p-value: 0.9800 (FAIL)
+WF windows passed: 4/4
+WF Sharpe std: 0.4806
+WF Sharpe min: 0.3417
+MC p5 Sharpe: -6.7052
+Bootstrap Sharpe CI: [-0.0468, 0.9539]
+Market impact (avg): 0.0248 bps
+Sensitivity pass: False
+Post-cost Sharpe (IS): 0.4585
+Cost/gross ratio: 0.0060
+2022 return: -11.65%
+2022 MDD: -16.52%
+
+Gate 1 checks:
+  FAIL: is_sharpe_pass
+  PASS: oos_sharpe_pass
+  FAIL: is_mdd_pass
+  PASS: trade_count_pass
+  FAIL: permutation_pass
+  PASS: wf_pass
+  PASS: dsr_pass

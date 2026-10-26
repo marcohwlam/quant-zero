@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<title>Gate 1 Report: H80_CryptoDayOfWeek</title>
+<style>
+body{font-family:monospace;background:#1a1a2e;color:#e0e0e0;padding:20px}
+h1,h2{color:#00d4ff} .verdict{font-size:2em;font-weight:bold;color:#e74c3c;margin:20px 0}
+table{border-collapse:collapse;margin:10px 0;width:100%}
+th,td{border:1px solid #444;padding:6px 10px;text-align:left}
+th{background:#0f3460;color:#00d4ff} tr:nth-child(even){background:#16213e}
+.section{margin:20px 0;padding:15px;border:1px solid #333;border-radius:5px}
+</style></head><body>
+<h1>Gate 1 Report: H80_CryptoDayOfWeek</h1>
+<p>Date: 2026-06-22 | Asset Class: Crypto | Universe: BTC/ETH/SOL/BNB/XRP/AVAX/ADA</p>
+<div class="verdict">VERDICT: FAIL</div>
+<p><strong>Recommendation:</strong> Gate 1 FAIL (both scenarios). Primary failures (TAKER): is_sharpe_pass, oos_sharpe_pass, win_rate_pass, permutation_pass, mc_p5_pass.</p>
+<div class="section"><h2>Core Metrics</h2>
+<table>
+<tr><th>Metric</th><th>TAKER (0.30% RT)</th><th>MAKER (0.14% RT)</th></tr>
+<tr><td>IS Sharpe</td><td style='color:#e74c3c'>0.5625</td><td style='color:#e74c3c'>0.8014</td></tr>
+<tr><td>IS CAGR</td><td>4.43%</td><td>6.12%</td></tr>
+<tr><td>IS MaxDD</td><td style='color:#2ecc71'>-18.56%</td><td style='color:#2ecc71'>-12.16%</td></tr>
+<tr><td>IS Trades</td><td style='color:#2ecc71'>2420</td><td style='color:#2ecc71'>2420</td></tr>
+<tr><td>IS Win Rate</td><td style='color:#e74c3c'>41.94%</td><td style='color:#e74c3c'>43.55%</td></tr>
+<tr><td>IS Profit Factor</td><td>1.1631</td><td>1.2871</td></tr>
+<tr><td>OOS Sharpe</td><td style='color:#e74c3c'>-0.4371</td><td style='color:#e74c3c'>-0.0938</td></tr>
+<tr><td>OOS CAGR</td><td>-5.42%</td><td>-1.58%</td></tr>
+<tr><td>OOS MaxDD</td><td style='color:#2ecc71'>-14.57%</td><td style='color:#2ecc71'>-11.22%</td></tr>
+<tr><td>OOS Trades</td><td>954</td><td>954</td></tr>
+<tr><td>DSR z-score</td><td style='color:#2ecc71'>9.1305</td><td style='color:#2ecc71'>8.0038</td></tr>
+<tr><td>MC p5 Sharpe</td><td style='color:#e74c3c'>0.3357</td><td style='color:#2ecc71'>0.9418</td></tr>
+<tr><td>MC Median Sharpe</td><td>0.9024</td><td>1.4817</td></tr>
+<tr><td>OOS Sharpe 95% CI</td><td>[-1.7788, 0.8778]</td><td>[-1.4472, 1.1902]</td></tr>
+<tr><td>Permutation p-val</td><td style='color:#e74c3c'>1.0000</td><td style='color:#e74c3c'>1.0000</td></tr>
+<tr><td>WF Windows</td><td style='color:#2ecc71'>5/14</td><td style='color:#2ecc71'>6/14</td></tr>
+<tr><td>WF Sharpe Min</td><td style='color:#e74c3c'>-2.6572</td><td style='color:#e74c3c'>-2.2716</td></tr>
+<tr><td>Cost/Gross</td><td style='color:#2ecc71'>0.1598</td><td style='color:#2ecc71'>0.0746</td></tr>
+<tr><td>Sensitivity</td><td style='color:#2ecc71'>PASS</td><td style='color:#2ecc71'>PASS</td></tr>
+<tr><td>Gate 1</td><td style='color:#e74c3c'>FAIL</td><td style='color:#e74c3c'>FAIL</td></tr>
+</table></div>
+<div class="section"><h2>Walk-Forward Windows (TAKER)</h2>
+<table><tr><th>#</th><th>Train Start</th><th>Train End</th><th>Test Start</th><th>Test End</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>Pass</th></tr>
+<tr><td>1</td><td>2016-01-01</td><td>2018-12-31</td><td>2019-01-01</td><td>2019-06-30</td><td>0.841</td><td>-1.178</td><td>✗</td></tr><tr><td>2</td><td>2016-07-01</td><td>2019-06-30</td><td>2019-07-01</td><td>2019-12-31</td><td>0.594</td><td>-2.657</td><td>✗</td></tr><tr><td>3</td><td>2017-01-01</td><td>2019-12-31</td><td>2020-01-01</td><td>2020-06-30</td><td>0.370</td><td>-0.656</td><td>✗</td></tr><tr><td>4</td><td>2017-07-01</td><td>2020-06-30</td><td>2020-07-01</td><td>2020-12-31</td><td>0.235</td><td>-1.461</td><td>✗</td></tr><tr><td>5</td><td>2018-01-01</td><td>2020-12-31</td><td>2021-01-01</td><td>2021-06-30</td><td>-0.963</td><td>1.887</td><td>✗</td></tr><tr><td>6</td><td>2018-07-01</td><td>2021-06-30</td><td>2021-07-01</td><td>2021-12-31</td><td>0.000</td><td>0.905</td><td>✓</td></tr><tr><td>7</td><td>2019-01-01</td><td>2021-12-31</td><td>2022-01-01</td><td>2022-06-30</td><td>0.109</td><td>-0.484</td><td>✗</td></tr><tr><td>8</td><td>2019-07-01</td><td>2022-06-30</td><td>2022-07-01</td><td>2022-12-31</td><td>0.178</td><td>0.807</td><td>✓</td></tr><tr><td>9</td><td>2020-01-01</td><td>2022-12-31</td><td>2023-01-01</td><td>2023-06-30</td><td>0.430</td><td>2.013</td><td>✓</td></tr><tr><td>10</td><td>2020-07-01</td><td>2023-06-30</td><td>2023-07-01</td><td>2023-12-31</td><td>0.780</td><td>1.439</td><td>✓</td></tr><tr><td>11</td><td>2021-01-01</td><td>2023-12-31</td><td>2024-01-01</td><td>2024-06-30</td><td>1.177</td><td>-2.390</td><td>✗</td></tr><tr><td>12</td><td>2021-07-01</td><td>2024-06-30</td><td>2024-07-01</td><td>2024-12-31</td><td>0.543</td><td>0.348</td><td>✗</td></tr><tr><td>13</td><td>2022-01-01</td><td>2024-12-31</td><td>2025-01-01</td><td>2025-06-30</td><td>0.428</td><td>-0.913</td><td>✗</td></tr><tr><td>14</td><td>2022-07-01</td><td>2025-06-30</td><td>2025-07-01</td><td>2025-12-31</td><td>0.311</td><td>0.696</td><td>✓</td></tr></table></div>
+<div class="section"><h2>Per-Asset IS Trade Counts (TAKER)</h2>
+<table><tr><th>Asset</th><th>IS Trades</th></tr><tr><td>BTC-USD</td><td>557</td></tr><tr><td>ETH-USD</td><td>407</td></tr><tr><td>SOL-USD</td><td>0 ⚠</td></tr><tr><td>BNB-USD</td><td>407</td></tr><tr><td>XRP-USD</td><td>407</td></tr><tr><td>AVAX-USD</td><td>235</td></tr><tr><td>ADA-USD</td><td>407</td></tr></table></div>
+<div class="section"><h2>Data Quality Notes</h2><ul>
+<li>BTC-USD: from 2014-09-17 (full IS)</li>
+<li>ETH-USD: from 2015-08-07 (near-full IS)</li>
+<li>XRP-USD: from 2014-11-04 (full IS)</li>
+<li>BNB-USD: from 2017-11-09 (partial IS ~6yr)</li>
+<li>ADA-USD: from 2017-10-02 (partial IS ~6yr)</li>
+<li>SOL-USD: from 2020-04-11 (partial IS ~3.7yr)</li>
+<li>AVAX-USD: from 2020-09-23 (partial IS ~3.3yr)</li>
+<li>Pre-listing bars excluded automatically (NaN guards in simulator)</li>
+</ul></div>
+</body></html>

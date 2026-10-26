@@ -1,0 +1,36 @@
+H69 SPY/TLT Ratio Mean Reversion — Gate 1 Verdict
+Date: 2026-06-15
+Overall: FAIL
+
+Gate 1 Criteria:
+  FAIL: IS Net Sharpe = 0.5290 (target: > 1.0)
+  FAIL: OOS Net Sharpe = -0.8628 (target: > 0.7)
+  PASS: IS Max Drawdown = -12.68% (target: < 20%)
+  FAIL: IS CAGR = 3.04% (target: >= 10%)
+  FAIL: IS Trade Count = 97 (target: >= 120)
+  PASS: Net Profit per Trade = 60.08 bps (target: > 15 bps)
+  PASS: Permutation p-value = 0.0000 (target: < 0.05)
+  FAIL: Walk-forward CV = 1.7022 (target: < 30%)
+
+Statistical Robustness:
+  MC p5 Sharpe:       1.1585
+  MC Median Sharpe:   3.7656
+  Bootstrap CI 95%:   [0.0848, 0.8907]
+  Permutation p-val:  0.0000
+  DSR:                -118.0361
+
+Walk-Forward (4 folds):
+  Fold 1 (2007-03-13 → 2008-04-03): Sharpe=-0.2314
+  Fold 2 (2011-06-09 → 2012-06-29): Sharpe=1.3933
+  Fold 3 (2015-09-10 → 2016-09-30): Sharpe=0.8375
+  Fold 4 (2019-12-10 → 2020-12-31): Sharpe=-0.3071
+  WF CV: 1.7022 | Gate: FAIL
+
+Market Impact:
+  SPY: 0.03 bps (Q/ADV: 0.000005)
+  TLT: 0.08 bps (Q/ADV: 0.000090)
+
+Sweep Stability (81 combos): FAIL: variance 123.0% > 30% — flag to Engineering Director
+Entry Threshold CV: 0.0121 | Gate: PASS
+
+OOS Data Quality: PASS

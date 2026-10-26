@@ -1,0 +1,93 @@
+H45_NR7VolatilityBreakout — Gate 1 Verdict
+======================================================================
+Date:    2026-06-24
+IS:      2005-01-01 → 2018-12-31
+OOS:     2019-01-01 → 2026-06-24
+Overall: FAIL (5/10 checks passed)
+
+=== Universe ===
+SPY, QQQ, IWM — ultra-liquid ETFs, ADV > $10B/day (ED-SLIP-001 ultra-liquid tier)
+Survivorship bias: NONE — ETFs continuously listed; no delisting risk.
+Earnings policy:   N/A — ETFs do not report earnings.
+
+=== IS Performance ===
+Sharpe:       0.2529
+Max Drawdown: -9.17%   [PASS CS threshold <20% | PASS Gate 7 <30%]
+CAGR:         0.79%
+Win Rate:     55.08%
+Profit Factor:1.2151
+Trade Count:  305 total | 5.5/quarter   [FAIL: >30/quarter]
+PpT (bps):    11.37   [FAIL: >15 bps]
+CPR:          0.0303   [PASS: <0.25]
+
+=== OOS Performance ===
+Sharpe:       -0.2986   [FAIL: >0.7]
+Max Drawdown: -12.91%
+CAGR:         -1.25%
+Trade Count:  173
+
+=== Composite Score (kpi-daily-weekly.md v1.0) ===
+CS = 0.40*NetSharpe_norm + 0.30*Stability_norm + 0.20*PpT_norm + 0.10*TradeAdequacy_norm
+  NetSharpe_norm:     0.0806
+  Stability_norm:     0.5415
+  PpT_norm:           0.1137
+  TradeAdequacy_norm: 0.1817
+  CS = 0.2356   [FAIL: >=0.60]
+
+=== Statistical Rigor ===
+MC p5/median/p95:  -0.1963 / 0.2621 / 0.7428
+Sharpe CI 95%:     [-0.2409, 0.7501]
+MDD CI 95%:        [-0.2043, -0.0534]
+Permutation p:     0.0050   [PASS: <0.05]
+DSR z-score:       -1.2019   [FAIL: >0]
+WF OOS Sharpe std: 1.0962
+
+=== Walk-Forward (4 windows — 4-year IS / 6-month OOS) ===
+  WF1 IS 2009-01-01–2012-12-31: Sharpe=0.3260 trades=101 | OOS 2013-01-01–2013-06-30: Sharpe=2.2424 | PASS
+  WF2 IS 2011-01-01–2014-12-31: Sharpe=0.3939 trades=116 | OOS 2015-01-01–2015-06-30: Sharpe=-0.7294 | FAIL
+  WF3 IS 2013-01-01–2016-12-31: Sharpe=0.7520 trades=97 | OOS 2017-01-01–2017-06-30: Sharpe=1.5090 | PASS
+  WF4 IS 2015-01-01–2018-12-31: Sharpe=0.5165 trades=89 | OOS 2019-01-01–2019-06-30: Sharpe=0.8726 | PASS
+  WF OOS Sharpe>0: 3/4   [PASS: >=3/4]
+
+=== Parameter Sweep (36 combos) ===
+  trend_ma: [150, 200, 250]
+  hold_days: [3, 5, 7]
+  atr_stop_mult: [1.5, 2.0, 2.5, 3.0]
+  Sharpe range: 0.1916 – 0.4756
+  Sensitivity: 112.3%   [FAIL: <50%]
+  Combos with Sharpe > 0.7: 0/36
+
+=== Track A Hard Gate 8 (Overnight/Weekend Guards) ===
+  Overnight gap PnL contribution: 81.1%
+  Weekend gap exposure:            2.8% of avg position notional
+  Gap MDD attribution:             41.2%
+  Earnings policy:                 N/A — SPY, QQQ, IWM are broad-market ETFs. No individual earnings risk. ETFs do not report earnings and cannot be halted for earnings. 5% per-earnings-position cap is inapplicable by asset-class definition.
+  Survivorship bias:               NONE — SPY (est. 1993), QQQ (est. 1999), IWM (est. 2000) are continuously listed. No delisting risk. No survivorship bias. Ticker identities identical to historical.
+
+=== Gate 1 Checks ===
+  [FAIL] Net OOS Sharpe > 0.7
+  [FAIL] Net profit/trade > 15 bps
+  [PASS] IS MDD < 20% (CS threshold)
+  [PASS] IS MDD < 30% (Gate 7 ceiling)
+  [FAIL] IS trades/quarter > 30
+  [PASS] CPR < 0.25
+  [PASS] WF OOS Sharpe > 0: >= 3/4
+  [FAIL] Composite Score CS >= 0.60
+  [PASS] Permutation p < 0.05
+  [FAIL] DSR z-score > 0
+
+=== Recommendation ===
+REJECT — does not meet Gate 1 criteria.
+
+=== Data Quality ===
+Look-ahead:      CLEAN (signal at close → entry at next open with breakout check)
+Same-close fill: NONE (Hard Gate 3 compliant)
+Price adjusted:  auto_adjust=True (yfinance)
+Cost model:      ED-SLIP-001 ultra-liquid ETF tier
+
+=== Files ===
+Report:  H45_NR7VolatilityBreakout_2026-06-24_report.html
+Metrics: H45_NR7VolatilityBreakout_2026-06-24.json
+Verdict: H45_NR7VolatilityBreakout_2026-06-24_verdict.txt
+Trades:  H45_NR7VolatilityBreakout_2026-06-24_trades.csv
+Sweep:   H45_NR7VolatilityBreakout_2026-06-24_sweep.csv

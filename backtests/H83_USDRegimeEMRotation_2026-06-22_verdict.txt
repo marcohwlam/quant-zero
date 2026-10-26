@@ -1,0 +1,54 @@
+H83 — USD-Regime EM Country Rotation — Gate 1 Verdict
+Date: 2026-06-22
+Universe: Baseline: 6 ETFs top-3
+
+OVERALL: FAIL
+
+=== Gate 1 Checks ===
+  [FAIL] oos_sharpe_gt_0.7
+  [PASS] oos_ppt_gt_15bps
+  [PASS] is_mdd_lt_20pct
+  [FAIL] is_trades_per_q_gt_30
+  [PASS] cpr_lt_0.25
+
+=== IS (2015-01-01 to 2022-12-31) ===
+  Sharpe:              0.3227
+  CAGR:                3.58%
+  Max Drawdown:        -19.80%
+  Total Return:        32.48%
+  Trade Count:         307
+  Trades/Quarter:      9.6
+  Profit/Trade (bps):  -37.23
+  CPR:                 0.0808
+  Win Rate:            58.63%
+  Signal Regime EM:    41.1%
+  Signal Regime SHY:   58.9%
+
+=== 2022 Standalone (Rate Shock / USD-Strong Stress Test) ===
+  2022 Return:         -2.27%
+  2022 MDD:            -7.17%
+  2022 Sharpe:         -0.1937
+
+=== OOS (2023-01-01 to 2024-12-31) ===
+  Sharpe:              0.6951
+  CAGR:                6.88%
+  Max Drawdown:        -9.86%
+  Total Return:        14.15%
+  Trade Count:         50
+  Trades/Quarter:      6.2
+  Profit/Trade (bps):  142.48
+  CPR:                 0.0434
+  Win Rate:            58.00%
+
+=== Statistical Rigor ===
+  MC P5/Med/P95:         -2.156 / -0.867 / 0.495
+  Sharpe 95% CI:         [-0.258, 0.989]
+  Market Impact (EWZ):   0.055 bps
+  Permutation p-value:   1.0000  (FAIL)
+  WF: 1/6 positive OOS | PF-1: 0/6 | min=-6.817 | std=2.490
+  Sensitivity:           pass=False  max_delta=147.8%
+  OOS DQ:                PASS
+
+=== Overnight / Weekend Gap (Track A Guard) ===
+  PnL contribution:    43.30%
+  MDD contribution:    40.92%

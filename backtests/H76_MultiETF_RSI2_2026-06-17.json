@@ -1,0 +1,512 @@
+{
+  "strategy_name": "H76_MultiETF_RSI2_DailyMeanReversion",
+  "date": "2026-06-17",
+  "asset_class": "equities",
+  "hypothesis": "H76",
+  "universe": [
+    "SPY",
+    "QQQ",
+    "IWM",
+    "XLK",
+    "XLV",
+    "XLE",
+    "XLF",
+    "XLY",
+    "XLP",
+    "XLU",
+    "XLI",
+    "XLB"
+  ],
+  "parent_task": "QUA-323",
+  "is_sharpe": 0.5404,
+  "is_max_drawdown": -0.1102,
+  "is_total_return": 0.5294,
+  "is_win_rate": 0.6837,
+  "is_profit_factor": 1.4178,
+  "is_trade_count": 588,
+  "is_trades_per_year": 42.0,
+  "is_ppt_bps": 13.95,
+  "is_cpr": 0.1339,
+  "is_exit_breakdown": {
+    "RSI_EXIT": 476,
+    "MAX_HOLD": 81,
+    "STOP_LOSS": 31
+  },
+  "is_gap_attribution": {
+    "overnight_gap_trades": 588,
+    "weekend_gap_trades": 408,
+    "total_trades": 588,
+    "overnight_gap_pct": 1.0,
+    "weekend_gap_pct": 0.6939,
+    "overnight_gap_pnl": 52942.12,
+    "weekend_gap_pnl": 16991.65
+  },
+  "is_per_instrument_stats": {
+    "SPY": {
+      "trade_count": 57,
+      "trades_per_year": 4.1,
+      "win_rate": 0.7544,
+      "ppt_bps": 30.77,
+      "sharpe_proxy": 1.4016,
+      "total_pnl": 6514.6
+    },
+    "XLU": {
+      "trade_count": 53,
+      "trades_per_year": 3.8,
+      "win_rate": 0.4906,
+      "ppt_bps": -9.65,
+      "sharpe_proxy": -0.5122,
+      "total_pnl": -1967.42
+    },
+    "XLB": {
+      "trade_count": 41,
+      "trades_per_year": 2.9,
+      "win_rate": 0.6585,
+      "ppt_bps": 15.43,
+      "sharpe_proxy": 0.6767,
+      "total_pnl": 2201.38
+    },
+    "XLI": {
+      "trade_count": 38,
+      "trades_per_year": 2.7,
+      "win_rate": 0.7632,
+      "ppt_bps": 39.13,
+      "sharpe_proxy": 1.827,
+      "total_pnl": 5631.55
+    },
+    "XLK": {
+      "trade_count": 48,
+      "trades_per_year": 3.4,
+      "win_rate": 0.6875,
+      "ppt_bps": 22.14,
+      "sharpe_proxy": 1.0705,
+      "total_pnl": 4070.28
+    },
+    "XLF": {
+      "trade_count": 47,
+      "trades_per_year": 3.4,
+      "win_rate": 0.7447,
+      "ppt_bps": 33.16,
+      "sharpe_proxy": 1.7678,
+      "total_pnl": 5821.97
+    },
+    "QQQ": {
+      "trade_count": 63,
+      "trades_per_year": 4.5,
+      "win_rate": 0.7302,
+      "ppt_bps": 47.7,
+      "sharpe_proxy": 2.2291,
+      "total_pnl": 12633.78
+    },
+    "XLV": {
+      "trade_count": 50,
+      "trades_per_year": 3.6,
+      "win_rate": 0.68,
+      "ppt_bps": 11.53,
+      "sharpe_proxy": 0.527,
+      "total_pnl": 2185.87
+    },
+    "XLY": {
+      "trade_count": 35,
+      "trades_per_year": 2.5,
+      "win_rate": 0.5714,
+      "ppt_bps": -15.28,
+      "sharpe_proxy": -0.7779,
+      "total_pnl": -2126.22
+    },
+    "IWM": {
+      "trade_count": 45,
+      "trades_per_year": 3.2,
+      "win_rate": 0.6889,
+      "ppt_bps": 57.83,
+      "sharpe_proxy": 2.202,
+      "total_pnl": 9365.61
+    },
+    "XLE": {
+      "trade_count": 64,
+      "trades_per_year": 4.6,
+      "win_rate": 0.625,
+      "ppt_bps": 23.56,
+      "sharpe_proxy": 0.8521,
+      "total_pnl": 5489.07
+    },
+    "XLP": {
+      "trade_count": 47,
+      "trades_per_year": 3.4,
+      "win_rate": 0.8085,
+      "ppt_bps": 16.65,
+      "sharpe_proxy": 1.1412,
+      "total_pnl": 3121.65
+    }
+  },
+  "is_concurrent_analysis": {
+    "pct_time_2plus_positions": 0.1528,
+    "pct_time_4plus_positions": 0.0642,
+    "avg_n_positions_when_invested": 2.11,
+    "max_simultaneous_positions": 4,
+    "pct_time_in_market": 0.289
+  },
+  "is_spy_regime_pct": 0.7981,
+  "oos_sharpe": 0.6643,
+  "oos_max_drawdown": -0.0691,
+  "oos_total_return": 0.3033,
+  "oos_win_rate": 0.662,
+  "oos_profit_factor": 1.4629,
+  "oos_trade_count": 284,
+  "oos_trades_per_year": 47.3,
+  "oos_ppt_bps": 15.49,
+  "oos_cpr": 0.0818,
+  "oos_exit_breakdown": {
+    "RSI_EXIT": 225,
+    "MAX_HOLD": 40,
+    "STOP_LOSS": 19
+  },
+  "oos_gap_attribution": {
+    "overnight_gap_trades": 284,
+    "weekend_gap_trades": 204,
+    "total_trades": 284,
+    "overnight_gap_pct": 1.0,
+    "weekend_gap_pct": 0.7183,
+    "overnight_gap_pnl": 30326.48,
+    "weekend_gap_pnl": 9496.59
+  },
+  "oos_per_instrument_stats": {
+    "SPY": {
+      "trade_count": 29,
+      "trades_per_year": 4.8,
+      "win_rate": 0.6897,
+      "ppt_bps": 54.17,
+      "sharpe_proxy": 2.2359,
+      "total_pnl": 4817.46
+    },
+    "QQQ": {
+      "trade_count": 26,
+      "trades_per_year": 4.3,
+      "win_rate": 0.8077,
+      "ppt_bps": 108.43,
+      "sharpe_proxy": 4.6305,
+      "total_pnl": 8992.37
+    },
+    "IWM": {
+      "trade_count": 32,
+      "trades_per_year": 5.3,
+      "win_rate": 0.7812,
+      "ppt_bps": 54.46,
+      "sharpe_proxy": 1.5541,
+      "total_pnl": 5296.85
+    },
+    "XLI": {
+      "trade_count": 14,
+      "trades_per_year": 2.3,
+      "win_rate": 0.5714,
+      "ppt_bps": -26.25,
+      "sharpe_proxy": -1.0485,
+      "total_pnl": -1119.5
+    },
+    "XLF": {
+      "trade_count": 25,
+      "trades_per_year": 4.2,
+      "win_rate": 0.6,
+      "ppt_bps": 4.84,
+      "sharpe_proxy": 0.185,
+      "total_pnl": 376.54
+    },
+    "XLV": {
+      "trade_count": 26,
+      "trades_per_year": 4.3,
+      "win_rate": 0.5769,
+      "ppt_bps": -13.25,
+      "sharpe_proxy": -0.6193,
+      "total_pnl": -1076.17
+    },
+    "XLE": {
+      "trade_count": 32,
+      "trades_per_year": 5.3,
+      "win_rate": 0.5312,
+      "ppt_bps": 39.55,
+      "sharpe_proxy": 1.1384,
+      "total_pnl": 4427.21
+    },
+    "XLU": {
+      "trade_count": 25,
+      "trades_per_year": 4.2,
+      "win_rate": 0.6,
+      "ppt_bps": -34.6,
+      "sharpe_proxy": -1.1907,
+      "total_pnl": -2633.21
+    },
+    "XLK": {
+      "trade_count": 23,
+      "trades_per_year": 3.8,
+      "win_rate": 0.5652,
+      "ppt_bps": 45.35,
+      "sharpe_proxy": 1.45,
+      "total_pnl": 3423.8
+    },
+    "XLB": {
+      "trade_count": 16,
+      "trades_per_year": 2.7,
+      "win_rate": 0.75,
+      "ppt_bps": 28.8,
+      "sharpe_proxy": 1.1715,
+      "total_pnl": 1422.16
+    },
+    "XLY": {
+      "trade_count": 15,
+      "trades_per_year": 2.5,
+      "win_rate": 0.8,
+      "ppt_bps": 94.43,
+      "sharpe_proxy": 7.0481,
+      "total_pnl": 4380.74
+    },
+    "XLP": {
+      "trade_count": 21,
+      "trades_per_year": 3.5,
+      "win_rate": 0.7143,
+      "ppt_bps": 30.89,
+      "sharpe_proxy": 1.8535,
+      "total_pnl": 2018.23
+    }
+  },
+  "oos_concurrent_analysis": {
+    "pct_time_2plus_positions": 0.1743,
+    "pct_time_4plus_positions": 0.0861,
+    "avg_n_positions_when_invested": 2.2841,
+    "max_simultaneous_positions": 4,
+    "pct_time_in_market": 0.3009
+  },
+  "oos_spy_regime_pct": 0.7966,
+  "post_cost_sharpe": 0.6643,
+  "dsr": 0.5109,
+  "n_trials": 13,
+  "wf_windows": [
+    {
+      "fold": 1,
+      "start": "2005-01-01",
+      "end": "2008-06-30",
+      "sharpe": 0.7351,
+      "max_drawdown": -0.0593,
+      "win_rate": 0.6908,
+      "trade_count": 152,
+      "trades_per_year": 43.5,
+      "per_ticker_trades": {
+        "QQQ": 18,
+        "XLK": 17,
+        "XLV": 17,
+        "XLB": 15,
+        "XLY": 14,
+        "XLF": 14,
+        "SPY": 13,
+        "IWM": 13,
+        "XLE": 11,
+        "XLI": 8,
+        "XLU": 7,
+        "XLP": 5
+      }
+    },
+    {
+      "fold": 2,
+      "start": "2008-07-01",
+      "end": "2011-12-31",
+      "sharpe": 0.5675,
+      "max_drawdown": -0.0511,
+      "win_rate": 0.6813,
+      "trade_count": 91,
+      "trades_per_year": 26.0,
+      "per_ticker_trades": {
+        "QQQ": 11,
+        "SPY": 11,
+        "XLU": 10,
+        "XLE": 9,
+        "XLF": 9,
+        "XLI": 9,
+        "IWM": 8,
+        "XLP": 7,
+        "XLK": 6,
+        "XLB": 5,
+        "XLV": 4,
+        "XLY": 2
+      }
+    },
+    {
+      "fold": 3,
+      "start": "2012-01-01",
+      "end": "2015-06-30",
+      "sharpe": 1.2775,
+      "max_drawdown": -0.0605,
+      "win_rate": 0.7169,
+      "trade_count": 166,
+      "trades_per_year": 47.5,
+      "per_ticker_trades": {
+        "XLE": 20,
+        "SPY": 17,
+        "XLV": 17,
+        "XLP": 16,
+        "QQQ": 15,
+        "XLU": 13,
+        "IWM": 13,
+        "XLK": 13,
+        "XLI": 12,
+        "XLB": 12,
+        "XLY": 10,
+        "XLF": 8
+      }
+    },
+    {
+      "fold": 4,
+      "start": "2015-07-01",
+      "end": "2018-12-31",
+      "sharpe": -0.242,
+      "max_drawdown": -0.1102,
+      "win_rate": 0.6591,
+      "trade_count": 176,
+      "trades_per_year": 50.3,
+      "per_ticker_trades": {
+        "XLE": 24,
+        "XLU": 23,
+        "XLP": 19,
+        "QQQ": 18,
+        "XLF": 16,
+        "SPY": 15,
+        "XLK": 12,
+        "XLV": 12,
+        "IWM": 10,
+        "XLB": 9,
+        "XLI": 9,
+        "XLY": 9
+      }
+    }
+  ],
+  "wf_windows_passed": 3,
+  "wf_consistency_score": 0.75,
+  "wf_sharpe_std": 0.5445917295323167,
+  "wf_sharpe_min": -0.242,
+  "wf_sharpe_max": 1.2775,
+  "wf_sharpe_mean": 0.584525,
+  "mc_p5_sharpe": 0.9545248355809259,
+  "mc_median_sharpe": 2.113335251869186,
+  "mc_p95_sharpe": 3.2886977466241767,
+  "sharpe_ci_low": 0.12210946000950307,
+  "sharpe_ci_high": 1.023759578102949,
+  "mdd_ci_low": -0.2197489837898433,
+  "mdd_ci_high": -0.06424048068862724,
+  "permutation_pvalue": 0.42,
+  "permutation_test_pass": false,
+  "permutation_perm_mean_sharpe": 0.4847574912680316,
+  "permutation_perm_p95_sharpe": 0.9591386422329288,
+  "market_impact_by_ticker": {
+    "SPY": {
+      "market_impact_bps": 0.006967881654973817,
+      "order_qty": 55,
+      "adv_20d": 156951585.0,
+      "liquidity_constrained": false
+    },
+    "QQQ": {
+      "market_impact_bps": 0.011699138782801764,
+      "order_qty": 60,
+      "adv_20d": 71206905.0,
+      "liquidity_constrained": false
+    },
+    "IWM": {
+      "market_impact_bps": 0.030382134156675726,
+      "order_qty": 145,
+      "adv_20d": 34458120.0,
+      "liquidity_constrained": false
+    },
+    "XLK": {
+      "market_impact_bps": 0.01932691040617293,
+      "order_qty": 105,
+      "adv_20d": 44195910.0,
+      "liquidity_constrained": false
+    },
+    "XLV": {
+      "market_impact_bps": 0.023900916580698532,
+      "order_qty": 95,
+      "adv_20d": 17328775.0,
+      "liquidity_constrained": false
+    },
+    "XLE": {
+      "market_impact_bps": 0.03165281027496714,
+      "order_qty": 155,
+      "adv_20d": 49103500.0,
+      "liquidity_constrained": false
+    },
+    "XLF": {
+      "market_impact_bps": 0.044230296046219905,
+      "order_qty": 450,
+      "adv_20d": 90106070.0,
+      "liquidity_constrained": false
+    },
+    "XLY": {
+      "market_impact_bps": 0.029915934221514357,
+      "order_qty": 100,
+      "adv_20d": 18913020.0,
+      "liquidity_constrained": false
+    },
+    "XLP": {
+      "market_impact_bps": 0.023673340993741823,
+      "order_qty": 225,
+      "adv_20d": 27654855.0,
+      "liquidity_constrained": false
+    },
+    "XLU": {
+      "market_impact_bps": 0.022098302492191826,
+      "order_qty": 200,
+      "adv_20d": 48979150.0,
+      "liquidity_constrained": false
+    },
+    "XLI": {
+      "market_impact_bps": 0.039982341257002015,
+      "order_qty": 185,
+      "adv_20d": 19158855.0,
+      "liquidity_constrained": false
+    },
+    "XLB": {
+      "market_impact_bps": 0.043057084768614105,
+      "order_qty": 210,
+      "adv_20d": 25304890.0,
+      "liquidity_constrained": false
+    }
+  },
+  "sensitivity_pass": false,
+  "sensitivity_max_delta_pct": 52.09,
+  "gate_is_sharpe": false,
+  "gate_oos_sharpe": false,
+  "gate_oos_ppt": true,
+  "gate_is_mdd_cs": true,
+  "gate_is_mdd_g7": true,
+  "gate_wf_trades": true,
+  "gate_cpr": true,
+  "gate7_auto_reject": false,
+  "gate_is_trades_100": true,
+  "gate1_pass": false,
+  "regime_2022": {
+    "2022_trade_count": 17,
+    "2022_regime_active_pct": 0.1912,
+    "2022_n_positions_mean": 0.2709,
+    "2022_note": "SPY 200-DMA filter should block entries from Jan 2022 bear leg"
+  },
+  "oos_data_quality": {
+    "strategy_name": "H76_MultiETF_RSI2_DailyMeanReversion",
+    "oos_total_rows": 1509,
+    "oos_clean_rows": 1509,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "Close": 0,
+      "High": 0,
+      "Low": 0,
+      "Open": 0,
+      "Volume": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "look_ahead_bias_flag": false,
+  "slippage_model": "SPY/QQQ/IWM 0.005% ultra-liquid (ED-SLIP-001); others 0.05% standard"
+}

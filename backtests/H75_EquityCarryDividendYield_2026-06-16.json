@@ -1,0 +1,382 @@
+{
+  "strategy_name": "H75_EquityCarryDividendYield",
+  "date": "2026-06-16",
+  "hypothesis": "H75",
+  "asset_class": "equities",
+  "parent_task": "QUA-316",
+  "universe": [
+    "XLK",
+    "XLY",
+    "XLF",
+    "XLI",
+    "XLV",
+    "XLB",
+    "XLP",
+    "XLE",
+    "XLU",
+    "XLRE"
+  ],
+  "regime_etf": "SPY",
+  "safe_haven": "SHY",
+  "xlre_note": "XLRE excluded from ranking pre-Oct-2015 (not yet launched)",
+  "parameters": {
+    "yield_lookback_months": 12,
+    "top_k": 3,
+    "spy_filter": true,
+    "regime_ma_days": 200
+  },
+  "cost_model": {
+    "slippage": "0.05% (standard ETF tier \u2014 sector ETFs ADV << 50M/day)",
+    "commission": "$0.005/share",
+    "market_impact": "0.1 \u00d7 \u03c3 \u00d7 sqrt(Q/ADV) \u2014 Almgren-Chriss",
+    "ruling": "ED-SLIP-001 ultra-liquid tier NOT applied (sector ETFs ADV << 50M/day)"
+  },
+  "is_sharpe": 0.884,
+  "is_cagr": 0.1051,
+  "is_max_drawdown": -0.2067,
+  "is_total_return": 5.6751,
+  "is_win_rate": 0.75,
+  "is_profit_factor": 3.0436,
+  "is_trade_count": 64,
+  "is_position_switches": 47,
+  "is_avg_ppt_bps": 563.17,
+  "oos_sharpe": -0.4605,
+  "oos_cagr": -0.0605,
+  "oos_max_drawdown": -0.2119,
+  "oos_total_return": -0.1171,
+  "oos_win_rate": 0.1875,
+  "oos_profit_factor": 0.4321,
+  "oos_trade_count": 16,
+  "oos_position_switches": 9,
+  "oos_avg_ppt_bps": -87.88,
+  "post_cost_sharpe": 0.884,
+  "dsr": 0.8553,
+  "n_trials": 22,
+  "mc_p5_sharpe": 2.1058447966351284,
+  "mc_median_sharpe": 5.573547592522458,
+  "mc_p95_sharpe": 9.109577862259385,
+  "mc_flag": "MC on 64 IS trade PnLs",
+  "sharpe_ci_low": 0.49564940236316407,
+  "sharpe_ci_high": 1.2489608726738937,
+  "mdd_ci_low": -0.3152969314990539,
+  "mdd_ci_high": -0.1424622570578621,
+  "win_rate_ci_low": 0.5372820835958833,
+  "win_rate_ci_high": 0.5620667926906112,
+  "permutation_pvalue": 0.237,
+  "permutation_test_pass": false,
+  "permutation_perm_mean": 0.8150920387779071,
+  "permutation_perm_p95": 0.9651395836120416,
+  "market_impact_by_ticker": {
+    "XLK": {
+      "market_impact_bps": 0.0527,
+      "adv_20d": 23020630.0,
+      "avg_price": 82.99,
+      "qty_at_33k": 402.0,
+      "q_over_adv": 1.7e-05,
+      "liquidity_constrained": false
+    },
+    "XLY": {
+      "market_impact_bps": 0.0622,
+      "adv_20d": 14570150.0,
+      "avg_price": 97.16,
+      "qty_at_33k": 343.0,
+      "q_over_adv": 2.4e-05,
+      "liquidity_constrained": false
+    },
+    "XLF": {
+      "market_impact_bps": 0.0464,
+      "adv_20d": 57136095.0,
+      "avg_price": 35.98,
+      "qty_at_33k": 926.0,
+      "q_over_adv": 1.6e-05,
+      "liquidity_constrained": false
+    },
+    "XLI": {
+      "market_impact_bps": 0.0551,
+      "adv_20d": 10942005.0,
+      "avg_price": 97.24,
+      "qty_at_33k": 343.0,
+      "q_over_adv": 3.1e-05,
+      "liquidity_constrained": false
+    },
+    "XLV": {
+      "market_impact_bps": 0.0342,
+      "adv_20d": 11950735.0,
+      "avg_price": 127.53,
+      "qty_at_33k": 261.0,
+      "q_over_adv": 2.2e-05,
+      "liquidity_constrained": false
+    },
+    "XLB": {
+      "market_impact_bps": 0.0849,
+      "adv_20d": 10065770.0,
+      "avg_price": 40.34,
+      "qty_at_33k": 826.0,
+      "q_over_adv": 8.2e-05,
+      "liquidity_constrained": false
+    },
+    "XLP": {
+      "market_impact_bps": 0.0456,
+      "adv_20d": 13152345.0,
+      "avg_price": 66.71,
+      "qty_at_33k": 500.0,
+      "q_over_adv": 3.8e-05,
+      "liquidity_constrained": false
+    },
+    "XLE": {
+      "market_impact_bps": 0.0827,
+      "adv_20d": 50685470.0,
+      "avg_price": 23.76,
+      "qty_at_33k": 1403.0,
+      "q_over_adv": 2.8e-05,
+      "liquidity_constrained": false
+    },
+    "XLU": {
+      "market_impact_bps": 0.0567,
+      "adv_20d": 27274740.0,
+      "avg_price": 30.56,
+      "qty_at_33k": 1091.0,
+      "q_over_adv": 4e-05,
+      "liquidity_constrained": false
+    },
+    "XLRE": {
+      "market_impact_bps": 0.1096,
+      "adv_20d": 6445160.0,
+      "avg_price": 43.02,
+      "qty_at_33k": 775.0,
+      "q_over_adv": 0.00012,
+      "liquidity_constrained": false
+    }
+  },
+  "wf_windows": [
+    {
+      "window": 1,
+      "is_start": "2003-01-01",
+      "is_end": "2007-12-31",
+      "sharpe": 1.3031,
+      "max_drawdown": -0.0981,
+      "win_rate": 0.7778,
+      "trade_count": 9,
+      "cagr": 0.1604,
+      "position_switches": 10
+    },
+    {
+      "window": 2,
+      "is_start": "2008-01-01",
+      "is_end": "2012-12-31",
+      "sharpe": 0.8344,
+      "max_drawdown": -0.1425,
+      "win_rate": 0.875,
+      "trade_count": 16,
+      "cagr": 0.0934,
+      "position_switches": 13
+    },
+    {
+      "window": 3,
+      "is_start": "2013-01-01",
+      "is_end": "2017-12-31",
+      "sharpe": 0.7766,
+      "max_drawdown": -0.1662,
+      "win_rate": 0.5625,
+      "trade_count": 16,
+      "cagr": 0.0799,
+      "position_switches": 13
+    },
+    {
+      "window": 4,
+      "is_start": "2018-01-01",
+      "is_end": "2021-12-31",
+      "sharpe": 0.5981,
+      "max_drawdown": -0.2068,
+      "win_rate": 0.6842,
+      "trade_count": 19,
+      "cagr": 0.0794,
+      "position_switches": 12
+    }
+  ],
+  "wf_windows_passed": 4,
+  "wf_consistency_score": 1.0,
+  "wf_sharpe_std": 0.2604,
+  "wf_sharpe_min": 0.5981,
+  "sensitivity_pass": false,
+  "sensitivity_max_delta_pct": 47.82,
+  "sweep_sharpe_min": 0.5081,
+  "sweep_sharpe_max": 0.9308,
+  "gate_is_sharpe": false,
+  "gate_oos_sharpe": false,
+  "gate_is_cagr": true,
+  "gate_is_mdd": false,
+  "gate_oos_mdd": false,
+  "gate_wf": true,
+  "gate_perm": false,
+  "gate_trades": false,
+  "gate_dsr": true,
+  "gate_pf1_switches": false,
+  "gate1_pass": false,
+  "n_checks_passed": 3,
+  "regime_bearish_is_months": 40,
+  "is_total_months": 228,
+  "pf2_gfc_shy_months": 11,
+  "pf2_gfc_first_shy": "2007-12-31",
+  "pf4_rate_shock_shy_months": 3,
+  "pf4_rate_shock_first_shy": "2022-02-28",
+  "data_quality": {
+    "universe": [
+      "XLK",
+      "XLY",
+      "XLF",
+      "XLI",
+      "XLV",
+      "XLB",
+      "XLP",
+      "XLE",
+      "XLU",
+      "XLRE"
+    ],
+    "regime_etf": "SPY",
+    "safe_haven": "SHY",
+    "survivorship_bias": "Fixed 10-sector universe: 9 SPDR ETFs (inception Dec 1998) + XLRE (inception Oct 2015). All active ETFs \u2014 no delisting risk. XLRE excluded from ranking pre-2015 (not yet launched). No survivorship bias: universe selected a priori by hypothesis specification.",
+    "price_adjustment": "Simulation prices: yfinance auto_adjust=True (total-return adjusted). Yield denominator: auto_adjust=False (split-adjusted only, not dividend-adjusted). Dividend numerator: split-adjusted historical ex-date amounts via yf.Ticker.history().",
+    "earnings_exclusion": "N/A \u2014 sector ETFs are diversified baskets; no individual earnings events.",
+    "xlre_note": "XLRE launched Oct 2015. Pre-launch: 9-sector universe used for yield ranking. Post-launch: 10-sector universe including XLRE.",
+    "tickers": {
+      "XLK": {
+        "total_obs": 5785,
+        "start": "2001-01-02",
+        "end": "2023-12-29",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLY": {
+        "total_obs": 5785,
+        "start": "2001-01-02",
+        "end": "2023-12-29",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLF": {
+        "total_obs": 5785,
+        "start": "2001-01-02",
+        "end": "2023-12-29",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLI": {
+        "total_obs": 5785,
+        "start": "2001-01-02",
+        "end": "2023-12-29",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLV": {
+        "total_obs": 5785,
+        "start": "2001-01-02",
+        "end": "2023-12-29",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLB": {
+        "total_obs": 5785,
+        "start": "2001-01-02",
+        "end": "2023-12-29",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLP": {
+        "total_obs": 5785,
+        "start": "2001-01-02",
+        "end": "2023-12-29",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLE": {
+        "total_obs": 5785,
+        "start": "2001-01-02",
+        "end": "2023-12-29",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLU": {
+        "total_obs": 5785,
+        "start": "2001-01-02",
+        "end": "2023-12-29",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "XLRE": {
+        "total_obs": 2071,
+        "start": "2015-10-08",
+        "end": "2023-12-29",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "SPY": {
+        "total_obs": 5785,
+        "start": "2001-01-02",
+        "end": "2023-12-29",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      },
+      "SHY": {
+        "total_obs": 5393,
+        "start": "2002-07-30",
+        "end": "2023-12-29",
+        "max_consecutive_missing": 0,
+        "gap_flag": false
+      }
+    },
+    "dividend_coverage": {
+      "XLK": {
+        "total_dividend_payments": 73,
+        "note": "OK",
+        "coverage_flag": false
+      },
+      "XLY": {
+        "total_dividend_payments": 92,
+        "note": "OK",
+        "coverage_flag": false
+      },
+      "XLF": {
+        "total_dividend_payments": 92,
+        "note": "OK",
+        "coverage_flag": false
+      },
+      "XLI": {
+        "total_dividend_payments": 91,
+        "note": "OK",
+        "coverage_flag": false
+      },
+      "XLV": {
+        "total_dividend_payments": 93,
+        "note": "OK",
+        "coverage_flag": false
+      },
+      "XLB": {
+        "total_dividend_payments": 92,
+        "note": "OK",
+        "coverage_flag": false
+      },
+      "XLP": {
+        "total_dividend_payments": 92,
+        "note": "OK",
+        "coverage_flag": false
+      },
+      "XLE": {
+        "total_dividend_payments": 93,
+        "note": "OK",
+        "coverage_flag": false
+      },
+      "XLU": {
+        "total_dividend_payments": 92,
+        "note": "OK",
+        "coverage_flag": false
+      },
+      "XLRE": {
+        "total_dividend_payments": 33,
+        "note": "OK",
+        "coverage_flag": false
+      }
+    },
+    "flagged": []
+  }
+}

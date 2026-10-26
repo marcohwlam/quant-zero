@@ -1,0 +1,89 @@
+H84 Cross-Asset Return Seasonality — Gate 1 Verdict
+======================================================================
+Date:     2026-06-22
+Strategy: H84_CrossAssetReturnSeasonality
+Criteria: v2.7 / kpi-daily-weekly.md v1.0 — NO IS Sharpe gate
+Overall:  FAIL (3/5 checks passed)
+======================================================================
+
+=== Universe ===
+Equity:   SPY, QQQ, IWM, XLE, XLV, XLP, HYG, EEM
+Bond/Gold:TLT, IEF, GLD
+Safe haven: SHY
+Regime:   SPY 200-DMA → exit equity ETFs (bonds/gold exempt=True)
+Signal:   10yr same-calendar-month avg return | Top-3 equal weight
+
+=== IS Performance (2003-01-01 to 2023-12-31, 21 years) ===
+Sharpe:           0.4290    [diagnostic only — no IS Sharpe gate in v2.7]
+CAGR:             4.74%
+Max Drawdown:     -30.27%
+Win Rate:         56.89%
+Profit Factor:    1.2689
+Trade Count:      501
+Position Switches:501   [PF-1 flag: OK]
+Avg PpT:          33.27 bps
+Regime-bearish months: 50/252 IS months
+Bonds/gold held in bearish (not 100% SHY): 47 months
+
+=== OOS Performance (2024-01-01 to 2026-06-22) ===
+Sharpe:           1.4433  [HARD GATE: PASS > 0.70]
+CAGR:             19.58%
+Max Drawdown:     -13.10%
+Win Rate:         60.34%
+Trade Count:      58
+
+=== Composite Score (v2.7) ===
+CS = 0.4775  [FAIL: >= 0.60]
+  NetSharpe_norm  = 0.7773 × 0.40 = 0.3109
+  Stability_norm  = 0.0000 × 0.30 = 0.0000
+  PpT_norm        = 0.3327 × 0.20 = 0.0665
+  TradeAdq_norm   = 1.0000 × 0.10 = 0.1000
+
+=== Structural Test: WITH vs WITHOUT Bond/Gold Exemption ===
+Primary (exempt=True):      Sharpe=0.4290, MDD=-30.27%
+H73-style (exempt=False):   Sharpe=0.4246, MDD=-27.41%
+H73 actual (equity-only):   Sharpe=0.5942, MDD=-31.06%
+MDD improvement (exemption vs H73): +0.8pp
+
+=== Statistical Rigor ===
+MC p5 Sharpe:       0.1769
+MC Median Sharpe:   1.3009
+Sharpe 95% CI:      [0.0448, 0.7708]
+MDD 95% CI:         [-0.5053, -0.1868]
+Permutation p:      0.9590  [FAIL: < 0.05]
+DSR:                0.3984  [PASS: > 0]
+Max Market Impact:  0.0597 bps
+
+=== Walk-Forward Analysis (4 IS Windows) ===
+  Window 1: 2003-01-01–2007-12-31: Sharpe=1.2609 ✓, MDD=-11.53%, trades=101, Gate7=PASS
+  Window 2: 2008-01-01–2012-12-31: Sharpe=0.2653 ✓, MDD=-13.83%, trades=106, Gate7=PASS
+  Window 3: 2013-01-01–2017-12-31: Sharpe=0.1760 ✓, MDD=-20.62%, trades=131, Gate7=PASS
+  Window 4: 2018-01-01–2023-12-31: Sharpe=-0.0286 ✗, MDD=-30.26%, trades=155, Gate7=FAIL
+  WF Sharpe>0: 3/4  [PASS: >= 3/4]
+  Gate 7 all windows MDD < 30%: FAIL
+
+=== Parameter Sweep (36 combos) ===
+  Sharpe range: 0.3384 – 0.5331
+  Variance vs primary: 45.4%  (FAIL < 30%)
+
+=== Gate 1 Checks (v2.7) ===
+  [PASS] OOS Sharpe (hard gate)         1.4433  (threshold: > 0.70)
+  [FAIL] Composite Score CS             0.4775  (threshold: >= 0.60)
+  [FAIL] Gate 7 MDD (WF windows)        all >30% FAIL  (threshold: < 30%)
+  [PASS] DSR                            0.3984  (threshold: > 0)
+  [PASS] Walk-Forward Sharpe>0          3/4  (threshold: >= 3/4)
+
+=== Root Cause Analysis ===
+Primary failures (2 of 5 gates):
+  - Composite Score CS: got 0.4775, need >= 0.60
+  - Gate 7 MDD (WF windows): got all >30% FAIL, need < 30%
+
+=== Recommendation ===
+REJECT — do not advance to paper trading. Return to Research Director with metrics.
+
+=== Files ===
+Metrics: backtests/H84_CrossAssetReturnSeasonality_2026-06-22.json
+Trades:  backtests/H84_CrossAssetReturnSeasonality_2026-06-22_trades.csv
+Sweep:   backtests/H84_CrossAssetReturnSeasonality_2026-06-22_sweep.csv
+Report:  backtests/H84_CrossAssetReturnSeasonality_2026-06-22_report.html
+Verdict: backtests/H84_CrossAssetReturnSeasonality_2026-06-22_verdict.txt

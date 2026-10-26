@@ -1,0 +1,92 @@
+======================================================================
+GATE 1 VERDICT — H67v2 Minervini VCP / Stage-2 Breakout
+QUA-249 (Refinement, iteration 2/2 of H67 family)
+Date: 2026-06-13
+======================================================================
+
+VERDICT: FAIL  (high confidence)
+
+Fixes applied vs H67v1:
+  Fix 1: ATR 40-day rolling max denominator; base_days=21
+  Fix 2: WF regime-blocked windows excluded from pass/fail denominator
+  Fix 3: Continuous contraction_score > 0.80 (smooth ATR gate)
+  Fix 4: RS filter: 60-day excess return vs SPY >= 70th pct of universe
+
+──────────────────────────────────────────────────────────────────────
+QUANTITATIVE METRICS
+──────────────────────────────────────────────────────────────────────
+IS Sharpe Ratio:        0.7671  [> 1.0]  FAIL
+OOS Sharpe Ratio:       0.6044  [> 0.7]  FAIL
+IS Max Drawdown:        2.37%  [< 20%]  PASS
+OOS Max Drawdown:       1.09%  [< 25%]  PASS
+IS Win Rate:            44.87%  [> 50%]  FAIL
+IS Trade Count:         234  [>= 100]  PASS
+Profit/Trade (IS):      351.5 bps  [> 15 bps]
+CPR (estimated):        0.079  [< 0.25]  PASS
+DSR:                    1.0000  [> 0]  PASS
+
+──────────────────────────────────────────────────────────────────────
+WALK-FORWARD (Fix 2: regime-blocked windows excluded from denominator)
+──────────────────────────────────────────────────────────────────────
+Windows Total:          16
+Windows Regime-Blocked: 2 (excluded — SPY below SMA150 >= 50% of days)
+Windows Eligible:       14
+Windows Passed:         1/14 eligible  FAIL
+WF Consistency Score:   0.7393
+WF Sharpe Std:          1.6775
+WF Sharpe Min:          -2.5390  (losing OOS window present)
+
+WF Window Detail:
+  WF  1: IS= 0.000 OOS= 0.197 [2015-01-01—2015-03-31] ✗ FAIL
+  WF  2: IS= 0.096 OOS= 0.013 [2015-04-01—2015-06-30] ✗ FAIL
+  WF  3: IS=-0.102 OOS=-2.539 [2015-07-01—2015-09-30] ✗ FAIL
+  WF  4: IS=-0.201 OOS=-2.509 [2015-10-01—2015-12-31] ✗ FAIL
+  WF  5: IS=-0.473 OOS= 1.230 [2016-01-01—2016-03-31] [BLOCKED spy=33% — excluded from WF count]
+  WF  6: IS=-0.896 OOS=-2.180 [2016-04-01—2016-06-30] ✗ FAIL
+  WF  7: IS=-1.528 OOS= 0.401 [2016-07-01—2016-09-30] ✗ FAIL
+  WF  8: IS=-0.473 OOS= 2.075 [2016-10-01—2016-12-31] ✗ FAIL
+  WF  9: IS=-0.526 OOS= 2.231 [2017-01-01—2017-03-31] ✗ FAIL
+  WF 10: IS=-0.043 OOS=-0.316 [2017-04-01—2017-06-30] ✗ FAIL
+  WF 11: IS= 1.298 OOS=-1.257 [2017-07-01—2017-09-30] ✗ FAIL
+  WF 12: IS= 2.220 OOS= 0.032 [2017-10-01—2017-12-31] ✗ FAIL
+  WF 13: IS= 2.588 OOS= 0.227 [2018-01-01—2018-03-31] ✗ FAIL
+  WF 14: IS= 1.021 OOS=-1.153 [2018-04-01—2018-06-30] ✗ FAIL
+  WF 15: IS= 0.300 OOS= 3.671 [2018-07-01—2018-09-30] ✓ PASS
+  WF 16: IS= 1.379 OOS= 0.000 [2018-10-01—2018-12-31] [BLOCKED spy=27% — excluded from WF count]
+
+──────────────────────────────────────────────────────────────────────
+STATISTICAL RIGOR
+──────────────────────────────────────────────────────────────────────
+MC p5 Sharpe:           2.8983  [> 0.5]  PASS
+MC Median Sharpe:       4.3982
+Sharpe CI 95%:          [0.242, 1.381]
+MDD CI 95%:             [-0.048, -0.016]
+Market Impact:          0.05 bps
+Permutation p-value:    0.7160  FAIL
+Sensitivity (±20%):     FAIL
+
+──────────────────────────────────────────────────────────────────────
+BIAS GUARDRAILS
+──────────────────────────────────────────────────────────────────────
+Look-ahead Bias:        NONE — all signals use prior-bar data; entry next-open
+Survivorship Bias:      Option B Disclosure — IS Sharpe inflation +0.10 to +0.20
+Overnight Guards:       Documented in H67 v1.2 — Hard Gate 8 SATISFIED
+
+──────────────────────────────────────────────────────────────────────
+RECOMMENDATION
+──────────────────────────────────────────────────────────────────────
+Return to Strategy Coder. Failing: ['is_sharpe_gt_1', 'oos_sharpe_gt_0_7', 'win_rate_gt_50pct', 'wf_windows_passed_3_of_4', 'sensitivity_pass', 'permutation_test_pass']
+
+Failing criteria: ['is_sharpe_gt_1', 'oos_sharpe_gt_0_7', 'win_rate_gt_50pct', 'wf_windows_passed_3_of_4', 'sensitivity_pass', 'permutation_test_pass']
+
+Survivorship-bias-adjusted OOS Sharpe estimate: 0.454
+  (applying midpoint -0.15 bias correction from H67 spec)
+
+Family iteration status: 2/2 exhausted — if FAIL, H67 family is retired.
+
+======================================================================
+Files:
+  Metrics: backtests/h67v2_vcp_stage2_breakout_2026-06-13.json
+  Verdict: backtests/h67v2_vcp_stage2_breakout_2026-06-13_verdict.txt
+  Trades:  backtests/h67v2_vcp_stage2_breakout_2026-06-13_trades.csv
+======================================================================

@@ -1,0 +1,89 @@
+========================================================================
+GATE 1 VERDICT — H58 Copper/Gold Ratio Regime Signal
+Report Date: 2026-06-11
+========================================================================
+
+OVERALL VERDICT: FAIL
+
+── GATE 1 CRITERIA ──────────────────────────────────────────────────────
+  [FAIL] IS_Sharpe: 0.5296 (threshold: > 1.0)
+  [PASS] OOS_Sharpe: 0.8688 (threshold: > 0.7)
+  [FAIL] IS_MaxDrawdown: -31.94 (threshold: > -20%)
+  [FAIL] IS_CAGR: 5.34 (threshold: >= 10%)
+  [PASS] IS_TradeCount: 308 (threshold: >= 100)
+  [FAIL] WF_Consistency: 2/4 (threshold: >= 3/4 windows)
+  [FAIL] Permutation_pvalue: 0.153 (threshold: < 0.05)  [CRITICAL — H51 retired for p=1.0]
+
+── IS METRICS (2003-01-01 to 2023-12-31) ─────────────────────────────────
+  Sharpe:           0.5296
+  CAGR:             5.34%
+  Max Drawdown:     -31.94%
+  Total Return:     198.33%
+  Win Rate:         53.2%
+  Profit Factor:    1.412
+  Trade Count:      308
+  Transitions/yr:   29.3
+  Avg Hold Days:    9.0
+  % Time in SPY:    52.4%
+
+── OOS METRICS (2024-01-01 to 2026-06-10) ────────────────────────────────
+  Sharpe:           0.8688
+  CAGR:             7.88%
+  Max Drawdown:     -11.83%
+  Total Return:     20.32%
+  Win Rate:         52.8%
+  Trade Count:      36
+  OOS Degradation:  -64.0% vs IS Sharpe
+
+── STATISTICAL RIGOR ────────────────────────────────────────────────────
+  MC p5 Sharpe:     0.1023  [WEAK]
+  MC median Sharpe: 1.6303
+  Sharpe 95% CI:    [0.1855, 0.9312]
+  MDD 95% CI:       [-41.41%, -14.69%]
+  Permutation p:    0.1530  (FAIL ✗ — retire strategy) [CRITICAL — H51 had p=1.0]
+  Perm n_blocks:    616
+  Market Impact:    0.007 bps  (OK)
+  DSR:              1.0000  (PASS)
+
+── WALK-FORWARD (4 expanding windows) ───────────────────────────────
+  Window 1: IS 2003-01-01→2010-12-31 OOS 2011-01-01→2015-12-31 | IS Sharpe=0.563 OOS Sharpe=0.433 [FAIL]
+  Window 2: IS 2003-01-01→2013-12-31 OOS 2014-01-01→2017-12-31 | IS Sharpe=0.523 OOS Sharpe=0.969 [PASS]
+  Window 3: IS 2003-01-01→2016-12-31 OOS 2017-01-01→2020-12-31 | IS Sharpe=0.558 OOS Sharpe=1.179 [PASS]
+  Window 4: IS 2003-01-01→2018-12-31 OOS 2019-01-01→2023-12-31 | IS Sharpe=0.564 OOS Sharpe=0.437 [FAIL]
+  Windows Passed:    2/4
+  WF Sharpe Std:     0.3278
+  WF Sharpe Min:     0.4329  
+
+── SUB-PERIOD DIAGNOSTICS ───────────────────────────────────────────
+  pre_gfc_only: Sharpe=0.322 CAGR=2.7% MDD=-13.6% Trades=78
+  gfc_only: Sharpe=0.537 CAGR=7.6% MDD=-19.5% Trades=31
+  copper_bust_2015_16: Sharpe=0.854 CAGR=6.0% MDD=-5.3% Trades=30
+  rate_shock_2022: Sharpe=-1.601 CAGR=-24.4% MDD=-30.5% Trades=18
+  post_gfc_2010_2019: Sharpe=0.906 CAGR=7.2% MDD=-15.2% Trades=140
+
+── SMOOTHING COMPARISON (QUA-201 Engineering Note 2) ────────────────
+  smooth=1: Sharpe=0.5296 CAGR=5.3% MDD=-31.9% Transitions=615
+  smooth=2: Sharpe=0.5792 CAGR=6.2% MDD=-26.4% Transitions=427
+  Note: smooth=2 requires 2 consecutive Cu/Au < 0 before exiting SPY. Reduces whipsaw at cost of slower exit. Fewer transitions = lower cost drag.
+
+── PARAMETER SWEEP SUMMARY (IS-only, 90 combinations) ──────────────────
+  Best IS Sharpe:    0.9111
+  Median IS Sharpe:  0.6859
+  Worst IS Sharpe:   0.4373
+  Best params:       lookback=40 thresh=0.0000 smooth=2 riskoff=SHY
+
+── COST MODEL ───────────────────────────────────────────────────────────
+  Fixed:    $0.005/share
+  Slippage: 0.005% of notional (ED-SLIP-001 ultra-liquid tier: SPY ADV > 50M/day)
+  Impact:   k=0.1 × sigma × sqrt(Q/ADV) × notional (Almgren-Chriss)
+  Signal:   HG=F/GC=F — not traded. No futures costs.
+
+── DATA QUALITY ─────────────────────────────────────────────────────────
+  Price adjustment: yfinance auto_adjust=True
+  HG=F: front-month continuous; roll gap check applied (>20% day-over-day)
+  GC=F: front-month continuous; roll gap check applied
+  Forward fill: commodity closes ffill(limit=3) into SPY calendar
+  Survivorship bias: N/A — SPY/SHY are active broad-market ETFs
+  Lookahead bias: signal at T computed from T close; execution at T+1 open
+
+========================================================================

@@ -1,0 +1,288 @@
+{
+  "strategy_name": "H78_IWMSPYSizeSpreadZScoreTimer",
+  "date": "2026-06-17",
+  "hypothesis": "H78",
+  "asset_class": "equities_etf",
+  "parent_task": "QUA-325",
+  "universe": [
+    "SPY",
+    "IWM",
+    "SHY"
+  ],
+  "parameters": {
+    "z_lookback": 60,
+    "z_threshold": 1.0,
+    "iwm_heavy_pct": 0.6,
+    "min_hold_days": 3,
+    "dma_window": 200
+  },
+  "initial_capital": 100000.0,
+  "cost_model": {
+    "spy_slippage": "0.005% ultra-liquid (ED-SLIP-001; SPY ADV >> 50M/day)",
+    "iwm_slippage": "0.005% ultra-liquid (ED-SLIP-001; IWM ADV >> 50M/day)",
+    "shy_slippage": "0.05% standard (SHY ADV ~20M/day < 50M threshold)",
+    "commission": "$0.005/share",
+    "market_impact": "0.1 \u00d7 \u03c3 \u00d7 sqrt(Q/ADV) \u2014 Almgren-Chriss square-root model",
+    "ruling": "ED-SLIP-001"
+  },
+  "is_period": {
+    "start": "2005-01-01",
+    "end": "2020-12-31"
+  },
+  "oos_period": {
+    "start": "2021-01-01",
+    "end": "2024-12-31"
+  },
+  "is_metrics": {
+    "sharpe": 0.4556,
+    "cagr": 0.0538,
+    "max_drawdown": -0.2896,
+    "total_return": 1.3129,
+    "trade_count": 448,
+    "position_switches": 447,
+    "win_rate": 0.5603,
+    "profit_factor": 1.2908,
+    "avg_ppt_bps": 23.36,
+    "avg_cost_bps": 1.4491,
+    "period": "2005-01-01 to 2020-12-31",
+    "years": 16.0
+  },
+  "oos_metrics": {
+    "sharpe": 0.5323,
+    "cagr": 0.069,
+    "max_drawdown": -0.2781,
+    "total_return": 0.3056,
+    "trade_count": 98,
+    "position_switches": 97,
+    "win_rate": 0.5816,
+    "profit_factor": 1.372,
+    "avg_ppt_bps": 33.52,
+    "avg_cost_bps": 1.1813,
+    "period": "2021-01-01 to 2024-12-31",
+    "years": 4.0
+  },
+  "stat_tests": {
+    "dsr": 0.0,
+    "sharpe_ci_low": -0.0277,
+    "sharpe_ci_high": 0.9614,
+    "mdd_ci_low": -0.5979,
+    "mdd_ci_high": -0.1933,
+    "permutation_pvalue": 1.0,
+    "permutation_test_pass": false,
+    "permutation_perm_mean": 1.364,
+    "permutation_perm_p95": 1.429,
+    "mc_p5_sharpe": 0.2647,
+    "mc_median_sharpe": 1.4109,
+    "mc_p95_sharpe": 2.689,
+    "mc_flag": "MC resampling on 447 IS closed state periods"
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "is_period": "2005-01-01 to 2009-12-31",
+        "oos_period": "2010-01-01 to 2011-12-31",
+        "is_sharpe": 0.3566,
+        "oos_sharpe": -0.378,
+        "is_mdd": -0.2302,
+        "oos_mdd": -0.2852,
+        "is_trades": 132,
+        "oos_trades": 58,
+        "pass": false
+      },
+      {
+        "is_period": "2005-01-01 to 2012-12-31",
+        "oos_period": "2013-01-01 to 2014-12-31",
+        "is_sharpe": 0.2382,
+        "oos_sharpe": 1.3931,
+        "is_mdd": -0.2852,
+        "oos_mdd": -0.0922,
+        "is_trades": 221,
+        "oos_trades": 60,
+        "pass": true
+      },
+      {
+        "is_period": "2005-01-01 to 2015-12-31",
+        "oos_period": "2016-01-01 to 2017-12-31",
+        "is_sharpe": 0.3813,
+        "oos_sharpe": 1.5885,
+        "is_mdd": -0.2852,
+        "oos_mdd": -0.0676,
+        "is_trades": 310,
+        "oos_trades": 50,
+        "pass": true
+      },
+      {
+        "is_period": "2005-01-01 to 2018-12-31",
+        "oos_period": "2019-01-01 to 2020-12-31",
+        "is_sharpe": 0.4289,
+        "oos_sharpe": 0.6091,
+        "is_mdd": -0.2852,
+        "oos_mdd": -0.237,
+        "is_trades": 392,
+        "oos_trades": 57,
+        "pass": false
+      }
+    ],
+    "passed": 2,
+    "total": 4,
+    "sharpe_std": 0.7742,
+    "sharpe_min": -0.378
+  },
+  "tilt_test": [
+    {
+      "label": "primary_60_40",
+      "iwm_heavy_pct": 0.6,
+      "spy_heavy_pct": 0.4,
+      "is_sharpe": 0.4556,
+      "is_cagr_pct": 5.38,
+      "is_mdd_pct": -28.96,
+      "is_trades": 448,
+      "oos_sharpe": 0.5323,
+      "oos_cagr_pct": 6.9,
+      "oos_mdd_pct": -27.81
+    },
+    {
+      "label": "aggressive_70_30",
+      "iwm_heavy_pct": 0.7,
+      "spy_heavy_pct": 0.3,
+      "is_sharpe": 0.4582,
+      "is_cagr_pct": 5.44,
+      "is_mdd_pct": -29.53,
+      "is_trades": 448,
+      "oos_sharpe": 0.5297,
+      "oos_cagr_pct": 6.95,
+      "oos_mdd_pct": -28.11
+    },
+    {
+      "label": "aggressive_80_20",
+      "iwm_heavy_pct": 0.8,
+      "spy_heavy_pct": 0.2,
+      "is_sharpe": 0.4601,
+      "is_cagr_pct": 5.49,
+      "is_mdd_pct": -30.1,
+      "is_trades": 448,
+      "oos_sharpe": 0.5252,
+      "oos_cagr_pct": 7.0,
+      "oos_mdd_pct": -28.42
+    }
+  ],
+  "sweep_stability": {
+    "primary_sharpe": 0.4556,
+    "sharpe_min": 0.3982,
+    "sharpe_max": 0.6727,
+    "sharpe_range": 0.2745,
+    "sharpe_variance_pct": 0.6025,
+    "sensitivity_pass": false,
+    "n_combinations": 384
+  },
+  "market_impact": {
+    "SPY": {
+      "notional": 40000.0,
+      "avg_price": 149.03,
+      "qty": 268.4,
+      "adv_20d": 138140109.0,
+      "q_over_adv": 1.9e-06,
+      "impact_bps": 0.0172,
+      "slippage_pct": 5e-05,
+      "adv_tier": "ultra_liquid",
+      "liq_constrained": false
+    },
+    "IWM": {
+      "notional": 60000.0,
+      "avg_price": 86.38,
+      "qty": 694.6,
+      "adv_20d": 45588820.0,
+      "q_over_adv": 1.52e-05,
+      "impact_bps": 0.0603,
+      "slippage_pct": 5e-05,
+      "adv_tier": "ultra_liquid",
+      "liq_constrained": false
+    },
+    "SHY": {
+      "notional": 0.0,
+      "avg_price": 66.33,
+      "qty": 0.0,
+      "adv_20d": 1515450.0,
+      "q_over_adv": 0.0,
+      "impact_bps": 0.0,
+      "slippage_pct": 0.0005,
+      "adv_tier": "standard",
+      "liq_constrained": false
+    }
+  },
+  "data_quality": {
+    "survivorship_bias": "Fixed 3-ticker universe: SPY (1993+), IWM (2000-05), SHY (2002-07). All active ETFs through OOS end 2024. No survivorship bias.",
+    "price_adjustment": "yfinance auto_adjust=True \u2014 split- and dividend-adjusted.",
+    "earnings_exclusion": "N/A \u2014 ETF baskets, no single-stock earnings events.",
+    "delisted_tickers": "N/A \u2014 SPY, IWM, SHY all active through 2024.",
+    "tickers": {
+      "SPY": {
+        "total_trading_days": 6036,
+        "max_consecutive_missing": 0,
+        "gap_flag": false,
+        "start": "2001-01-02",
+        "end": "2024-12-30"
+      },
+      "IWM": {
+        "total_trading_days": 6036,
+        "max_consecutive_missing": 0,
+        "gap_flag": false,
+        "start": "2001-01-02",
+        "end": "2024-12-30"
+      },
+      "SHY": {
+        "total_trading_days": 5644,
+        "max_consecutive_missing": 0,
+        "gap_flag": false,
+        "start": "2002-07-30",
+        "end": "2024-12-30"
+      }
+    },
+    "flagged": []
+  },
+  "gate1_checks": {
+    "IS Sharpe > 1.0": {
+      "pass": false,
+      "detail": "0.4556 (threshold: > 1.0)"
+    },
+    "OOS Sharpe > 0.70": {
+      "pass": false,
+      "detail": "0.5323 (threshold: > 0.70)"
+    },
+    "IS CAGR >= 10%": {
+      "pass": false,
+      "detail": "5.38% (threshold: >= 10%)"
+    },
+    "IS MDD > -20%": {
+      "pass": false,
+      "detail": "-28.96% (threshold: > -20%)"
+    },
+    "OOS MDD > -20%": {
+      "pass": false,
+      "detail": "-27.81% (threshold: > -20%)"
+    },
+    "IS Trade Count >= 100": {
+      "pass": true,
+      "detail": "448 state periods (threshold: >= 100)"
+    },
+    "Walk-Forward >= 3/4": {
+      "pass": false,
+      "detail": "2/4 windows pass OOS Sharpe > 0.70"
+    },
+    "Permutation p < 0.05": {
+      "pass": false,
+      "detail": "p = 1.0 (threshold: < 0.05)"
+    },
+    "DSR > 0": {
+      "pass": false,
+      "detail": "DSR = 0.0 (threshold: > 0)"
+    },
+    "IS Switches >= 60": {
+      "pass": true,
+      "detail": "447 switches (threshold: >= 60)"
+    }
+  },
+  "gate1_pass": false,
+  "gate1_n_passed": 2,
+  "gate1_n_total": 10
+}

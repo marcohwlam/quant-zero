@@ -1,0 +1,67 @@
+FAIL
+Strategy: H81_DollarStrengthEMRotation
+Date: 2026-06-22
+IS period: 2008-01-01 to 2022-12-31
+OOS period: 2023-01-01 to 2026-06-01
+
+── Core Metrics ──
+IS Sharpe: 0.5990 (threshold >1.0)
+OOS Sharpe: 0.9181 (threshold >0.7)
+IS MDD: -20.09% (threshold <20%)
+OOS MDD: -10.52% (threshold <25%)
+IS CAGR: 6.53%
+OOS CAGR: 8.24%
+Trade count (IS): 359 (threshold >=100)
+Trade count (OOS): 92
+Win rate (IS): 55.93% (threshold >50%)
+Profit factor (IS): 1.9112
+IS Regime — weak: 273 | neutral: 273 | strong: 209
+OOS Regime — weak: 44 | neutral: 72 | strong: 57
+
+── Statistical Rigor ──
+DSR z-score: 23.3852 (PASS)
+Permutation p-value: 1.0000 (FAIL)
+MC p5 Sharpe: 0.1788 (WARN)
+MC Median Sharpe: 0.5971
+Bootstrap Sharpe CI: [0.2602, 1.0633]
+Bootstrap MDD CI: [-0.3449, -0.1278]
+Bootstrap WR CI: [0.4722, 0.5327]
+WF windows passed: 5/6
+WF Sharpe std: 1.0957
+WF Sharpe min: -1.3430
+Sensitivity pass: False
+Market impact (est): 2.00 bps
+Post-cost Sharpe (IS): 0.5990
+Post-cost Sharpe (OOS): 0.9181
+Liquidity constrained events: 0
+
+── Parameter Sweep (IS sensitivity) ──
+  uup_sma_period: {'uup_sma_period=30': 0.5992, 'uup_sma_period=50': 0.599, 'uup_sma_period=63': 0.5984, 'uup_sma_period=100': 0.5122}
+    Gate1: PASS: variance 15.1% <= 30%
+  uup_mom_period: {'uup_mom_period=42': 0.374, 'uup_mom_period=63': 0.599, 'uup_mom_period=126': 0.5711}
+    Gate1: FAIL: variance 43.7% > 30%
+  confirmation_weeks: {'confirmation_weeks=1': 0.623, 'confirmation_weeks=2': 0.599, 'confirmation_weeks=3': 0.5882, 'confirmation_weeks=4': 0.5508}
+    Gate1: PASS: variance 12.2% <= 30%
+
+── Walk-Forward Windows ──
+  Window 1: IS [2008-01-01–2010-12-31] Sharpe=0.706 | OOS [2011-01-01–2011-06-30] Sharpe=0.761 | CR=1.079 | PASS
+  Window 2: IS [2008-07-01–2011-06-30] Sharpe=1.032 | OOS [2011-07-01–2011-12-31] Sharpe=-1.343 | CR=-1.301 | FAIL
+  Window 3: IS [2009-01-01–2011-12-31] Sharpe=0.714 | OOS [2012-01-01–2012-06-30] Sharpe=0.846 | CR=1.185 | PASS
+  Window 4: IS [2009-07-01–2012-06-30] Sharpe=0.706 | OOS [2012-07-01–2012-12-31] Sharpe=2.378 | CR=3.369 | PASS
+  Window 5: IS [2010-01-01–2012-12-31] Sharpe=0.444 | OOS [2013-01-01–2013-06-30] Sharpe=0.790 | CR=1.778 | PASS
+  Window 6: IS [2010-07-01–2013-06-30] Sharpe=0.793 | OOS [2013-07-01–2013-12-31] Sharpe=1.154 | CR=1.456 | PASS
+
+── Gate 1 Checks ──
+  FAIL: is_sharpe_pass
+  PASS: oos_sharpe_pass
+  FAIL: is_mdd_pass
+  PASS: oos_mdd_pass
+  PASS: win_rate_pass
+  PASS: dsr_pass
+  PASS: wf_pass
+  PASS: trade_count_pass
+  FAIL: permutation_pass
+  FAIL: mc_p5_pass
+  FAIL: sensitivity_pass
+
+OOS Data Quality: PASS | Coverage: 100.0%

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Gate 1: H45v2_NR7SectorETF</title>
+<style>
+body{font-family:monospace;max-width:1100px;margin:20px auto;background:#f8f9fa}
+h1,h2{color:#333}
+.verdict{font-size:2em;font-weight:bold;color:#dc3545;border:3px solid #dc3545;
+  display:inline-block;padding:8px 20px;border-radius:6px}
+table{border-collapse:collapse;width:100%;margin:10px 0}
+th,td{border:1px solid #dee2e6;padding:6px 10px;text-align:left}
+th{background:#343a40;color:white} tr:nth-child(even){background:#f2f2f2}
+.section{background:white;padding:15px;margin:15px 0;border-radius:6px;
+  box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.metric{display:inline-block;margin:8px;padding:10px;background:#e9ecef;
+  border-radius:4px;min-width:140px}
+.mv{font-size:1.4em;font-weight:bold;color:#0d6efd}
+.pass{color:#28a745;font-weight:bold} .fail{color:#dc3545;font-weight:bold}
+</style></head>
+<body>
+<h1>Gate 1 Report: H45v2_NR7SectorETF</h1>
+<p>Date: 2026-06-25 | IS: 2005-01-01–2018-12-31 | OOS: 2019-01-01–2026-06-25</p>
+<p>Universe: SPY, QQQ, IWM, XLK, XLF, XLV, XLE, XLI, XLY, XLP, XLB, XLU, GLD, TLT, SLV (+ XLRE/XLC for OOS signals)</p>
+<p>Track A swing/daily | NR7 lookback=7 (Crabel canonical, fixed) | max_positions=5 | position_size=20%</p>
+<div class="verdict">FAIL</div>
+
+<div class="section"><h2>Core Metrics</h2>
+<div class="metric"><div>IS Sharpe</div><div class="mv">0.0404</div></div>
+<div class="metric"><div>OOS Sharpe</div><div class="mv">0.2399</div></div>
+<div class="metric"><div>IS MDD</div><div class="mv">-20.51%</div></div>
+<div class="metric"><div>IS CAGR</div><div class="mv">0.07%</div></div>
+<div class="metric"><div>OOS CAGR</div><div class="mv">1.34%</div></div>
+<div class="metric"><div>IS Trades</div><div class="mv">1263</div></div>
+<div class="metric"><div>IS PpT (bps)</div><div class="mv">0.4</div></div>
+<div class="metric"><div>IS CPR</div><div class="mv">0.130</div></div>
+<div class="metric"><div>Win Rate</div><div class="mv">50.59%</div></div>
+<div class="metric"><div>Composite CS</div><div class="mv">0.1945</div></div>
+<div class="metric"><div>MC p5 Sharpe</div><div class="mv">-0.4086</div></div>
+</div>
+
+<div class="section"><h2>Gate 1 Checks (10 required)</h2>
+<table><tr><th>Check</th><th>Result</th><th>Actual</th><th>Threshold</th></tr>
+<tr><td>Net OOS Sharpe > 0.7</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>0.2399</td><td>> 0.7</td></tr>
+<tr><td>Net profit/trade > 15 bps</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>0.41 bps</td><td>> 15 bps</td></tr>
+<tr><td>IS MDD < 20% (CS threshold)</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>-20.51%</td><td>< 20%</td></tr>
+<tr><td>IS MDD < 30% (Gate 7 ceiling)</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>-20.51%</td><td>< 30%</td></tr>
+<tr><td>IS trades/quarter > 30</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>22.6</td><td>> 30</td></tr>
+<tr><td>CPR < 0.25</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>0.1303</td><td>< 0.25</td></tr>
+<tr><td>WF OOS Sharpe > 0: ≥ 3/4</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>2/4</td><td>≥ 3/4</td></tr>
+<tr><td>Composite Score CS ≥ 0.60</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>0.1945</td><td>≥ 0.60</td></tr>
+<tr><td>Permutation p < 0.05</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>1.0000</td><td>< 0.05</td></tr>
+<tr><td>DSR z-score > 0</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>-1.8785</td><td>> 0</td></tr></table>
+<p>Score: 2/10 passed</p></div>
+
+<div class="section"><h2>Walk-Forward (4 windows — 4-year IS / 6-month OOS)</h2>
+<table><tr><th>#</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th>
+<th>IS Trades</th><th>OOS Sharpe</th><th>Status</th></tr>
+<tr><td>1</td><td>2009-01-01–2012-12-31</td><td>2013-01-01–2013-06-30</td><td>0.4446</td><td>404</td><td>1.9875</td><td style='color:#28a745'>PASS</td></tr>
+<tr><td>2</td><td>2011-01-01–2014-12-31</td><td>2015-01-01–2015-06-30</td><td>0.1183</td><td>401</td><td>-0.6485</td><td style='color:#dc3545'>FAIL</td></tr>
+<tr><td>3</td><td>2013-01-01–2016-12-31</td><td>2017-01-01–2017-06-30</td><td>0.3089</td><td>339</td><td>-0.2660</td><td style='color:#dc3545'>FAIL</td></tr>
+<tr><td>4</td><td>2015-01-01–2018-12-31</td><td>2019-01-01–2019-06-30</td><td>-0.1923</td><td>327</td><td>1.1662</td><td style='color:#28a745'>PASS</td></tr></table>
+<p>WF pass rate: 2/4 (gate: ≥ 3/4 OOS Sharpe &gt; 0) |
+WF OOS Sharpe std=1.0663</p></div>
+
+<div class="section"><h2>Statistical Rigor</h2>
+<p>DSR z-score: -1.8785 | Bootstrap Sharpe CI:
+[-0.4611, 0.5835]</p>
+<p>Bootstrap MDD CI: [-0.3843, -0.0989]</p>
+<p>MC p5/median/p95: -0.4086 / 0.0251 /
+0.4681</p>
+<p>Permutation p-value: 1.0000</p></div>
+
+<div class="section"><h2>Parameter Sweep (27 combos)</h2>
+<p>max_positions: [3, 5, 7] | trend_ma: [150, 200, 250] | hold_days: [3, 5, 7]</p>
+<p>Sharpe range: -0.4744 – 0.1599</p>
+<p>Sensitivity = (max-min)/|baseline| × 100 = <b>1570.0%</b>
+(threshold: &lt;50% — FAIL)</p>
+<p>Combos with Sharpe &gt; 0.7: 0/27</p></div>
+
+<div class="section"><h2>Composite Score (kpi-daily-weekly.md v1.0)</h2>
+<p>CS = 0.40 × NetSharpe_norm + 0.30 × Stability_norm + 0.20 × PpT_norm + 0.10 × TradeAdequacy_norm</p>
+<p>NetSharpe_norm = 0.2960 |
+Stability_norm = 0.0000 |
+PpT_norm = 0.0041 |
+TradeAdequacy_norm = 0.7530</p>
+<p>CS = <b>0.1945</b> (threshold: ≥ 0.60 — FAIL)</p></div>
+
+<div class="section"><h2>Track A Hard Gate 8 — Overnight/Weekend Guards</h2>
+<table>
+<tr><th>Guard</th><th>Value</th></tr>
+<tr><td>Overnight gap PnL contribution</td><td>3435.6%</td></tr>
+<tr><td>Weekend gap exposure (% avg notional)</td><td>14.5%</td></tr>
+<tr><td>Gap MDD attribution</td><td>130.2%</td></tr>
+<tr><td>Earnings hold policy</td><td>N/A — All 15 tickers are ETFs (sector baskets, commodity ETFs, bond ETF). No individual earnings risk. ETFs do not report earnings and cannot be halted for single-stock earnings. 5% per-earnings-position cap is inapplicable by asset-class definition.</td></tr>
+<tr><td>Survivorship bias</td><td>NONE — SPY/QQQ/IWM (1993-2000), SPDR sector ETFs (1998), GLD (2004), TLT (2002), SLV (2006) all continuously listed. XLRE (2015) and XLC (2018) contribute OOS signals only; pre-inception NaN handled as no-signal (no data fabrication). No delisting risk for any ticker in universe.</td></tr>
+</table></div>
+
+<div class="section"><h2>Data Quality Checklist</h2>
+<ul>
+<li><b>Universe:</b> 15 ETFs. SPY/QQQ/IWM/SPDR sector ETFs: full IS coverage. GLD (Nov 2004), TLT (Jul 2002), SLV (Apr 2006): partial IS warmup. XLRE/XLC: OOS signals only (pre-inception → NaN → no signal). No survivorship bias.</li>
+<li><b>Price adjustments:</b> yfinance auto_adjust=True (splits + dividends).</li>
+<li><b>Earnings exclusion:</b> N/A — all tickers are ETF baskets; no single-stock earnings risk.</li>
+<li><b>Delisted tickers:</b> N/A — all ETFs continuously listed from inception.</li>
+<li><b>Entry execution:</b> Next-day open with breakout confirmation (open &gt; NR7 high). CLEAN — no same-close fill.</li>
+<li><b>Look-ahead:</b> CLEAN — NR7/SMA computed on prior-close data; entry at next open.</li>
+<li><b>Cost model:</b> ED-SLIP-001 dual-tier — SPY/QQQ/IWM: $0.005/share + 0.005% slippage; sector ETFs/GLD/TLT/SLV: $0.005/share + 0.05% slippage + Almgren-Chriss impact.</li>
+</ul></div>
+
+</body></html>

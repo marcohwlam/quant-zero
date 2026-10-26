@@ -1,0 +1,213 @@
+{
+  "strategy_name": "H87v2_DarvasBoxBreakout_RegimeAdjusted",
+  "date": "2026-06-25",
+  "issue": "QUA-423",
+  "parent_issue": "QUA-422",
+  "version": "H87v2",
+  "asset_class": "equities",
+  "h87v2_changes": {
+    "is_period": "2023-01-01 to 2025-12-31 (removed 2022 bear contamination)",
+    "walk_forward": "4 \u00d7 (6mo IS / 3mo OOS)",
+    "box_n_sweep": "[20, 25, 30] (removed box_n=15)"
+  },
+  "is_sharpe": 1.0716,
+  "composite_oos_sharpe": 0.20379518072289154,
+  "is_mdd": -0.1493,
+  "is_win_rate": 0.583,
+  "is_profit_factor": "1.5300",
+  "is_trade_count": 259,
+  "is_total_return": 0.3727,
+  "dsr": 0.9907,
+  "gate1_pass": false,
+  "overall_verdict": "FAIL",
+  "n_checks_passed": 8,
+  "n_checks_total": 10,
+  "mc_p5_sharpe": 1.0434044536195528,
+  "mc_median_sharpe": 2.708555597850145,
+  "mc_p95_sharpe": 4.443109292864431,
+  "sharpe_ci_low": -0.2602272091007617,
+  "sharpe_ci_high": 2.3718180659819343,
+  "mdd_ci_low": -0.2693126279282325,
+  "mdd_ci_high": -0.07895627626918483,
+  "win_rate_ci_low": 0.46153846153846156,
+  "win_rate_ci_high": 0.5680473372781065,
+  "permutation_pvalue": 1.0,
+  "permutation_test_pass": false,
+  "wf_windows_passed": 3,
+  "wf_sharpe_std": 0.5802605293098954,
+  "wf_sharpe_min": -0.6621,
+  "sensitivity_pass": true,
+  "sensitivity_sharpe_var_pct": 0.5518850317282566,
+  "base_params": {
+    "box_n": 25,
+    "box_width_max": 0.1,
+    "vol_ratio_min": 1.3,
+    "spy_sma_days": 150,
+    "hard_stop_pct": 0.08,
+    "max_hold_days": 25,
+    "partial_profit_pct": 0.2,
+    "trail_stop_pct": 0.08,
+    "high_proximity_pct": 0.25,
+    "min_price": 10.0,
+    "min_adv_dollars": 2000000,
+    "max_positions": 10,
+    "risk_per_trade_pct": 0.02,
+    "max_position_pct": 0.1,
+    "init_cash": 25000,
+    "universe_file": "data/h82v2_universe_2018_jan.csv"
+  },
+  "is_period": "2023-01-01 to 2025-09-30",
+  "wf_windows": [
+    {
+      "window": 1,
+      "is_start": "2023-01-01",
+      "is_end": "2023-06-30",
+      "oos_start": "2023-07-01",
+      "oos_end": "2023-09-30",
+      "is_sharpe": 1.2476,
+      "oos_sharpe": 0.0972,
+      "is_mdd": -0.0808,
+      "oos_mdd": -0.0671,
+      "is_trades": 43,
+      "oos_trades": 21,
+      "is_win_rate": 0.4884,
+      "wf_pass": true
+    },
+    {
+      "window": 2,
+      "is_start": "2023-10-01",
+      "is_end": "2024-03-31",
+      "oos_start": "2024-04-01",
+      "oos_end": "2024-06-30",
+      "is_sharpe": 4.5084,
+      "oos_sharpe": 0.6328,
+      "is_mdd": -0.0456,
+      "oos_mdd": -0.0528,
+      "is_trades": 44,
+      "oos_trades": 20,
+      "is_win_rate": 0.7727,
+      "wf_pass": true
+    },
+    {
+      "window": 3,
+      "is_start": "2024-07-01",
+      "is_end": "2024-12-31",
+      "oos_start": "2025-01-01",
+      "oos_end": "2025-03-31",
+      "is_sharpe": 1.0183,
+      "oos_sharpe": 0.8392,
+      "is_mdd": -0.0712,
+      "oos_mdd": -0.058,
+      "is_trades": 49,
+      "oos_trades": 20,
+      "is_win_rate": 0.5918,
+      "wf_pass": true
+    },
+    {
+      "window": 4,
+      "is_start": "2025-04-01",
+      "is_end": "2025-09-30",
+      "oos_start": "2025-10-01",
+      "oos_end": "2025-12-31",
+      "is_sharpe": -0.7469,
+      "oos_sharpe": -0.6621,
+      "is_mdd": -0.0894,
+      "oos_mdd": -0.0344,
+      "is_trades": 36,
+      "oos_trades": 22,
+      "is_win_rate": 0.4167,
+      "wf_pass": false
+    }
+  ],
+  "checks": [
+    {
+      "gate": "IS Sharpe",
+      "value": "1.0716",
+      "threshold": "> 1.0",
+      "passed": true
+    },
+    {
+      "gate": "Composite OOS Sharpe (WF)",
+      "value": "0.2038",
+      "threshold": "> 0.7",
+      "passed": false
+    },
+    {
+      "gate": "IS Max Drawdown",
+      "value": "-14.93%",
+      "threshold": "< 20%",
+      "passed": true
+    },
+    {
+      "gate": "IS Trade Count",
+      "value": "259",
+      "threshold": ">= 100",
+      "passed": true
+    },
+    {
+      "gate": "IS Win Rate",
+      "value": "58.30%",
+      "threshold": "> 50%",
+      "passed": true
+    },
+    {
+      "gate": "IS Profit Factor",
+      "value": "1.5300",
+      "threshold": "> 1.0",
+      "passed": true
+    },
+    {
+      "gate": "DSR",
+      "value": "0.9907",
+      "threshold": "> 0",
+      "passed": true
+    },
+    {
+      "gate": "WF OOS Sharpe>0 windows",
+      "value": "3/4",
+      "threshold": ">= 3/4",
+      "passed": true
+    },
+    {
+      "gate": "Parameter Sensitivity",
+      "value": "55.2%",
+      "threshold": "< 100% SR range",
+      "passed": true
+    },
+    {
+      "gate": "Permutation Test",
+      "value": "p=1.0000",
+      "threshold": "p < 0.05",
+      "passed": false
+    }
+  ],
+  "data_quality": {
+    "flagged_count": 766,
+    "flagged_sample": [
+      "AAPL",
+      "MSFT",
+      "AMZN",
+      "GOOG",
+      "GOOGL",
+      "NVDA",
+      "INTC",
+      "CSCO",
+      "ORCL",
+      "IBM",
+      "QCOM",
+      "TXN",
+      "AVGO",
+      "AMAT",
+      "LRCX",
+      "KLAC",
+      "ADI",
+      "MCHP",
+      "SNPS",
+      "CDNS"
+    ],
+    "total_tickers": 766
+  },
+  "survivorship_bias_note": "Universe = h82v2_universe_2018_jan.csv (PIT proxy ~2018). Stocks delisted after 2018 absent from yfinance \u2014 bias directionally inflates Sharpe. Same treatment as H87 / H82v2 (documented per Hard Gate 9 option b).",
+  "look_ahead_bias_flag": false,
+  "look_ahead_note": "CLEAN \u2014 box ceiling/floor from prior N days (.shift(1)). Vol avg from prior 20 days (.shift(1)). Entry signal at T-close, fill at T+1-open. No same-bar fills."
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<title>H82 MinerviniVCPBreakout Gate 1 Report</title>
+<style>
+body{font-family:monospace;max-width:900px;margin:auto;padding:20px;background:#f9fafb}
+h1{color:#1e293b}h2{color:#334155;border-bottom:1px solid #e2e8f0}
+.verdict{font-size:2em;font-weight:bold;color:#ef4444;padding:10px;border:2px solid #ef4444;display:inline-block}
+table{border-collapse:collapse;width:100%;margin:10px 0}
+th,td{border:1px solid #e2e8f0;padding:6px 10px;text-align:left}
+th{background:#f1f5f9}
+.pass{color:#16a34a;font-weight:bold}.fail{color:#dc2626;font-weight:bold}
+</style></head>
+<body>
+<h1>H82 Minervini VCP Breakout — Gate 1 Report</h1>
+<p>Date: 2026-06-17 | Universe: 144 tickers | IS: 2018-2023 | OOS: 2024-2025</p>
+<div class="verdict">FAIL</div>
+
+<h2>Core Metrics</h2>
+<table>
+<tr><th>Metric</th><th>IS</th><th>OOS</th><th>Gate 1 Threshold</th></tr>
+<tr><td>Sharpe Ratio</td><td>-0.1185</td><td>0.8471</td><td>IS&gt;1.0 / OOS&gt;0.7</td></tr>
+<tr><td>CAGR</td><td>-1.05%</td><td>8.24%</td><td>IS≥10%</td></tr>
+<tr><td>Max Drawdown</td><td>-16.34%</td><td>-15.94%</td><td>IS&lt;15% (hard) / OOS&lt;25%</td></tr>
+<tr><td>Win Rate</td><td>40.59%</td><td>49.02%</td><td>&gt;50%</td></tr>
+<tr><td>Profit Factor</td><td>0.7837</td><td>2.1848</td><td>&gt;1.0</td></tr>
+<tr><td>Trade Count</td><td>101</td><td>51</td><td>≥100</td></tr>
+</table>
+
+<h2>Statistical Rigor</h2>
+<table>
+<tr><th>Test</th><th>Result</th><th>Pass/Fail</th></tr>
+<tr><td>DSR z-score</td><td>-4.8308</td><td class="fail">FAIL</td></tr>
+<tr><td>Permutation p-value</td><td>1.0000</td><td class="fail">FAIL</td></tr>
+<tr><td>MC p5 Sharpe</td><td>-4.6088</td><td class="fail">FAIL</td></tr>
+<tr><td>MC Median Sharpe</td><td>-1.6026</td><td>—</td></tr>
+<tr><td>Bootstrap Sharpe CI</td><td>[-0.9113, 0.4725]</td><td>—</td></tr>
+<tr><td>Bootstrap MDD CI</td><td>[-0.3395, -0.0829]</td><td>—</td></tr>
+<tr><td>Post-cost IS Sharpe</td><td>-0.1185</td><td class="fail">FAIL</td></tr>
+<tr><td>Market impact (est)</td><td>3.00 bps</td><td>—</td></tr>
+</table>
+
+<h2>Walk-Forward Windows</h2>
+<table>
+<tr><th>#</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>Consistency</th><th>Result</th></tr>
+<tr style="background:#fef2f2"><td>1</td><td>2018-01-01–2020-12-31</td><td>2021-01-01–2021-06-30</td><td>-0.368</td><td>-0.324</td><td>0.000</td><td>FAIL</td></tr>
+<tr style="background:#fef2f2"><td>2</td><td>2018-07-01–2021-06-30</td><td>2021-07-01–2021-12-31</td><td>-0.404</td><td>1.796</td><td>0.000</td><td>FAIL</td></tr>
+<tr style="background:#fef2f2"><td>3</td><td>2019-01-01–2021-12-31</td><td>2022-01-01–2022-06-30</td><td>0.233</td><td>0.000</td><td>0.000</td><td>FAIL</td></tr>
+<tr style="background:#fef2f2"><td>4</td><td>2019-07-01–2022-06-30</td><td>2022-07-01–2022-12-31</td><td>-0.011</td><td>0.211</td><td>0.000</td><td>FAIL</td></tr>
+
+</table>
+<p>WF Pass: 0/4 | Consistency: 0.000 | Std: 0.817 | Min: -0.324</p>
+
+<h2>Gate 1 Checks</h2>
+<table>
+<tr><th>Check</th><th>Result</th></tr>
+<tr style="background:#fef2f2"><td>is_sharpe_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#f0fdf4"><td>oos_sharpe_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#fef2f2"><td>is_mdd_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#f0fdf4"><td>oos_mdd_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#fef2f2"><td>win_rate_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#fef2f2"><td>dsr_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#fef2f2"><td>wf_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#f0fdf4"><td>trade_count_pass</td><td>PASS ✓</td></tr>
+<tr style="background:#fef2f2"><td>permutation_pass</td><td>FAIL ✗</td></tr>
+<tr style="background:#fef2f2"><td>mc_p5_pass</td><td>FAIL ✗</td></tr>
+
+</table>
+
+<h2>OOS Data Quality</h2>
+<p>Recommendation: <strong>PASS</strong> | Coverage: 100.0%</p>
+
+<h2>Strategy Info</h2>
+<p>Universe: 144 tickers | VCP signal days: 587 | Total signals: 852</p>
+<p>Liquidity-constrained trades IS: 0 | OOS: 0</p>
+
+<h2>VCP Parameters (Post-Fix)</h2>
+<table>
+<tr><th>Parameter</th><th>Value</th><th>Note</th></tr>
+<tr><td>vcp_contraction_ratio</td><td>0.99</td><td>Loosened from 0.75 (QUA-336)</td></tr>
+<tr><td>vcp_volume_dryup_ratio</td><td>0.95</td><td>Loosened from 0.60 (QUA-336)</td></tr>
+<tr><td>breakout_volume_ratio</td><td>1.05</td><td>Loosened from 1.40 (QUA-336)</td></tr>
+<tr><td>min_swing_pct</td><td>0.03</td><td>Loosened from 0.04 (QUA-336)</td></tr>
+</table>
+
+</body></html>

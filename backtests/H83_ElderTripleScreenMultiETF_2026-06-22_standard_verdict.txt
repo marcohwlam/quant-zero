@@ -1,0 +1,51 @@
+H83 Elder Triple Screen Multi-ETF — Gate 1 Verdict [Standard (IS 2003-2018 / OOS 2019-2025)]
+Date: 2026-06-22
+
+OVERALL: FAIL  |  Composite Score: 0.3096 (threshold: 0.60)
+
+=== Gate 1 Checks (kpi-daily-weekly.md v1.0) ===
+NOTE: No IS Sharpe gate. Only OOS Sharpe > 0.7 hard gate.
+  [FAIL] oos_sharpe_gt_0.7
+  [PASS] is_mdd_lt_30pct
+  [PASS] cpr_lt_0.25
+  [PASS] is_ppt_gt_15bps
+  [FAIL] composite_score_ge_0.60
+  [FAIL] is_tpq_ge_30
+
+=== Composite Score Breakdown ===
+  NetSharpe_norm (OOS):  0.0613 × 0.40 = 0.0245
+  Stability_norm (IS MDD): 0.3630 × 0.30 = 0.1089
+  PpT_norm (IS):         0.3807 × 0.20 = 0.0761
+  TradeAdequacy_norm:    1.0000 × 0.10 = 0.1000
+  CS = 0.3096  (threshold ≥ 0.60)
+
+=== IS Period (2003-01-01 → 2018-12-31) ===
+  Sharpe:              0.4344  [no IS Sharpe gate in v2.7]
+  Max Drawdown:        -12.74%  [gate: <30%]
+  Total Return:        36.16%
+  Trade Count:         378
+  Trades/Quarter:      5.9  [gate: ≥30]
+  PpT (bps net):       38.07  [gate: >15]
+  CPR:                 0.0397  [gate: <0.25]
+  Win Rate:            65.87%
+  Avg Hold Days:       10.6
+  Gap PnL attribution: 19.8% of IS net PnL
+  Flagged Quarters (<30): ['2004Q4', '2005Q1', '2005Q2', '2005Q3', '2005Q4', '2006Q1', '2006Q2', '2006Q3', '2006Q4', '2007Q1', '2007Q2', '2007Q3', '2007Q4', '2008Q1', '2008Q2', '2008Q3', '2008Q4', '2009Q1', '2009Q2', '2009Q3', '2009Q4', '2010Q2', '2010Q3', '2010Q4', '2011Q1', '2011Q2', '2011Q3', '2011Q4', '2012Q1', '2012Q2', '2012Q3', '2012Q4', '2013Q1', '2013Q2', '2013Q3', '2013Q4', '2014Q1', '2014Q2', '2014Q3', '2014Q4', '2015Q1', '2015Q2', '2015Q3', '2015Q4', '2016Q1', '2016Q2', '2016Q3', '2016Q4', '2017Q1', '2017Q2', '2017Q3', '2017Q4', '2018Q1', '2018Q2', '2018Q3', '2018Q4']
+
+=== OOS Period (2019-01-01 → 2025-06-01) ===
+  Sharpe:              -0.3467  [hard gate: >0.70]
+  Max Drawdown:        -16.79%
+  Total Return:        -12.31%
+  Trade Count:         179
+  Trades/Quarter:      7.0
+  PpT (bps net):       -24.28
+  CPR:                 0.0358
+  Win Rate:            56.28%
+
+=== Statistical Rigor ===
+  MC P5/Med/P95 Sharpe:  -2.845 / -1.017 / 0.902
+  Bootstrap 95% CI:      [-3.303, 1.350]
+  Market Impact:         4.092 bps
+  Permutation p-value:   0.7984  (FAIL)
+  WF: 4/6 positive OOS Sharpe  min=-0.412
+  Sensitivity:           pass=True  max_delta=34.6%

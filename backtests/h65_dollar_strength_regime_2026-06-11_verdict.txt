@@ -1,0 +1,102 @@
+========================================================================
+GATE 1 VERDICT — H65 US Dollar Strength Regime Signal
+Report Date: 2026-06-11
+========================================================================
+
+OVERALL VERDICT: FAIL
+Selected variant: primary_lookback60
+
+── QUA-213 VARIANT COMPARISON ───────────────────────────────────────────
+  Variant-1 (baseline lookback=20): IS Sharpe=0.5761 MDD=-25.65% Trades=258
+  Variant-2 (primary  lookback=60): IS Sharpe=0.6756 MDD=-20.69% Trades=163
+  Selected for Gate 1: primary_lookback60
+
+── GATE 1 CRITERIA ──────────────────────────────────────────────────────
+  [FAIL] IS_Sharpe: 0.6756 (threshold: > 1.0)
+  [PASS] OOS_Sharpe: 1.1105 (threshold: > 0.7)
+  [FAIL] IS_MaxDrawdown: -20.69 (threshold: > -20%)
+  [FAIL] IS_CAGR: 7.3 (threshold: >= 10%)
+  [PASS] IS_TradeCount: 163 (threshold: >= 100)
+  [FAIL] WF_Consistency: 1/4 (threshold: >= 3/4 windows)
+  [FAIL] Permutation_pvalue: 0.099 (threshold: < 0.05)  [CRITICAL]
+
+  *** V2.0 FLAG: IS Sharpe < 1.0. If primary drag is 2014–2015 dollar bull, flag for v2.0: longer lookback or dual-filter with VIX (QUA-213 spec). ***
+
+── IS METRICS (2003-01-01 to 2023-12-31) ─────────────────────────────────
+  Sharpe:           0.6756
+  CAGR:             7.30%
+  Max Drawdown:     -20.69%
+  Total Return:     339.12%
+  Win Rate:         58.9%
+  Profit Factor:    2.110
+  Trade Count:      163
+  Transitions/yr:   15.5
+  Avg Hold Days:    16.3
+  % Time in SPY:    50.3%
+
+── OOS METRICS (2024-01-01 to 2026-06-10) ────────────────────────────────
+  Sharpe:           1.1105
+  CAGR:             14.47%
+  Max Drawdown:     -16.78%
+  Total Return:     39.04%
+  Win Rate:         61.1%
+  Trade Count:      18
+  OOS Degradation:  -64.4% vs IS Sharpe
+
+── STATISTICAL RIGOR ────────────────────────────────────────────────────
+  MC p5 Sharpe:     1.2240  [OK]
+  MC median Sharpe: 3.4625
+  Sharpe 95% CI:    [0.3361, 1.0836]
+  MDD 95% CI:       [-37.14%, -12.70%]
+  Permutation p:    0.0990  (FAIL ✗) [CRITICAL]
+  Perm n_blocks:    325
+  Market Impact:    0.007 bps  (OK)
+  DSR:              1.0000  (PASS)
+
+── WALK-FORWARD (4 expanding windows) ───────────────────────────────
+  Window 1: IS 2003-01-01→2010-12-31 OOS 2011-01-01→2015-12-31 | IS Sharpe=0.881 OOS Sharpe=0.505 [FAIL]
+  Window 2: IS 2003-01-01→2013-12-31 OOS 2014-01-01→2017-12-31 | IS Sharpe=0.727 OOS Sharpe=1.044 [PASS]
+  Window 3: IS 2003-01-01→2016-12-31 OOS 2017-01-01→2020-12-31 | IS Sharpe=0.742 OOS Sharpe=0.573 [FAIL]
+  Window 4: IS 2003-01-01→2018-12-31 OOS 2019-01-01→2023-12-31 | IS Sharpe=0.738 OOS Sharpe=0.494 [FAIL]
+  Windows Passed:    1/4
+  WF Sharpe Std:     0.2271
+  WF Sharpe Min:     0.4937  
+
+── SUB-PERIOD DIAGNOSTICS (QUA-213 required) ───────────────────────────
+  pre_gfc_only: Sharpe=0.780 CAGR=8.6% MDD=-13.7% Trades=41
+  gfc_only: Sharpe=0.895 CAGR=13.7% MDD=-19.6% Trades=22
+  dollar_bull_2014_15: Sharpe=1.066 CAGR=8.6% MDD=-9.3% Trades=13
+  rate_shock_2022: Sharpe=-1.876 CAGR=-13.8% MDD=-15.1% Trades=2
+  ai_bull_2023: Sharpe=2.639 CAGR=30.2% MDD=-5.6% Trades=16
+  post_gfc_2010_2019: Sharpe=0.788 CAGR=7.1% MDD=-10.1% Trades=74
+  dotcom_2000_2002: Sharpe=-0.791 CAGR=-13.2% MDD=-42.5% Trades=11 [Pre-IS period. SHY started 2002-07-30; BIL used as risk-off substitute. QUA-213 ...]
+
+── SMOOTHING COMPARISON ─────────────────────────────────────────────
+  smooth=1: Sharpe=0.6756 CAGR=7.3% MDD=-20.7% Transitions=325
+  smooth=2: Sharpe=0.5907 CAGR=6.6% MDD=-27.3% Transitions=235
+  Note: smooth=2 requires 2 consecutive DXY mom > threshold before exiting SPY. Reduces FX whipsaw at cost of slower exit. Fewer transitions = lower cost drag.
+
+── PARAMETER SWEEP SUMMARY (IS-only) ───────────────────────────────────
+  Best IS Sharpe:    0.8129
+  Median IS Sharpe:  0.5676
+  Worst IS Sharpe:   0.3960
+  Best params:       lookback=20 thresh=0.0050 smooth=1 riskoff=SHY
+
+── COST MODEL ───────────────────────────────────────────────────────────
+  Fixed:    $0.005/share
+  Slippage: 0.005% of notional (ED-SLIP-001 ultra-liquid tier: SPY ADV > 50M/day)
+  Impact:   k=0.1 × sigma × sqrt(Q/ADV) × notional (Almgren-Chriss)
+  Signal:   DX-Y.NYB — not traded. No FX transaction costs.
+
+── DATA QUALITY ─────────────────────────────────────────────────────────
+  Price adjustment: yfinance auto_adjust=True
+  DX-Y.NYB: ICE US Dollar Index cash level (not futures); no roll-gap check
+  Forward fill: DX-Y.NYB ffill(limit=3) into SPY equity calendar
+  Survivorship bias: N/A — SPY/SHY are active broad-market ETFs
+  Lookahead bias: signal at T computed from T close; execution at T+1 open
+
+── HYPOTHESIS SOURCE ────────────────────────────────────────────────────
+  H65: US Dollar Strength Regime — research/hypotheses/65_dollar_strength_regime.md
+  Replaces H58 (Cu/Au retired QUA-207). References: Miranda-Agrippino & Rey (2020).
+
+========================================================================

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>H72 Bond Yield Curve Carry — Gate 1 Report</title>
+<style>
+body { font-family: monospace; margin: 32px; background: #f8f9fa; color: #212529; }
+h1 { color: #343a40; }
+h2 { color: #495057; margin-top: 28px; border-bottom: 2px solid #dee2e6; padding-bottom: 6px; }
+.verdict { font-size: 2em; font-weight: bold; color: #dc3545; padding: 16px 24px;
+  background: #fff5f5; border: 2px solid #dc3545; display: inline-block; margin: 16px 0; border-radius: 4px; }
+table { border-collapse: collapse; width: 100%; background: #fff; margin: 12px 0; border-radius: 4px; overflow: hidden; }
+th, td { border: 1px solid #dee2e6; padding: 8px 14px; text-align: left; }
+th { background: #343a40; color: #fff; }
+tr:nth-child(even) { background: #f8f9fa; }
+.pass { color: #28a745; font-weight: bold; }
+.fail { color: #dc3545; font-weight: bold; }
+.warn { color: #fd7e14; font-weight: bold; }
+.section { background: #fff; padding: 16px 20px; border-radius: 6px; margin: 16px 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.metric-card { background: #fff; border: 1px solid #dee2e6; border-radius: 6px; padding: 16px; }
+.metric-val { font-size: 1.8em; font-weight: bold; }
+.metric-val.bad { color: #dc3545; }
+.metric-val.ok { color: #28a745; }
+.root-cause { background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 16px; margin: 16px 0; }
+ul.findings { line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<h1>H72 Bond Yield Curve Carry — Gate 1 Report</h1>
+<p style="color:#6c757d">
+  Date: 2026-06-16 &nbsp;|&nbsp; IS: 2003-01-01 to 2018-12-31 (16 yr, 26 trades) &nbsp;|&nbsp;
+  OOS: 2019-01-01 to 2024-12-31 (6 yr, 12 trades)
+</p>
+
+<div class="verdict">&#10007; FAIL &mdash; 0/10 Gate 1 checks passed</div>
+
+<div class="section">
+<h2>IS / OOS Performance Summary</h2>
+<table>
+<tr><th>Metric</th><th>IS (2003&ndash;2018)</th><th>OOS (2019&ndash;2024)</th><th>Threshold</th><th>IS Result</th><th>OOS Result</th></tr>
+<tr>
+  <td>Net Sharpe</td>
+  <td class="fail">0.5848</td>
+  <td class="fail">-0.185</td>
+  <td>&gt; 1.0 (IS) / &gt; 0.70 (OOS)</td>
+  <td><span class="fail">FAIL</span></td>
+  <td><span class="fail">FAIL</span></td>
+</tr>
+<tr>
+  <td>CAGR</td>
+  <td class="fail">5.05%</td>
+  <td class="fail">-2.77%</td>
+  <td>&ge; 10%</td>
+  <td><span class="fail">FAIL</span></td>
+  <td><span class="fail">FAIL</span></td>
+</tr>
+<tr>
+  <td>Max Drawdown</td>
+  <td class="fail">-17.05%</td>
+  <td class="fail">-33.32%</td>
+  <td>&lt; -15% magnitude</td>
+  <td><span class="fail">FAIL</span></td>
+  <td><span class="fail">FAIL</span></td>
+</tr>
+<tr>
+  <td>Win Rate</td>
+  <td>65.38%</td>
+  <td>66.67%</td>
+  <td>&gt; 50%</td>
+  <td><span class="pass">OK</span></td>
+  <td><span class="pass">OK</span></td>
+</tr>
+<tr>
+  <td>Profit Factor</td>
+  <td>5.7795</td>
+  <td>0.6182</td>
+  <td>&gt; 1.0</td>
+  <td><span class="pass">OK</span></td>
+  <td><span class="fail">FAIL</span></td>
+</tr>
+<tr>
+  <td>Trade Count</td>
+  <td class="fail">26</td>
+  <td>12</td>
+  <td>&ge; 100 (IS)</td>
+  <td><span class="fail">FAIL</span></td>
+  <td>N/A</td>
+</tr>
+<tr>
+  <td>Avg PnL/trade (bps)</td>
+  <td>341.75</td>
+  <td>-99.85</td>
+  <td>&gt; 0</td>
+  <td><span class="pass">OK</span></td>
+  <td><span class="fail">FAIL</span></td>
+</tr>
+<tr>
+  <td>Total Return</td>
+  <td>119.92%</td>
+  <td>-15.51%</td>
+  <td>N/A</td>
+  <td>-</td><td>-</td>
+</tr>
+<tr>
+  <td>DSR</td>
+  <td class="fail" colspan="2">0.0 (expected max Sharpe from 12 trials: 1.66)</td>
+  <td>&gt; 0</td>
+  <td colspan="2"><span class="fail">FAIL</span></td>
+</tr>
+</table>
+</div>
+
+<div class="root-cause">
+<h2 style="border:none;margin-top:0">&#x26A0; Root Cause: Chronically Under-Traded</h2>
+<p><strong>Only 26 trades over 15 IS years</strong> (1.7/year). Monthly rebalancing between TLT/SHY
+produces too few switches because the yield curve slope persists in single regimes for years.
+This violates the Gate 1 minimum of 100 IS trades by 4x, making all statistical significance
+tests (permutation p=0.498, DSR=0.0) fail definitively.</p>
+<p><strong>OOS collapse</strong>: The 2019&ndash;2024 period included severe yield-curve inversions
+(2019, 2022&ndash;2023) where the hypothesis predicts SHORT_DURATION (SHY) but TLT's price
+dynamics diverged from the simple slope-direction model. OOS Sharpe -0.185, MDD -33.3%.</p>
+</div>
+
+<div class="section">
+<h2>Gate 1 Checklist (0/10 passed)</h2>
+<table>
+<tr><th>Check</th><th>Required</th><th>Actual</th><th>Result</th></tr>
+<tr><td>IS Sharpe</td><td>&gt; 1.0</td><td>0.5848</td><td><span class="fail">FAIL</span></td></tr>
+<tr><td>OOS Sharpe</td><td>&gt; 0.70</td><td>-0.185</td><td><span class="fail">FAIL</span></td></tr>
+<tr><td>IS Max Drawdown</td><td>&lt; -15% magnitude</td><td>-17.05%</td><td><span class="fail">FAIL</span></td></tr>
+<tr><td>OOS Max Drawdown</td><td>&lt; -15% magnitude</td><td>-33.32%</td><td><span class="fail">FAIL</span></td></tr>
+<tr><td>IS CAGR</td><td>&ge; 10%</td><td>5.05%</td><td><span class="fail">FAIL</span></td></tr>
+<tr><td>OOS CAGR</td><td>&ge; 10%</td><td>-2.77%</td><td><span class="fail">FAIL</span></td></tr>
+<tr><td>IS Trade Count</td><td>&ge; 100</td><td>26</td><td><span class="fail">FAIL</span></td></tr>
+<tr><td>Permutation p-value</td><td>&lt; 0.05</td><td>0.498</td><td><span class="fail">FAIL</span></td></tr>
+<tr><td>Walk-forward windows</td><td>&ge; 3/4</td><td>0/4</td><td><span class="fail">FAIL</span></td></tr>
+<tr><td>DSR</td><td>&gt; 0</td><td>0.0</td><td><span class="fail">FAIL</span></td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>Statistical Rigor Pipeline</h2>
+<table>
+<tr><th>Test</th><th>Value</th><th>Note</th><th>Result</th></tr>
+<tr>
+  <td>Monte Carlo p5 Sharpe</td>
+  <td>3.305</td>
+  <td>MC on 26 trade PnLs — high p5 reflects per-trade consistency, not daily return Sharpe</td>
+  <td><span class="pass">OK</span></td>
+</tr>
+<tr>
+  <td>MC Median Sharpe</td>
+  <td>6.658</td>
+  <td>Inflated by low trade count (26 samples)</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td>Bootstrap Sharpe CI (95%)</td>
+  <td>[0.128, 1.032]</td>
+  <td>Block bootstrap on IS daily returns — wide CI reflects limited signal</td>
+  <td><span class="warn">BORDERLINE</span></td>
+</tr>
+<tr>
+  <td>Bootstrap MDD CI (95%)</td>
+  <td>[-0.327, -0.099]</td>
+  <td>IS daily returns — worst case -32.7%</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td>Bootstrap Win Rate CI</td>
+  <td>[0.480, 0.513]</td>
+  <td>Near 50% at lower bound</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td>Permutation p-value</td>
+  <td class="fail">0.498</td>
+  <td>500 permutations — no significant alpha (p &gt; 0.05)</td>
+  <td><span class="fail">FAIL</span></td>
+</tr>
+<tr>
+  <td>Market Impact (TLT)</td>
+  <td>0.05 bps</td>
+  <td>Negligible at $100K capital vs TLT ADV ~30M shares</td>
+  <td><span class="pass">OK</span></td>
+</tr>
+<tr>
+  <td>OOS Data Quality</td>
+  <td>PASS</td>
+  <td>No NaN contamination</td>
+  <td><span class="pass">PASS</span></td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2>Walk-Forward Analysis (0/4 windows passed)</h2>
+<table>
+<tr><th>OOS Period</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>OOS/IS</th><th>IS Trades</th><th>Result</th><th>Reason</th></tr>
+<tr>
+  <td>2006-01 to 2006-07</td>
+  <td>0.657</td>
+  <td class="warn">1.579</td>
+  <td class="warn">2.41</td>
+  <td>4</td>
+  <td><span class="fail">FAIL</span></td>
+  <td>Ratio 2.41 &gt; 1.30 (overshoot)</td>
+</tr>
+<tr>
+  <td>2009-07 to 2010-01</td>
+  <td>0.886</td>
+  <td class="fail">0.378</td>
+  <td>0.43</td>
+  <td>4</td>
+  <td><span class="fail">FAIL</span></td>
+  <td>OOS Sharpe 0.378 &lt; 0.70</td>
+</tr>
+<tr>
+  <td>2013-01 to 2013-07</td>
+  <td>0.802</td>
+  <td class="fail">-0.930</td>
+  <td>-1.16</td>
+  <td>4</td>
+  <td><span class="fail">FAIL</span></td>
+  <td>OOS Sharpe -0.93 (negative window)</td>
+</tr>
+<tr>
+  <td>2016-07 to 2017-01</td>
+  <td>0.757</td>
+  <td class="fail">-0.025</td>
+  <td>-0.03</td>
+  <td>4</td>
+  <td><span class="fail">FAIL</span></td>
+  <td>OOS Sharpe near-zero</td>
+</tr>
+</table>
+<p><strong>WF Sharpe std: 0.9018</strong> (extreme variance) &nbsp;|&nbsp;
+   <strong>WF Sharpe min: -0.9304</strong> <span class="fail">(WARNING: negative OOS window)</span></p>
+</div>
+
+<div class="section">
+<h2>Parameter Sensitivity Sweep (IS, 12 combinations)</h2>
+<p><span class="pass">PASS: variance 22.5% &le; 30%</span> &mdash; The single bright spot: IS performance is relatively
+stable across lookback/threshold combinations.</p>
+<table>
+<tr><th>Lookback (mo)</th><th>Threshold</th><th>Sharpe</th><th>CAGR</th><th>Win Rate</th></tr>
+<tr><td>6</td><td>median</td><td>~0.52</td><td>~4.5%</td><td>~62%</td></tr>
+<tr><td>6</td><td>0.0</td><td>~0.55</td><td>~4.8%</td><td>~63%</td></tr>
+<tr><td>6</td><td>-0.25</td><td>~0.51</td><td>~4.4%</td><td>~61%</td></tr>
+<tr><td>12</td><td>median</td><td>0.5848</td><td>5.05%</td><td>65.4%</td></tr>
+<tr><td>12</td><td>0.0</td><td>~0.57</td><td>~5.0%</td><td>~64%</td></tr>
+<tr><td>12</td><td>-0.25</td><td>~0.55</td><td>~4.8%</td><td>~63%</td></tr>
+<tr><td>18</td><td>median</td><td>~0.61</td><td>~5.3%</td><td>~66%</td></tr>
+<tr><td>18</td><td>0.0</td><td>~0.59</td><td>~5.1%</td><td>~65%</td></tr>
+<tr><td>18</td><td>-0.25</td><td>~0.57</td><td>~4.9%</td><td>~64%</td></tr>
+<tr><td>24</td><td>median</td><td>~0.65</td><td>~5.6%</td><td>~67%</td></tr>
+<tr><td>24</td><td>0.0</td><td>~0.63</td><td>~5.4%</td><td>~66%</td></tr>
+<tr><td>24</td><td>-0.25</td><td>~0.60</td><td>~5.2%</td><td>~65%</td></tr>
+</table>
+<p style="color:#6c757d;font-size:0.85em">Note: non-primary sweep values are approximate (actual CSV has full precision).</p>
+</div>
+
+<div class="section">
+<h2>Secondary Leveraged Test (2x)</h2>
+<p>Primary IS CAGR 5.05% &lt; 10% threshold &rarr; ran 2x leveraged test per task spec.</p>
+<table>
+<tr><th>Metric</th><th>2x IS</th><th>2x OOS</th><th>Threshold</th><th>Result</th></tr>
+<tr><td>Sharpe</td><td class="fail">0.5819</td><td class="fail">-0.1599</td><td>&gt; 0.8</td><td><span class="fail">FAIL</span></td></tr>
+<tr><td>CAGR</td><td class="warn">9.38%</td><td class="fail">-7.10%</td><td>&ge; 10%</td><td><span class="fail">FAIL (IS near miss)</span></td></tr>
+</table>
+<p>Leverage does not rescue the strategy. OOS remains deeply negative.</p>
+</div>
+
+<div class="section">
+<h2>Recommendation</h2>
+<p><strong>REJECT &mdash; do not advance to paper trading.</strong></p>
+<ul class="findings">
+  <li>Strategy is fundamentally under-traded: 26 IS trades over 15 years cannot satisfy any statistical significance requirement at Gate 1.</li>
+  <li>OOS collapse (-0.185 Sharpe, -33% MDD) demonstrates that 2019&ndash;2024 regime conditions invalidate the hypothesis, not just reduce alpha.</li>
+  <li>Permutation test p=0.498 confirms no statistically significant alpha even on the in-sample period.</li>
+  <li>Walk-forward 0/4 windows pass &mdash; extreme Sharpe variance (std=0.90) indicates regime-dependent, not structural, alpha.</li>
+</ul>
+<h3>Paths Forward (for Engineering Director / Research Director)</h3>
+<ul class="findings">
+  <li>Redesign at weekly or daily frequency to reach 50+ signals/year and satisfy ≥100 IS trade floor</li>
+  <li>Multi-asset bond universe (TLT, IEF, SHY, TIP) to increase trade frequency within same hypothesis</li>
+  <li>Use yield-curve slope as a <em>regime filter</em> layered on another strategy (not standalone signal)</li>
+</ul>
+</div>
+
+<div class="section" style="color:#6c757d;font-size:0.85em">
+<h2>Output Files</h2>
+<ul>
+  <li>Metrics JSON: <code>backtests/H72_BondYieldCurveCarry_2026-06-16.json</code></li>
+  <li>Trade log:   <code>backtests/H72_BondYieldCurveCarry_2026-06-16_trades.csv</code></li>
+  <li>Sweep CSV:   <code>backtests/H72_BondYieldCurveCarry_2026-06-16_sweep.csv</code></li>
+  <li>HTML report: <code>backtests/H72_BondYieldCurveCarry_2026-06-16_report.html</code></li>
+  <li>Verdict:     <code>backtests/H72_BondYieldCurveCarry_2026-06-16_verdict.txt</code></li>
+</ul>
+</div>
+
+</body>
+</html>

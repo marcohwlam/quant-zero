@@ -130,6 +130,8 @@ def validate_verdict_json(verdict_json: dict[str, Any]) -> VerdictValidationResu
       3. All required metric names appear in the `metrics` array.
       4. Each metric entry has all required sub-fields (name, value, threshold, passed).
       5. The `metrics` array is non-empty.
+      6. Canonical drawdown fields, when present, use the SIGNED convention
+         (negative-or-zero) and `drawdown_convention` declares "signed".
 
     Args:
         verdict_json: The verdict dict as produced by gate1_reporter.py.
@@ -206,7 +208,43 @@ def validate_verdict_json(verdict_json: dict[str, Any]) -> VerdictValidationResu
                 ),
             ))
 
-    # ── 6. Advisory: oos_data_quality missing ─────────────────────────────
+    # ── 6. Drawdown sign convention ───────────────────────────────────────
+    # Canonical drawdown fields must be SIGNED (negative-or-zero). A positive
+    # value here means a runner wrote a magnitude into a signed field, which
+    # silently inverts the charter check `MaxDD < -15%`.
+    # See orchestrator/drawdown_convention.py.
+    declared = verdict_json.get("drawdown_convention")
+    if declared is not None and declared != "signed":
+        result.issues.append(VerdictValidationIssue(
+            field="drawdown_convention",
+            severity="error",
+            message=(
+                f"Value '{declared}' is not supported. Canonical drawdown fields "
+                f"must declare 'signed' (negative-or-zero)."
+            ),
+        ))
+    for dd_field in ("max_drawdown_is", "max_drawdown_oos"):
+        if dd_field not in verdict_json:
+            continue
+        dd_val = verdict_json[dd_field]
+        if not isinstance(dd_val, (int, float)) or isinstance(dd_val, bool):
+            result.issues.append(VerdictValidationIssue(
+                field=dd_field,
+                severity="error",
+                message=f"Must be numeric, got {type(dd_val).__name__}: {dd_val!r}.",
+            ))
+        elif dd_val > 0:
+            result.issues.append(VerdictValidationIssue(
+                field=dd_field,
+                severity="error",
+                message=(
+                    f"Value {dd_val} is positive, but the canonical convention is "
+                    f"SIGNED (negative-or-zero). Expected {-abs(dd_val)}. A positive "
+                    f"value inverts the charter check 'MaxDD < -15%'."
+                ),
+            ))
+
+    # ── 7. Advisory: oos_data_quality missing ─────────────────────────────
     if "oos_data_quality" not in verdict_json or verdict_json["oos_data_quality"] is None:
         result.issues.append(VerdictValidationIssue(
             field="oos_data_quality",
@@ -257,6 +295,9 @@ def _make_valid_verdict(strategy_name: str = "TestStrategy") -> dict[str, Any]:
         "confidence": "HIGH",
         "disqualify_reason": None,
         "oos_data_quality": {"recommendation": "PASS"},
+        "drawdown_convention": "signed",
+        "max_drawdown_is": -0.12,
+        "max_drawdown_oos": -0.09,
         "metrics": metrics,
     }
 
@@ -348,6 +389,47 @@ def _run_tests() -> bool:
         except VerdictValidationError:
             pass
 
+    # Positive drawdown in a signed field → error
+    def test_positive_drawdown_rejected():
+        v = _make_valid_verdict()
+        v["max_drawdown_is"] = 0.12   # magnitude written into a signed field
+        r = validate_verdict_json(v)
+        assert r.has_errors, r.summary()
+        assert any(i.field == "max_drawdown_is" for i in r.issues if i.severity == "error")
+
+    # Zero drawdown is legal (no drawdown observed)
+    def test_zero_drawdown_ok():
+        v = _make_valid_verdict()
+        v["max_drawdown_is"] = 0.0
+        v["max_drawdown_oos"] = 0.0
+        r = validate_verdict_json(v)
+        assert not r.has_errors, r.summary()
+
+    # Wrong declared convention → error
+    def test_bad_convention_rejected():
+        v = _make_valid_verdict()
+        v["drawdown_convention"] = "magnitude"
+        r = validate_verdict_json(v)
+        assert r.has_errors
+        assert any(i.field == "drawdown_convention" for i in r.issues if i.severity == "error")
+
+    # Non-numeric drawdown → error
+    def test_non_numeric_drawdown_rejected():
+        v = _make_valid_verdict()
+        v["max_drawdown_oos"] = "-9%"
+        r = validate_verdict_json(v)
+        assert r.has_errors
+        assert any(i.field == "max_drawdown_oos" for i in r.issues if i.severity == "error")
+
+    # Legacy verdicts without the canonical fields must still validate
+    def test_legacy_verdict_without_dd_fields_ok():
+        v = _make_valid_verdict()
+        del v["drawdown_convention"]
+        del v["max_drawdown_is"]
+        del v["max_drawdown_oos"]
+        r = validate_verdict_json(v)
+        assert not r.has_errors, r.summary()
+
     _case("valid verdict → no errors", test_valid)
     _case("missing top-level field → error", test_missing_top_level)
     _case("invalid overall_verdict value → error", test_bad_verdict_value)
@@ -356,6 +438,12 @@ def _run_tests() -> bool:
     _case("empty metrics list → error", test_empty_metrics)
     _case("missing oos_data_quality → warning only", test_missing_dq_warning)
     _case("enforce_verdict_template raises on error", test_enforce_raises)
+    _case("positive drawdown in signed field → error", test_positive_drawdown_rejected)
+    _case("zero drawdown is legal", test_zero_drawdown_ok)
+    _case("wrong drawdown_convention → error", test_bad_convention_rejected)
+    _case("non-numeric drawdown → error", test_non_numeric_drawdown_rejected)
+    _case("legacy verdict without canonical dd fields → valid",
+          test_legacy_verdict_without_dd_fields_ok)
 
     print(f"\n{passed}/{total} tests passed")
     return passed == total

@@ -35,6 +35,11 @@ if str(_OVERFIT_TOOLS) not in sys.path:
 
 from gate1_verdict import BacktestResult, Gate1Verdict, generate_verdict, format_verdict  # noqa: E402
 from gate1_verdict_validator import enforce_verdict_template, VerdictValidationError  # noqa: E402
+from drawdown_convention import (  # noqa: E402
+    charter_compliance_block,
+    drawdown_magnitude,
+    signed_drawdown,
+)
 
 
 # ── Public API ────────────────────────────────────────────────────────────────
@@ -79,6 +84,16 @@ def generate_and_save_verdict(
         test_start = ""
         test_end = ""
 
+    # ── Normalize drawdown sign convention once, up front ────────────────────
+    # Runners disagree on sign (see orchestrator/drawdown_convention.py). Derive
+    # both forms here so the two consumers each get the convention they expect:
+    #   * MAGNITUDE → BacktestResult, because gate1_verdict.py compares
+    #     `is_max_drawdown < IS_DD_MAX` against a positive threshold. Feeding it a
+    #     signed value makes a -51% drawdown return PASS (-0.51 < 0.20).
+    #   * SIGNED → verdict JSON, because the charter constraint is `MaxDD < -15%`.
+    is_dd_signed = signed_drawdown(metrics.get("max_dd_in_sample", 0.0), "max_dd_in_sample")
+    oos_dd_signed = signed_drawdown(metrics.get("max_dd_out_of_sample", 0.0), "max_dd_out_of_sample")
+
     # ── Map metrics → BacktestResult ─────────────────────────────────────────
     bt = BacktestResult(
         strategy_name=strategy_name,
@@ -87,8 +102,8 @@ def generate_and_save_verdict(
         test_end=test_end,
         is_sharpe=float(metrics.get("sharpe_in_sample", 0.0)),
         oos_sharpe=float(metrics.get("sharpe_out_of_sample", 0.0)),
-        is_max_drawdown=abs(float(metrics.get("max_dd_in_sample", 0.0))),
-        oos_max_drawdown=abs(float(metrics.get("max_dd_out_of_sample", 0.0))),
+        is_max_drawdown=drawdown_magnitude(is_dd_signed),
+        oos_max_drawdown=drawdown_magnitude(oos_dd_signed),
         win_rate=float(metrics.get("win_rate_in_sample", 0.0)),
         trade_count=int(metrics.get("trades_in_sample", 0)),
         dsr_zscore=float(metrics.get("dsr_zscore", 0.0)),
@@ -135,6 +150,26 @@ def generate_and_save_verdict(
             }
             for m in verdict.metrics
         ],
+        # ── Canonical numeric drawdown fields (SIGNED: negative-or-zero) ──
+        # The `metrics` array above carries drawdown only as a formatted display
+        # string ("-15.1%"), which is not machine-checkable. These fields give
+        # downstream consumers (charter compliance, Risk Director, CEO reporting)
+        # a numeric value with a documented sign.
+        "drawdown_convention": "signed",
+        "max_drawdown_is": is_dd_signed,
+        "max_drawdown_oos": oos_dd_signed,
+        # ── Charter hard-constraint check (docs/objective-function-charter.md) ──
+        # Net CAGR >= 10% AND MaxDD < -15% AND Net Sharpe > 0.8. Charter MaxDD is a
+        # portfolio-level constraint; evaluated here on OOS as the best available
+        # out-of-sample proxy at Gate 1. `net_cagr` is None when the runner does not
+        # report it, which keeps `all_constraints_pass` False rather than assuming.
+        "charter_compliance": charter_compliance_block(
+            net_sharpe=metrics.get(
+                "post_cost_sharpe_oos", metrics.get("post_cost_sharpe_is", 0.0)
+            ),
+            net_cagr=metrics.get("net_cagr_oos", metrics.get("net_cagr", None)),
+            max_drawdown=oos_dd_signed,
+        ),
         "equity_curve": equity_curve,
         "trade_log": trade_log,
         "txt_path": str(txt_path),

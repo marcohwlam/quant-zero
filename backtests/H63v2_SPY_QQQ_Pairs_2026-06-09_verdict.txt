@@ -1,0 +1,77 @@
+======================================================================
+GATE 1 v2.2 VERDICT — H63v2 SPY/QQQ Pairs Daily Baseline
+Report Date: 2026-06-09
+======================================================================
+
+OVERALL VERDICT: FAIL
+Trade Frequency: LOW (1.82/day)
+
+── GATE 1 CRITERIA ──────────────────────────────────────────────────
+  [FAIL] IS_Sharpe: -1.5396 (threshold: > 1.0)
+  [FAIL] OOS_Sharpe: -1.3189 (threshold: > 0.7)
+  [FAIL] IS_MaxDrawdown: -37.13 (threshold: > -20%)
+  [FAIL] OOS_Degradation: 100.0 (threshold: < 40%)
+  [PASS] IS_TradeCount: 2751 (threshold: >= 100)
+  [FAIL] TradeFrequency: 1.82 (threshold: 3-8/day)  [LOW (1.82/day)]
+
+── IS METRICS (2018-01-01 to 2023-12-31) ──────────────────────────────
+  Sharpe:          -1.5396
+  Max Drawdown:    -37.13%
+  Total Return:    -36.12%
+  Win Rate:        12.1%
+  Profit Factor:   0.427
+  Trade Count:     2751
+  Trades/Year:     459
+  Avg Trades/Day:  1.82  ← CRITICAL VALIDATION
+  PpT (bps):       -1.31
+  Cost Ratio:      1870.6%
+  Exit Reasons:    {'STOP_ZSCORE': 2375, 'EOD_EXIT': 376}
+
+── OOS METRICS (2024-01-01 to 2026-06-06) ────────────────────────
+  Sharpe:          -1.3189
+  Max Drawdown:    -10.26%
+  Total Return:    -9.25%
+  Win Rate:        12.8%
+  Profit Factor:   0.503
+  Trade Count:     907
+  Avg Trades/Day:  1.49
+  OOS Degradation: 100.0% vs IS Sharpe
+
+── STATISTICAL RIGOR PIPELINE ───────────────────────────────────────
+  MC p5 Sharpe:      -3.5010  [WEAK]
+  MC median Sharpe:  -2.8740
+  MC p95 Sharpe:     -2.2832
+  Sharpe 95% CI:     [-2.1806, -0.7935]
+  MDD 95% CI:        [-56.74%, -17.08%]
+  WinRate 95% CI:    [9.9%, 13.7%]
+  Permutation pval:  1.0000  (FAIL – no alpha)
+  Market Impact:     0.007 bps  (OK)
+  DSR:               0.001517
+
+── WALK-FORWARD (4 windows, IS 36mo / OOS 6mo) ─────────────────────
+  Window 1: IS 2018-01-01→2020-12-31 OOS 2021-01-01→2021-06-30 | IS Sharpe=-1.764 OOS Sharpe=-2.660 [FAIL]
+  Window 2: IS 2018-07-01→2021-06-30 OOS 2021-07-01→2021-12-31 | IS Sharpe=-1.860 OOS Sharpe=-0.374 [FAIL]
+  Window 3: IS 2019-01-01→2021-12-31 OOS 2022-01-01→2022-06-30 | IS Sharpe=-1.536 OOS Sharpe=0.692 [FAIL]
+  Window 4: IS 2019-07-01→2022-06-30 OOS 2022-07-01→2022-12-31 | IS Sharpe=-1.325 OOS Sharpe=0.617 [FAIL]
+  Windows Passed:  0/4
+  WF Sharpe Std:   1.3539
+  WF Sharpe Min:   -2.6602  [LOSING WINDOW]
+
+── PARAMETER SWEEP SUMMARY (IS-only, 324 combinations) ─────────────
+  Best IS Sharpe:   -0.1076
+  Median IS Sharpe: -1.5387
+  Worst IS Sharpe:  -2.2784
+  Best params:      BASELINE=10 ENTRY_Z=2.0 EXIT_Z=0.1 HEDGE=10 VIX=30.0
+  Best trades/day:  0.08
+
+── COST MODEL ───────────────────────────────────────────────────────
+  Fixed:   $0.005/share (ED-SLIP-001 ultra-liquid ETF tier)
+  Slippage: 0.005% of notional (one-way)
+  Impact:  k=0.1 × sigma × sqrt(Q/ADV) × notional (Almgren-Chriss)
+  Note:    At $12.5K/leg, Q/ADV is negligible for SPY/QQQ
+
+── PDT NOTE ─────────────────────────────────────────────────────────
+  Strategy targets 3-8 spread crossings/day (= 6-16 day trades/day).
+  PDT designation required. Minimum capital $30K recommended.
+
+======================================================================

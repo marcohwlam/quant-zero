@@ -1,0 +1,308 @@
+{
+  "strategy_name": "H70b_SPY_QQQ_Multi_ETF_RSI4_Basket",
+  "date": "2026-06-16",
+  "asset_class": "equities",
+  "hypothesis": "H70b",
+  "universe": [
+    "IWM",
+    "IJH",
+    "VB",
+    "IJR"
+  ],
+  "family": "H70 Small-Cap Mean Reversion \u2014 iteration 2/2 (final allowed)",
+  "is_sharpe": 0.9304,
+  "is_max_drawdown": -0.0955,
+  "is_total_return": 1.2295,
+  "is_win_rate": 0.7548,
+  "is_profit_factor": 2.4857,
+  "is_trade_count": 310,
+  "is_trades_per_year": 22.1,
+  "is_ppt_bps": 59.66,
+  "is_cpr": 0.0693,
+  "is_exit_breakdown": {
+    "RSI_EXIT": 154,
+    "HIGH_EXIT": 138,
+    "MAX_HOLD": 9,
+    "STOP_LOSS": 9
+  },
+  "is_gap_attribution": {
+    "overnight_gap_trades": 310,
+    "weekend_gap_trades": 276,
+    "total_trades": 310,
+    "overnight_gap_pct": 1.0,
+    "weekend_gap_pct": 0.8903,
+    "overnight_gap_pnl": 30738.54,
+    "weekend_gap_pnl": 24241.67
+  },
+  "is_per_instrument_stats": {
+    "IJH": {
+      "trade_count": 88,
+      "trades_per_year": 6.3,
+      "win_rate": 0.75,
+      "ppt_bps": 75.78,
+      "sharpe_proxy": 1.928,
+      "total_pnl": 7649.3
+    },
+    "IWM": {
+      "trade_count": 89,
+      "trades_per_year": 6.4,
+      "win_rate": 0.764,
+      "ppt_bps": 117.35,
+      "sharpe_proxy": 3.2012,
+      "total_pnl": 11729.87
+    },
+    "VB": {
+      "trade_count": 93,
+      "trades_per_year": 6.6,
+      "win_rate": 0.7849,
+      "ppt_bps": 100.23,
+      "sharpe_proxy": 2.6579,
+      "total_pnl": 10610.24
+    },
+    "IJR": {
+      "trade_count": 40,
+      "trades_per_year": 2.9,
+      "win_rate": 0.675,
+      "ppt_bps": 15.41,
+      "sharpe_proxy": 0.3429,
+      "total_pnl": 749.13
+    }
+  },
+  "is_concurrent_analysis": {
+    "pct_time_2plus_positions": 0.1755,
+    "pct_time_3plus_positions": 0.144,
+    "avg_n_positions_when_invested": 2.4331,
+    "max_simultaneous_positions": 3,
+    "avg_portfolio_notional_pct": 0.144,
+    "avg_notional_when_cap_active": 0.7967
+  },
+  "is_regime_pct_by_ticker": {
+    "IWM": 0.7351,
+    "IJH": 0.7765,
+    "VB": 0.7606,
+    "IJR": 0.768
+  },
+  "oos_sharpe": 0.3658,
+  "oos_max_drawdown": -0.1229,
+  "oos_total_return": 0.1383,
+  "oos_win_rate": 0.6637,
+  "oos_profit_factor": 1.4085,
+  "oos_trade_count": 113,
+  "oos_trades_per_year": 18.8,
+  "oos_ppt_bps": 29.45,
+  "oos_cpr": 0.0595,
+  "oos_exit_breakdown": {
+    "HIGH_EXIT": 56,
+    "RSI_EXIT": 46,
+    "STOP_LOSS": 9,
+    "MAX_HOLD": 2
+  },
+  "oos_gap_attribution": {
+    "overnight_gap_trades": 113,
+    "weekend_gap_trades": 101,
+    "total_trades": 113,
+    "overnight_gap_pct": 1.0,
+    "weekend_gap_pct": 0.8938,
+    "overnight_gap_pnl": 3457.68,
+    "weekend_gap_pnl": 3696.78
+  },
+  "oos_per_instrument_stats": {
+    "IJH": {
+      "trade_count": 37,
+      "trades_per_year": 6.2,
+      "win_rate": 0.6486,
+      "ppt_bps": 51.44,
+      "sharpe_proxy": 1.0896,
+      "total_pnl": 1379.05
+    },
+    "VB": {
+      "trade_count": 30,
+      "trades_per_year": 5.0,
+      "win_rate": 0.6333,
+      "ppt_bps": 47.5,
+      "sharpe_proxy": 0.8443,
+      "total_pnl": 1020.45
+    },
+    "IWM": {
+      "trade_count": 30,
+      "trades_per_year": 5.0,
+      "win_rate": 0.7333,
+      "ppt_bps": 63.96,
+      "sharpe_proxy": 1.1723,
+      "total_pnl": 1363.03
+    },
+    "IJR": {
+      "trade_count": 16,
+      "trades_per_year": 2.7,
+      "win_rate": 0.625,
+      "ppt_bps": -26.01,
+      "sharpe_proxy": -0.4171,
+      "total_pnl": -304.85
+    }
+  },
+  "oos_concurrent_analysis": {
+    "pct_time_2plus_positions": 0.1769,
+    "pct_time_3plus_positions": 0.1206,
+    "avg_n_positions_when_invested": 2.3245,
+    "max_simultaneous_positions": 3,
+    "avg_portfolio_notional_pct": 0.1378,
+    "avg_notional_when_cap_active": 0.7913
+  },
+  "oos_regime_pct_by_ticker": {
+    "IWM": 0.6103,
+    "IJH": 0.7164,
+    "VB": 0.6859,
+    "IJR": 0.6057
+  },
+  "post_cost_sharpe": 0.3658,
+  "dsr": 0.9009,
+  "n_trials": 13,
+  "wf_windows": [
+    {
+      "fold": 1,
+      "start": "2005-01-01",
+      "end": "2008-06-30",
+      "sharpe": 1.0177,
+      "max_drawdown": -0.0578,
+      "win_rate": 0.6988,
+      "trade_count": 83,
+      "trades_per_year": 23.8,
+      "per_ticker_trades": {
+        "IJH": 25,
+        "VB": 24,
+        "IWM": 22,
+        "IJR": 12
+      }
+    },
+    {
+      "fold": 2,
+      "start": "2008-07-01",
+      "end": "2011-12-31",
+      "sharpe": 0.9832,
+      "max_drawdown": -0.0693,
+      "win_rate": 0.75,
+      "trade_count": 64,
+      "trades_per_year": 18.3,
+      "per_ticker_trades": {
+        "IWM": 22,
+        "VB": 21,
+        "IJH": 17,
+        "IJR": 4
+      }
+    },
+    {
+      "fold": 3,
+      "start": "2012-01-01",
+      "end": "2015-06-30",
+      "sharpe": 1.2987,
+      "max_drawdown": -0.053,
+      "win_rate": 0.8404,
+      "trade_count": 94,
+      "trades_per_year": 26.9,
+      "per_ticker_trades": {
+        "VB": 30,
+        "IJH": 28,
+        "IWM": 26,
+        "IJR": 10
+      }
+    },
+    {
+      "fold": 4,
+      "start": "2015-07-01",
+      "end": "2018-12-31",
+      "sharpe": 0.4905,
+      "max_drawdown": -0.072,
+      "win_rate": 0.7,
+      "trade_count": 70,
+      "trades_per_year": 20.0,
+      "per_ticker_trades": {
+        "IWM": 19,
+        "IJH": 18,
+        "VB": 18,
+        "IJR": 15
+      }
+    }
+  ],
+  "wf_windows_passed": 4,
+  "wf_consistency_score": 1.0,
+  "wf_sharpe_std": 0.29085776915014666,
+  "wf_sharpe_min": 0.4905,
+  "wf_sharpe_max": 1.2987,
+  "wf_sharpe_mean": 0.947525,
+  "mc_p5_sharpe": 3.585277407302544,
+  "mc_median_sharpe": 5.511396127884831,
+  "mc_p95_sharpe": 7.867601037465106,
+  "sharpe_ci_low": 0.4958868527778498,
+  "sharpe_ci_high": 1.4231766736184794,
+  "mdd_ci_low": -0.16454060427781658,
+  "mdd_ci_high": -0.06184788091002287,
+  "permutation_pvalue": 0.137,
+  "permutation_test_pass": false,
+  "permutation_perm_mean_sharpe": 0.48805848960679027,
+  "permutation_perm_p95_sharpe": 1.179268678016039,
+  "market_impact_by_ticker": {
+    "IWM": {
+      "market_impact_bps": 0.014494100670651764,
+      "order_qty": 33,
+      "adv_20d": 34458120.0,
+      "liquidity_constrained": false
+    },
+    "IJH": {
+      "market_impact_bps": 0.028152991274014542,
+      "order_qty": 70,
+      "adv_20d": 15131875.0,
+      "liquidity_constrained": false
+    },
+    "VB": {
+      "market_impact_bps": 0.06319271343010567,
+      "order_qty": 30,
+      "adv_20d": 1495190.0,
+      "liquidity_constrained": false
+    },
+    "IJR": {
+      "market_impact_bps": 0.039126490574542296,
+      "order_qty": 60,
+      "adv_20d": 7907565.0,
+      "liquidity_constrained": false
+    }
+  },
+  "sensitivity_pass": true,
+  "sensitivity_max_delta_pct": 28.31,
+  "gate_oos_sharpe": false,
+  "gate_oos_ppt": true,
+  "gate_is_mdd_cs": true,
+  "gate_is_mdd_g7": true,
+  "gate_wf_trades": true,
+  "gate_cpr": true,
+  "gate7_auto_reject": false,
+  "composite_score": 0.4542,
+  "gate1_pass": false,
+  "regime_2022": {
+    "2022_trade_count": 5,
+    "2022_note": "All four small/mid-cap ETFs expected below 200-SMA by Feb 2022 (rate-shock gate)",
+    "2022_n_position_mean": 0.1434
+  },
+  "oos_data_quality": {
+    "strategy_name": "H70b_SPY_QQQ_Multi_ETF_RSI4_Basket",
+    "oos_total_rows": 1509,
+    "oos_clean_rows": 1509,
+    "oos_data_coverage_pct": 100.0,
+    "oos_nan_per_column": {
+      "Close": 0,
+      "High": 0,
+      "Low": 0,
+      "Open": 0,
+      "Volume": 0
+    },
+    "oos_total_nans": 0,
+    "metrics_nan_fields": [],
+    "advisory_nan_fields": [],
+    "returns_nan_count": 0,
+    "returns_nan_pct": 0.0,
+    "has_critical_nan": false,
+    "recommendation": "PASS",
+    "block_reasons": []
+  },
+  "look_ahead_bias_flag": false,
+  "slippage_model": "mixed: IWM 0.005% ultra-liquid (ED-SLIP-001); IJH/VB/IJR 0.05% standard"
+}

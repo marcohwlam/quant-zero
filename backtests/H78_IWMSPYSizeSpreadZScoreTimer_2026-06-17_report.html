@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>H78 IWM/SPY Size Spread Z-Score Timer — Gate 1</title>
+<style>
+body{font-family:monospace;margin:30px;background:#f9f9f9}
+h1{color:#2c3e50}h2{color:#34495e;border-bottom:1px solid #ccc}
+table{border-collapse:collapse;width:100%;margin-bottom:20px}
+th{background:#2c3e50;color:white;padding:6px 10px;text-align:left}
+td{padding:5px 10px;border:1px solid #ddd}
+tr:nth-child(even){background:#f2f2f2}
+.pass{color:green;font-weight:bold}.fail{color:red;font-weight:bold}
+.verdict{font-size:1.4em;font-weight:bold;padding:10px;border-radius:4px;
+          background:#f8d7da;
+          color:#721c24}
+</style></head><body>
+<h1>H78 IWM/SPY Size Spread Z-Score Daily Timer — Gate 1 Report</h1>
+<div class="verdict">Overall: ❌ FAIL (2/10 checks passed)</div>
+<h2>Strategy</h2>
+<p>Universe: SPY, IWM (equity positions), SHY (cash). Signal: 60-day rolling Z-score of IWM/SPY ratio.
+States: IWM-Heavy (60% IWM/40% SPY) when Z&lt;-1.0; Neutral (50/50); SPY-Heavy (40/60) when Z&gt;+1.0.
+Regime filter: 100% SHY when SPY &lt; 200-DMA. Min hold: 3 days.</p>
+<h2>IS Performance (2005-01-01 to 2020-12-31, 16.0 years)</h2>
+<table>
+<tr><th>Metric</th><th>IS</th><th>OOS (2021-01-01–2024-12-31)</th></tr>
+<tr><td>Sharpe</td><td>0.4556</td><td>0.5323</td></tr>
+<tr><td>CAGR</td><td>5.38%</td><td>6.90%</td></tr>
+<tr><td>Max Drawdown</td><td>-28.96%</td><td>-27.81%</td></tr>
+<tr><td>Win Rate</td><td>56.0%</td><td>58.2%</td></tr>
+<tr><td>Profit Factor</td><td>1.2908</td><td>1.372</td></tr>
+<tr><td>Trade Count (state periods)</td><td>448</td><td>98</td></tr>
+<tr><td>Position Switches</td><td>447</td><td>97</td></tr>
+<tr><td>Avg PpT (bps)</td><td>23.36</td><td>33.52</td></tr>
+<tr><td>Avg Cost (bps/rebalance)</td><td>1.4491</td><td>1.1813</td></tr>
+</table>
+<h2>Statistical Rigor</h2>
+<table>
+<tr><td>MC p5 Sharpe</td><td>0.2647</td></tr>
+<tr><td>MC Median Sharpe</td><td>1.4109</td></tr>
+<tr><td>Sharpe 95% CI</td><td>[-0.0277, 0.9614]</td></tr>
+<tr><td>MDD 95% CI</td><td>[-59.79%, -19.33%]</td></tr>
+<tr><td>Permutation p-value</td><td>1.0</td></tr>
+<tr><td>DSR</td><td>0.0</td></tr>
+</table>
+<h2>Walk-Forward (4 expanding IS windows, 2yr OOS each)</h2>
+<table><tr><th>#</th><th>IS Period</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>Result</th></tr>
+<tr><td>1</td><td>2005-01-01 to 2009-12-31</td><td>IS: 0.3566</td><td>OOS: -0.378</td><td>❌ FAIL</td></tr><tr><td>2</td><td>2005-01-01 to 2012-12-31</td><td>IS: 0.2382</td><td>OOS: 1.3931</td><td>✅ PASS</td></tr><tr><td>3</td><td>2005-01-01 to 2015-12-31</td><td>IS: 0.3813</td><td>OOS: 1.5885</td><td>✅ PASS</td></tr><tr><td>4</td><td>2005-01-01 to 2018-12-31</td><td>IS: 0.4289</td><td>OOS: 0.6091</td><td>❌ FAIL</td></tr></table>
+<h2>Tilt Test: Sharpe vs MDD Tradeoff</h2>
+<table><tr><th>Config</th><th>IWM/SPY Split</th><th>IS Sharpe</th><th>IS CAGR</th><th>IS MDD</th><th>OOS Sharpe</th><th>OOS MDD</th></tr>
+<tr><td>primary_60_40</td><td>60% / 40%</td><td>0.4556</td><td>5.38%</td><td>-28.96%</td><td>0.5323</td><td>-27.81%</td></tr><tr><td>aggressive_70_30</td><td>70% / 30%</td><td>0.4582</td><td>5.44%</td><td>-29.53%</td><td>0.5297</td><td>-28.11%</td></tr><tr><td>aggressive_80_20</td><td>80% / 20%</td><td>0.4601</td><td>5.49%</td><td>-30.1%</td><td>0.5252</td><td>-28.42%</td></tr></table>
+<h2>Sensitivity Sweep (384 combos)</h2>
+<p>Sharpe range: 0.3982 – 0.6727 |
+Variance vs primary: 60.2% |
+❌ FAIL: >30%</p>
+<h2>Gate 1 Checks</h2>
+<table><tr><th>Pass</th><th>Gate</th><th>Details</th></tr><tr><td>❌</td><td>IS Sharpe > 1.0</td><td>0.4556 (threshold: > 1.0)</td></tr><tr><td>❌</td><td>OOS Sharpe > 0.70</td><td>0.5323 (threshold: > 0.70)</td></tr><tr><td>❌</td><td>IS CAGR >= 10%</td><td>5.38% (threshold: >= 10%)</td></tr><tr><td>❌</td><td>IS MDD > -20%</td><td>-28.96% (threshold: > -20%)</td></tr><tr><td>❌</td><td>OOS MDD > -20%</td><td>-27.81% (threshold: > -20%)</td></tr><tr><td>✅</td><td>IS Trade Count >= 100</td><td>448 state periods (threshold: >= 100)</td></tr><tr><td>❌</td><td>Walk-Forward >= 3/4</td><td>2/4 windows pass OOS Sharpe > 0.70</td></tr><tr><td>❌</td><td>Permutation p < 0.05</td><td>p = 1.0 (threshold: < 0.05)</td></tr><tr><td>❌</td><td>DSR > 0</td><td>DSR = 0.0 (threshold: > 0)</td></tr><tr><td>✅</td><td>IS Switches >= 60</td><td>447 switches (threshold: >= 60)</td></tr></table>
+</body></html>

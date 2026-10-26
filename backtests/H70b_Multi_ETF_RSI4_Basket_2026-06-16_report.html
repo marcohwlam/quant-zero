@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>H70b Gate 1 Report — 2026-06-16</title>
+<style>
+body { font-family: monospace; max-width: 1200px; margin: 0 auto; padding: 20px; }
+h1 { background: #343a40; color: white; padding: 15px; border-radius: 4px; }
+h2 { border-bottom: 2px solid #343a40; padding-bottom: 5px; margin-top: 30px; }
+.verdict { font-size: 2em; font-weight: bold; padding: 15px; border-radius: 4px; background: #f8d7da; text-align: center; margin: 20px 0; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th { background: #343a40; color: white; padding: 8px; text-align: left; }
+td { padding: 6px 8px; border: 1px solid #dee2e6; }
+.section { margin: 20px 0; padding: 15px; border: 1px solid #dee2e6; border-radius: 4px; }
+.pass { color: #155724; font-weight: bold; }
+.fail { color: #721c24; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>H70b Multi-ETF RSI-4 Basket — Gate 1 Report</h1>
+<p><strong>Date:</strong> 2026-06-16 | <strong>Universe:</strong> IWM + IJH + VB + IJR | <strong>Family:</strong> H70 iteration 2/2 (FINAL ALLOWED)</p>
+<p><strong>Slippage:</strong> IWM 0.005% (ED-SLIP-001 ultra-liquid) | IJH/VB/IJR 0.05% (canonical standard)</p>
+
+<div class="verdict">GATE 1: FAIL — Composite Score: 0.4542 (≥ 0.60)</div>
+
+<h2>Gate 1 Checklist</h2>
+<table><tr><th>Gate</th><th>Value</th><th>Threshold</th><th>Result</th></tr><tr style='background:#f8d7da'><td>OOS Sharpe</td><td>0.3658</td><td>> 0.70</td><td>✗ FAIL</td></tr><tr style='background:#d4edda'><td>OOS PpT</td><td>29.45 bps</td><td>> 15 bps</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>IS MDD (CS)</td><td>9.55%</td><td>< 20%</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>IS MDD (Gate 7)</td><td>9.55%</td><td>< 30%</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>WF trades/fold</td><td>True</td><td>all > 30</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>CPR</td><td>0.0693</td><td>< 0.25</td><td>✓ PASS</td></tr><tr style='background:#f8d7da'><td>Perm test</td><td>p=0.1370</td><td>< 0.05</td><td>✗ FAIL</td></tr><tr style='background:#d4edda'><td>Gate7 no-reject</td><td>True</td><td>no fold>30%</td><td>✓ PASS</td></tr><tr style='background:#d4edda'><td>Sensitivity</td><td>Δ28.3%</td><td>< 30%</td><td>✓ PASS</td></tr></table>
+
+<h2>IS/OOS Summary</h2>
+<div class="section">
+<table>
+<tr><th>Metric</th><th>IS (2005–2018)</th><th>OOS (2019–2024)</th></tr>
+<tr><td>Sharpe</td><td>0.9304</td><td>0.3658</td></tr>
+<tr><td>Max Drawdown</td><td>9.55%</td><td>12.29%</td></tr>
+<tr><td>Win Rate</td><td>75.48%</td><td>66.37%</td></tr>
+<tr><td>Profit Factor</td><td>2.49</td><td>1.41</td></tr>
+<tr><td>Trade Count</td><td>310</td><td>113</td></tr>
+<tr><td>Trades/Year</td><td>22.1</td><td>18.8</td></tr>
+<tr><td>PpT (bps)</td><td>59.66</td><td>29.45</td></tr>
+<tr><td>CPR</td><td>0.0693</td><td>0.0595</td></tr>
+</table>
+</div>
+
+<h2>Per-Instrument Disaggregation (IS)</h2>
+<table>
+<tr><th>Ticker</th><th>Trades</th><th>PpT (bps)</th><th>Win Rate</th><th>Sharpe~</th><th>Total PnL</th></tr>
+<tr><td>IJH</td><td>88</td><td>75.8</td><td>75.0%</td><td>1.928</td><td>$7,649.30</td></tr><tr><td>IWM</td><td>89</td><td>117.3</td><td>76.4%</td><td>3.201</td><td>$11,729.87</td></tr><tr><td>VB</td><td>93</td><td>100.2</td><td>78.5%</td><td>2.658</td><td>$10,610.24</td></tr><tr><td>IJR</td><td>40</td><td>15.4</td><td>67.5%</td><td>0.343</td><td>$749.13</td></tr>
+</table>
+
+<h2>Walk-Forward Analysis (4 IS Folds)</h2>
+<table>
+<tr><th>Fold</th><th>Period</th><th>Sharpe</th><th>MDD</th><th>Win Rate</th><th>Trades</th><th>Per-Ticker</th></tr>
+<tr><td>1</td><td>2005-01-01–2008-06-30</td><td>1.0177</td><td>-5.78%</td><td>69.88%</td><td>83</td><td style='font-size:0.85em'>{'IJH': 25, 'VB': 24, 'IWM': 22, 'IJR': 12}</td></tr><tr><td>2</td><td>2008-07-01–2011-12-31</td><td>0.9832</td><td>-6.93%</td><td>75.00%</td><td>64</td><td style='font-size:0.85em'>{'IWM': 22, 'VB': 21, 'IJH': 17, 'IJR': 4}</td></tr><tr><td>3</td><td>2012-01-01–2015-06-30</td><td>1.2987</td><td>-5.30%</td><td>84.04%</td><td>94</td><td style='font-size:0.85em'>{'VB': 30, 'IJH': 28, 'IWM': 26, 'IJR': 10}</td></tr><tr><td>4</td><td>2015-07-01–2018-12-31</td><td>0.4905</td><td>-7.20%</td><td>70.00%</td><td>70</td><td style='font-size:0.85em'>{'IWM': 19, 'IJH': 18, 'VB': 18, 'IJR': 15}</td></tr>
+</table>
+<p>WF passed: 4/4 | Sharpe std: 0.2909 | Min: 0.4905 | Gate 7: PASS</p>
+
+<h2>Concurrent Position Analysis</h2>
+<div class="section">
+<p>{'pct_time_2plus_positions': 0.1755, 'pct_time_3plus_positions': 0.144, 'avg_n_positions_when_invested': 2.4331, 'max_simultaneous_positions': 3, 'avg_portfolio_notional_pct': 0.144, 'avg_notional_when_cap_active': 0.7967}</p>
+</div>
+
+<h2>Statistical Tests</h2>
+<div class="section">
+<p><strong>Monte Carlo (1000 resamples):</strong> p5=3.5853, median=5.5114, p95=7.8676</p>
+<p><strong>Block Bootstrap CI (95%):</strong> Sharpe [0.4959, 1.4232]</p>
+<p><strong>Permutation test (multi-instrument, 1000 perms):</strong> p=0.1370 — <span class='fail'>FAIL</span></p>
+<p><strong>DSR:</strong> 0.9009 | <strong>Sensitivity:</strong> Δ28.3%</p>
+</div>
+
+<h2>2022 Rate-Shock Regime Split</h2>
+<div class="section">
+<p>2022 trades: 5 | All four small/mid-cap ETFs expected below 200-SMA by Feb 2022 (rate-shock gate)</p>
+</div>
+
+<h2>Gap Attribution (Hard Gate 8)</h2>
+<div class="section">
+<table>
+<tr><th>Period</th><th>Overnight Gap Trades</th><th>%</th><th>Weekend Gap Trades</th><th>%</th></tr>
+<tr><td>IS</td>
+<td>310</td>
+<td>100.0%</td>
+<td>276</td>
+<td>89.0%</td></tr>
+<tr><td>OOS</td>
+<td>113</td>
+<td>100.0%</td>
+<td>101</td>
+<td>89.4%</td></tr>
+</table>
+</div>
+
+<h2>Parameter Sweep (9 Combinations)</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>rsi_entry</th>
+      <th>portfolio_notional_cap</th>
+      <th>sharpe</th>
+      <th>max_drawdown</th>
+      <th>win_rate</th>
+      <th>trade_count</th>
+      <th>total_return</th>
+      <th>profit_factor</th>
+      <th>sharpe_delta_pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>20</td>
+      <td>0.6000</td>
+      <td>0.6773</td>
+      <td>-0.0509</td>
+      <td>0.7297</td>
+      <td>148</td>
+      <td>0.4079</td>
+      <td>2.2151</td>
+      <td>-27.2000</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>0.8000</td>
+      <td>0.6920</td>
+      <td>-0.0763</td>
+      <td>0.7451</td>
+      <td>204</td>
+      <td>0.6442</td>
+      <td>2.2995</td>
+      <td>-25.6200</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>1.0000</td>
+      <td>0.6920</td>
+      <td>-0.0763</td>
+      <td>0.7451</td>
+      <td>204</td>
+      <td>0.6442</td>
+      <td>2.2995</td>
+      <td>-25.6200</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>0.6000</td>
+      <td>0.8910</td>
+      <td>-0.0677</td>
+      <td>0.7523</td>
+      <td>222</td>
+      <td>0.7388</td>
+      <td>2.4991</td>
+      <td>-4.2300</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>0.8000</td>
+      <td>0.9304</td>
+      <td>-0.0955</td>
+      <td>0.7548</td>
+      <td>310</td>
+      <td>1.2295</td>
+      <td>2.4857</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>1.0000</td>
+      <td>0.9332</td>
+      <td>-0.0955</td>
+      <td>0.7532</td>
+      <td>312</td>
+      <td>1.2372</td>
+      <td>2.4853</td>
+      <td>0.3000</td>
+    </tr>
+    <tr>
+      <td>30</td>
+      <td>0.6000</td>
+      <td>0.6670</td>
+      <td>-0.0967</td>
+      <td>0.7263</td>
+      <td>285</td>
+      <td>0.5820</td>
+      <td>1.7949</td>
+      <td>-28.3100</td>
+    </tr>
+    <tr>
+      <td>30</td>
+      <td>0.8000</td>
+      <td>0.7699</td>
+      <td>-0.1148</td>
+      <td>0.7413</td>
+      <td>402</td>
+      <td>1.1710</td>
+      <td>1.9812</td>
+      <td>-17.2500</td>
+    </tr>
+    <tr>
+      <td>30</td>
+      <td>1.0000</td>
+      <td>0.7699</td>
+      <td>-0.1148</td>
+      <td>0.7413</td>
+      <td>402</td>
+      <td>1.1710</td>
+      <td>1.9812</td>
+      <td>-17.2500</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Market Impact by Ticker</h2>
+<div class="section">
+<p>IWM: 0.0145 bps | ADV=34,458,120 shares | liq_constrained=False</p><p>IJH: 0.0282 bps | ADV=15,131,875 shares | liq_constrained=False</p><p>VB: 0.0632 bps | ADV=1,495,190 shares | liq_constrained=False</p><p>IJR: 0.0391 bps | ADV=7,907,565 shares | liq_constrained=False</p>
+</div>
+
+<hr>
+<p><em>Generated by Engineering Director (QUA-306) | H70b Gate 1 | 2026-06-16</em></p>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Gate 1: H86v2_PostEarningsGapV2</title>
+<style>
+body {font-family:monospace;max-width:1100px;margin:20px auto;background:#f8f9fa}
+h1,h2,h3 {color:#333} .verdict {font-size:2em;font-weight:bold;color:#dc3545;
+border:3px solid #dc3545;display:inline-block;padding:8px 20px;border-radius:6px}
+table {border-collapse:collapse;width:100%;margin:10px 0}
+th,td {border:1px solid #dee2e6;padding:6px 10px;text-align:left}
+th {background:#343a40;color:white} tr:nth-child(even) {background:#f2f2f2}
+.section {background:white;padding:15px;margin:15px 0;border-radius:6px;
+box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+.metric {display:inline-block;margin:8px;padding:10px;background:#e9ecef;
+border-radius:4px;min-width:150px}
+.metric-val {font-size:1.4em;font-weight:bold;color:#0d6efd}
+.pass {color:#28a745;font-weight:bold} .fail {color:#dc3545;font-weight:bold}
+</style></head>
+<body>
+<h1>Gate 1 Report: H86v2_PostEarningsGapV2</h1>
+<p>Date: 2026-06-24 | IS: 2023-07-01–2025-03-31 | OOS: 2025-04-01–2026-06-24</p>
+<p>H86v2: Fix 1 (local universe), Fix 2 (150-SMA), Fix 3 (narrow grid). Family: 2/2.</p>
+<div class="verdict">FAIL</div>
+
+<div class="section"><h2>Core Metrics</h2>
+<div class="metric"><div>IS Sharpe</div><div class="metric-val">1.1516</div></div>
+<div class="metric"><div>OOS Sharpe</div><div class="metric-val">-1.1430</div></div>
+<div class="metric"><div>IS MDD</div><div class="metric-val">-3.92%</div></div>
+<div class="metric"><div>IS CAGR</div><div class="metric-val">5.39%</div></div>
+<div class="metric"><div>OOS CAGR</div><div class="metric-val">-4.79%</div></div>
+<div class="metric"><div>IS Trades</div><div class="metric-val">138</div></div>
+<div class="metric"><div>Win Rate</div><div class="metric-val">57.25%</div></div>
+<div class="metric"><div>MC p5 Sharpe</div><div class="metric-val">-0.1224</div></div>
+</div>
+
+<div class="section"><h2>Gate 1 Checks (10 required)</h2>
+<table><tr><th>Check</th><th>Result</th><th>Actual</th><th>Threshold</th></tr>
+<tr><td>IS Sharpe > 1.0</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>1.1516</td><td>> 1.0</td></tr>
+<tr><td>OOS Sharpe > 0.7</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>-1.1430</td><td>> 0.7</td></tr>
+<tr><td>IS MDD < 20%</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>-3.92%</td><td>< 20%</td></tr>
+<tr><td>IS Trade Count ≥ 100</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>138</td><td>≥ 100</td></tr>
+<tr><td>Win Rate > 50%</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>57.25%</td><td>> 50%</td></tr>
+<tr><td>Profit Factor > 1.0</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>1.7765</td><td>> 1.0</td></tr>
+<tr><td>DSR z-score > 0</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>-1.0393</td><td>> 0</td></tr>
+<tr><td>WF OOS Sharpe>0: ≥ 3/4</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>2/4</td><td>≥ 3/4</td></tr>
+<tr><td>Parameter Sensitivity < 50%</td><td style='color:#dc3545;font-weight:bold'>✗ FAIL</td><td>116.4%</td><td>< 50%</td></tr>
+<tr><td>Permutation p < 0.05</td><td style='color:#28a745;font-weight:bold'>✓ PASS</td><td>0.0050</td><td>< 0.05</td></tr></table></div>
+
+<div class="section"><h2>H86 vs H86v2 Comparison</h2>
+<table><tr><th>Metric</th><th>H86 (FAIL)</th><th>H86v2 (This)</th><th>Delta</th></tr>
+<tr><td>is_sharpe</td><td>1.8235</td><td>1.1516</td><td style='color:#dc3545'>→ Same/Worse</td></tr>
+<tr><td>oos_sharpe</td><td>0.5063</td><td>-1.143</td><td style='color:#dc3545'>→ Same/Worse</td></tr>
+<tr><td>is_trade_count</td><td>26</td><td>138</td><td style='color:#28a745'>↑ Improved</td></tr>
+<tr><td>sensitivity_pct</td><td>110.3</td><td>116.4</td><td style='color:#dc3545'>→ Same/Worse</td></tr>
+<tr><td>wf_windows_passed</td><td>3</td><td>2</td><td style='color:#dc3545'>→ Same/Worse</td></tr></table></div>
+
+<div class="section"><h2>Walk-Forward (4 windows — 6mo IS / 3mo OOS)</h2>
+<table><tr><th>#</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th>
+<th>OOS Sharpe</th><th>IS Trades</th><th>Status</th></tr>
+<tr><td>1</td><td>2023-07-01–2023-12-31</td><td>2024-01-01–2024-03-31</td><td>-0.2202</td><td>4.6027</td><td>33</td><td style='color:#28a745'>PASS</td></tr>
+<tr><td>2</td><td>2024-01-01–2024-06-30</td><td>2024-07-01–2024-09-30</td><td>3.4197</td><td>0.4443</td><td>41</td><td style='color:#28a745'>PASS</td></tr>
+<tr><td>3</td><td>2024-07-01–2024-12-31</td><td>2025-01-01–2025-03-31</td><td>1.0161</td><td>-1.6894</td><td>42</td><td style='color:#dc3545'>FAIL</td></tr>
+<tr><td>4</td><td>2024-10-01–2025-03-31</td><td>2025-04-01–2025-06-30</td><td>0.8071</td><td>-0.0790</td><td>45</td><td style='color:#dc3545'>FAIL</td></tr></table>
+<p>WF pass rate: 2/4 (gate: ≥ 3/4 OOS Sharpe > 0)</p>
+</div>
+
+<div class="section"><h2>150-SMA Stress Test (Fix 2 Validation)</h2>
+<p><b>Dot-com bust:</b> 150-SMA breach: 2000-02-18 |
+200-SMA breach: 2000-04-14 |
+Lag: 56 days |
+150-SMA closes 56 days before 200-SMA</p>
+<p><b>GFC:</b> 150-SMA breach: 2007-07-27 |
+200-SMA breach: 2007-08-03 |
+Lag: 7 days |
+150-SMA closes 7 days before 200-SMA</p>
+<p><b>Verdict:</b> PASS — 150-SMA gate closes effectively in both GFC and dot-com regimes. Gate blocks new long entries before sustained drawdown materializes.</p>
+</div>
+
+<div class="section"><h2>Statistical Rigor</h2>
+<p>DSR z-score: -1.0393 | Bootstrap Sharpe CI:
+[-0.2552, 2.4739]</p>
+<p>Bootstrap MDD CI: [-0.0761, -0.0200]</p>
+<p>MC p5/median/p95: -0.1224 / 1.1455 /
+2.2519</p>
+<p>Permutation p-value: 0.0050</p>
+</div>
+
+<div class="section"><h2>Parameter Sweep (108 combos)</h2>
+<p>Sharpe range: 0.3612 – 1.7021</p>
+<p>Sensitivity = (max-min)/baseline × 100% = <b>116.4%</b>
+(threshold: &lt; 50% — FAIL)</p>
+<p>Combos with Sharpe &gt; 1.0: 37/108</p>
+</div>
+
+<div class="section"><h2>Data Quality Checklist</h2>
+<ul>
+<li><b>Universe:</b> Current S&amp;P 500 (local static CSV, 595 tickers).
+Survivorship bias: MODERATE RISK, LOW MAGNITUDE (large-cap).</li>
+<li><b>Price adjustment:</b> yfinance auto_adjust=True (splits + dividends).</li>
+<li><b>Look-ahead:</b> CLEAN — gap T+0 open vs T-1 close; entry T+2 close.</li>
+<li><b>Earnings coverage:</b> 83.4%
+(yfinance ~3yr coverage from query date).</li>
+<li><b>Regime gate:</b> 150-SMA (Fix 2). Gate closes in GFC and dot-com per stress test above.</li>
+</ul>
+</div>
+
+<div class="section"><h2>Family Limit</h2>
+<p>H86: iteration 1/2 (Gate 1 FAIL 2026-06-23). H86v2: iteration 2/2.</p>
+<p><b>→ H86 family RETIRED — do not create H86v3.</b></p>
+</div>
+
+</body></html>

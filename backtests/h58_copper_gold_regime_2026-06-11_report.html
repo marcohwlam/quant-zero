@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>H58 Gate 1 Report — Copper/Gold Regime Signal</title>
+<style>
+body { font-family: Arial, sans-serif; max-width: 1100px; margin: 40px auto; color: #333; }
+h1 { color: #1a1a2e; } h2 { color: #16213e; border-bottom: 2px solid #eee; padding-bottom: 4px; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th, td { padding: 8px 12px; border: 1px solid #ddd; text-align: left; font-size: 0.9em; }
+th { background: #f4f4f4; font-weight: bold; }
+.verdict { font-size: 2em; font-weight: bold; color: #dc3545; margin: 20px 0; }
+.metric-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.metric-box { background: #f9f9f9; border: 1px solid #ddd; border-radius: 6px; padding: 12px; }
+.metric-val { font-size: 1.2em; font-weight: bold; color: #1a1a2e; }
+.perm-badge { color: #dc3545; font-weight: bold; font-size: 1.1em; }
+.warn { color: #856404; background: #fff3cd; padding: 10px; border-radius: 4px; margin: 10px 0; }
+.critical { color: #721c24; background: #f8d7da; padding: 10px; border-radius: 4px; margin: 10px 0; }
+.ok { color: #155724; background: #d4edda; padding: 10px; border-radius: 4px; margin: 10px 0; }
+</style>
+</head>
+<body>
+<h1>Gate 1 Report — H58 Copper/Gold Ratio Regime Signal</h1>
+<p><strong>Report Date:</strong> 2026-06-11 | <strong>IS:</strong> 2003-01-01→2023-12-31 | <strong>OOS:</strong> 2024-01-01→2026-06-10</p>
+<p>Strategy: Cu/Au 20-day relative return → binary SPY/SHY allocation. Execute at T+1 open.</p>
+<p>Replaces H51 (GLD/SPY, retired p=1.0). H58 uses two commodities — industrial vs safe-haven demand — for structurally superior signal.</p>
+
+<div class="verdict">Gate 1 Verdict: FAIL</div>
+
+
+
+<div class="critical">
+<strong>PERMUTATION TEST (CRITICAL):</strong>
+<span class="perm-badge">p = 0.1530</span>
+(FAIL — no statistical alpha. H51 also failed with p=1.0. Retire H58.)
+Block-shuffle permutation (1000 shuffles, 616 regime blocks).
+</div>
+
+<h2>Gate 1 Criteria</h2>
+<table><thead><tr><th>Criterion</th><th>Value</th><th>Threshold</th><th>Status</th><th>Note</th></tr></thead>
+<tbody><tr><td><strong>IS_Sharpe</strong></td><td>0.5296</td><td>> 1.0</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>OOS_Sharpe</strong></td><td>0.8688</td><td>> 0.7</td><td style='color:#28a745;font-weight:bold'>PASS</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>IS_MaxDrawdown</strong></td><td>-31.94</td><td>> -20%</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>IS_CAGR</strong></td><td>5.34</td><td>>= 10%</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>IS_TradeCount</strong></td><td>308</td><td>>= 100</td><td style='color:#28a745;font-weight:bold'>PASS</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>WF_Consistency</strong></td><td>2/4</td><td>>= 3/4 windows</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'></td></tr>
+<tr><td><strong>Permutation_pvalue</strong></td><td>0.153</td><td>< 0.05</td><td style='color:#dc3545;font-weight:bold'>FAIL</td><td style='font-size:0.85em'>CRITICAL — H51 retired for p=1.0</td></tr>
+</tbody></table>
+
+<h2>IS Performance (2003-01-01 to 2023-12-31)</h2>
+<div class="metric-grid">
+  <div class="metric-box"><div>Sharpe Ratio</div><div class="metric-val">0.5296</div></div>
+  <div class="metric-box"><div>CAGR</div><div class="metric-val">5.34%</div></div>
+  <div class="metric-box"><div>Max Drawdown</div><div class="metric-val">-31.94%</div></div>
+  <div class="metric-box"><div>Total Return</div><div class="metric-val">198.33%</div></div>
+  <div class="metric-box"><div>Win Rate</div><div class="metric-val">53.25%</div></div>
+  <div class="metric-box"><div>Profit Factor</div><div class="metric-val">1.4124</div></div>
+  <div class="metric-box"><div>Trade Count</div><div class="metric-val">308</div></div>
+  <div class="metric-box"><div>Transitions/yr</div><div class="metric-val">29.3</div></div>
+  <div class="metric-box"><div>% Time in SPY</div><div class="metric-val">52.4%</div></div>
+</div>
+
+<h2>OOS Performance (2024-01-01 to 2026-06-10)</h2>
+<div class="metric-grid">
+  <div class="metric-box"><div>Sharpe Ratio</div><div class="metric-val">0.8688</div></div>
+  <div class="metric-box"><div>CAGR</div><div class="metric-val">7.88%</div></div>
+  <div class="metric-box"><div>Max Drawdown</div><div class="metric-val">-11.83%</div></div>
+  <div class="metric-box"><div>Win Rate</div><div class="metric-val">52.78%</div></div>
+  <div class="metric-box"><div>Trade Count</div><div class="metric-val">36</div></div>
+  <div class="metric-box"><div>OOS Degradation</div><div class="metric-val">-64.0%</div></div>
+</div>
+
+<h2>Statistical Rigor Pipeline</h2>
+<table><thead><tr><th>Metric</th><th>Value</th><th>Threshold</th><th>Status</th></tr></thead><tbody>
+<tr><td>MC p5 Sharpe (1000 bootstrap)</td><td>0.1023</td><td>&ge; 0.5</td><td>WARN</td></tr>
+<tr><td>MC Median Sharpe</td><td>1.6303</td><td>-</td><td>-</td></tr>
+<tr><td>Block Bootstrap Sharpe 95% CI</td><td>[0.1855, 0.9312]</td><td>-</td><td>-</td></tr>
+<tr><td>Block Bootstrap MDD 95% CI</td><td>[-41.41%, -14.69%]</td><td>-</td><td>-</td></tr>
+<tr><td><strong>Permutation test p-value (1000 perms, block-shuffle)</strong></td>
+    <td><strong>0.1530</strong></td>
+    <td>&le; 0.05</td>
+    <td style='color:#dc3545;font-weight:bold'>FAIL — CRITICAL</td></tr>
+<tr><td>Market Impact (SPY, $25K notional)</td><td>0.0069 bps</td><td>-</td>
+    <td>OK</td></tr>
+<tr><td>Deflated Sharpe Ratio</td><td>1.0000</td><td>&gt; 0</td>
+    <td>PASS</td></tr>
+</tbody></table>
+
+<h2>Walk-Forward Analysis (4 expanding windows)</h2>
+<table><thead><tr><th>#</th><th>IS Period</th><th>OOS Period</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>OOS Pass</th></tr></thead>
+<tbody><tr><td>1</td><td>2003-01-01→2010-12-31</td><td>2011-01-01→2015-12-31</td><td>0.5631</td><td>0.4329</td><td style='color:#dc3545;font-weight:bold'>FAIL</td></tr>
+<tr><td>2</td><td>2003-01-01→2013-12-31</td><td>2014-01-01→2017-12-31</td><td>0.5227</td><td>0.9690</td><td style='color:#28a745;font-weight:bold'>PASS</td></tr>
+<tr><td>3</td><td>2003-01-01→2016-12-31</td><td>2017-01-01→2020-12-31</td><td>0.5582</td><td>1.1785</td><td style='color:#28a745;font-weight:bold'>PASS</td></tr>
+<tr><td>4</td><td>2003-01-01→2018-12-31</td><td>2019-01-01→2023-12-31</td><td>0.5641</td><td>0.4372</td><td style='color:#dc3545;font-weight:bold'>FAIL</td></tr>
+</tbody></table>
+<p>Windows passed: <strong>2/4</strong> | WF Sharpe std: 0.3278
+| WF min: 0.4329</p>
+
+
+<h2>Sub-Period Diagnostics</h2>
+<table><thead><tr><th>Period</th><th>Window</th><th>Sharpe</th><th>CAGR</th><th>MDD</th><th>Trades</th><th>% SPY</th></tr></thead>
+<tbody><tr><td>pre_gfc_only</td><td>2003-01-01→2007-12-31</td><td>0.3224</td><td>2.7%</td><td>-13.6%</td><td>78</td><td>56.8%</td></tr>
+<tr><td>gfc_only</td><td>2007-01-01→2009-12-31</td><td>0.5370</td><td>7.6%</td><td>-19.5%</td><td>31</td><td>48.5%</td></tr>
+<tr><td>copper_bust_2015_16</td><td>2015-01-01→2016-12-31</td><td>0.8541</td><td>6.0%</td><td>-5.3%</td><td>30</td><td>41.3%</td></tr>
+<tr><td>rate_shock_2022</td><td>2022-01-01→2022-12-31</td><td>-1.6013</td><td>-24.4%</td><td>-30.5%</td><td>18</td><td>47.4%</td></tr>
+<tr><td>post_gfc_2010_2019</td><td>2010-01-01→2019-12-31</td><td>0.9061</td><td>7.2%</td><td>-15.2%</td><td>140</td><td>49.6%</td></tr>
+</tbody></table>
+
+<h2>Smoothing Comparison (QUA-201 Engineering Note 2)</h2>
+<table><thead><tr><th>Smoothing</th><th>Sharpe</th><th>CAGR</th><th>MDD</th><th>Transitions</th></tr></thead><tbody>
+<tr><td>smooth=1 (baseline)</td><td>0.5296</td><td>5.3%</td>
+    <td>-31.9%</td><td>615</td></tr>
+<tr><td>smooth=2</td><td>0.5792</td><td>6.2%</td>
+    <td>-26.4%</td><td>427</td></tr>
+</tbody></table>
+<p><em>smooth=2 requires 2 consecutive Cu/Au < 0 before exiting SPY. Reduces whipsaw at cost of slower exit. Fewer transitions = lower cost drag.</em></p>
+
+
+<h2>Parameter Sweep — Top 10 IS Configurations (90 combos)</h2>
+<table><thead><tr><th>Lookback</th><th>Threshold</th><th>Smooth</th><th>Risk-off</th><th>IS Sharpe</th><th>IS CAGR</th><th>IS MDD</th><th>IS Trades</th></tr></thead>
+<tbody><tr><td>40</td><td>0.0000</td><td>2</td><td>SHY</td><td>0.9111</td><td>10.1%</td><td>-39.0%</td><td>156</td></tr>
+<tr><td>40</td><td>0.0050</td><td>3</td><td>SHY</td><td>0.9060</td><td>10.1%</td><td>-35.5%</td><td>127</td></tr>
+<tr><td>40</td><td>0.0000</td><td>3</td><td>SHY</td><td>0.8877</td><td>10.1%</td><td>-37.8%</td><td>121</td></tr>
+<tr><td>40</td><td>0.0000</td><td>1</td><td>SHY</td><td>0.8851</td><td>9.3%</td><td>-34.1%</td><td>230</td></tr>
+<tr><td>40</td><td>-0.0050</td><td>1</td><td>SHY</td><td>0.8847</td><td>9.5%</td><td>-35.3%</td><td>212</td></tr>
+<tr><td>40</td><td>-0.0050</td><td>2</td><td>SHY</td><td>0.8744</td><td>9.9%</td><td>-37.7%</td><td>143</td></tr>
+<tr><td>40</td><td>0.0000</td><td>2</td><td>BIL</td><td>0.8508</td><td>9.3%</td><td>-38.0%</td><td>156</td></tr>
+<tr><td>40</td><td>-0.0050</td><td>3</td><td>SHY</td><td>0.8455</td><td>9.7%</td><td>-37.2%</td><td>118</td></tr>
+<tr><td>40</td><td>0.0050</td><td>3</td><td>BIL</td><td>0.8355</td><td>9.2%</td><td>-35.1%</td><td>127</td></tr>
+<tr><td>40</td><td>0.0050</td><td>2</td><td>SHY</td><td>0.8274</td><td>8.9%</td><td>-39.4%</td><td>164</td></tr>
+</tbody></table>
+
+<h2>Transaction Cost Model (ED-SLIP-001)</h2>
+<ul>
+  <li>Fixed: $0.005/share | Slippage: 0.005% of notional (ultra-liquid: SPY ADV &gt; 50M shares/day)</li>
+  <li>Market impact: Almgren-Chriss k=0.1 × σ × √(Q/ADV) × notional</li>
+  <li>Signal assets HG=F/GC=F: not traded. No futures transaction costs.</li>
+</ul>
+
+<h2>Data Quality Checklist</h2>
+<ul>
+  <li>✓ Survivorship bias: SPY/SHY are active ETFs — no survivorship bias</li>
+  <li>✓ Price adjustment: yfinance auto_adjust=True (splits + dividends)</li>
+  <li>✓ HG=F / GC=F: front-month continuous, roll gap check applied (&gt;20% daily return = flag)</li>
+  <li>✓ Forward fill: commodity closes ffill(limit=3) into SPY calendar (covers weekends + holidays)</li>
+  <li>✓ Lookahead bias: signal at T computed from T close; execution at T+1 open</li>
+  <li>✓ Earnings exclusion: N/A — ETF/futures strategy</li>
+</ul>
+
+<h2>Known Risks</h2>
+<ul>
+  <li><strong>GFC dependency:</strong> 2008-2009 is most favorable period for risk-off timers. WF folds excluding GFC are the definitive test.</li>
+  <li><strong>2015–2016 copper bust:</strong> Base-metal correction without equity bear = false risk-off signals. Quantified in sub-period diagnostics above.</li>
+  <li><strong>China demand cycles:</strong> Chinese construction PMI can temporarily dominate Cu/Au without global equity regime change.</li>
+</ul>
+
+</body></html>

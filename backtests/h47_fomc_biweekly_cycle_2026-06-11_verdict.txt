@@ -1,0 +1,56 @@
+H47 FOMC Bi-Weekly Cycle — Gate 1 Verdict
+Date: 2026-06-11
+Strategy: h47_fomc_biweekly_cycle
+Asset: SPY (equities)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OVERALL VERDICT: FAIL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IS Period: 2003-01-01 to 2023-12-31 (21 years)
+OOS Period: 2024-01-01 to 2026-06-10
+
+GATE 1 METRICS:
+  IS Sharpe:              0.5425    (threshold > 1.0)  FAIL
+  OOS Sharpe:             0.5933    (threshold > 0.7)  FAIL
+  IS Max Drawdown:        -27.87%   (threshold < 20%)  FAIL
+  IS CAGR:                4.78%   (threshold >= 10%)  FAIL
+  Win Rate:               59.12%   (threshold > 50%)  PASS
+  Trade Count (IS):       1001      (threshold >= 100) PASS
+  WF Windows Passed:      3/4       (threshold >= 3)   PASS
+  Permutation p-value:    1.0000  (threshold < 0.05) FAIL
+  DSR:                    0.000004
+  MC p5 Sharpe:           0.1707    (threshold >= 0.5) FAIL
+  Sensitivity Pass:       False  (threshold < 30% variation)
+
+STATISTICAL RIGOR:
+  Bootstrap Sharpe CI:    [0.1066, 0.9786]
+  Bootstrap MDD CI:       [-42.58%, -14.80%]
+  MC p5/median/p95:       0.1707 / 1.2717 / 2.5626
+  Market Impact:          0.0199 bps  (Q/ADV=2.63e-06)
+
+WALK-FORWARD RESULTS:
+  Windows passed:         3/4
+  OOS Sharpe std:         1.1538
+  OOS Sharpe min:         -1.3308
+  Consistency score:      1.4153
+
+EVEN VS ODD WEEK DIAGNOSTICS:
+  Avg even-week return:   0.1938%
+  Avg odd-week return:    0.2132%
+  Even-week win rate:     58.05%
+  t-stat:                 -0.144  (p=0.8856)
+
+POST-PUBLICATION DECAY:
+  Pre-2019 even Sharpe:   0.2554  (n=383 weeks)
+  Post-2019 even Sharpe:  1.5030  (n=180 weeks)
+  Retirement signal:      False
+  No retirement signal
+
+200-DMA OVERLAY IMPACT:
+  Baseline (MA=200):      Sharpe=0.5425  MDD=-27.87%
+  No MA filter:           Sharpe=0.3995  MDD=-45.48%
+  Sharpe improvement:     0.1430
+  MDD improvement:        -17.61%
+
+FAILED CHECKS: is_sharpe_pass, oos_sharpe_pass, is_mdd_pass, is_cagr_pass, permutation_pass, sensitivity_pass, mc_p5_pass

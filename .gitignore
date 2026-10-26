@@ -37,3 +37,9 @@ Thumbs.db
 # Testing artifacts
 backtests/test-artifacts/
 backtests/test/
+
+# Large local data caches (regenerable)
+backtests/h64_cache/
+pipelines/data/h63_cache/
+strategies/data/h62/*.pkl
+strategies/data/h62/*.parquet

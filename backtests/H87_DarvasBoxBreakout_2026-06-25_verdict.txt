@@ -1,0 +1,70 @@
+H87_DarvasBoxBreakout — Gate 1 Verdict
+======================================================================
+Date:    2026-06-25
+IS:      2022-01-01 -> 2024-12-31
+Overall: FAIL (5/9 checks passed)
+
+=== Best Parameters (from 27-combo IS sweep) ===
+box_n          = 25
+box_width_max  = 0.1
+vol_ratio_min  = 1.4
+spy_sma_days   = 150 (fixed)
+hard_stop_pct  = 0.08 (fixed)
+max_hold_days  = 25 (fixed)
+
+=== IS Performance ===
+Sharpe:         0.7903
+Max Drawdown:   -16.08%
+CAGR:           8.16%
+Win Rate:       56.73%
+Profit Factor:  1.1029
+Trade Count:    245
+PpT (bps):      114.12
+
+=== OOS Performance (Walk-Forward Combined) ===
+OOS Sharpe:     2.1250
+OOS MDD:        -5.61%
+WF windows positive: 3/6
+
+=== Walk-Forward Windows ===
+  WF1: IS 2022-01-01-2022-03-31 Sharpe=-0.6194 t=23 | OOS 2022-04-01-2022-04-30 Sharpe=-5.1337 t=1 -> FAIL
+  WF2: IS 2022-04-01-2022-06-30 Sharpe=-2.7619 t=1 | OOS 2022-07-01-2022-07-31 Sharpe=0.0000 t=0 -> FAIL
+  WF3: IS 2022-07-01-2022-09-30 Sharpe=-2.7824 t=7 | OOS 2022-10-01-2022-10-31 Sharpe=0.0000 t=0 -> FAIL
+  WF4: IS 2022-10-01-2022-12-31 Sharpe=-0.9144 t=10 | OOS 2023-01-01-2023-01-31 Sharpe=1.0652 t=10 -> PASS
+  WF5: IS 2023-01-01-2023-09-30 Sharpe=0.6624 t=79 | OOS 2023-10-01-2023-12-31 Sharpe=3.6083 t=25 -> PASS
+  WF6: IS 2024-01-01-2024-09-30 Sharpe=1.7199 t=85 | OOS 2024-10-01-2024-12-31 Sharpe=2.4578 t=26 -> PASS
+
+=== Statistical Rigor ===
+MC p5 Sharpe:   -0.1051
+Permutation p:  0.4850
+Bootstrap Sharpe CI: [-0.2948, 1.9562]
+
+=== Parameter Sweep Sensitivity ===
+Sharpe range:   -0.0632 – 0.7903
+Sensitivity:    290.9% (threshold: < 50%)
+
+=== Regime & Risk Attribution ===
+2022 trades:    41 (expected near-zero after March 2022)
+2022 PnL:       $-2163
+Earnings exits: 0
+Gap MDD frac:   17.31%
+Liq. const.:    0.00%
+
+=== Gate 1 Checks ===
+✗ FAIL  IS Sharpe > 1.0             : 0.7903
+✓ PASS  OOS Sharpe > 0.7            : 2.1250
+✓ PASS  IS MDD < 20%                : -16.08%
+✓ PASS  IS trade count >= 100       : 245
+✓ PASS  Win rate > 50%              : 56.73%
+✓ PASS  Profit factor > 1.0         : 1.1029
+✗ FAIL  WF OOS positive >= 4/6      : 3/6
+✗ FAIL  Parameter sensitivity < 50% : 290.9%
+✗ FAIL  Permutation p < 0.05        : 0.4850
+
+OVERALL: FAIL (5/9 checks passed)
+
+=== Survivorship Bias Note ===
+Universe: h82v2_universe_2018_jan.csv (PIT proxy circa 2018, ~1,047 tickers).
+Stocks delisted after 2018 are absent from yfinance.
+Bias direction: INFLATES Sharpe (missing losers that went to zero).
+Satisfies Hard Gate 9 option b (documented, directional sensitivity note present).
