@@ -121,7 +121,7 @@ Not recommended for testing: the IS check shows no signal worth a parameter swee
 
 ## Recommendation
 
-**Retire.** Do not send to Engineering. Honest outcome: the A-share late-day gainer rule does not transfer to US index ETFs on daily bars. The conditioning removes the unconditional overnight drift on SPY and gives too few trades to test on QQQ.
+**Retire (index-ETF version only).** The single-stock gainer-list version is tested in `92_ta_overnight_gainer_screen_sp500.md`. Do not send to Engineering. Honest outcome: the A-share late-day gainer rule does not transfer to US index ETFs on daily bars. The conditioning removes the unconditional overnight drift on SPY and gives too few trades to test on QQQ.
 
 If the Research Director wants the overnight premium itself, it is already covered by H46 (unconditional SPY/QQQ overnight with SMA200 filter) and H61 (down-intraday conditioning). This evidence supports H61's direction: strong intraday close is a negative conditioner, weak intraday close is the positive one. A reformulation as a single-stock cross-sectional rule (long the bottom decile of intraday return, hold overnight) would solve the trade count but needs a larger universe and survivorship-free constituents; it is a new hypothesis, not a revision of this one.
 
