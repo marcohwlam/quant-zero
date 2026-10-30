@@ -42,7 +42,7 @@ STALENESS_HOURS = {
 
 def is_stale(meta: dict, asset_class: str, now_utc: datetime) -> bool:
     """Return True when meta.last_update is older than the asset-class threshold."""
-    last_update_str = meta.get("last_update", "")
+    last_update_str = _meta_last_update(meta) or ""
     if not last_update_str:
         return True
     try:
@@ -128,30 +128,78 @@ def load_meta_json(strat_id: str) -> dict:
 
 # ── Portfolio drawdown ─────────────────────────────────────────────────────────
 
-def compute_portfolio_drawdown(active_equity: dict) -> float:
+def _meta_last_update(meta: dict):
+    """Meta writers use `last_updated`; legacy runners used `last_update`. Accept both."""
+    return meta.get("last_updated") or meta.get("last_update")
+
+
+def _strategy_curve(rows: list, capital: float) -> dict:
+    """{date: value} rebased to `capital` (value / first_value * capital)."""
+    pts = {}
+    for row in rows:
+        try:
+            val = float(row.get("portfolio_value", 0) or 0)
+        except (ValueError, TypeError):
+            continue
+        if row.get("date") and val > 0:
+            pts[row["date"]] = val
+    if not pts:
+        return {}
+    dates = sorted(pts)
+    base = pts[dates[0]]
+    scale = (capital / base) if capital and capital > 0 else 1.0
+    return {d: pts[d] * scale for d in dates}
+
+
+def compute_strategy_drawdown(rows: list) -> float:
+    """Peak-to-current drawdown (%) of one strategy's own equity curve."""
+    vals = [v for _, v in sorted(_strategy_curve(rows, 1.0).items())]
+    if not vals or max(vals) <= 0:
+        return 0.0
+    return max(0.0, (1.0 - vals[-1] / max(vals)) * 100.0)
+
+
+def compute_portfolio_drawdown(active_equity: dict, capital: dict = None) -> float:
     """
     Portfolio drawdown from combined equity curves of active strategies.
     active_equity: {strat_id: [equity_csv_rows]}
+    capital: {strat_id: capital_allocated}. Each curve is rebased to its allocation
+    and forward-filled over the common date index before summing, so mixed
+    bases and sparse, unaligned dates do not create phantom drawdowns.
     """
-    date_values: dict = {}
-    for rows in active_equity.values():
-        for row in rows:
-            date = row.get("date", "")
-            try:
-                val = float(row.get("portfolio_value", 0) or 0)
-            except (ValueError, TypeError):
-                val = 0.0
-            date_values[date] = date_values.get(date, 0.0) + val
-
-    if not date_values:
+    capital = capital or {}
+    curves = {sid: _strategy_curve(rows, capital.get(sid, 0)) for sid, rows in active_equity.items()}
+    curves = {sid: c for sid, c in curves.items() if c}
+    if not curves:
         return 0.0
 
-    values = [date_values[d] for d in sorted(date_values)]
+    all_dates = sorted({d for c in curves.values() for d in c})
+    values = []
+    last = {}
+    for d in all_dates:
+        for sid, c in curves.items():
+            if d in c:
+                last[sid] = c[d]
+        # Before a strategy's first row, carry its starting allocation (flat).
+        total = sum(last.get(sid, next(iter(sorted(c.items())))[1]) for sid, c in curves.items())
+        values.append(total)
+
     peak = max(values)
-    current = values[-1]
     if peak <= 0:
         return 0.0
-    return max(0.0, (1.0 - current / peak) * 100.0)
+    return max(0.0, (1.0 - values[-1] / peak) * 100.0)
+
+
+DD_DIVERGENCE_PTS = 5.0
+
+
+def portfolio_dd_divergence(portfolio_dd: float, strategy_dds: list):
+    """Return warning text when portfolio DD exceeds max per-strategy DD by > DD_DIVERGENCE_PTS."""
+    max_strat = max(strategy_dds) if strategy_dds else 0.0
+    if portfolio_dd - max_strat > DD_DIVERGENCE_PTS:
+        return (f"Portfolio DD {portfolio_dd:.2f}% diverges from max per-strategy DD "
+                f"{max_strat:.2f}% by > {DD_DIVERGENCE_PTS:.0f} pts. Likely equity data quality issue.")
+    return None
 
 
 # ── Leaderboard builder ───────────────────────────────────────────────────────
@@ -197,7 +245,7 @@ def build_leaderboard_row(strat: dict, meta: dict, paper_sharpe, stale: bool) ->
         "demotion_threshold_pct": round(demotion_pct, 2),
         "warning_threshold_pct": round(warning_pct, 2),
         "alert": alert,
-        "last_update": meta.get("last_update"),
+        "last_update": _meta_last_update(meta),
         "is_stale": stale,
         "paper_start_date": strat.get("paper_start_date"),
     }
@@ -205,12 +253,20 @@ def build_leaderboard_row(strat: dict, meta: dict, paper_sharpe, stale: bool) ->
 
 # ── Alerts builder ─────────────────────────────────────────────────────────────
 
-def build_alerts(strategies: list, metas: dict, stales: dict, portfolio_dd: float) -> list:
+def build_alerts(strategies: list, metas: dict, stales: dict, portfolio_dd: float, dq_warning: str = None) -> list:
     alerts = []
     now_iso = datetime.now(timezone.utc).isoformat()
 
     # Portfolio-level
-    if portfolio_dd >= 8.0:
+    if dq_warning:
+        alerts.append({
+            "type": "data_quality",
+            "severity": "WARNING",
+            "strat_id": None,
+            "message": dq_warning,
+            "timestamp": now_iso,
+        })
+    elif portfolio_dd >= 8.0:
         alerts.append({
             "type": "portfolio_halt",
             "severity": "CRITICAL",
@@ -243,7 +299,7 @@ def build_alerts(strategies: list, metas: dict, stales: dict, portfolio_dd: floa
                 "type": "strategy_stale",
                 "severity": "WARNING",
                 "strat_id": strat_id,
-                "message": f"Strategy data stale. Last update: {meta.get('last_update', 'unknown')}",
+                "message": f"Strategy data stale. Last update: {_meta_last_update(meta) or 'unknown'}",
                 "timestamp": now_iso,
             })
         if current_dd >= demotion_pct:
@@ -515,11 +571,17 @@ def main(output_dir: str = "docs/dashboard") -> int:
     cash_pct = round(cash / total_capital * 100, 1) if total_capital else 0
 
     active_equity = {sid: all_equity[sid] for sid in (s["strat_id"] for s in active_strategies)}
-    portfolio_dd = compute_portfolio_drawdown(active_equity)
+    portfolio_dd = compute_portfolio_drawdown(
+        active_equity, {s["strat_id"]: s.get("capital_allocated", 0) for s in active_strategies})
+    dq_warning = portfolio_dd_divergence(
+        portfolio_dd, [compute_strategy_drawdown(r) for r in active_equity.values()])
 
     dd_warn_pct = portfolio_cfg.get("portfolio_drawdown_warn", 0.06) * 100
     dd_pause_pct = portfolio_cfg.get("portfolio_drawdown_pause", 0.08) * 100
-    if portfolio_dd >= dd_pause_pct:
+    if dq_warning:
+        print(f"WARNING: data-quality: {dq_warning}", file=sys.stderr)
+        port_alert = "WARN"
+    elif portfolio_dd >= dd_pause_pct:
         port_alert = "HALT"
     elif portfolio_dd >= dd_warn_pct:
         port_alert = "WARN"
@@ -527,9 +589,9 @@ def main(output_dir: str = "docs/dashboard") -> int:
         port_alert = "OK"
 
     last_updates = [
-        metas.get(s["strat_id"], {}).get("last_update", "")
+        _meta_last_update(metas.get(s["strat_id"], {})) or ""
         for s in active_strategies
-        if metas.get(s["strat_id"], {}).get("last_update")
+        if _meta_last_update(metas.get(s["strat_id"], {}))
     ]
     as_of = max(last_updates) if last_updates else now_iso
 
@@ -547,7 +609,7 @@ def main(output_dir: str = "docs/dashboard") -> int:
     }
 
     # Build alerts
-    alerts = build_alerts(strategies, metas, stales, portfolio_dd)
+    alerts = build_alerts(strategies, metas, stales, portfolio_dd, dq_warning)
 
     # Trade feed: last 50 sorted DESC by timestamp
     trade_feed = sorted(all_trades, key=lambda t: t.get("timestamp", ""), reverse=True)[:50]
