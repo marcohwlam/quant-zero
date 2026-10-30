@@ -3,14 +3,14 @@
     "type": "strategy_stale",
     "severity": "WARNING",
     "strat_id": "h10_crypto_eql_reversal_v2",
-    "message": "Strategy data stale. Last update: unknown",
-    "timestamp": "2026-10-26T21:45:51.572880+00:00"
+    "message": "Strategy data stale. Last update: 2026-10-30T16:00:45.997221",
+    "timestamp": "2026-10-30T21:48:48.470895+00:00"
   },
   {
     "type": "strategy_stale",
     "severity": "WARNING",
     "strat_id": "bollinger_band_mean_reversion_v1",
-    "message": "Strategy data stale. Last update: unknown",
-    "timestamp": "2026-10-26T21:45:51.572880+00:00"
+    "message": "Strategy data stale. Last update: 2026-10-30T16:00:58.187178",
+    "timestamp": "2026-10-30T21:48:48.470895+00:00"
   }
 ]

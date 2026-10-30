@@ -530,7 +530,9 @@ def main(dry_run: bool = False, shortfall_report_only: bool = False):
         logger.warning(f"ACTION REQUIRED: {is_report.get('action_note')}")
 
     # 6. Write canonical equity.csv and meta.json
-    account_value = float(account.get("portfolio_value", 0))
+    # The Alpaca account balance is shared (~$100k) and is not this strategy's
+    # value. Use the allocated capital as a flat ledger value (QUA-855).
+    account_value = INITIAL_CAPITAL
     signal_count = len(UNIVERSE)
     fill_count = sum(
         1 for r in execution_log
