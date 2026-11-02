@@ -1,65 +1,68 @@
 # Current Market Regime
 
-**Updated:** 2026-03-16
+**Updated:** 2026-11-02 (SPY bar for 2026-11-02 may be intraday-partial; recheck at close)
 **Author:** Market Regime Agent
+**Issue:** QUA-866
 
-## Classification
+## Track A Regime (Daily/Weekly)
 
-- **Trend:** choppy
+- **O'Neil M-filter:** correction (distribution days in last 25 sessions: 7; dates 2026-09-30, 10-08, 10-14, 10-16, 10-22, 10-29, 10-30)
+- **Weinstein Stage (SPY):** Stage 2 (close 760.23 above rising 30-week MA 744.03; MA +2.1% vs 22 sessions ago)
+- **SPY 12-1m momentum:** risk-on (+14.4%)
+
+**track_a_regime:** unfavorable
+**Track A entry:** PAUSED. M-filter fails (7 >= 5). Stage 2 and momentum still pass, so this is a distribution-driven correction warning inside an intact uptrend, not a trend break.
+
+## Track B Classification (Minute-Level)
+
+- **Trend:** choppy (Hurst 60d = 0.19, below 0.45)
 - **Volatility:** normal-vol
 - **Momentum:** risk-on
 - **Liquidity:** liquid
-- **Correlation:** crisis
+- **Correlation:** normal (0.398, borderline: 0.002 under the elevated threshold)
 
-**Summary label:** `choppy / normal-vol / risk-on / liquid / crisis-corr`
+**Track B summary label:** `choppy / normal-vol / risk-on / liquid / normal-corr`
 
 ## Key Indicators
 
 | Indicator | Value | Signal |
 |---|---|---|
-| VIX | 23.51 | normal-vol (15–25 range) |
-| GARCH(1,1) annualized vol | 14.55% | normal-vol (12–20%) |
-| SPY 200-day SMA delta | +1.86% | above trend (bullish long-term structure) |
-| SPY 12-1m momentum | +22.56% | risk-on |
-| Hurst exponent (60d) | -0.003 | choppy (near-zero, well below 0.45 threshold) |
-| SPY/BTC-USD 60d corr | 0.615 | **CRISIS (> 0.6) — stat arb pause triggered** |
-| 2Y Treasury yield (^IRX) | 3.605% | marginally rising (+0.007% vs 1m ago) |
-| HYG/LQD spread ratio | 0.7310 | tightening (was 0.7253 one month ago — credit stable) |
+| VIX | 19.07 | normal-vol |
+| GARCH(1,1) annualized vol | 14.87% | normal-vol |
+| SPY 200-day SMA delta | +4.7% | above trend |
+| SPY 12-1m momentum | +14.4% | risk-on |
+| Hurst exponent (60d) | 0.19 | mean-reverting / choppy |
+| SPY/BTC-USD 60d corr | 0.398 | normal (edge of elevated) |
+| 2Y Treasury yield (^IRX) | 4.00% | stable (3.993% one month ago) |
+| HYG/LQD spread ratio | 0.741 | widening (0.755 one month ago, -1.9%) |
+
+Macro overlay: rates stable, spreads widening. Rising-rates condition not met, so no severity amplification. Credit is a watch item.
 
 ## Regime Stability
 
-**Days in current regime:** 1 day
-**Regime stability:** LOW (< 5 days — regime just changed today)
-**Note:** Transition from prior `mildly-trending / high-vol / risk-on / liquid` regime. Multiple dimensions shifted simultaneously; treat as fresh classification.
+**Days in current regime:** 1 day (prior entry 2026-03-16 is 7 months stale; history has a gap, no continuity claimed)
+**Regime stability:** LOW (< 5 days)
 
 ## Regime Confidence
 
-**Confidence:** LOW
-**Volatility signal agreement:** GARCH (14.55%, normal-vol) and VIX (23.51, normal-vol) AGREE → HIGH vol confidence. Overall confidence downgraded to LOW due to regime age (1 day).
-**Transition risk:** MEDIUM — VIX is in the upper half of the normal-vol band (23.5). A further selloff could push VIX back above 25 (high-vol). Hurst near zero suggests market is directionless; watch for trend establishment or continuation of choppy action.
-
-## ⚠️ Critical Alert: Correlation Crisis
-
-**SPY/BTC-USD 60-day rolling correlation: 0.615 (CRISIS level > 0.6)**
-
-Per firm policy, a **crisis correlation** requires **immediate pause of all stat arb / pairs / cointegration strategies**. When equity-crypto correlation is this elevated, cross-asset diversification collapses and pairs assumptions break down.
-
-- **Action required:** Pause any active stat arb / pairs trading strategies pending regime normalization
-- **Resume trigger:** SPY/BTC 60d correlation drops below 0.4 (normal) or 0.6 (elevated) for ≥ 5 consecutive days
+**Confidence:** LOW (regime age)
+**Volatility signal agreement:** GARCH (14.87%) and VIX (19.07) both normal-vol, AGREE.
+**Transition risk:** MEDIUM-HIGH. Distribution days clustered in the last 5 sessions (10-22, 10-29, 10-30), HYG/LQD widening, corr 0.398 about to cross 0.4.
 
 ## Strategy Implications
 
-- **Favored this regime:** Volatility premium capture strategies; short-term mean reversion on liquid ETFs; defensive factor tilt (low-beta, quality)
-- **Caution this regime:** Trend-following / momentum (Hurst near zero indicates no persistent trend direction); leveraged directional bets
-- **PAUSE — correlation crisis:** All stat arb, pairs trading, and cointegration strategies (H04, H31, H32 in backtest) — SPY/BTC crisis correlation collapses diversification assumptions
-- **Pause triggers:**
-  - VIX > 40 or GARCH vol > 35% → crisis regime, pause ALL strategies
-  - SPY breaks 200d SMA (currently at 656.84) → suspend trend-following entirely
-  - 12-1m momentum turns negative → suspend equity momentum (H05)
-  - SPY/BTC corr remains above 0.6 → keep stat arb paused
+- **Favored this regime:** short-horizon mean reversion on liquid ETFs; overnight/gap reversal families; defined-risk strategies
+- **Caution this regime:** breakout and trend-following longs (M-filter fails, Hurst choppy); stat arb (corr at elevated threshold)
+- **Pause triggers:** VIX > 40 or GARCH > 35%; SPY close below 30-week MA (744) → Stage 3/4, M-filter failure becomes confirmed; SPY/BTC corr > 0.6 → pause stat arb
+- **Track A resume trigger:** distribution count back below 5 (oldest hits roll off from 2026-09-30 onward; need 3 to expire with no new ones, earliest around 2026-10-16 + 25 sessions, about 2026-11-20, if no new distribution days)
+- **Correlation note:** no stat arb pause required at 0.398, monitor daily
 
-## Macro Context
+## Track A Family Fit (QUA-866)
 
-- **Rates:** 2Y Treasury (^IRX) at 3.605%, marginally rising (+0.007% vs 1 month ago) — not a stress signal on its own
-- **Credit:** HYG/LQD ratio tightening (0.7310 vs 0.7253) — credit spreads contracting, supportive of risk-on
-- **Macro overlay:** Rising rates (marginally) + tightening spreads → macro stress signal NOT triggered; risk-on supported by credit market
+| Family | Fit now | Reason |
+|---|---|---|
+| Momentum / breakout longs (Stage 2 VCP style) | POOR, paused | M-filter correction (7 distribution days); Hurst choppy |
+| Overnight gainer reversal (H91 to H93) | NEUTRAL to FAVORABLE | Mean-reversion mechanism suits choppy, normal-vol tape; not gated on trend. Still Track A, so honor the M-filter pause for any long-only variant, or test with the filter as a stated condition |
+| Index/ETF short-term mean reversion (IWM, H70 style) | FAVORABLE | Hurst 0.19, VIX 19, liquid |
+| Stat arb / pairs | OK, monitor | Corr 0.398, 0.002 under elevated |
+| Multi-month trend following | WAIT | Stage 2 intact, but resume only when distribution count < 5 |
