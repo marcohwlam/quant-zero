@@ -37,3 +37,8 @@ Thumbs.db
 # Testing artifacts
 backtests/test-artifacts/
 backtests/test/
+
+# Regenerable data caches (QUA-902)
+backtests/*_cache/
+pipelines/data/*_cache/
+strategies/data/h*/
