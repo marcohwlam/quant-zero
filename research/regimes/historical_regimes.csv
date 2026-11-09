@@ -2,3 +2,4 @@ date,trend,volatility,momentum,liquidity,correlation,vix,garch_vol_annualized,sp
 2026-03-15,mildly-trending,high-vol,risk-on,liquid,,27.19,,+0.90%,+25.0%,0.732,,,,,mildly-trending/high-vol/risk-on/liquid
 2026-03-16,choppy,normal-vol,risk-on,liquid,crisis,23.51,14.55%,+1.86%,+22.56%,-0.003,0.615,3.605%,0.7310,1,choppy/normal-vol/risk-on/liquid/crisis-corr
 2026-11-02,choppy,normal-vol,risk-on,liquid,normal,19.07,14.87%,+4.7%,+14.4%,0.19,0.398,4.00%,0.7411,1,choppy/normal-vol/risk-on/liquid/normal-corr
+2026-11-09,choppy,high-vol,risk-on,liquid,elevated,21.97,27.72%,+2.7%,+17.4%,0.24,0.501,4.02%,0.7392,1,choppy/high-vol/risk-on/liquid/elevated-corr
