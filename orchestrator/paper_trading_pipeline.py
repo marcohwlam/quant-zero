@@ -240,7 +240,8 @@ def run_testmomentum(client, dry_run: bool) -> dict:
     from strategies.test_momentum import get_live_signals, PARAMETERS
     from broker.paper_trading.testmomentum_paper_runner import (
         execute_signals, append_trade_log, load_trade_log,
-        compute_shortfall_report, STRATEGY_NAME,
+        compute_shortfall_report, write_canonical_equity,
+        STRATEGY_NAME, INITIAL_CAPITAL,
     )
 
     signals = get_live_signals(params=PARAMETERS)
@@ -263,19 +264,31 @@ def run_testmomentum(client, dry_run: bool) -> dict:
     trade_log = load_trade_log()
     is_report = compute_shortfall_report(trade_log)
 
+    # QUA-910: ledger value is the allocated capital (the Alpaca balance is shared).
+    # The runner owns the canonical equity.csv, so the pipeline must not rewrite it.
+    if not dry_run:
+        fill_count = sum(
+            1 for r in exec_log
+            if (r.get("action") or "").lower() in {"buy", "sell", "close"}
+            and r.get("fill_qty") is not None and float(r.get("fill_qty") or 0) > 0
+        )
+        write_canonical_equity(INITIAL_CAPITAL, len(PARAMETERS["universe"]), fill_count)
+
     return {
         "strategy": STRATEGY_NAME,
         "signals": signals,
         "execution": exec_log,
         "trade_log": trade_log,
         "is_report": is_report,
+        "strategy_value": INITIAL_CAPITAL,
+        "equity_written": not dry_run,
     }
 
 
 STRATEGY_RUNNERS = {
     # Canonical strat_ids from promoted/registry.json
     "h10_crypto_eql_reversal_v2": run_h10,
-    "bollinger_band_mean_reversion_v1": run_testmomentum,
+    "testmomentum_etf_momentum_v1": run_testmomentum,
     # Legacy names from broker/strategy_registry.json (fallback)
     "h10_cryptoeqlreversal_v2": run_h10,
     "testmomentum": run_testmomentum,
@@ -323,7 +336,7 @@ def run_pipeline(dry_run: bool = False) -> dict:
             # strategy value. Only runners that report their own ledger value write
             # equity.csv here; H10 owns its canonical equity.csv via h10_paper_runner.main.
             strat_value = result.get("strategy_value")
-            if strat_value is not None:
+            if strat_value is not None and not result.get("equity_written"):
                 append_equity_row(strat_id, strat_value)
             write_trades_csv(strat_id, result.get("trade_log", []))
 

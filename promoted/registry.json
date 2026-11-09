@@ -48,7 +48,7 @@
       "retired_reason": null
     },
     {
-      "strat_id": "bollinger_band_mean_reversion_v1",
+      "strat_id": "testmomentum_etf_momentum_v1",
       "name": "TestMomentum ETF Momentum",
       "version": "v1.0",
       "status": "paper",

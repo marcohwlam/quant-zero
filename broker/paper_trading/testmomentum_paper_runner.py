@@ -65,7 +65,7 @@ TOP_N           = PARAMETERS["top_n"]
 TRADE_LOG_PATH  = "broker/paper_trading/testmomentum_trade_log.json"
 
 # Canonical data paths (spec §4.2)
-STRAT_ID         = "bollinger_band_mean_reversion_v1"
+STRAT_ID         = "testmomentum_etf_momentum_v1"
 CANONICAL_DIR    = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
     "paper_trading", STRAT_ID,
