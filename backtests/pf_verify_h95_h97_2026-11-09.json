@@ -1,0 +1,67 @@
+{
+ "H95": {
+  "is_trades": 1500,
+  "per_year": 75.0,
+  "div4": 375.0,
+  "mdd_2000_2002": -0.24377716364898117,
+  "mdd_2008_2009": -0.08215126034606157,
+  "mdd_is": -0.24833710977783752,
+  "mdd_2022": -0.08129724137903493,
+  "sharpe_is_gross": 0.6092696322560918
+ },
+ "H96_events": {
+  "either": {
+   "is_events": 191,
+   "distinct_days": 94,
+   "per_year": 9.55,
+   "div4": 47.75,
+   "min_year": 0
+  },
+  "own_sma": {
+   "is_events": 170,
+   "distinct_days": 85,
+   "per_year": 8.5,
+   "div4": 42.5,
+   "min_year": 0
+  },
+  "raw": {
+   "is_events": 252,
+   "distinct_days": 121,
+   "per_year": 12.6,
+   "div4": 63.0,
+   "min_year": 4
+  },
+  "spy_sma": {
+   "is_events": 178,
+   "distinct_days": 83,
+   "per_year": 8.9,
+   "div4": 44.5,
+   "min_year": 0
+  }
+ },
+ "H96_pf2_spy_sma": {
+  "mdd_2000_2002": -0.0016234050576156012,
+  "mdd_2008_2009": 0.0,
+  "mdd_is": -0.009333216881860618
+ },
+ "H96_pf2_either": {
+  "mdd_2000_2002": -0.011495715865424083,
+  "mdd_2008_2009": 0.0,
+  "mdd_is": -0.016703507407251683
+ },
+ "H96_pf2_raw": {
+  "mdd_2000_2002": -0.014462061871548193,
+  "mdd_2008_2009": 0.0,
+  "mdd_is": -0.022406883986316295
+ },
+ "H97": {
+  "is_entries": 262,
+  "per_year": 13.1,
+  "div4": 65.5,
+  "mdd_2000_2002": -0.06639987803468805,
+  "mdd_2008_2009": -0.020918632854871166,
+  "mdd_is": -0.14294792243873944,
+  "mdd_2022": -0.0709294048032818,
+  "note": "monthly close-to-close, no intramonth stop; XLC/XLRE enter when listed; <3 qualifying = partial cash"
+ }
+}
