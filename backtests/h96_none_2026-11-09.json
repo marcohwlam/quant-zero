@@ -1,0 +1,253 @@
+{
+  "variant": "none",
+  "params": {
+    "universe": [
+      "SPY",
+      "QQQ",
+      "IWM",
+      "DIA",
+      "XLF",
+      "XLK",
+      "XLE",
+      "XLV",
+      "XLY",
+      "XLP"
+    ],
+    "atr_window": 14,
+    "drop_atr_mult": 1.5,
+    "vol_mult": 2.0,
+    "vol_avg_window": 20,
+    "sma_window": 200,
+    "trend_gate": "none",
+    "max_hold_days": 5,
+    "size_frac": 0.2,
+    "max_positions": 4,
+    "spy_pause_signals": 3,
+    "vix_pause": 40.0,
+    "init_cash": 100000.0
+  },
+  "is_metrics": {
+    "sharpe": -0.16767365813243598,
+    "max_drawdown": -0.08319040402685207,
+    "total_return": -0.05019900501095487,
+    "win_rate": 0.5833333333333334,
+    "profit_factor": 0.7983404954029321,
+    "trade_count": 192,
+    "ppt_bps": -12.873275567066264,
+    "bars": 5031
+  },
+  "oos_metrics": {
+    "sharpe": -0.24618276105733725,
+    "max_drawdown": -0.035136338733370076,
+    "total_return": -0.017333482808337797,
+    "win_rate": 0.5208333333333334,
+    "profit_factor": 0.737610538648764,
+    "trade_count": 48,
+    "ppt_bps": -17.828403658589526,
+    "bars": 1258
+  },
+  "net_sharpe_full": -0.18256123260081797,
+  "is_signal_counts": {
+    "events": 231,
+    "distinct_days": 115,
+    "years_with_zero_events": [],
+    "events_per_year": {
+      "2000": 10,
+      "2001": 9,
+      "2002": 5,
+      "2003": 4,
+      "2004": 6,
+      "2005": 4,
+      "2006": 10,
+      "2007": 17,
+      "2008": 5,
+      "2009": 3,
+      "2010": 16,
+      "2011": 14,
+      "2012": 7,
+      "2013": 9,
+      "2014": 20,
+      "2015": 13,
+      "2016": 19,
+      "2017": 14,
+      "2018": 30,
+      "2019": 16
+    }
+  },
+  "oos_signal_counts": {
+    "events": 56,
+    "distinct_days": 22,
+    "years_with_zero_events": [
+      2022
+    ],
+    "events_per_year": {
+      "2020": 21,
+      "2021": 21,
+      "2022": 0,
+      "2023": 4,
+      "2024": 10
+    }
+  },
+  "walk_forward": {
+    "folds": [
+      {
+        "start": "2000-01-01",
+        "end": "2004-12-31",
+        "sharpe": -0.519707670997325,
+        "max_drawdown": -0.04025309525969534,
+        "trades": 34,
+        "distinct_signal_days": 33,
+        "years_with_zero_events": []
+      },
+      {
+        "start": "2005-01-01",
+        "end": "2009-12-31",
+        "sharpe": 0.1730184792844263,
+        "max_drawdown": -0.02526900347253047,
+        "trades": 32,
+        "distinct_signal_days": 18,
+        "years_with_zero_events": []
+      },
+      {
+        "start": "2010-01-01",
+        "end": "2014-12-31",
+        "sharpe": -0.13367101695095496,
+        "max_drawdown": -0.016931796390288967,
+        "trades": 61,
+        "distinct_signal_days": 32,
+        "years_with_zero_events": []
+      },
+      {
+        "start": "2015-01-01",
+        "end": "2019-12-31",
+        "sharpe": -0.22097793575782818,
+        "max_drawdown": -0.05201050611026692,
+        "trades": 65,
+        "distinct_signal_days": 32,
+        "years_with_zero_events": []
+      }
+    ],
+    "sharpe_variance": 0.08125394937554686,
+    "sharpe_std": 0.28505078385359134
+  },
+  "monte_carlo_sharpe": {
+    "p5": -0.4821367853884912,
+    "p50": -0.1774023248889983,
+    "p95": 0.15040860176386514
+  },
+  "bootstrap_sharpe_ci95": {
+    "lo": -0.524985546246675,
+    "hi": 0.1637852681185573
+  },
+  "permutation_p": 0.9075,
+  "sensitivity": {
+    "grid": [
+      {
+        "drop_atr_mult": 1.0,
+        "vol_mult": 1.5,
+        "sharpe": -0.16382408703452972,
+        "trades": 986
+      },
+      {
+        "drop_atr_mult": 1.0,
+        "vol_mult": 2.0,
+        "sharpe": -0.19678863179516295,
+        "trades": 387
+      },
+      {
+        "drop_atr_mult": 1.0,
+        "vol_mult": 3.0,
+        "sharpe": -0.31597011645482165,
+        "trades": 83
+      },
+      {
+        "drop_atr_mult": 1.5,
+        "vol_mult": 1.5,
+        "sharpe": -0.1985411085357171,
+        "trades": 413
+      },
+      {
+        "drop_atr_mult": 1.5,
+        "vol_mult": 2.0,
+        "sharpe": -0.16767365813243598,
+        "trades": 192
+      },
+      {
+        "drop_atr_mult": 1.5,
+        "vol_mult": 3.0,
+        "sharpe": -0.17914133133570245,
+        "trades": 47
+      },
+      {
+        "drop_atr_mult": 2.0,
+        "vol_mult": 1.5,
+        "sharpe": -0.19107031338270533,
+        "trades": 130
+      },
+      {
+        "drop_atr_mult": 2.0,
+        "vol_mult": 2.0,
+        "sharpe": -0.07309637223399457,
+        "trades": 82
+      },
+      {
+        "drop_atr_mult": 2.0,
+        "vol_mult": 3.0,
+        "sharpe": -0.03258894427315171,
+        "trades": 21
+      }
+    ],
+    "base_sharpe": -0.16767365813243598,
+    "max_abs_delta": 0.14829645832238567
+  },
+  "exit_reasons": {
+    "target": 147,
+    "stop": 93
+  },
+  "liquidity_flags": 8,
+  "criteria": {
+    "IS_Sharpe": {
+      "value": -0.16767365813243598,
+      "threshold": "> 1.0",
+      "pass": false
+    },
+    "OOS_Sharpe": {
+      "value": -0.24618276105733725,
+      "threshold": "> 0.7",
+      "pass": false
+    },
+    "IS_MDD": {
+      "value": -0.08319040402685207,
+      "threshold": "> -0.15",
+      "pass": true
+    },
+    "OOS_MDD": {
+      "value": -0.035136338733370076,
+      "threshold": "> -0.15",
+      "pass": true
+    },
+    "IS_TradeCount": {
+      "value": 192.0,
+      "threshold": ">= 100",
+      "pass": true
+    },
+    "Fold_MinTrades": {
+      "value": 32.0,
+      "threshold": ">= 30",
+      "pass": true
+    }
+  },
+  "verdict": "FAIL",
+  "flags": [
+    "8 entries with Q/ADV > 1% (liquidity-constrained)"
+  ],
+  "is_window": [
+    "2000-01-01",
+    "2019-12-31"
+  ],
+  "oos_window": [
+    "2020-01-01",
+    "2024-12-31"
+  ],
+  "trade_count_total": 240
+}

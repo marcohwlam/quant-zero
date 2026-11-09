@@ -1,0 +1,33 @@
+GATE 1 VERDICT: H96 Volume Capitulation Reversal (spy_sma gate)
+Report date: 2026-11-09
+OVERALL: FAIL
+
+  [FAIL] IS_Sharpe: -0.0210 (threshold > 1.0)
+  [FAIL] OOS_Sharpe: -0.3322 (threshold > 0.7)
+  [PASS] IS_MDD: -0.0301 (threshold > -0.15)
+  [PASS] OOS_MDD: -0.0351 (threshold > -0.15)
+  [PASS] IS_TradeCount: 148.0000 (threshold >= 100)
+  [FAIL] Fold_MinTrades: 11.0000 (threshold >= 30)
+
+IS  2000-2019: Sharpe -0.021 MDD -3.01% win 59.5% PF 0.96 trades 148
+OOS 2020-2024: Sharpe -0.332 MDD -3.51% win 50.0% PF 0.65 trades 46
+Net Sharpe (IS+OOS): -0.097
+MC p5 Sharpe: -0.426
+Bootstrap 95% CI: [-0.438, 0.197]
+Permutation p: 0.7780
+IS events 178, distinct days 83
+WF Sharpe variance: 0.0577
+Per-fold:
+  2000-2004: Sharpe 0.075 trades 11 distinct days 11 MDD -0.53%
+  2005-2009: Sharpe -0.407 trades 25 distinct days 13 MDD -2.33%
+  2010-2014: Sharpe 0.067 trades 57 distinct days 31 MDD -1.65%
+  2015-2019: Sharpe 0.079 trades 55 distinct days 28 MDD -2.76%
+
+FLAGS:
+  - fold 2000-2004 trades 11 < 30
+  - fold 2005-2009 trades 25 < 30
+  - 2 entries with Q/ADV > 1% (liquidity-constrained)
+  - IS years with zero events: [2001, 2002, 2008]
+
+Cost model: $0.005/share, slippage 0.005% (SPY/QQQ/IWM) else 0.05%, impact 0.1*sigma*sqrt(Q/ADV)
+Data: yfinance auto_adjust=True daily OHLCV
