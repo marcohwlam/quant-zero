@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset='utf-8'><title>H97 Gate 1 2026-11-09</title><style>body{font-family:sans-serif;max-width:900px;margin:2em auto}td,th{border:1px solid #ccc;padding:4px 8px}table{border-collapse:collapse}</style></head><body><h1>H97 Gate 1: FAIL</h1><pre>H97 Gate 1 verdict: FAIL
+Date: 2026-11-09
+
+Net Sharpe (full IS+OOS): 0.727
+IS Sharpe 0.690 | OOS Sharpe 0.864
+IS MDD -17.9% | OOS MDD -20.0%
+Win rate IS 60.5% | OOS 55.7%
+Profit factor IS 1.99 | OOS 1.94
+MC p5 Sharpe 0.684
+Bootstrap 95% CI Sharpe [0.375, 1.054]
+Permutation p 0.1791 (null mean Sharpe 0.628)
+WF Sharpe std 0.366, min 0.268
+
+Walk-forward folds:
+  1 2000-01-01..2004-12-31: Sharpe 0.577, MDD -10.8%, trades 45
+  2 2005-01-01..2009-12-31: Sharpe 0.629, MDD -9.9%, trades 57
+  3 2010-01-01..2014-12-31: Sharpe 1.275, MDD -12.7%, trades 76
+  4 2015-01-01..2019-12-31: Sharpe 0.268, MDD -17.9%, trades 83
+
+Stress windows:
+  2000_2002: MDD -10.8%, CAGR 0.4%, trades 14
+  2008: MDD -2.2%, CAGR 6.6%, trades 0
+  2008_2009: MDD -5.0%, CAGR 6.3%, trades 5
+  2022: MDD -11.7%, CAGR -10.3%, trades 10
+
+12% stop effect (IS): with stop Sharpe 0.690, MDD -17.9%; without stop Sharpe 0.704, MDD -18.8%; stop exits 3
+
+Failures:
+  - IS Sharpe 0.690 &lt; 1.0
+  - OOS MDD -20.0% worse than -20%
+  - permutation p 0.179 &gt; 0.05
+
+Warnings:
+  - IS MDD -17.9% is at or beyond the -15% warning line
+</pre><h2>Walk-forward folds</h2><table><tr><th>Fold</th><th>Window</th><th>Sharpe</th><th>MDD</th><th>Trades</th></tr><tr><td>1</td><td>2000-01-01..2004-12-31</td><td>0.577</td><td>-10.8%</td><td>45</td></tr><tr><td>2</td><td>2005-01-01..2009-12-31</td><td>0.629</td><td>-9.9%</td><td>57</td></tr><tr><td>3</td><td>2010-01-01..2014-12-31</td><td>1.275</td><td>-12.7%</td><td>76</td></tr><tr><td>4</td><td>2015-01-01..2019-12-31</td><td>0.268</td><td>-17.9%</td><td>83</td></tr></table></body></html>
