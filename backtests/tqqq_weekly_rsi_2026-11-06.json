@@ -1,0 +1,114 @@
+{
+ "buy_hold": {
+  "cagr": 0.3904,
+  "vol": 0.613,
+  "sharpe": 0.848,
+  "mdd": -0.8166,
+  "trades": 1,
+  "exposure": 1.0
+ },
+ "trend_RSI>50_in__<45_out": {
+  "full": {
+   "cagr": 0.2722,
+   "vol": 0.4664,
+   "sharpe": 0.753,
+   "mdd": -0.6616,
+   "trades": 21,
+   "exposure": 0.814
+  },
+  "IS": {
+   "cagr": 0.2707,
+   "vol": 0.4108,
+   "sharpe": 0.791,
+   "mdd": -0.6616,
+   "trades": 14,
+   "exposure": 0.841
+  },
+  "OOS": {
+   "cagr": 0.2752,
+   "vol": 0.5367,
+   "sharpe": 0.726,
+   "mdd": -0.6209,
+   "trades": 8,
+   "exposure": 0.776
+  }
+ },
+ "trend_RSI>55_in__<50_out": {
+  "full": {
+   "cagr": 0.2234,
+   "vol": 0.3962,
+   "sharpe": 0.71,
+   "mdd": -0.448,
+   "trades": 27,
+   "exposure": 0.682
+  },
+  "IS": {
+   "cagr": 0.1923,
+   "vol": 0.3511,
+   "sharpe": 0.679,
+   "mdd": -0.4106,
+   "trades": 18,
+   "exposure": 0.699
+  },
+  "OOS": {
+   "cagr": 0.2705,
+   "vol": 0.4535,
+   "sharpe": 0.758,
+   "mdd": -0.448,
+   "trades": 10,
+   "exposure": 0.657
+  }
+ },
+ "meanrev_RSI<40_in__>60_out": {
+  "full": {
+   "cagr": 0.1407,
+   "vol": 0.3939,
+   "sharpe": 0.532,
+   "mdd": -0.7482,
+   "trades": 9,
+   "exposure": 0.239
+  },
+  "IS": {
+   "cagr": 0.1839,
+   "vol": 0.2801,
+   "sharpe": 0.742,
+   "mdd": -0.4712,
+   "trades": 5,
+   "exposure": 0.204
+  },
+  "OOS": {
+   "cagr": 0.081,
+   "vol": 0.5158,
+   "sharpe": 0.411,
+   "mdd": -0.7482,
+   "trades": 4,
+   "exposure": 0.289
+  }
+ },
+ "meanrev_RSI<30_in__>50_out": {
+  "full": {
+   "cagr": 0.0763,
+   "vol": 0.2461,
+   "sharpe": 0.417,
+   "mdd": -0.5823,
+   "trades": 3,
+   "exposure": 0.057
+  },
+  "IS": {
+   "cagr": 0.0,
+   "vol": 0.0,
+   "sharpe": 0,
+   "mdd": 0.0,
+   "trades": 0,
+   "exposure": 0.0
+  },
+  "OOS": {
+   "cagr": 0.1969,
+   "vol": 0.3847,
+   "sharpe": 0.653,
+   "mdd": -0.5823,
+   "trades": 3,
+   "exposure": 0.139
+  }
+ }
+}

@@ -1,0 +1,294 @@
+{
+ "TQQQ_buy_hold": {
+  "full": {
+   "cagr": 0.3904,
+   "vol": 0.613,
+   "sharpe": 0.848,
+   "mdd": -0.8166,
+   "trades": 1,
+   "exposure": 1.0
+  }
+ },
+ "QQQ_buy_hold": {
+  "full": {
+   "cagr": 0.1853,
+   "vol": 0.2071,
+   "sharpe": 0.925,
+   "mdd": -0.3512,
+   "trades": 1,
+   "exposure": 1.0
+  }
+ },
+ "TQQQ_gate_y0": {
+  "full": {
+   "cagr": 0.277,
+   "vol": 0.4607,
+   "sharpe": 0.764,
+   "mdd": -0.5658,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.2305,
+   "vol": 0.3974,
+   "sharpe": 0.723,
+   "mdd": -0.5658,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.3481,
+   "vol": 0.5391,
+   "sharpe": 0.828,
+   "mdd": -0.5495,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.4398,
+   "vol": 0.2271,
+   "sharpe": -2.43,
+   "mdd": -0.4543,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "TQQQ_gate_y4": {
+  "full": {
+   "cagr": 0.2867,
+   "vol": 0.4607,
+   "sharpe": 0.781,
+   "mdd": -0.5606,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.2398,
+   "vol": 0.3974,
+   "sharpe": 0.742,
+   "mdd": -0.5606,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.3585,
+   "vol": 0.5391,
+   "sharpe": 0.842,
+   "mdd": -0.5493,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.4186,
+   "vol": 0.2274,
+   "sharpe": -2.263,
+   "mdd": -0.4501,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "TQQQ_gate_y6": {
+  "full": {
+   "cagr": 0.2916,
+   "vol": 0.4607,
+   "sharpe": 0.789,
+   "mdd": -0.558,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.2445,
+   "vol": 0.3974,
+   "sharpe": 0.752,
+   "mdd": -0.558,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.3637,
+   "vol": 0.5391,
+   "sharpe": 0.849,
+   "mdd": -0.5493,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.4077,
+   "vol": 0.2276,
+   "sharpe": -2.179,
+   "mdd": -0.448,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "TQQQ_gate_y8": {
+  "full": {
+   "cagr": 0.2965,
+   "vol": 0.4606,
+   "sharpe": 0.797,
+   "mdd": -0.5553,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.2492,
+   "vol": 0.3974,
+   "sharpe": 0.761,
+   "mdd": -0.5553,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.3689,
+   "vol": 0.5391,
+   "sharpe": 0.856,
+   "mdd": -0.5492,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.3966,
+   "vol": 0.2278,
+   "sharpe": -2.096,
+   "mdd": -0.4459,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "QQQ_gate_y0": {
+  "full": {
+   "cagr": 0.1212,
+   "vol": 0.1551,
+   "sharpe": 0.815,
+   "mdd": -0.2346,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.0928,
+   "vol": 0.1338,
+   "sharpe": 0.73,
+   "mdd": -0.2346,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.1638,
+   "vol": 0.1816,
+   "sharpe": 0.927,
+   "mdd": -0.2211,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.177,
+   "vol": 0.0773,
+   "sharpe": -2.478,
+   "mdd": -0.1842,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "QQQ_gate_y4": {
+  "full": {
+   "cagr": 0.1297,
+   "vol": 0.1551,
+   "sharpe": 0.864,
+   "mdd": -0.2254,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.1011,
+   "vol": 0.1338,
+   "sharpe": 0.787,
+   "mdd": -0.2254,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.1728,
+   "vol": 0.1816,
+   "sharpe": 0.969,
+   "mdd": -0.2209,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.1459,
+   "vol": 0.0777,
+   "sharpe": -1.989,
+   "mdd": -0.178,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "QQQ_gate_y6": {
+  "full": {
+   "cagr": 0.134,
+   "vol": 0.1551,
+   "sharpe": 0.889,
+   "mdd": -0.2208,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.1052,
+   "vol": 0.1338,
+   "sharpe": 0.815,
+   "mdd": -0.2208,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.1773,
+   "vol": 0.1815,
+   "sharpe": 0.99,
+   "mdd": -0.2208,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.1298,
+   "vol": 0.0779,
+   "sharpe": -1.746,
+   "mdd": -0.1748,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "QQQ_gate_y8": {
+  "full": {
+   "cagr": 0.1384,
+   "vol": 0.1551,
+   "sharpe": 0.914,
+   "mdd": -0.2206,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.1094,
+   "vol": 0.1338,
+   "sharpe": 0.843,
+   "mdd": -0.2161,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.1818,
+   "vol": 0.1815,
+   "sharpe": 1.012,
+   "mdd": -0.2206,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.1135,
+   "vol": 0.0781,
+   "sharpe": -1.504,
+   "mdd": -0.1717,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ }
+}

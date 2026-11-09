@@ -1,0 +1,174 @@
+{
+ "buy_hold": {
+  "cagr": 0.3904,
+  "vol": 0.613,
+  "sharpe": 0.848,
+  "mdd": -0.8166,
+  "trades": 1,
+  "exposure": 1.0
+ },
+ "TQQQ<200SMA": {
+  "full": {
+   "cagr": 0.2654,
+   "vol": 0.4292,
+   "sharpe": 0.766,
+   "mdd": -0.5028,
+   "trades": 46,
+   "exposure": 0.748
+  },
+  "IS": {
+   "cagr": 0.2399,
+   "vol": 0.372,
+   "sharpe": 0.766,
+   "mdd": -0.5028,
+   "trades": 30,
+   "exposure": 0.747
+  },
+  "OOS": {
+   "cagr": 0.3041,
+   "vol": 0.5004,
+   "sharpe": 0.785,
+   "mdd": -0.5016,
+   "trades": 17,
+   "exposure": 0.75
+  }
+ },
+ "QQQ<200SMA": {
+  "full": {
+   "cagr": 0.277,
+   "vol": 0.4607,
+   "sharpe": 0.764,
+   "mdd": -0.5658,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.2305,
+   "vol": 0.3974,
+   "sharpe": 0.723,
+   "mdd": -0.5658,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.3481,
+   "vol": 0.5391,
+   "sharpe": 0.828,
+   "mdd": -0.5495,
+   "trades": 13,
+   "exposure": 0.808
+  }
+ },
+ "QQQ<200SMA+trail35": {
+  "full": {
+   "cagr": 0.2182,
+   "vol": 0.4111,
+   "sharpe": 0.689,
+   "mdd": -0.5719,
+   "trades": 44,
+   "exposure": 0.694
+  },
+  "IS": {
+   "cagr": 0.2305,
+   "vol": 0.3974,
+   "sharpe": 0.723,
+   "mdd": -0.5658,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.2014,
+   "vol": 0.4301,
+   "sharpe": 0.645,
+   "mdd": -0.5719,
+   "trades": 13,
+   "exposure": 0.526
+  }
+ },
+ "QQQ<200SMA+trail25": {
+  "full": {
+   "cagr": 0.2014,
+   "vol": 0.3548,
+   "sharpe": 0.697,
+   "mdd": -0.551,
+   "trades": 44,
+   "exposure": 0.554
+  },
+  "IS": {
+   "cagr": 0.2013,
+   "vol": 0.3554,
+   "sharpe": 0.696,
+   "mdd": -0.551,
+   "trades": 32,
+   "exposure": 0.695
+  },
+  "OOS": {
+   "cagr": 0.2024,
+   "vol": 0.3539,
+   "sharpe": 0.7,
+   "mdd": -0.5384,
+   "trades": 13,
+   "exposure": 0.351
+  }
+ },
+ "QQQ200&TQQQ>50SMA": {
+  "full": {
+   "cagr": 0.2004,
+   "vol": 0.3509,
+   "sharpe": 0.698,
+   "mdd": -0.5352,
+   "trades": 142,
+   "exposure": 0.624
+  },
+  "IS": {
+   "cagr": 0.137,
+   "vol": 0.3051,
+   "sharpe": 0.575,
+   "mdd": -0.5352,
+   "trades": 88,
+   "exposure": 0.638
+  },
+  "OOS": {
+   "cagr": 0.2993,
+   "vol": 0.4081,
+   "sharpe": 0.848,
+   "mdd": -0.4459,
+   "trades": 55,
+   "exposure": 0.602
+  }
+ },
+ "QQQ_buy_hold": {
+  "cagr": 0.1853,
+  "vol": 0.2071,
+  "sharpe": 0.925,
+  "mdd": -0.3512,
+  "trades": 1,
+  "exposure": 1.0
+ },
+ "QQQ_200SMA_gate": {
+  "full": {
+   "cagr": 0.1212,
+   "vol": 0.1551,
+   "sharpe": 0.815,
+   "mdd": -0.2346,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.0928,
+   "vol": 0.1338,
+   "sharpe": 0.73,
+   "mdd": -0.2346,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.1638,
+   "vol": 0.1816,
+   "sharpe": 0.927,
+   "mdd": -0.2211,
+   "trades": 13,
+   "exposure": 0.808
+  }
+ }
+}

@@ -1,0 +1,266 @@
+{
+ "TQQQ_buy_hold": {
+  "full": {
+   "cagr": 0.3904,
+   "vol": 0.613,
+   "sharpe": 0.848,
+   "mdd": -0.8166,
+   "trades": 1,
+   "exposure": 1.0
+  }
+ },
+ "TQQQ_gate_cash": {
+  "full": {
+   "cagr": 0.277,
+   "vol": 0.4607,
+   "sharpe": 0.764,
+   "mdd": -0.5658,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.2305,
+   "vol": 0.3974,
+   "sharpe": 0.723,
+   "mdd": -0.5658,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.3481,
+   "vol": 0.5391,
+   "sharpe": 0.828,
+   "mdd": -0.5495,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.4398,
+   "vol": 0.2271,
+   "sharpe": -2.43,
+   "mdd": -0.4543,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "TQQQ_gate_BIL": {
+  "full": {
+   "cagr": 0.2727,
+   "vol": 0.4607,
+   "sharpe": 0.757,
+   "mdd": -0.5696,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.2233,
+   "vol": 0.3974,
+   "sharpe": 0.708,
+   "mdd": -0.5696,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.3484,
+   "vol": 0.5391,
+   "sharpe": 0.828,
+   "mdd": -0.551,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.4372,
+   "vol": 0.2278,
+   "sharpe": -2.401,
+   "mdd": -0.4593,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "TQQQ_gate_SHY": {
+  "full": {
+   "cagr": 0.2732,
+   "vol": 0.4608,
+   "sharpe": 0.758,
+   "mdd": -0.5667,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.2269,
+   "vol": 0.3975,
+   "sharpe": 0.716,
+   "mdd": -0.5667,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.344,
+   "vol": 0.5393,
+   "sharpe": 0.822,
+   "mdd": -0.5533,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.4599,
+   "vol": 0.2285,
+   "sharpe": -2.572,
+   "mdd": -0.4797,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "TQQQ_gate_IEF": {
+  "full": {
+   "cagr": 0.2764,
+   "vol": 0.4623,
+   "sharpe": 0.762,
+   "mdd": -0.5778,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.2393,
+   "vol": 0.3985,
+   "sharpe": 0.74,
+   "mdd": -0.5562,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.3328,
+   "vol": 0.5412,
+   "sharpe": 0.806,
+   "mdd": -0.5778,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.5082,
+   "vol": 0.2474,
+   "sharpe": -2.736,
+   "mdd": -0.5377,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "TQQQ_gate_TLT": {
+  "full": {
+   "cagr": 0.2627,
+   "vol": 0.4687,
+   "sharpe": 0.735,
+   "mdd": -0.6419,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.2386,
+   "vol": 0.4038,
+   "sharpe": 0.734,
+   "mdd": -0.5536,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.2992,
+   "vol": 0.549,
+   "sharpe": 0.755,
+   "mdd": -0.6419,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.5876,
+   "vol": 0.2997,
+   "sharpe": -2.797,
+   "mdd": -0.6293,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "QQQ_buy_hold": {
+  "full": {
+   "cagr": 0.1853,
+   "vol": 0.2071,
+   "sharpe": 0.925,
+   "mdd": -0.3512,
+   "trades": 1,
+   "exposure": 1.0
+  }
+ },
+ "QQQ_gate_IEF": {
+  "full": {
+   "cagr": 0.1207,
+   "vol": 0.1597,
+   "sharpe": 0.794,
+   "mdd": -0.312,
+   "trades": 44,
+   "exposure": 0.81
+  },
+  "IS": {
+   "cagr": 0.1006,
+   "vol": 0.1371,
+   "sharpe": 0.768,
+   "mdd": -0.2242,
+   "trades": 32,
+   "exposure": 0.811
+  },
+  "OOS": {
+   "cagr": 0.1506,
+   "vol": 0.1876,
+   "sharpe": 0.842,
+   "mdd": -0.312,
+   "trades": 13,
+   "exposure": 0.808
+  },
+  "2022": {
+   "cagr": -0.2774,
+   "vol": 0.1257,
+   "sharpe": -2.52,
+   "mdd": -0.3089,
+   "trades": 5,
+   "exposure": 0.072
+  }
+ },
+ "BIL_buy_hold": {
+  "full": {
+   "cagr": 0.0134,
+   "vol": 0.0028,
+   "sharpe": 4.661,
+   "mdd": -0.0043,
+   "trades": 1,
+   "exposure": 1.0
+  }
+ },
+ "SHY_buy_hold": {
+  "full": {
+   "cagr": 0.0134,
+   "vol": 0.0135,
+   "sharpe": 0.993,
+   "mdd": -0.0571,
+   "trades": 1,
+   "exposure": 1.0
+  }
+ },
+ "IEF_buy_hold": {
+  "full": {
+   "cagr": 0.0242,
+   "vol": 0.0657,
+   "sharpe": 0.397,
+   "mdd": -0.2392,
+   "trades": 1,
+   "exposure": 1.0
+  }
+ },
+ "TLT_buy_hold": {
+  "full": {
+   "cagr": 0.0238,
+   "vol": 0.1489,
+   "sharpe": 0.233,
+   "mdd": -0.4835,
+   "trades": 1,
+   "exposure": 1.0
+  }
+ }
+}

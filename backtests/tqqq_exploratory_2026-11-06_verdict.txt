@@ -1,0 +1,11 @@
+TQQQ exploratory backtests 2026-11-06 (origin: QUA-889 and follow-ups). Triage: QUA-903.
+Verdict: RETIRE. Not Gate 1 candidates. No paper trading.
+
+Gate 1 check (IS Sharpe > 1.0, OOS Sharpe > 0.7, MaxDD < 20%, >= 100 trades):
+- Every TQQQ variant has full-period MaxDD between -45% and -82%. Fails MaxDD.
+- Best TQQQ variant (gate, 8% fixed yield off-state): IS Sharpe 0.761, MaxDD -55.5%, 44 trades. Fails IS Sharpe, MaxDD, trade count.
+- Weekly RSI variants: 3 to 27 trades. Fail trade count. Best IS Sharpe 0.791 (trend RSI>50/<45), MaxDD -66%.
+- Only variant with 100+ trades (QQQ200 & TQQQ>50SMA, 142): IS Sharpe 0.575, MaxDD -53.5%.
+- QQQ 200SMA gate (no leverage) best IS Sharpe 0.843 (8% yield), MaxDD -22%, 44 trades. Fails IS Sharpe, MaxDD, trade count.
+- Runs use rf=0 and 10 bps/side, not the Gate 1 v2.2 cost model. No Monte Carlo, permutation or walk-forward output.
+Prior art: H09 TQQQ Weekly Snapback was abandoned (QUA-142).
