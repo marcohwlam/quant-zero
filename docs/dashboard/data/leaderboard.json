@@ -13,12 +13,12 @@
     "demotion_threshold_pct": 16.1,
     "warning_threshold_pct": 10.7,
     "alert": "WARNING",
-    "last_update": "2026-10-30T16:00:45.997221",
+    "last_update": "2026-11-13T15:00:32.982438",
     "is_stale": true,
     "paper_start_date": "2026-03-16"
   },
   {
-    "strat_id": "bollinger_band_mean_reversion_v1",
+    "strat_id": "testmomentum_etf_momentum_v1",
     "name": "TestMomentum ETF Momentum",
     "status": "paper",
     "asset_class": "equities",
@@ -31,7 +31,7 @@
     "demotion_threshold_pct": 18.0,
     "warning_threshold_pct": 12.0,
     "alert": "WARNING",
-    "last_update": "2026-10-30T16:00:58.187178",
+    "last_update": "2026-11-13T15:00:34.702842",
     "is_stale": true,
     "paper_start_date": "2026-03-16"
   }
