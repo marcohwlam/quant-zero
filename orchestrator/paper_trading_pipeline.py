@@ -352,8 +352,10 @@ def run_pipeline(dry_run: bool = False) -> dict:
                 "registry": {
                     "asset_class": strat.get("asset_class"),
                     "capital_allocated": strat.get("capital_allocated"),
-                    "gate1_approved": strat.get("gate1_approved"),
-                    "start_date": strat.get("start_date"),
+                    "gate1_approved": strat.get("gate1_approved", bool((strat.get("gate1") or {}).get("approval_date"))),
+                    "start_date": strat.get("start_date") or strat.get("paper_start_date"),
+                    "backtest_max_drawdown": strat.get("backtest_max_drawdown", (strat.get("gate1") or {}).get("is_max_drawdown")),
+                    "backtest_oos_max_drawdown": strat.get("backtest_oos_max_drawdown", (strat.get("gate1") or {}).get("oos_max_drawdown")),
                 },
             }
             write_meta_json(strat_id, meta)

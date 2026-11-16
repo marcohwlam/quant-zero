@@ -1,12 +1,12 @@
 {
   "strat_id": "testmomentum_etf_momentum_v1",
   "strategy_name": "TestMomentum ETF Momentum",
-  "last_updated": "2026-11-06T15:01:05.767824",
-  "run_date": "2026-11-06",
+  "last_updated": "2026-11-13T15:00:34.702842",
+  "run_date": "2026-11-13",
   "dry_run": false,
   "portfolio_value": 5000.0,
   "signals": {
-    "date": "2026-11-06",
+    "date": "2026-11-13",
     "buy": [
       "XLE",
       "XLV"
@@ -20,14 +20,14 @@
       "XLK"
     ],
     "momentum_scores": {
-      "SPY": 0.093462,
-      "QQQ": 0.043015,
-      "IWM": 0.118739,
-      "DIA": 0.102907,
-      "XLF": 0.110394,
-      "XLE": 0.450176,
-      "XLK": 0.106191,
-      "XLV": 0.290676
+      "SPY": 0.119858,
+      "QQQ": 0.113228,
+      "IWM": 0.154445,
+      "DIA": 0.098094,
+      "XLF": 0.101694,
+      "XLE": 0.466242,
+      "XLK": 0.188496,
+      "XLV": 0.249632
     }
   },
   "is_report": {
@@ -41,7 +41,9 @@
   "registry": {
     "asset_class": "equities",
     "capital_allocated": 5000,
-    "gate1_approved": null,
-    "start_date": null
+    "gate1_approved": true,
+    "start_date": "2026-03-16",
+    "backtest_max_drawdown": 0.12,
+    "backtest_oos_max_drawdown": 0.15
   }
 }
