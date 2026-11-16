@@ -1,0 +1,45 @@
+<html><head><meta charset='utf-8'><title>H95 Gate 1 2026-11-09</title></head><body><h1>H95 Sector Weekly Reversal - Gate 1 (2026-11-09)</h1><pre>GATE 1 VERDICT: FAIL
+Strategy: H95_Sector_Weekly_Reversal v1.0
+Date: 2026-11-09
+Analyst: Overfit Detector Agent
+
+⛔ AUTO-DISQUALIFIED
+Reason: Auto-disqualify: IS Sharpe = 0.01 (threshold: &gt; 1.0)
+
+QUANTITATIVE SUMMARY
+- Test period: 2000-01-01 – 2024-12-31, 25.0 years  [PASS, threshold ≥ 5 years]
+- IS Sharpe: 0.01  [FAIL, threshold &gt; 1.0]
+- OOS Sharpe: 0.42  [FAIL, threshold &gt; 0.7]
+- Walk-forward windows passed: 0/4  [FAIL, threshold ≥ 3/4]
+- Walk-forward OOS/IS consistency: -3.58 mean OOS/IS ratio  [FAIL, threshold OOS within 30% of IS]
+- IS Max Drawdown: 29.1%  [FAIL, threshold &lt; 20%]
+- OOS Max Drawdown: 14.8%  [PASS, threshold &lt; 25%]
+- Win Rate: 52.5%  [PASS, threshold &gt; 50%]
+- Trade count: 1500  [PASS, threshold &gt; 50]
+- Deflated Sharpe Ratio (z-score): -1.72  [FAIL, threshold &gt; 0.0]
+- Parameter sensitivity: 2090.9% max Sharpe Δ within ±20%  [FAIL, threshold &lt; 30% Sharpe change]
+- Post-cost Sharpe: 0.42  [FAIL, threshold &gt; 0.7 (after realistic costs)]
+
+WALK-FORWARD WINDOW DETAIL
+  Window 1: IS=-0.05, OOS=0.57  [FAIL]
+  Window 2: IS=0.03, OOS=-0.44  [FAIL]
+  Window 3: IS=-0.02, OOS=0.31  [FAIL]
+  Window 4: IS=0.01, OOS=-0.02  [FAIL]
+
+QUALITATIVE ASSESSMENT
+- Economic rationale: VALID
+- Look-ahead bias: NONE DETECTED
+- Overfitting risk: HIGH
+- Notes:
+    * IS drawdown is elevated (29.1%); strategies near 20% warrant closer review.
+    * Overfitting risk assessed as HIGH — mandatory second review before CEO promotion decision.
+
+RECOMMENDATION: Reject
+CONFIDENCE: HIGH
+CONCERNS:
+  - IS drawdown is elevated (29.1%); strategies near 20% warrant closer review.
+  - Overfitting risk assessed as HIGH — mandatory second review before CEO promotion decision.
+
+MDD NOTE: IS MDD -29.1% vs Gate 1 limit 20% (EXCEEDS), Gate 7 ceiling 30% (within). Worst window MDD -29.1% - APPROACHING/EXCEEDING -15%.
+Stop effect (stop minus no-stop): {&#x27;is_sharpe_delta&#x27;: -0.025, &#x27;oos_sharpe_delta&#x27;: 0.1119, &#x27;is_mdd_delta&#x27;: -0.008}
+</pre><h2>base_stop_2.5atr</h2><table border='1'><tr><td>IS sharpe</td><td>0.0066</td></tr><tr><td>IS max_drawdown</td><td>-0.291</td></tr><tr><td>IS cagr</td><td>-0.0046</td></tr><tr><td>IS win_rate</td><td>0.5247</td></tr><tr><td>IS profit_factor</td><td>0.982</td></tr><tr><td>IS trade_count</td><td>1500</td></tr><tr><td>IS n_days</td><td>5031</td></tr><tr><td>IS stop_exits</td><td>120</td></tr><tr><td>IS liquidity_constrained_trades</td><td>94</td></tr><tr><td>OOS sharpe</td><td>0.4196</td></tr><tr><td>OOS max_drawdown</td><td>-0.1482</td></tr><tr><td>OOS cagr</td><td>0.047</td></tr><tr><td>OOS win_rate</td><td>0.5345</td></tr><tr><td>OOS profit_factor</td><td>1.1355</td></tr><tr><td>OOS trade_count</td><td>406</td></tr><tr><td>OOS n_days</td><td>1258</td></tr><tr><td>OOS stop_exits</td><td>36</td></tr><tr><td>OOS liquidity_constrained_trades</td><td>0</td></tr></table><h3>Walk-forward folds</h3><table border='1'><tr><th>test</th><th>train Sharpe</th><th>test Sharpe</th><th>train trades</th><th>test trades</th></tr><tr><td>2012-01-01..2013-12-31</td><td>-0.0545</td><td>0.5736</td><td>744</td><td>206</td></tr><tr><td>2014-01-01..2015-12-31</td><td>0.0345</td><td>-0.4351</td><td>950</td><td>184</td></tr><tr><td>2016-01-01..2017-12-31</td><td>-0.0226</td><td>0.3069</td><td>1134</td><td>188</td></tr><tr><td>2018-01-01..2019-12-31</td><td>0.0094</td><td>-0.016</td><td>1322</td><td>178</td></tr></table><h2>no_stop</h2><table border='1'><tr><td>IS sharpe</td><td>0.0316</td></tr><tr><td>IS max_drawdown</td><td>-0.283</td></tr><tr><td>IS cagr</td><td>-0.0022</td></tr><tr><td>IS win_rate</td><td>0.5247</td></tr><tr><td>IS profit_factor</td><td>0.9913</td></tr><tr><td>IS trade_count</td><td>1500</td></tr><tr><td>IS n_days</td><td>5031</td></tr><tr><td>IS stop_exits</td><td>0</td></tr><tr><td>IS liquidity_constrained_trades</td><td>97</td></tr><tr><td>OOS sharpe</td><td>0.3077</td></tr><tr><td>OOS max_drawdown</td><td>-0.1475</td></tr><tr><td>OOS cagr</td><td>0.0324</td></tr><tr><td>OOS win_rate</td><td>0.5345</td></tr><tr><td>OOS profit_factor</td><td>1.0941</td></tr><tr><td>OOS trade_count</td><td>406</td></tr><tr><td>OOS n_days</td><td>1258</td></tr><tr><td>OOS stop_exits</td><td>0</td></tr><tr><td>OOS liquidity_constrained_trades</td><td>0</td></tr></table><h3>Walk-forward folds</h3><table border='1'><tr><th>test</th><th>train Sharpe</th><th>test Sharpe</th><th>train trades</th><th>test trades</th></tr><tr><td>2012-01-01..2013-12-31</td><td>-0.0406</td><td>0.6078</td><td>744</td><td>206</td></tr><tr><td>2014-01-01..2015-12-31</td><td>0.0512</td><td>-0.39</td><td>950</td><td>184</td></tr><tr><td>2016-01-01..2017-12-31</td><td>-0.0031</td><td>0.3007</td><td>1134</td><td>188</td></tr><tr><td>2018-01-01..2019-12-31</td><td>0.026</td><td>0.0763</td><td>1322</td><td>178</td></tr></table><h2>Statistical rigor (base)</h2><table border='1'><tr><td>mc_p5_sharpe</td><td>-0.3842</td></tr><tr><td>mc_median_sharpe</td><td>0.0127</td></tr><tr><td>mc_p95_sharpe</td><td>0.3639</td></tr><tr><td>sharpe_ci_low</td><td>-0.4273</td></tr><tr><td>sharpe_ci_high</td><td>0.3408</td></tr><tr><td>mdd_ci_low</td><td>-0.6817</td></tr><tr><td>mdd_ci_high</td><td>-0.2177</td></tr><tr><td>permutation_pvalue</td><td>0.2587</td></tr><tr><td>permutation_pass</td><td>False</td></tr><tr><td>n_perms</td><td>200</td></tr><tr><td>null_mean_sharpe</td><td>-0.0591</td></tr><tr><td>null_p95_sharpe</td><td>0.1483</td></tr><tr><td>wf_sharpe_std</td><td>0.3764</td></tr><tr><td>wf_sharpe_min</td><td>-0.4351</td></tr><tr><td>wf_windows_passed</td><td>2</td></tr></table></body></html>
