@@ -5,8 +5,8 @@
   "cash_buffer": 15000,
   "deployed_pct": 40.0,
   "cash_pct": 60.0,
-  "portfolio_drawdown_pct": 0.132,
+  "portfolio_drawdown_pct": 0.0,
   "alert_state": "OK",
-  "as_of_utc": "2026-10-30T16:00:58.187178",
+  "as_of_utc": "2026-11-13T15:00:34.702842",
   "active_strategy_count": 2
 }
