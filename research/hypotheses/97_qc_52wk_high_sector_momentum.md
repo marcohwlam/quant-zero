@@ -5,7 +5,7 @@
 **Date:** 2026-11-02
 **Asset class:** equities
 **Strategy type:** single-signal
-**Status:** hypothesis
+**Status:** retired (QUA-950; see research/findings/95_96_97_qc_gate1_fail.md)
 
 ## Economic Rationale
 
