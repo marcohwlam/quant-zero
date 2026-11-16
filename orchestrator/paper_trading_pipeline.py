@@ -11,7 +11,7 @@ Output per strategy:
     paper_trading/<strat_id>/meta.json     — metadata, signals, last_updated, health
 
 Usage:
-    python orchestrator/paper_trading_pipeline.py
+    PYTHONPATH=. .venv/bin/python orchestrator/paper_trading_pipeline.py
     python orchestrator/paper_trading_pipeline.py --dry-run
     python orchestrator/paper_trading_pipeline.py --health-check
 
@@ -30,6 +30,7 @@ Scheduled daily at market close via Paperclip routine (see broker/strategy_regis
 
 import os
 import sys
+import time
 import csv
 import json
 import logging
@@ -86,10 +87,20 @@ def append_equity_row(strat_id: str, portfolio_value: float) -> None:
         w.writerows(rows)
 
 
+def _dedupe_trades_by_date(trade_log: list) -> list:
+    """Keep the last record per (calendar date, ticker, action); runner and pipeline can both log a day."""
+    latest = {}
+    for rec in trade_log:
+        key = (str(rec.get("date", ""))[:10], rec.get("ticker"), rec.get("action"))
+        latest[key] = rec
+    return list(latest.values())
+
+
 def write_trades_csv(strat_id: str, trade_log: list) -> None:
     """Overwrite trades.csv with the full trade log."""
     if not trade_log:
         return
+    trade_log = _dedupe_trades_by_date(trade_log)
     path = _strat_dir(strat_id) / "trades.csv"
     # Collect all keys preserving order
     seen, cols = set(), []
@@ -104,8 +115,15 @@ def write_trades_csv(strat_id: str, trade_log: list) -> None:
         w.writerows(trade_log)
 
 
+# Strategies whose runner writes its own canonical meta.json (richer schema).
+META_OWNED_BY_RUNNER = {"h10_crypto_eql_reversal_v2", "h10_cryptoeqlreversal_v2"}
+
+
 def write_meta_json(strat_id: str, meta: dict) -> None:
-    """Write meta.json for a strategy."""
+    """Write meta.json for a strategy, unless its runner owns that file."""
+    if strat_id in META_OWNED_BY_RUNNER:
+        logger.info(f"  {strat_id}: meta.json owned by runner, not overwritten")
+        return
     path = _strat_dir(strat_id) / "meta.json"
     with open(path, "w") as f:
         json.dump(meta, f, indent=2, default=str)
@@ -307,7 +325,12 @@ def run_pipeline(dry_run: bool = False) -> dict:
 
     # Connect once; all runners share the client
     client = AlpacaClient()
-    account = client.get_account()
+    try:
+        account = client.get_account()
+    except Exception as exc:  # one retry for transient read timeouts
+        logger.warning(f"get_account failed ({exc}); retrying once")
+        time.sleep(3)
+        account = client.get_account()
     total_portfolio_value = float(account.get("portfolio_value", 0))
     logger.info(f"Alpaca connected — portfolio=${total_portfolio_value:,.2f} status={account.get('status')}")
 
