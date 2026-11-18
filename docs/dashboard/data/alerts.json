@@ -3,7 +3,7 @@
     "type": "strategy_stale",
     "severity": "WARNING",
     "strat_id": "testmomentum_etf_momentum_v1",
-    "message": "Strategy data stale. Last update: 2026-11-17T15:00:14.702881",
-    "timestamp": "2026-11-17T21:45:10.924958+00:00"
+    "message": "Strategy data stale. Last update: 2026-11-18T15:00:19.055156",
+    "timestamp": "2026-11-18T21:45:21.931076+00:00"
   }
 ]
