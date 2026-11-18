@@ -59,3 +59,5 @@ date,ticker,signal,signal_type,target_notional,has_position,action,order_id,fill
 2026-11-16 15:00:51,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
 2026-11-17 15:00:12,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
 2026-11-17 15:00:13,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-11-18 15:00:17,BTC-USD,0,flat,0.0,False,flat,,,,,,,False
+2026-11-18 15:00:17,ETH-USD,0,flat,0.0,False,flat,,,,,,,False
