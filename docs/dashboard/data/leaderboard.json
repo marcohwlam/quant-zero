@@ -13,7 +13,7 @@
     "demotion_threshold_pct": 18.0,
     "warning_threshold_pct": 12.0,
     "alert": "WARNING",
-    "last_update": "2026-11-19T15:00:26.899052",
+    "last_update": "2026-11-20T15:00:57.704557",
     "is_stale": true,
     "paper_start_date": "2026-03-16"
   },
@@ -31,7 +31,7 @@
     "demotion_threshold_pct": 16.1,
     "warning_threshold_pct": 10.7,
     "alert": "OK",
-    "last_update": "2026-11-19T21:00:24Z",
+    "last_update": "2026-11-20T21:00:30Z",
     "is_stale": false,
     "paper_start_date": "2026-03-16"
   }
