@@ -32,7 +32,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 
 # Staleness thresholds per spec §3
 STALENESS_HOURS = {
-    "crypto": 2,
+    "crypto": 26,
     "equities": 26,
     "futures": 4,
 }
