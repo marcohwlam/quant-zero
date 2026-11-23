@@ -1,0 +1,3 @@
+timestamp,ticker,signal,signal_type,has_position,blocked_by,regime_ok,eql_zone_count,eqh_zone_count,near_eql_zone,near_eqh_zone,pending_entry,pending_ready,bar_date
+2026-11-23T21:00:49Z,BTC-USD,0,flat,False,btc_regime_gate,False,0,0,False,False,,False,2026-11-22
+2026-11-23T21:00:49Z,ETH-USD,0,flat,False,btc_regime_gate,False,2,0,True,False,,False,2026-11-22
