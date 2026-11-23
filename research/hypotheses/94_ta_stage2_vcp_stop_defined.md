@@ -5,7 +5,7 @@
 **Date:** 2026-10-26
 **Asset class:** equities (US single stocks, liquid large and mid caps)
 **Strategy type:** multi-signal
-**Status:** hypothesis
+**Status:** retired (QUA-831 PF-1 fail; see research/findings/94_ta_stage2_vcp_stop_defined_retired.md)
 **Source:** QUA-830, board request on QUA-829 (screened mid-term trade versus a discretionary ladder plan)
 **Class:** momentum. This hypothesis uses the single momentum slot of its batch (Hypothesis Class Diversification Mandate, QUA-181).
 **Track:** A (daily bars, holding period weeks to months)
