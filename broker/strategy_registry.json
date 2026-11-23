@@ -11,6 +11,7 @@
       "backtest_is_sharpe": 1.20,
       "backtest_oos_sharpe": 1.44,
       "backtest_is_mdd": -0.107,
+      "backtest_max_drawdown": 0.107,
       "backtest_win_rate": 0.614,
       "demotion_drawdown_threshold": 0.20,
       "warning_drawdown_threshold": 0.15,
