@@ -1,0 +1,5 @@
+H99 Month-End Treasury Window | TLT n=3 | 2026-11-23
+Gate 1: FAIL
+{"is_sharpe": false, "oos_sharpe": false, "max_dd": true, "trades": true}
+IS Sharpe 0.80  OOS Sharpe 0.39  IS MDD -13.0%  IS trades 209
+IS Net CAGR 3.81% (hard constraint 10%)  perm p=0.0004

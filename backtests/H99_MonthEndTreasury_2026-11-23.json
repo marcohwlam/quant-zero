@@ -1,0 +1,742 @@
+{
+  "hypothesis": "H99",
+  "ticket": "QUA-989",
+  "run_date": "2026-11-23",
+  "cost_per_side": 0.0005,
+  "is_window": [
+    "2000-01-01",
+    "2019-12-31"
+  ],
+  "oos_window": [
+    "2020-01-01",
+    "2024-12-31"
+  ],
+  "permutation_runs": 5000,
+  "bootstrap_runs": 5000,
+  "results": {
+    "n3_TLT": {
+      "IS": {
+        "sharpe": 0.7957351783723401,
+        "net_cagr": 0.03814943000841886,
+        "max_dd": -0.12956124952638604,
+        "n_trades": 209,
+        "win_rate": 0.6172248803827751,
+        "profit_factor": 1.8895084242722617,
+        "mean_window_net_bp": 32.075871501417794,
+        "exposure_frac": 0.14292227034419877,
+        "sleeve_cagr_exposed_days": 0.2994728893462846,
+        "sleeve_sharpe_exposed_days": 2.1194303438306856,
+        "cash_adjusted_cagr": 0.04953586461183357,
+        "cash_adjusted_sharpe": 1.0210587109938811,
+        "leverage_to_10pct_cagr_linear": 2.6212711429222373,
+        "n_trades_all_legs": 209
+      },
+      "OOS": {
+        "sharpe": 0.39018271850736397,
+        "net_cagr": 0.020875936651115756,
+        "max_dd": -0.08630648919899919,
+        "n_trades": 60,
+        "win_rate": 0.55,
+        "profit_factor": 1.3986306564759325,
+        "mean_window_net_bp": 18.14664901552443,
+        "exposure_frac": 0.1431980906921241,
+        "sleeve_cagr_exposed_days": 0.15521074556620773,
+        "sleeve_sharpe_exposed_days": 1.0305035251169403,
+        "cash_adjusted_cagr": 0.04264204888501433,
+        "cash_adjusted_sharpe": 0.7597809915268132,
+        "leverage_to_10pct_cagr_linear": 4.790204227538471
+      },
+      "walk_forward": [
+        {
+          "window": [
+            "2002-07-01",
+            "2005-12-31"
+          ],
+          "sharpe": 0.5586690008862032
+        },
+        {
+          "window": [
+            "2006-01-01",
+            "2009-06-30"
+          ],
+          "sharpe": 0.30133670201082663
+        },
+        {
+          "window": [
+            "2009-07-01",
+            "2012-12-31"
+          ],
+          "sharpe": 1.2722365096356074
+        },
+        {
+          "window": [
+            "2013-01-01",
+            "2016-06-30"
+          ],
+          "sharpe": 0.682190502914195
+        },
+        {
+          "window": [
+            "2016-07-01",
+            "2019-12-31"
+          ],
+          "sharpe": 1.1750370824474072
+        }
+      ],
+      "wf_pass_count_sharpe_ge_0.3": 5,
+      "bootstrap_IS": {
+        "sharpe_ci95": [
+          0.3560532149015224,
+          1.2317174772696269
+        ],
+        "mc_p5_sharpe": 0.43285611869883794
+      },
+      "permutation_IS": {
+        "observed_mean_net_bp": 32.075871501417794,
+        "null_mean_bp": -0.3025523629952305,
+        "null_p95_bp": 14.288770763514338,
+        "p_value": 0.0003999200159968006,
+        "n_windows": 209
+      }
+    },
+    "n3_IEF": {
+      "IS": {
+        "sharpe": 0.6409148304406883,
+        "net_cagr": 0.015113672568662695,
+        "max_dd": -0.0644133791329089,
+        "n_trades": 209,
+        "win_rate": 0.583732057416268,
+        "profit_factor": 1.6578103702393265,
+        "mean_window_net_bp": 12.708387193248383,
+        "exposure_frac": 0.142010485525416,
+        "sleeve_cagr_exposed_days": 0.11141082359002952,
+        "sleeve_sharpe_exposed_days": 1.708010016176586,
+        "cash_adjusted_cagr": 0.026263738066926168,
+        "cash_adjusted_sharpe": 1.0994664952708726,
+        "leverage_to_10pct_cagr_linear": 6.616525503360718,
+        "n_trades_all_legs": 209
+      },
+      "OOS": {
+        "sharpe": 0.6072604508348797,
+        "net_cagr": 0.016309747922995443,
+        "max_dd": -0.0337889265727539,
+        "n_trades": 60,
+        "win_rate": 0.55,
+        "profit_factor": 1.6291466656104123,
+        "mean_window_net_bp": 13.704492954963158,
+        "exposure_frac": 0.1431980906921241,
+        "sleeve_cagr_exposed_days": 0.1196068228631868,
+        "sleeve_sharpe_exposed_days": 1.6079800253110412,
+        "cash_adjusted_cagr": 0.0379785043737173,
+        "cash_adjusted_sharpe": 1.382131650789586,
+        "leverage_to_10pct_cagr_linear": 6.13130260946633
+      },
+      "walk_forward": [
+        {
+          "window": [
+            "2002-07-01",
+            "2005-12-31"
+          ],
+          "sharpe": 0.3496740871192517
+        },
+        {
+          "window": [
+            "2006-01-01",
+            "2009-06-30"
+          ],
+          "sharpe": 0.3760421361566239
+        },
+        {
+          "window": [
+            "2009-07-01",
+            "2012-12-31"
+          ],
+          "sharpe": 1.2059434669300284
+        },
+        {
+          "window": [
+            "2013-01-01",
+            "2016-06-30"
+          ],
+          "sharpe": 0.4412309804023003
+        },
+        {
+          "window": [
+            "2016-07-01",
+            "2019-12-31"
+          ],
+          "sharpe": 0.9452748695155277
+        }
+      ],
+      "wf_pass_count_sharpe_ge_0.3": 5,
+      "bootstrap_IS": {
+        "sharpe_ci95": [
+          0.2003041408589986,
+          1.0970447826128014
+        ],
+        "mc_p5_sharpe": 0.2657409072665602
+      },
+      "permutation_IS": {
+        "observed_mean_net_bp": 12.708387193248383,
+        "null_mean_bp": -3.8325673216068914,
+        "null_p95_bp": 3.060361943942074,
+        "p_value": 0.0003999200159968006,
+        "n_windows": 209
+      }
+    },
+    "n3_TLT+IEF": {
+      "IS": {
+        "sharpe": 0.7580223353588533,
+        "net_cagr": 0.02666844751880526,
+        "max_dd": -0.09566508622275682,
+        "n_trades": 418,
+        "win_rate": 0.6004784688995215,
+        "profit_factor": 1.8086801169288704,
+        "mean_window_net_bp": 22.39212934733309,
+        "exposure_frac": 0.14292227034419877,
+        "sleeve_cagr_exposed_days": 0.202195355275419,
+        "sleeve_sharpe_exposed_days": 2.017554674749468,
+        "cash_adjusted_cagr": 0.037928958577379435,
+        "cash_adjusted_sharpe": 1.0654685222735503,
+        "leverage_to_10pct_cagr_linear": 3.7497495843912545,
+        "n_trades_all_legs": 418
+      },
+      "OOS": {
+        "sharpe": 0.4702162249938057,
+        "net_cagr": 0.018740462835808103,
+        "max_dd": -0.05526788360237833,
+        "n_trades": 120,
+        "win_rate": 0.55,
+        "profit_factor": 1.47323497979898,
+        "mean_window_net_bp": 15.925570985243795,
+        "exposure_frac": 0.1431980906921241,
+        "sleeve_cagr_exposed_days": 0.1384409251649794,
+        "sleeve_sharpe_exposed_days": 1.2428993499672065,
+        "cash_adjusted_cagr": 0.040461044598208984,
+        "cash_adjusted_sharpe": 0.9814944970359853,
+        "leverage_to_10pct_cagr_linear": 5.336047507264669
+      }
+    },
+    "n3_VUSTX_proxy": {
+      "IS": {
+        "sharpe": 1.5610716801776525,
+        "net_cagr": 0.06982873240320941,
+        "max_dd": -0.09268427275339286,
+        "n_trades": 240,
+        "win_rate": 0.7125,
+        "profit_factor": 3.745795712688379,
+        "mean_window_net_bp": 56.87469988793437,
+        "exposure_frac": 0.1413237924865832,
+        "sleeve_cagr_exposed_days": 0.6122270455377514,
+        "sleeve_sharpe_exposed_days": 4.277643119397769,
+        "cash_adjusted_cagr": 0.08479205099742093,
+        "cash_adjusted_sharpe": 1.880896207923775,
+        "leverage_to_10pct_cagr_linear": 1.4320752583989893,
+        "n_trades_all_legs": 240
+      },
+      "OOS": {
+        "sharpe": 0.870059310938089,
+        "net_cagr": 0.046287460469151664,
+        "max_dd": -0.0625697444670531,
+        "n_trades": 60,
+        "win_rate": 0.6166666666666667,
+        "profit_factor": 2.132705229559997,
+        "mean_window_net_bp": 38.49948765162794,
+        "exposure_frac": 0.14160700079554495,
+        "sleeve_cagr_exposed_days": 0.37648515455729403,
+        "sleeve_sharpe_exposed_days": 2.3278218870901384,
+        "cash_adjusted_cagr": 0.06861089502609397,
+        "cash_adjusted_sharpe": 1.2648236662070824,
+        "leverage_to_10pct_cagr_linear": 2.1604123230447074
+      }
+    },
+    "n3_VFITX_proxy": {
+      "IS": {
+        "sharpe": 1.856230734425537,
+        "net_cagr": 0.03885690723744295,
+        "max_dd": -0.035323718355757094,
+        "n_trades": 240,
+        "win_rate": 0.7625,
+        "profit_factor": 5.707565105892473,
+        "mean_window_net_bp": 31.86684820709515,
+        "exposure_frac": 0.13615583383025243,
+        "sleeve_cagr_exposed_days": 0.3231040366239917,
+        "sleeve_sharpe_exposed_days": 5.2607624702685944,
+        "cash_adjusted_cagr": 0.053474020852231297,
+        "cash_adjusted_sharpe": 2.541911984028797,
+        "leverage_to_10pct_cagr_linear": 2.5735450170784278,
+        "n_trades_all_legs": 240
+      },
+      "OOS": {
+        "sharpe": 1.3569836483522033,
+        "net_cagr": 0.027942402412202583,
+        "max_dd": -0.017001495138995182,
+        "n_trades": 60,
+        "win_rate": 0.6666666666666666,
+        "profit_factor": 3.558970187042541,
+        "mean_window_net_bp": 23.038753963617655,
+        "exposure_frac": 0.13444709626093873,
+        "sleeve_cagr_exposed_days": 0.2275020749306591,
+        "sleeve_sharpe_exposed_days": 3.7814188884329463,
+        "cash_adjusted_cagr": 0.05002185104082124,
+        "cash_adjusted_sharpe": 2.403080387455648,
+        "leverage_to_10pct_cagr_linear": 3.5787903461131716
+      }
+    },
+    "n4_TLT": {
+      "IS": {
+        "sharpe": 0.6290441037131457,
+        "net_cagr": 0.03448420660542317,
+        "max_dd": -0.13331379025192247,
+        "n_trades": 209,
+        "win_rate": 0.6172248803827751,
+        "profit_factor": 1.6542886662955705,
+        "mean_window_net_bp": 29.33825929422135,
+        "exposure_frac": 0.19033508092090268,
+        "sleeve_cagr_exposed_days": 0.19497163943317997,
+        "sleeve_sharpe_exposed_days": 1.4459944105021285,
+        "cash_adjusted_cagr": 0.04520243708211047,
+        "cash_adjusted_sharpe": 0.8119893512187343,
+        "leverage_to_10pct_cagr_linear": 2.89987822959724,
+        "n_trades_all_legs": 209
+      },
+      "OOS": {
+        "sharpe": 0.3135398206825253,
+        "net_cagr": 0.018777522322043216,
+        "max_dd": -0.11790693331100277,
+        "n_trades": 60,
+        "win_rate": 0.55,
+        "profit_factor": 1.3053399276775322,
+        "mean_window_net_bp": 16.75510613521349,
+        "exposure_frac": 0.1909307875894988,
+        "sleeve_cagr_exposed_days": 0.10234013180055501,
+        "sleeve_sharpe_exposed_days": 0.7169360487955364,
+        "cash_adjusted_cagr": 0.039262599553890665,
+        "cash_adjusted_sharpe": 0.6138027578223193,
+        "leverage_to_10pct_cagr_linear": 5.325516236112178
+      },
+      "walk_forward": [
+        {
+          "window": [
+            "2002-07-01",
+            "2005-12-31"
+          ],
+          "sharpe": 0.20996574502083507
+        },
+        {
+          "window": [
+            "2006-01-01",
+            "2009-06-30"
+          ],
+          "sharpe": 0.14937254044720308
+        },
+        {
+          "window": [
+            "2009-07-01",
+            "2012-12-31"
+          ],
+          "sharpe": 1.2139035343202693
+        },
+        {
+          "window": [
+            "2013-01-01",
+            "2016-06-30"
+          ],
+          "sharpe": 0.6826149598336564
+        },
+        {
+          "window": [
+            "2016-07-01",
+            "2019-12-31"
+          ],
+          "sharpe": 0.7681628425840259
+        }
+      ],
+      "wf_pass_count_sharpe_ge_0.3": 3,
+      "bootstrap_IS": {
+        "sharpe_ci95": [
+          0.2041433541923248,
+          1.0580134622931237
+        ],
+        "mc_p5_sharpe": 0.2662974531497485
+      },
+      "permutation_IS": {
+        "observed_mean_net_bp": 29.33825929422135,
+        "null_mean_bp": 2.3902291594935887,
+        "null_p95_bp": 18.438474928664068,
+        "p_value": 0.001799640071985603,
+        "n_windows": 209
+      }
+    },
+    "n4_IEF": {
+      "IS": {
+        "sharpe": 0.55262395032773,
+        "net_cagr": 0.01499367712038202,
+        "max_dd": -0.06926428015151798,
+        "n_trades": 209,
+        "win_rate": 0.5741626794258373,
+        "profit_factor": 1.5571298010833028,
+        "mean_window_net_bp": 12.664476414680713,
+        "exposure_frac": 0.1896512423068156,
+        "sleeve_cagr_exposed_days": 0.08163347251907682,
+        "sleeve_sharpe_exposed_days": 1.2716506297355241,
+        "cash_adjusted_cagr": 0.025516105538123446,
+        "cash_adjusted_sharpe": 0.9263047127721967,
+        "leverage_to_10pct_cagr_linear": 6.669478020442535,
+        "n_trades_all_legs": 209
+      },
+      "OOS": {
+        "sharpe": 0.5106936319159469,
+        "net_cagr": 0.01542179920279274,
+        "max_dd": -0.038132100021651016,
+        "n_trades": 60,
+        "win_rate": 0.55,
+        "profit_factor": 1.5527856486617435,
+        "mean_window_net_bp": 13.003146896022296,
+        "exposure_frac": 0.1909307875894988,
+        "sleeve_cagr_exposed_days": 0.08345518657071538,
+        "sleeve_sharpe_exposed_days": 1.1693480300995966,
+        "cash_adjusted_cagr": 0.035839401205004284,
+        "cash_adjusted_sharpe": 1.1552866159268045,
+        "leverage_to_10pct_cagr_linear": 6.484327715918578
+      }
+    },
+    "n4_TLT+IEF": {
+      "IS": {
+        "sharpe": 0.6143227789155261,
+        "net_cagr": 0.024829174466712622,
+        "max_dd": -0.10162182256853636,
+        "n_trades": 418,
+        "win_rate": 0.5956937799043063,
+        "profit_factor": 1.6216036102409297,
+        "mean_window_net_bp": 21.00136785445103,
+        "exposure_frac": 0.19056302712559836,
+        "sleeve_cagr_exposed_days": 0.1373517215173563,
+        "sleeve_sharpe_exposed_days": 1.4110842356072086,
+        "cash_adjusted_cagr": 0.0354371341900801,
+        "cash_adjusted_sharpe": 0.8639135655439852,
+        "leverage_to_10pct_cagr_linear": 4.02752013096793,
+        "n_trades_all_legs": 418
+      },
+      "OOS": {
+        "sharpe": 0.3844623144116093,
+        "net_cagr": 0.017307944802157582,
+        "max_dd": -0.0768396809964551,
+        "n_trades": 120,
+        "win_rate": 0.55,
+        "profit_factor": 1.37958619710425,
+        "mean_window_net_bp": 14.879126515617893,
+        "exposure_frac": 0.1909307875894988,
+        "sleeve_cagr_exposed_days": 0.0940373138826518,
+        "sleeve_sharpe_exposed_days": 0.8794735214005076,
+        "cash_adjusted_cagr": 0.03776347249219336,
+        "cash_adjusted_sharpe": 0.8031601799543739,
+        "leverage_to_10pct_cagr_linear": 5.77769348949704
+      }
+    },
+    "n4_VUSTX_proxy": {
+      "IS": {
+        "sharpe": 1.282595864174566,
+        "net_cagr": 0.0650681531495636,
+        "max_dd": -0.09133242305362654,
+        "n_trades": 240,
+        "win_rate": 0.6833333333333333,
+        "profit_factor": 2.8931752123073555,
+        "mean_window_net_bp": 53.324252201612296,
+        "exposure_frac": 0.18763665275293182,
+        "sleeve_cagr_exposed_days": 0.39928589232231326,
+        "sleeve_sharpe_exposed_days": 3.0024155705597653,
+        "cash_adjusted_cagr": 0.07916393322433746,
+        "cash_adjusted_sharpe": 1.5465773032137347,
+        "leverage_to_10pct_cagr_linear": 1.536850135736036,
+        "n_trades_all_legs": 240
+      },
+      "OOS": {
+        "sharpe": 0.7188816112857265,
+        "net_cagr": 0.04358568129986162,
+        "max_dd": -0.08938634043832183,
+        "n_trades": 60,
+        "win_rate": 0.5833333333333334,
+        "profit_factor": 1.8710200066846334,
+        "mean_window_net_bp": 36.60394245309826,
+        "exposure_frac": 0.1869530628480509,
+        "sleeve_cagr_exposed_days": 0.2563356587827037,
+        "sleeve_sharpe_exposed_days": 1.6671888402418347,
+        "cash_adjusted_cagr": 0.06462163793894127,
+        "cash_adjusted_sharpe": 1.041405149525005,
+        "leverage_to_10pct_cagr_linear": 2.2943314643177892
+      }
+    },
+    "n4_VFITX_proxy": {
+      "IS": {
+        "sharpe": 1.6446042180041385,
+        "net_cagr": 0.038138693659474976,
+        "max_dd": -0.02965193771058061,
+        "n_trades": 240,
+        "win_rate": 0.7375,
+        "profit_factor": 4.416971118744875,
+        "mean_window_net_bp": 31.324148987260077,
+        "exposure_frac": 0.176704432518386,
+        "sleeve_cagr_exposed_days": 0.23592441343394,
+        "sleeve_sharpe_exposed_days": 4.012162467050382,
+        "cash_adjusted_cagr": 0.05208538996717382,
+        "cash_adjusted_sharpe": 2.2328599312505624,
+        "leverage_to_10pct_cagr_linear": 2.6220090518269896,
+        "n_trades_all_legs": 240
+      },
+      "OOS": {
+        "sharpe": 1.1863152086936326,
+        "net_cagr": 0.027174189972201557,
+        "max_dd": -0.016402385405798747,
+        "n_trades": 60,
+        "win_rate": 0.6666666666666666,
+        "profit_factor": 3.3145629429501238,
+        "mean_window_net_bp": 22.429479240199743,
+        "exposure_frac": 0.17501988862370724,
+        "sleeve_cagr_exposed_days": 0.16554794550933827,
+        "sleeve_sharpe_exposed_days": 2.868384891863179,
+        "cash_adjusted_cagr": 0.048137936060588915,
+        "cash_adjusted_sharpe": 2.076284797019346,
+        "leverage_to_10pct_cagr_linear": 3.6799624975867626
+      }
+    },
+    "n5_TLT": {
+      "IS": {
+        "sharpe": 0.7069852556488163,
+        "net_cagr": 0.04249131494231362,
+        "max_dd": -0.17590511048763946,
+        "n_trades": 209,
+        "win_rate": 0.6267942583732058,
+        "profit_factor": 1.8097572590583004,
+        "mean_window_net_bp": 35.8353236375069,
+        "exposure_frac": 0.2372919990882152,
+        "sleeve_cagr_exposed_days": 0.1916842759855366,
+        "sleeve_sharpe_exposed_days": 1.4554548205216993,
+        "cash_adjusted_cagr": 0.05266088377160827,
+        "cash_adjusted_sharpe": 0.8650339137174682,
+        "leverage_to_10pct_cagr_linear": 2.353422108394631,
+        "n_trades_all_legs": 209
+      },
+      "OOS": {
+        "sharpe": 0.2377838192355458,
+        "net_cagr": 0.015343150178201537,
+        "max_dd": -0.11158609832248445,
+        "n_trades": 60,
+        "win_rate": 0.45,
+        "profit_factor": 1.2185384424046284,
+        "mean_window_net_bp": 14.410078915002252,
+        "exposure_frac": 0.23786793953858393,
+        "sleeve_cagr_exposed_days": 0.06610623088130008,
+        "sleeve_sharpe_exposed_days": 0.48709759361664867,
+        "cash_adjusted_cagr": 0.0345314867758264,
+        "cash_adjusted_sharpe": 0.4834549870796499,
+        "leverage_to_10pct_cagr_linear": 6.5175663953334
+      },
+      "walk_forward": [
+        {
+          "window": [
+            "2002-07-01",
+            "2005-12-31"
+          ],
+          "sharpe": 0.37756949988594324
+        },
+        {
+          "window": [
+            "2006-01-01",
+            "2009-06-30"
+          ],
+          "sharpe": 0.05145116650836501
+        },
+        {
+          "window": [
+            "2009-07-01",
+            "2012-12-31"
+          ],
+          "sharpe": 1.156287427986485
+        },
+        {
+          "window": [
+            "2013-01-01",
+            "2016-06-30"
+          ],
+          "sharpe": 1.0866401683561728
+        },
+        {
+          "window": [
+            "2016-07-01",
+            "2019-12-31"
+          ],
+          "sharpe": 0.81757655430208
+        }
+      ],
+      "wf_pass_count_sharpe_ge_0.3": 4,
+      "bootstrap_IS": {
+        "sharpe_ci95": [
+          0.29811856644536416,
+          1.110376924798881
+        ],
+        "mc_p5_sharpe": 0.3621445666086792
+      },
+      "permutation_IS": {
+        "observed_mean_net_bp": 35.8353236375069,
+        "null_mean_bp": 6.064290061284379,
+        "null_p95_bp": 23.213544853549344,
+        "p_value": 0.0027994401119776045,
+        "n_windows": 209
+      }
+    },
+    "n5_IEF": {
+      "IS": {
+        "sharpe": 0.646024719006275,
+        "net_cagr": 0.019182149570235785,
+        "max_dd": -0.09511638933742839,
+        "n_trades": 209,
+        "win_rate": 0.6076555023923444,
+        "profit_factor": 1.6839866612287184,
+        "mean_window_net_bp": 16.11929628931345,
+        "exposure_frac": 0.23706405288351948,
+        "sleeve_cagr_exposed_days": 0.08344869399311738,
+        "sleeve_sharpe_exposed_days": 1.3298958401191425,
+        "cash_adjusted_cagr": 0.029123505445436404,
+        "cash_adjusted_sharpe": 0.968764352551346,
+        "leverage_to_10pct_cagr_linear": 5.213180078376942,
+        "n_trades_all_legs": 209
+      },
+      "OOS": {
+        "sharpe": 0.3780715583537623,
+        "net_cagr": 0.012798102525482191,
+        "max_dd": -0.040740372103665545,
+        "n_trades": 60,
+        "win_rate": 0.5,
+        "profit_factor": 1.3990659779727073,
+        "mean_window_net_bp": 10.917704426417892,
+        "exposure_frac": 0.23786793953858393,
+        "sleeve_cagr_exposed_days": 0.05491691803860155,
+        "sleeve_sharpe_exposed_days": 0.7749018868190095,
+        "cash_adjusted_cagr": 0.031937956008692314,
+        "cash_adjusted_sharpe": 0.9087630565931442,
+        "leverage_to_10pct_cagr_linear": 7.813658298243109
+      }
+    },
+    "n5_TLT+IEF": {
+      "IS": {
+        "sharpe": 0.6989067821041492,
+        "net_cagr": 0.030934697955791624,
+        "max_dd": -0.13619797165340453,
+        "n_trades": 418,
+        "win_rate": 0.6172248803827751,
+        "profit_factor": 1.7660540991072085,
+        "mean_window_net_bp": 25.977309963410175,
+        "exposure_frac": 0.23820378390699795,
+        "sleeve_cagr_exposed_days": 0.13643744720398931,
+        "sleeve_sharpe_exposed_days": 1.4359428279108328,
+        "cash_adjusted_cagr": 0.0409734225957481,
+        "cash_adjusted_sharpe": 0.9144212786422098,
+        "leverage_to_10pct_cagr_linear": 3.232616013995311,
+        "n_trades_all_legs": 418
+      },
+      "OOS": {
+        "sharpe": 0.28788703738922283,
+        "net_cagr": 0.014343303070009528,
+        "max_dd": -0.07313226809601125,
+        "n_trades": 120,
+        "win_rate": 0.475,
+        "profit_factor": 1.2714760667709677,
+        "mean_window_net_bp": 12.663891670710072,
+        "exposure_frac": 0.2386634844868735,
+        "sleeve_cagr_exposed_days": 0.061487803603350155,
+        "sleeve_sharpe_exposed_days": 0.5888504718459363,
+        "cash_adjusted_cagr": 0.03351200419736333,
+        "cash_adjusted_sharpe": 0.6305514206683841,
+        "leverage_to_10pct_cagr_linear": 6.971894793821266
+      }
+    },
+    "n5_VUSTX_proxy": {
+      "IS": {
+        "sharpe": 1.2854861039452758,
+        "net_cagr": 0.07042950449143692,
+        "max_dd": -0.12391739544567681,
+        "n_trades": 240,
+        "win_rate": 0.6833333333333333,
+        "profit_factor": 2.981800507447101,
+        "mean_window_net_bp": 57.58913560632044,
+        "exposure_frac": 0.23275690717551184,
+        "sleeve_cagr_exposed_days": 0.3396494387395732,
+        "sleeve_sharpe_exposed_days": 2.692898048813436,
+        "cash_adjusted_cagr": 0.08382653853937683,
+        "cash_adjusted_sharpe": 1.516944842227125,
+        "leverage_to_10pct_cagr_linear": 1.4198594853405275,
+        "n_trades_all_legs": 240
+      },
+      "OOS": {
+        "sharpe": 0.5491474238754294,
+        "net_cagr": 0.037174658684486106,
+        "max_dd": -0.07375618446960774,
+        "n_trades": 60,
+        "win_rate": 0.5,
+        "profit_factor": 1.6228773532056675,
+        "mean_window_net_bp": 31.8374975690414,
+        "exposure_frac": 0.23309466984884647,
+        "sleeve_cagr_exposed_days": 0.16951625286510952,
+        "sleeve_sharpe_exposed_days": 1.1381789139912677,
+        "cash_adjusted_cagr": 0.05686615063967704,
+        "cash_adjusted_sharpe": 0.81417512233692,
+        "leverage_to_10pct_cagr_linear": 2.690004522939506
+      }
+    },
+    "n5_VFITX_proxy": {
+      "IS": {
+        "sharpe": 1.5515191552004306,
+        "net_cagr": 0.038320157768075624,
+        "max_dd": -0.05231218766393142,
+        "n_trades": 240,
+        "win_rate": 0.7333333333333333,
+        "profit_factor": 3.88880279115379,
+        "mean_window_net_bp": 31.483469816599577,
+        "exposure_frac": 0.2172530312065196,
+        "sleeve_cagr_exposed_days": 0.18897227145468332,
+        "sleeve_sharpe_exposed_days": 3.386298909823347,
+        "cash_adjusted_cagr": 0.05158370357493092,
+        "cash_adjusted_sharpe": 2.0757379480041274,
+        "leverage_to_10pct_cagr_linear": 2.609592596283871,
+        "n_trades_all_legs": 240
+      },
+      "OOS": {
+        "sharpe": 0.9860920084665972,
+        "net_cagr": 0.02485120978689781,
+        "max_dd": -0.021534309650046102,
+        "n_trades": 60,
+        "win_rate": 0.5833333333333334,
+        "profit_factor": 2.9083719519958424,
+        "mean_window_net_bp": 20.571550298972006,
+        "exposure_frac": 0.21400159108989658,
+        "sleeve_cagr_exposed_days": 0.12154456906383415,
+        "sleeve_sharpe_exposed_days": 2.1437541671522466,
+        "cash_adjusted_cagr": 0.044732833819594475,
+        "cash_adjusted_sharpe": 1.7505400055842355,
+        "leverage_to_10pct_cagr_linear": 4.023948968984301
+      }
+    }
+  },
+  "gate1_primary_TLT_n3": {
+    "checks": {
+      "is_sharpe": false,
+      "oos_sharpe": false,
+      "max_dd": true,
+      "trades": true
+    },
+    "thresholds": {
+      "is_sharpe": 1.0,
+      "oos_sharpe": 0.7,
+      "max_dd": -0.2,
+      "min_trades": 100
+    },
+    "result": "FAIL"
+  },
+  "charter_hard_constraints_TLT_n3": {
+    "net_cagr_ge_10pct": false,
+    "net_cagr_is": 0.03814943000841886,
+    "maxdd_lt_15pct": true,
+    "net_sharpe_gt_0_8": false
+  }
+}
