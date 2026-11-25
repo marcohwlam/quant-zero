@@ -168,6 +168,9 @@ def execute_signals(
 
             if not dry_run:
                 try:
+                    entry_record["realized_pnl"] = float(
+                        current_position.get("unrealized_pl", 0) or 0
+                    )
                     result = client.close_position(ticker)
                     logger.info(f"  Position closed for {ticker}")
                     entry_record["order_id"] = result.get("id")
@@ -182,6 +185,25 @@ def execute_signals(
         execution_log.append(entry_record)
 
     return execution_log
+
+
+# ── Strategy-level value (QUA-1011) ───────────────────────────────────────────
+
+_STRAT_VALUE_CEILING = INITIAL_CAPITAL * 2  # $10k; above this is raw Alpaca account equity
+
+
+def compute_strategy_value(client, trade_log: list) -> float:
+    """
+    Strategy ledger value: CAPITAL + realized PnL on closes + unrealized PnL on open
+    universe positions. The Alpaca account balance is shared (~$100k) and is never
+    a strategy value (QUA-827, QUA-1011).
+    """
+    realized = sum(float(r.get("realized_pnl") or 0) for r in trade_log)
+    unrealized = 0.0
+    for pos in client.get_positions():
+        if pos.get("symbol") in UNIVERSE:
+            unrealized += float(pos.get("unrealized_pl", 0) or 0)
+    return CAPITAL + realized + unrealized
 
 
 # ── Trade Log ─────────────────────────────────────────────────────────────────
@@ -244,6 +266,8 @@ def write_canonical_equity(account_value: float, signal_count: int, trade_count:
     except FileNotFoundError:
         pass
 
+    # Skip legacy rows holding raw Alpaca account equity (~$100k).
+    rows = [r for r in rows if 0 < float(r.get("portfolio_value", 0) or 0) < INITIAL_CAPITAL * 2]
     if rows:
         prev = rows[-1]
         prev_value = float(prev.get("portfolio_value", INITIAL_CAPITAL) or INITIAL_CAPITAL)
@@ -530,7 +554,9 @@ def main(dry_run: bool = False, shortfall_report_only: bool = False):
         logger.warning(f"ACTION REQUIRED: {is_report.get('action_note')}")
 
     # 6. Write canonical equity.csv and meta.json
-    account_value = float(account.get("portfolio_value", 0))
+    account_value = compute_strategy_value(client, all_trades)
+    if not 0 < account_value < _STRAT_VALUE_CEILING:
+        raise ValueError(f"Strategy value {account_value:.2f} outside (0, {_STRAT_VALUE_CEILING:.0f})")
     signal_count = len(UNIVERSE)
     fill_count = sum(
         1 for r in execution_log
@@ -548,7 +574,7 @@ def main(dry_run: bool = False, shortfall_report_only: bool = False):
         "signals":       signals,
         "execution":     execution_log,
         "is_report":     is_report,
-        "account_value": float(account.get("portfolio_value", 0)),
+        "account_value": account_value,
     }
     logger.info("Run complete.")
     return summary

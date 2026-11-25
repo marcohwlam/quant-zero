@@ -1,23 +1,18 @@
 {
   "strat_id": "bollinger_band_mean_reversion_v1",
   "dates": [
-    "2026-06-08",
-    "2026-10-26"
+    "2026-11-25"
   ],
   "portfolio_values": [
-    100187.6,
-    99922.85
+    4775.4
   ],
   "cumulative_return_pct": [
-    0.0,
-    0.0
+    -4.4919
   ],
   "drawdown_pct": [
-    0.0,
-    0.0
+    4.4919
   ],
   "daily_pnl": [
-    0.0,
-    0.0
+    -224.6
   ]
 }

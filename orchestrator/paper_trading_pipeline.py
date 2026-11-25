@@ -226,8 +226,18 @@ def run_h10(client, dry_run: bool) -> dict:
     trade_log = load_trade_log()
     is_report = compute_shortfall_report(trade_log)
 
+    # QUA-1011: strategy ledger value on the $5,000 base. The runner owns the
+    # canonical equity.csv (rich columns), so the pipeline must not rewrite it.
+    strategy_value = None
+    if not dry_run:
+        strategy_value = compute_strategy_value(client, trade_log)
+        fills = sum(1 for r in exec_log if r.get("fill_qty"))
+        write_canonical_equity(strategy_value, len(UNIVERSE), fills)
+
     return {
         "strategy": STRATEGY_NAME,
+        "strategy_value": strategy_value,
+        "equity_written": strategy_value is not None,
         "signals": {k: v for k, v in signals.items() if k not in ("timestamp",)},
         "execution": exec_log,
         "trade_log": trade_log,
@@ -240,7 +250,8 @@ def run_testmomentum(client, dry_run: bool) -> dict:
     from strategies.test_momentum import get_live_signals, PARAMETERS
     from broker.paper_trading.testmomentum_paper_runner import (
         execute_signals, append_trade_log, load_trade_log,
-        compute_shortfall_report, STRATEGY_NAME,
+        compute_shortfall_report, compute_strategy_value,
+        write_canonical_equity, STRATEGY_NAME, UNIVERSE,
     )
 
     signals = get_live_signals(params=PARAMETERS)
@@ -323,7 +334,7 @@ def run_pipeline(dry_run: bool = False) -> dict:
             # strategy value. Only runners that report their own ledger value write
             # equity.csv here; H10 owns its canonical equity.csv via h10_paper_runner.main.
             strat_value = result.get("strategy_value")
-            if strat_value is not None:
+            if strat_value is not None and not result.get("equity_written"):
                 append_equity_row(strat_id, strat_value)
             write_trades_csv(strat_id, result.get("trade_log", []))
 
