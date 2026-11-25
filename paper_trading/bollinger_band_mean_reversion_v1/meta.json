@@ -1,15 +1,15 @@
 {
   "strat_id": "bollinger_band_mean_reversion_v1",
   "strategy_name": "TestMomentum ETF Momentum",
-  "last_updated": "2026-10-26T16:01:50.322374",
-  "run_date": "2026-10-26",
+  "last_updated": "2026-11-25T15:01:14.512985",
+  "run_date": "2026-11-25",
   "dry_run": false,
-  "portfolio_value": 99922.85,
+  "portfolio_value": null,
   "signals": {
-    "date": "2026-10-26",
+    "date": "2026-11-25",
     "buy": [
       "XLE",
-      "XLK"
+      "XLV"
     ],
     "sell": [
       "SPY",
@@ -17,17 +17,17 @@
       "IWM",
       "DIA",
       "XLF",
-      "XLV"
+      "XLK"
     ],
     "momentum_scores": {
-      "SPY": 0.143517,
-      "QQQ": 0.159078,
-      "IWM": 0.130394,
-      "DIA": 0.132059,
-      "XLF": 0.080729,
-      "XLE": 0.602939,
-      "XLK": 0.274135,
-      "XLV": 0.248123
+      "SPY": 0.08644,
+      "QQQ": 0.059386,
+      "IWM": 0.124861,
+      "DIA": 0.091594,
+      "XLF": 0.098377,
+      "XLE": 0.394495,
+      "XLK": 0.128996,
+      "XLV": 0.209627
     }
   },
   "is_report": {
